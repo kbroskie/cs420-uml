@@ -1,31 +1,72 @@
 package edu.millersville.cs.segfault.model;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 public class UMLModel {
 	
-	static final int SET_NAME = 0;
+	//******************************************************************
+	// Change type values
+	static final int SET_NAME = 0; // Change type for chaning the name
+	                               // of the model.
+	static final int ADD_OBJECT = 1; // Add an object to the diagram.
+	//******************************************************************
 	
-	private String modelName;
 	
+	private String modelName;    // Name of the model.
+	
+	private Set<UMLObject> objects;
+	
+	//******************************************************************
 	// Constructors	
-	public UMLModel() { 
+	//******************************************************************
+	
+	// Empty constructor
+	public UMLModel() 
+	{ 
 		modelName = "New UML Model";
+		this.objects = new HashSet<UMLObject>();
 	}
 
-	public UMLModel(String serialized) throws Exception {
+	// De-serialization constructor
+	public UMLModel(String serialized) throws Exception 
+	{
 		this();
-		int model_start = serialized.indexOf("<model>" + 7);
-		int model_end = serialized.lastIndexOf("</model>");
-		if (model_start == 5 || model_end == -1) {
-			throw new Exception("Could not find model boundaries.");
+		
+		// De-serialize title
+		int startTitle = serialized.indexOf("<title>") + 7;
+		int endTitle = serialized.indexOf("</title>");
+		if (startTitle == 6 || endTitle == -1) {
+			throw new Exception("Model has no title!");
+		} else {
+			this.modelName = serialized.substring(startTitle, endTitle);
 		}
 		
+		// De-serialize any objects
+		int objectSearch = 0;
+		while (serialized.indexOf("<object>", objectSearch) != -1 && objectSearch != -1) 
+		{
+			UMLObject newObject = new UMLObject(serialized.substring(
+							serialized.indexOf("<object>", objectSearch) + 8,
+							serialized.indexOf("</object>", objectSearch)));
+			objects.add(newObject);
+			objectSearch = serialized.indexOf("</objects>", objectSearch);
+		}
 	}
 	
-	public UMLModel(UMLModel source) {
+	// Copy constructor
+	public UMLModel(UMLModel source) 
+	{
+		this();
 		this.modelName = source.getName();
+		this.objects = new HashSet<UMLObject>(source.getSet());
 	}
 	
-	public UMLModel(UMLModel source, int changeType, String newString) throws Exception {
+	// Copy/change string constructor
+	public UMLModel(UMLModel source, int changeType, String newString) 
+			throws Exception 
+	{
 		this(source);
 		if (changeType == SET_NAME) {
 			this.modelName = newString;
@@ -34,23 +75,68 @@ public class UMLModel {
 		}
 	}
 	
+	// Copy + Object reference constructor
+	public UMLModel(UMLModel source, int changeType, UMLObject newObject)
+		throws Exception
+	{
+		this(source);
+		
+		if (changeType == ADD_OBJECT) 
+		{
+			this.objects.add(newObject);
+		} else {
+			throw new Exception("Unknown change type!");
+		}
+	}
+	
+	//********************************************************************
 	// Observers
-	public String serialize() {
-		String modelString = "<model>";
+	//********************************************************************
+	
+	// Turns all data in the model into a string.
+	public String serialize() 
+	{
+		String modelString = "";
 		
-		modelString = modelString + "<title>" + modelName + "</title>";
+		// Serialize title
+		modelString = modelString + "<title>" + modelName + "</title>\n";
 		
-		modelString += "</model>";
+		// Serialize objects
+		Iterator<UMLObject> objectIterator = objects.iterator();
+		while (objectIterator.hasNext()) 
+		{
+			modelString += ("<object>\n" + objectIterator.next().serialize() + "</object>\n"); 
+		}
+		
 		return modelString;
 	}
 
-	public String getName() {
+	// Return the given name of the model.
+	public String getName() 
+	{
 		return this.modelName;
 	}
 
+	// Returns a copy of the set of objects
+	public Set<UMLObject> getSet() {
+		return new HashSet<UMLObject>(this.objects);
+	}
+	
+	//********************************************************************
 	// Mutators
-	public UMLModel changeName(String newName) throws Exception {
+	//********************************************************************
+	
+	// Returns a copy of the model with a different name.
+	public UMLModel changeName(String newName) throws Exception 
+	{
 		return new UMLModel(this, SET_NAME, newName);
+	}
+
+	// Adds an object to the model.
+	public UMLModel add(UMLObject newObject)
+		throws Exception
+	{
+		return new UMLModel(this, ADD_OBJECT, newObject);
 	}
 	
 }
