@@ -1,8 +1,11 @@
 package edu.millersville.cs.segfault.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+
 
 public class UMLModel {
 	
@@ -11,12 +14,14 @@ public class UMLModel {
 	static final int SET_NAME = 0; // Change type for chaning the name
 	                               // of the model.
 	static final int ADD_OBJECT = 1; // Add an object to the diagram.
+	static final int ADD_RELATION = 2;
 	//******************************************************************
 	
 	
 	private String modelName;    // Name of the model.
 	
-	private Set<UMLObject> objects;
+	private List<UMLObject> objects;
+	private Set<UMLRelation> relations;
 	
 	//******************************************************************
 	// Constructors	
@@ -26,7 +31,8 @@ public class UMLModel {
 	public UMLModel() 
 	{ 
 		modelName = "New UML Model";
-		this.objects = new HashSet<UMLObject>();
+		this.objects = new ArrayList<UMLObject>();
+		this.relations = new HashSet<UMLRelation>();
 	}
 
 	// De-serialization constructor
@@ -45,13 +51,24 @@ public class UMLModel {
 		
 		// De-serialize any objects
 		int objectSearch = 0;
-		while (serialized.indexOf("<object>", objectSearch) != -1 && objectSearch != -1) 
+		while (serialized.indexOf("<object>", objectSearch) != -1) 
 		{
-			UMLObject newObject = new UMLObject(serialized.substring(
-							serialized.indexOf("<object>", objectSearch) + 8,
-							serialized.indexOf("</object>", objectSearch)));
+			int startObject = serialized.indexOf("<object>", objectSearch);
+			int endObject = serialized.indexOf("</object>", objectSearch);
+			UMLObject newObject = new UMLObject(serialized.substring(startObject, endObject));
 			objects.add(newObject);
-			objectSearch = serialized.indexOf("</objects>", objectSearch);
+			objectSearch = endObject + 1;
+		}
+		
+		// De-serialize any relations
+		int relationSearch = 0;
+		while (serialized.indexOf("<relation>", relationSearch) != -1)
+		{
+			int startRelation = serialized.indexOf("<relation>", relationSearch);
+			int endRelation = serialized.indexOf("</relation>", relationSearch);
+			UMLRelation newRelation = new UMLRelation(this, serialized.substring(startRelation, endRelation));
+			relations.add(newRelation);
+			relationSearch = endRelation + 1;
 		}
 	}
 	
@@ -60,7 +77,7 @@ public class UMLModel {
 	{
 		this();
 		this.modelName = source.getName();
-		this.objects = new HashSet<UMLObject>(source.getSet());
+		this.objects = new ArrayList<UMLObject>(source.getObjects());
 	}
 	
 	// Copy/change string constructor
@@ -89,6 +106,18 @@ public class UMLModel {
 		}
 	}
 	
+	// Copy + Relation reference constructor
+	public UMLModel(UMLModel source, int changeType, UMLRelation newRelation)
+		throws Exception
+	{
+		this(source);
+		if (changeType == ADD_RELATION) {
+			this.relations.add(newRelation);
+		} else {
+			throw new Exception("Unknown change type!");
+		}
+	}
+	
 	//********************************************************************
 	// Observers
 	//********************************************************************
@@ -108,6 +137,13 @@ public class UMLModel {
 			modelString += ("<object>\n" + objectIterator.next().serialize() + "</object>\n"); 
 		}
 		
+		// Serialize relations
+		Iterator<UMLRelation> relationIterator = relations.iterator();
+		while (relationIterator.hasNext())
+		{
+			modelString += "<relation>\n" + relationIterator.next().serialize(this) + "</relation>\n"; 
+		}
+		
 		return modelString;
 	}
 
@@ -118,8 +154,26 @@ public class UMLModel {
 	}
 
 	// Returns a copy of the set of objects
-	public Set<UMLObject> getSet() {
-		return new HashSet<UMLObject>(this.objects);
+	public List<UMLObject> getObjects() {
+		return new ArrayList<UMLObject>(this.objects);
+	}
+
+	// Gets the object with id n
+	public UMLObject getObject(int n) {
+		return objects.get(n);
+	}
+	
+	// Gets the id of a given object
+	public int getId(UMLObject target)
+	{
+		for (int i=0; i<objects.size(); ++i)
+		{
+			if (objects.get(i) == target)
+			{
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	//********************************************************************
@@ -139,4 +193,10 @@ public class UMLModel {
 		return new UMLModel(this, ADD_OBJECT, newObject);
 	}
 	
+	// Adds a relation between two objects
+	public UMLModel link(UMLRelation relation)
+		throws Exception
+	{
+		return new UMLModel(this, ADD_RELATION, relation);
+	}
 }
