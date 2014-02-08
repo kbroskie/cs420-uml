@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Set;
 
 
@@ -198,5 +199,28 @@ public class UMLModel {
 		throws Exception
 	{
 		return new UMLModel(this, ADD_RELATION, relation);
+	}
+
+	//********************************************************************
+	// Z - Iterator
+	
+	public Iterator<DrawableUML> zIterator()
+	{
+		PriorityQueue<DrawableUML> zQueue = new PriorityQueue<DrawableUML>(this.objects.size()+this.relations.size(),
+				new ZComparator());
+		
+		Iterator<UMLObject> oIter = objects.iterator();
+		while (oIter.hasNext())
+		{
+			zQueue.add(oIter.next());
+		}
+		
+		Iterator<UMLRelation> rIter = relations.iterator();
+		while (rIter.hasNext())
+		{
+			zQueue.add(rIter.next());
+		}
+		
+		return zQueue.iterator();
 	}
 }

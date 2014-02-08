@@ -1,6 +1,8 @@
 package edu.millersville.cs.segfault.model;
 
-public class UMLObject {
+import java.awt.Graphics;
+
+public class UMLObject implements DrawableUML {
 	
 	//********************************************************************
 	// Object change types.
@@ -186,4 +188,14 @@ public class UMLObject {
 	{
 		return new UMLObject(this, SET_DIMENSION, width, height);
 	}
+
+	//********************************************************************
+	// Custom Drawing
+	//********************************************************************
+	
+	public void draw(Graphics g)
+	{
+		
+	}
+	
 }
