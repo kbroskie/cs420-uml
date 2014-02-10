@@ -10,14 +10,12 @@ public class Window extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel optionsPanel;
-	private JPanel drawingPanel;
+	private JPanel umlPanel;
 
 	private JMenuBar menuBar;
 
 	private JMenu fileMenu;
 	private JMenu editMenu;
-
-	private JScrollPane scrollPane;
 
 	private JMenuItem newItem;
 	private JMenuItem openItem;
@@ -33,10 +31,10 @@ public class Window extends JFrame {
 
 	    buildMenuBar();  
 	    buildOptionsPanel();
-	    buildDrawingPanel();
+	    buildUMLPanel();
 	    
 	    add(optionsPanel, BorderLayout.WEST);
-	    add(drawingPanel, BorderLayout.CENTER);
+	    add(umlPanel, BorderLayout.CENTER);
 	    
 	    pack();
 	    setVisible(true);	
@@ -113,18 +111,14 @@ public class Window extends JFrame {
 	private void buildOptionsPanel() {
 	   optionsPanel = new JPanel();
 	   optionsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); 
-	   scrollPane = new JScrollPane();
-	   optionsPanel.add(scrollPane); 
 	} 
 
 	/**
-	 * Replace with code for the panel where the UML chart will be.
+	 * Adds the UML panel.
 	 */
-	private void buildDrawingPanel() {
-		// Code here for the UML chart 
-		drawingPanel = new UMLPanel();
-		drawingPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-		drawingPanel.setPreferredSize(new Dimension(600, 600));
+	private void buildUMLPanel() {
+		umlPanel = new UMLPanel();
+		umlPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 	 }
 
 	/**
