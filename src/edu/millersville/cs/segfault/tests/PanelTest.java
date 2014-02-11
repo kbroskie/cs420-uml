@@ -12,13 +12,13 @@ public class PanelTest {
 		
 		UMLModel model = new UMLModel();
 		
-		UMLObject object = new UMLObject().move(10,10,0).resize(100,100);
+		UMLObject object = new UMLObject().move(10,10,0).resize(100,100).changeLabel("A");
 		
 		model = model.add(object);
 		
-		UMLObject objectB = new UMLObject().move(200,200,0).resize(50,200);
+		UMLObject objectB = new UMLObject().move(200,200,0).resize(50,200).changeLabel("B");
 		
-		model = model.add(objectB).link(new UMLRelation(object, objectB));
+		model = model.add(objectB); //.link(new UMLRelation(object, objectB));
 		
 		JFrame testFrame = new JFrame("UML Panel Test");
 		testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

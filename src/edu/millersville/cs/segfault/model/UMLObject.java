@@ -200,6 +200,8 @@ public class UMLObject implements DrawableUML {
 		g.fillRect(this.x, this.y, this.width, this.height);
 		g.setColor(Color.BLACK);
 		g.drawRect(this.x, this.y, this.width, this.height);
+		
+		g.drawString(this.label, this.x+15, this.y+15);
 	}
 	
 }
