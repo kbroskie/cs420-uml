@@ -2,18 +2,16 @@ package edu.millersville.cs.segfault.ui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.swing.JPanel;
-import javax.swing.event.MouseInputListener;
 
 import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.UMLObject;
 
-public class UMLPanel extends JPanel implements MouseInputListener {
+public class UMLPanel extends JPanel {
 	
 	
 	private static final long serialVersionUID = 3691818181393202313L;
@@ -31,10 +29,10 @@ public class UMLPanel extends JPanel implements MouseInputListener {
 		undoStack = new LinkedList<UMLModel>();
 		redoStack = new LinkedList<UMLModel>();
 		currentInteractionMode = new DrawObjectMode(this);
+		this.addMouseListener(currentInteractionMode);
+		this.addMouseMotionListener(currentInteractionMode);
 		lastX = 0;
 		lastY = 0;
-		this.addMouseListener(this);
-		this.addMouseMotionListener(this);
 	}
 
 	public UMLPanel(UMLModel new_model) {
@@ -47,6 +45,7 @@ public class UMLPanel extends JPanel implements MouseInputListener {
 		undoStack.push(currentModel);
 		this.currentModel = new_model;
 		redoStack = new LinkedList<UMLModel>();
+		repaint();
 	}
 
 	public void changeInteractionMode(PanelInteractionMode newMode)
@@ -87,7 +86,7 @@ public class UMLPanel extends JPanel implements MouseInputListener {
 			zIter.next().draw(g);
 		}
 		
-		currentInteractionMode.draw(g, lastX, lastY);
+		currentInteractionMode.draw(g);
 	}
 	
 	public void undo()
@@ -111,55 +110,5 @@ public class UMLPanel extends JPanel implements MouseInputListener {
 	public UMLModel model()
 	{
 		return currentModel;
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		if (e.getButton() == MouseEvent.BUTTON1)
-		{
-			currentInteractionMode.left_click(e.getX(), e.getY());
-		} 
-		if (e.getButton() == MouseEvent.BUTTON2)
-		{
-			currentInteractionMode.right_click(e.getX(), e.getY());
-		}
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		lastX = e.getX();
-		lastY = e.getY();
-		repaint();
-		
 	}
 }

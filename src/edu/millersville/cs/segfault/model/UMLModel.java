@@ -79,6 +79,7 @@ public class UMLModel {
 		this();
 		this.modelName = source.getName();
 		this.objects = new ArrayList<UMLObject>(source.getObjects());
+		this.relations = new HashSet<UMLRelation>(source.getRelations());
 	}
 	
 	// Copy/change string constructor
@@ -159,6 +160,11 @@ public class UMLModel {
 		return new ArrayList<UMLObject>(this.objects);
 	}
 
+	public Set<UMLRelation> getRelations() 
+	{ 
+		return this.relations; 
+	}
+	
 	// Gets the object with id n
 	public UMLObject getObject(int n) {
 		return objects.get(n);
