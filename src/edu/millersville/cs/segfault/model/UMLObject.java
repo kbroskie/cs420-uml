@@ -1,5 +1,6 @@
 package edu.millersville.cs.segfault.model;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class UMLObject implements DrawableUML {
@@ -195,6 +196,9 @@ public class UMLObject implements DrawableUML {
 	
 	public void draw(Graphics g)
 	{
+		g.setColor(Color.WHITE);
+		g.fillRect(this.x, this.y, this.width, this.height);
+		g.setColor(Color.BLACK);
 		g.drawRect(this.x, this.y, this.width, this.height);
 	}
 	

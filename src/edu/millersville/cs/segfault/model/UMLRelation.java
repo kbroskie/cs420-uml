@@ -37,7 +37,7 @@ public class UMLRelation implements DrawableUML {
 	{
 		this.source = source;
 		this.target = target;
-		this.z = 1;
+		this.z = -1;
 	}
 	
 	public UMLRelation(UMLModel model, String serialized)
