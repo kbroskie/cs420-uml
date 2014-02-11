@@ -37,7 +37,7 @@ public class UMLRelation implements DrawableUML {
 	{
 		this.source = source;
 		this.target = target;
-		this.z = 0;
+		this.z = 1;
 	}
 	
 	public UMLRelation(UMLModel model, String serialized)
@@ -69,6 +69,7 @@ public class UMLRelation implements DrawableUML {
 
 	public void draw(Graphics g) 
 	{
-		
+		g.drawLine(this.source.getX(), this.source.getY(),
+				this.target.getX(), this.target.getY());
 	}
 }

@@ -12,6 +12,8 @@ public class ZIterationTest {
 		UMLModel testModel = new UMLModel();
 		
 		testModel = testModel.add(new UMLObject().move(1, 2, 3));
+		testModel = testModel.add(new UMLObject().move(1, 2, 3));
+		
 		testModel = testModel.add(new UMLObject().move(0, 0, 5));
 		testModel = testModel.add(new UMLObject().move(50,50,9));
 		

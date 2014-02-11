@@ -202,7 +202,7 @@ public class UMLModel {
 	}
 
 	//********************************************************************
-	// Z - Iterator
+	// Iterators
 	
 	public Iterator<DrawableUML> zIterator()
 	{
@@ -222,5 +222,15 @@ public class UMLModel {
 		}
 		
 		return zQueue.iterator();
+	}
+
+	public Iterator<UMLObject> objectIterator()
+	{
+		return objects.iterator();
+	}
+	
+	public Iterator<UMLRelation> relationIterator()
+	{
+		return relations.iterator();
 	}
 }

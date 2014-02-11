@@ -195,7 +195,7 @@ public class UMLObject implements DrawableUML {
 	
 	public void draw(Graphics g)
 	{
-		
+		g.drawRect(this.x, this.y, this.width, this.height);
 	}
 	
 }
