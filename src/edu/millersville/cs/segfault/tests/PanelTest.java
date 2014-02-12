@@ -18,7 +18,7 @@ public class PanelTest {
 		
 		UMLObject objectB = new UMLObject().move(200,200,0).resize(50,200).changeLabel("B");
 		
-		model = model.add(objectB); //.link(new UMLRelation(object, objectB));
+		model = model.add(objectB).link(new UMLRelation(object, objectB));
 		
 		JFrame testFrame = new JFrame("UML Panel Test");
 		testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

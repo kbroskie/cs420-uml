@@ -2,6 +2,7 @@ package edu.millersville.cs.segfault.model;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 
 public class UMLObject implements DrawableUML {
 	
@@ -38,6 +39,7 @@ public class UMLObject implements DrawableUML {
 	private int z;     // Coords of the object.
 	private int width; //
 	private int height; //
+	private boolean selected;
 	
 	//********************************************************************
 	// Constructors
@@ -51,11 +53,13 @@ public class UMLObject implements DrawableUML {
 		this.z = 0;
 		this.width = 100;
 		this.height = 100;
+		selected = false;
 	
 	}
 	
 	// De-serialization constructor
 	public UMLObject(String serialized) throws Exception {
+		this();
 		int startLabel = serialized.indexOf("<label>") + 7;
 		int endLabel = serialized.lastIndexOf("</label>");
 		if (startLabel == 6 || endLabel == -1) {
@@ -128,6 +132,7 @@ public class UMLObject implements DrawableUML {
 		}
 	}
 	
+	
 	//********************************************************************
 	// Observers
 	//********************************************************************
@@ -165,6 +170,16 @@ public class UMLObject implements DrawableUML {
 	
 	public int getHeight() { return this.height; }
 	
+	public boolean within(int x, int y) 
+	{
+		if (x >= this.x && x <= this.x + this.width &&
+				y >= this.y && y <= this.y + this.height)
+		{
+			return true;
+		}
+		return false;
+	}
+	
 	//********************************************************************
 	// Mutators
 	//********************************************************************
@@ -196,6 +211,12 @@ public class UMLObject implements DrawableUML {
 	
 	public void draw(Graphics g)
 	{
+		if (this.selected)
+		{
+			g.setColor(Color.BLUE);
+			g.fillRect(this.x - 5, this.y - 5, this.width + 10, this.height + 10);
+		}
+		
 		g.setColor(Color.WHITE);
 		g.fillRect(this.x, this.y, this.width, this.height);
 		g.setColor(Color.BLACK);
@@ -203,5 +224,27 @@ public class UMLObject implements DrawableUML {
 		
 		g.drawString(this.label, this.x+15, this.y+15);
 	}
+
+	@Override
+	public Point getOrigin() 
+	{
+		return new Point(this.x, this.y);
+	}
+
+	@Override
+	public Point getBound() {
+		return new Point(this.x + this.width, this.y + this.height);
+	}
 	
+	public int getType() { return DrawableUML.OBJECT; }
+
+	@Override
+	public void select() {
+		this.selected = true;
+	}
+
+	@Override
+	public void unselect() {
+		this.selected = false;
+	}
 }

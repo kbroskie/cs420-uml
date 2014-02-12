@@ -16,6 +16,7 @@ public class UMLModel {
 	                               // of the model.
 	static final int ADD_OBJECT = 1; // Add an object to the diagram.
 	static final int ADD_RELATION = 2;
+	static final int REMOVE = 3;
 	//******************************************************************
 	
 	
@@ -103,6 +104,8 @@ public class UMLModel {
 		if (changeType == ADD_OBJECT) 
 		{
 			this.objects.add(newObject);
+		} else if(changeType == REMOVE) {
+			objects.remove(newObject);
 		} else {
 			throw new Exception("Unknown change type!");
 		}
@@ -115,10 +118,22 @@ public class UMLModel {
 		this(source);
 		if (changeType == ADD_RELATION) {
 			this.relations.add(newRelation);
+		} else if (changeType == REMOVE) {
+			relations.remove(newRelation);
 		} else {
 			throw new Exception("Unknown change type!");
 		}
 	}
+	
+	public UMLModel(UMLModel source, int changeType, DrawableUML newDrawable)
+	{
+		this(source);
+		if (changeType == REMOVE) {
+			objects.remove(newDrawable);
+			relations.remove(newDrawable);
+		}
+	}
+	
 	
 	//********************************************************************
 	// Observers
@@ -207,12 +222,17 @@ public class UMLModel {
 		return new UMLModel(this, ADD_RELATION, relation);
 	}
 
+	public UMLModel remove(DrawableUML drawable) 
+	{
+		return new UMLModel(this, REMOVE, drawable);
+	}
+	
 	//********************************************************************
 	// Iterators
 	
 	public Iterator<DrawableUML> zIterator()
 	{
-		PriorityQueue<DrawableUML> zQueue = new PriorityQueue<DrawableUML>(this.objects.size()+this.relations.size(),
+		PriorityQueue<DrawableUML> zQueue = new PriorityQueue<DrawableUML>(1 + this.objects.size()+this.relations.size(),
 				new ZComparator());
 		
 		Iterator<UMLObject> oIter = objects.iterator();

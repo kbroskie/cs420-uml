@@ -37,7 +37,7 @@ public class Window extends JFrame {
 	    add(umlPanel, BorderLayout.CENTER);
 	    
 	    pack();
-	    setVisible(true);	
+	    setVisible(true);
 	}
 
 	/*

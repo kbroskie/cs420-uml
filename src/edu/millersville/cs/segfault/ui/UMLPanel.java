@@ -28,11 +28,14 @@ public class UMLPanel extends JPanel {
 		currentModel = new UMLModel();
 		undoStack = new LinkedList<UMLModel>();
 		redoStack = new LinkedList<UMLModel>();
-		currentInteractionMode = new DrawRelationMode(this);
+		currentInteractionMode = new SelectionMode(this);
 		this.addMouseListener(currentInteractionMode);
 		this.addMouseMotionListener(currentInteractionMode);
+		this.addKeyListener(currentInteractionMode);
 		lastX = 0;
 		lastY = 0;
+		setFocusable(true);
+		
 	}
 
 	public UMLPanel(UMLModel new_model) {
@@ -73,6 +76,9 @@ public class UMLPanel extends JPanel {
 			}
 		}
 		
+		if (maxX < 500) { maxX = 500; }
+		if (maxY < 500) { maxY = 500; }
+		
 		return new Dimension(maxX+10,maxY+10);
 	}
 	
@@ -111,4 +117,5 @@ public class UMLPanel extends JPanel {
 	{
 		return currentModel;
 	}
+
 }
