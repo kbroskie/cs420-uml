@@ -7,10 +7,8 @@ public class UMLeditor {
 	 * reasonable application name on the menu.
 	 * @param args
 	 */
-	
 	public static void main(String[] args) {
-		Window.main(args);
-
+		WindowController.main(args);
 	}
 
 }
