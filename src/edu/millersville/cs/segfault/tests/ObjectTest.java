@@ -1,6 +1,7 @@
 package edu.millersville.cs.segfault.tests;
 
 import edu.millersville.cs.segfault.model.UMLObject;
+import edu.millersville.cs.segfault.model.UMLFileOp;
 
 public class ObjectTest {
 
@@ -14,6 +15,8 @@ public class ObjectTest {
 		testObject = testObject.resize(150, 42);
 		
 		System.out.println(testObject.serialize());
+		
+		UMLFileOp.save(testObject.serialize(), "./test.out");
 	}
 
 }
