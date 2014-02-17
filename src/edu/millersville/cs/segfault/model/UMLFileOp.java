@@ -19,9 +19,9 @@ public class UMLFileOp {
  * Takes a serialized string from Model.serialize()
  * Writes serialized string to a file at given location
  * 
- * Bool UMLFileOP.save( String serialized, String path );
+ * Bool saveObject( String serialized, String path );
  */
-	public static boolean save( String serialized, String path )
+	private static boolean saveObject( String serialized, String path )
 	{
 		try{
 			File file = new File(path);
@@ -52,9 +52,9 @@ public class UMLFileOp {
  * Takes a path location and returns a serialized string
  * from the contents of the file
  * 
- * String UMLFileOP.load( String path );
+ * String loadObject( String path );
  */
-	public String load( String path )
+	private static String loadObject( String path )
 	{
 		try{
 			File file = new File(path);
@@ -64,15 +64,61 @@ public class UMLFileOp {
 			FileReader fr = new FileReader(file);
 			BufferedReader br = new BufferedReader(fr);
 			
-			serialized = br.readLine();						// Store the data
-			br.close();										// Close the file
+			while( br.ready())
+			{
+				serialized = serialized + br.readLine() + "\n";
+			}
+			br.close();						// Close the file
 			
-			return(serialized);								// Return the serialized string
+			return(serialized);				// Return the serialized string
 			
 		} catch (IOException e) {
 			System.err.println("ERROR: Failed to open file!");
 			return(null);
 		}
 
+	}
+
+/******************************************************************************
+ * Save
+ * -------------------
+ * Prompt for save information
+ * 
+ * Presents a graphical interface to save and passes the resulting
+ * path to 'saveObject'
+ */
+	public static boolean save( String serialized )
+	{
+		String path = new String();
+		
+		// Create save menu and get string
+		path = ""; // Output of save menu
+		
+		// Save the file
+		return(saveObject(serialized, path));
+	}
+	
+/******************************************************************************
+ * Load
+ * --------------------
+ * Prompt for load information
+ * 
+ * Presents a graphical interface to load a file, passes the resulting
+ * path to 'loadObject' and gives back the resultant UMLObject
+ */
+	public static UMLObject load()
+	{
+		String path = new String();
+		
+		// Create load menu and get string
+		path = ""; // Output of load menu
+		
+		// Load the file
+		try{
+			return( new UMLObject( loadObject(path) ) );
+		} catch(Exception e) {
+			System.err.println("ERROR: Failed to create UML Object!");
+			return(null);
+		}
 	}
 }
