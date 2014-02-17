@@ -2,6 +2,7 @@ package edu.millersville.cs.segfault.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Event;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+
 
 import edu.millersville.cs.segfault.model.UMLModel;
 
@@ -97,30 +100,29 @@ public class WindowUI extends JPanel
 	}
 	
 	/**
-	 * Builds the File menu and sets the hotkeys.
+	 * Builds the File menu.
 	 * @return returns the file submenu
 	 */
 	private JMenu buildFileMenu() { 
-	   // Create the menu items.
+	   // Create the menu items, adding action listeners and accelerators.
 	   JMenu fileMenu = new JMenu(fileMenuText);
+	   
 	   JMenuItem newItem = new JMenuItem(newMenuText);
 	   newItem.addActionListener(this);
+	   newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK));
+	   
 	   JMenuItem openItem = new JMenuItem(openMenuText);
 	   openItem.addActionListener(this);
+	   openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK));
+
 	   JMenuItem saveItem = new JMenuItem(saveMenuText);
 	   saveItem.addActionListener(this);
+	   saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
+
 	   JMenuItem exitItem = new JMenuItem(exitMenuText);
-
-	   // Add an action listener for the exit option.
 	   exitItem.addActionListener(new ExitListener());
+	   exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK));
 
-	   // Set the hotkeys for the sub-menu options.
-	   fileMenu.setMnemonic(KeyEvent.VK_F);
-	   newItem.setMnemonic(KeyEvent.VK_N);
-	   openItem.setMnemonic(KeyEvent.VK_O);
-	   saveItem.setMnemonic(KeyEvent.VK_S);
-	   exitItem.setMnemonic(KeyEvent.VK_X);
-	      
 	   // Add the sub-menus to the File menu.
 	   fileMenu.add(newItem);
 	   fileMenu.add(openItem);
@@ -135,17 +137,16 @@ public class WindowUI extends JPanel
 	 * @return returns the edit submenu
 	 */
 	private JMenu buildEditMenu() {
-	   // Create the menu items.
+	   // Create the edit submenu items, and add accelerators.
 	   JMenu editMenu = new JMenu(editMenuText);
+	   
 	   JMenuItem undoItem = new JMenuItem(undoMenuText);
 	   undoItem.addActionListener(this);
+	   undoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, Event.CTRL_MASK));
+
 	   JMenuItem redoItem = new JMenuItem(redoMenuText);
 	   redoItem.addActionListener(this);
-	   
-	   // Set the hotkeys.
-	   editMenu.setMnemonic(KeyEvent.VK_E);
-	   undoItem.setMnemonic(KeyEvent.VK_Z);
-	   redoItem.setMnemonic(KeyEvent.VK_Y);
+	   redoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, Event.CTRL_MASK));
 
 	   // Add the sub-menus to the Edit menu.
 	   editMenu.add(undoItem);
@@ -170,7 +171,7 @@ public class WindowUI extends JPanel
 	 */
 	private void buildOptionsPanel(JFrame wFrame) {
 		
-		GridBagLayout gridBag = new GridBagLayout();
+	   GridBagLayout gridBag = new GridBagLayout();
 	   JPanel optionsPanel = new JPanel();
 	   optionsPanel.setLayout(gridBag);
 	   
