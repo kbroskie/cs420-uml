@@ -1,4 +1,5 @@
-package edu.millersville.cs.segfault.ui;
+import edu.millersville.cs.segfault.ui.WindowController;
+
 
 public class UMLeditor {
 
