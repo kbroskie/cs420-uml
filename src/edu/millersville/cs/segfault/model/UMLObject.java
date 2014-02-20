@@ -197,13 +197,15 @@ public class UMLObject implements DrawableUML {
 	
 	public int getType() { return DrawableUML.OBJECT; }
 
+	public boolean getSelected() { return this.selected; }
+	
 	@Override
-	public void select() {
-		this.selected = true;
+	public UMLObject select() {
+		return new UMLObject(this.label, this.x, this.y, this.z, this.width, this.height, true);
 	}
 
 	@Override
-	public void unselect() {
-		this.selected = false;
+	public UMLObject unselect() {
+		return new UMLObject(this.label, this.x, this.y, this.z, this.width, this.height, false);
 	}
 }

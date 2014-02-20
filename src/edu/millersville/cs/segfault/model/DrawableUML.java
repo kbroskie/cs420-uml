@@ -12,6 +12,6 @@ public interface DrawableUML {
 	Point getOrigin();
 	Point getBound();
 	int getType();
-	void select();
-	void unselect();
+	DrawableUML select();
+	DrawableUML unselect();
 }
