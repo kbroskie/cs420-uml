@@ -37,6 +37,9 @@ public class UMLRelation implements DrawableUML {
 	
 	//*************************************************************************
 	// Constructors
+	
+	public UMLRelation(){}  // Shouldn't ever be added to a model!!! 
+	
 	public UMLRelation(UMLObject source, UMLObject target)
 	{
 		this.source = source;

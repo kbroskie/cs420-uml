@@ -6,13 +6,6 @@ import java.awt.Point;
 
 public class UMLObject implements DrawableUML {
 	
-	//********************************************************************
-	// Object change types.
-	public static final int SET_LABEL = 0; // Change the object's label.
-	public static final int SET_COORDS = 1;
-	public static final int SET_DIMENSION = 2;
-	public static final int SET_ID = 3;
-	//********************************************************************
 	// De-Serialization helpers
 	public static int findIntAttr(String attr, String serialized)
 		throws Exception
@@ -39,7 +32,7 @@ public class UMLObject implements DrawableUML {
 	private int z;     // Coords of the object.
 	private int width; //
 	private int height; //
-	private boolean selected;
+	private boolean selected; 
 	
 	//********************************************************************
 	// Constructors
@@ -89,49 +82,17 @@ public class UMLObject implements DrawableUML {
 		this.height = source.getHeight();
 	}
 	
-	// Inject string constructor
-	public UMLObject(UMLObject source, int changeType, String newString)
-		throws Exception
+	// Member constructor
+	public UMLObject(String nLabel, int nX, int nY, int nZ, int nWidth, int nHeight, boolean nSelected) 
 	{
-		this(source);
-		
-		if (changeType == SET_LABEL) 
-		{
-			this.label = newString;
-		} else {
-			throw new Exception("Unrecognized string change type.");
-		}
+		this.label = nLabel;
+		this.x = nX;
+		this.y = nY;
+		this.z = nZ;
+		this.width = nWidth;
+		this.height = nHeight;
+		this.selected = nSelected;
 	}
-
-	// Inject position constructor
-	public UMLObject(UMLObject source, int changeType, int x, int y, int z)
-		throws Exception
-	{
-		this(source);
-		
-		if (changeType == SET_COORDS) {
-			this.x = x;
-			this.y = y;
-			this.z = z;
-		} else {
-			throw new Exception("Unrecognized coord change type.");
-		}
-	}
-	
-	// Inject dimension constructor
-	public UMLObject(UMLObject source, int changeType, int width, int height)
-		throws Exception
-	{
-		this(source);
-		
-		if (changeType == SET_DIMENSION) {
-			this.width = width;
-			this.height = height;
-		} else {
-			throw new Exception("Unrecognized dimension change type.");
-		}
-	}
-	
 	
 	//********************************************************************
 	// Observers
@@ -188,21 +149,19 @@ public class UMLObject implements DrawableUML {
 	public UMLObject changeLabel(String newLabel)
 		throws Exception
 	{
-		UMLObject newObject = new UMLObject(this, SET_LABEL, newLabel);
-		
-		return newObject;
+		return new UMLObject(newLabel, this.x, this.y, this.z, this.width, this.height, this.selected);
 	}
 	
 	public UMLObject move(int x, int y, int z) 
 		throws Exception
 	{
-		return new UMLObject(this, SET_COORDS, x, y, z);
+		return new UMLObject(this.label, x, y, z, this.width, this.height, this.selected);
 	}
 
 	public UMLObject resize(int width, int height)
 		throws Exception
 	{
-		return new UMLObject(this, SET_DIMENSION, width, height);
+		return new UMLObject(this.label, this.x, this.y, this.z, width, height, this.selected);
 	}
 
 	//********************************************************************
