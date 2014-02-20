@@ -1,7 +1,13 @@
 package edu.millersville.cs.segfault.model;
 
+// GENERAL FILE OP
 import java.io.File;
 import java.io.IOException;
+
+// JFILECHOOSER
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.*;
+
 
 // READ
 import java.io.FileReader;
@@ -21,11 +27,9 @@ public class UMLFileOp {
  * 
  * Bool saveObject( String serialized, String path );
  */
-	private static boolean saveObject( String serialized, String path )
+	private static boolean saveObject( String serialized, File file )
 	{
 		try{
-			File file = new File(path);
-		
 			/*** CHECK FOR FILE, IF NOT FOUND CREATE ONE ***/
 			if( !file.exists())
 			{
@@ -54,10 +58,9 @@ public class UMLFileOp {
  * 
  * String loadObject( String path );
  */
-	private static String loadObject( String path )
+	private static String loadObject( File file )
 	{
 		try{
-			File file = new File(path);
 			String serialized = new String();
 			
 			/*** READ THE FILE ***/
@@ -89,13 +92,19 @@ public class UMLFileOp {
  */
 	public static boolean save( String serialized )
 	{
-		String path = new String();
-		
-		// Create save menu and get string
-		path = ""; // Output of save menu
-		
-		// Save the file
-		return(saveObject(serialized, path));
+		// Create save menu through JFileChooser
+	    JFileChooser chooser = new JFileChooser();
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter( "UML Diagram (.uml)", "uml" );
+	    chooser.setFileFilter(filter);
+	    int returnVal = chooser.showSaveDialog(chooser);
+	    if(returnVal == JFileChooser.APPROVE_OPTION) {
+	    	// Save the file through function call to saveObject(serialized)
+	    	// and return 'True' if saveObject is successful
+			return(saveObject(serialized, chooser.getSelectedFile()));
+	    } else {
+	    	// Oh no! JFileChooser failed!!!
+	    	return(false);
+	    }
 	}
 	
 /******************************************************************************
@@ -108,17 +117,23 @@ public class UMLFileOp {
  */
 	public static UMLObject load()
 	{
-		String path = new String();
-		
-		// Create load menu and get string
-		path = ""; // Output of load menu
-		
-		// Load the file
-		try{
-			return( new UMLObject( loadObject(path) ) );
-		} catch(Exception e) {
-			System.err.println("ERROR: Failed to create UML Object!");
-			return(null);
-		}
+		// Create load menu through JFileChooser
+	    JFileChooser chooser = new JFileChooser();
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter( "UML Diagram (.uml)", "uml" );
+	    chooser.setFileFilter(filter);
+	    int returnVal = chooser.showOpenDialog(chooser);
+	    if(returnVal == JFileChooser.APPROVE_OPTION) {
+	    	// Load the file
+	    	try{
+	    		// Run the result of FileChooser through 'loadObject()'
+	    		return( new UMLObject( loadObject(chooser.getSelectedFile()) ) );
+	    	} catch(Exception e) {
+	    		System.err.println("ERROR: Failed to create UML Object!");
+	    		return(null);
+	    	}
+	    } else {
+	    	//Oh no! JFileChooser failed!!!
+	    	return(null);
+	    }
 	}
 }

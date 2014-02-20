@@ -16,7 +16,10 @@ public class ObjectTest {
 		
 		System.out.println(testObject.serialize());
 		
-		UMLFileOp.save(testObject.serialize(), "./test.out");
+		UMLFileOp.save(testObject.serialize());
+		testObject = UMLFileOp.load();
+		
+		System.out.println(testObject.serialize());
 	}
 
 }
