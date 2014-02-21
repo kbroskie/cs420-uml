@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Set;
 
 
@@ -15,6 +16,7 @@ public class UMLModel {
 	                               // of the model.
 	static final int ADD_OBJECT = 1; // Add an object to the diagram.
 	static final int ADD_RELATION = 2;
+	static final int REMOVE = 3;
 	//******************************************************************
 	
 	
@@ -78,6 +80,7 @@ public class UMLModel {
 		this();
 		this.modelName = source.getName();
 		this.objects = new ArrayList<UMLObject>(source.getObjects());
+		this.relations = new HashSet<UMLRelation>(source.getRelations());
 	}
 	
 	// Copy/change string constructor
@@ -101,6 +104,8 @@ public class UMLModel {
 		if (changeType == ADD_OBJECT) 
 		{
 			this.objects.add(newObject);
+		} else if(changeType == REMOVE) {
+			objects.remove(newObject);
 		} else {
 			throw new Exception("Unknown change type!");
 		}
@@ -113,10 +118,22 @@ public class UMLModel {
 		this(source);
 		if (changeType == ADD_RELATION) {
 			this.relations.add(newRelation);
+		} else if (changeType == REMOVE) {
+			relations.remove(newRelation);
 		} else {
 			throw new Exception("Unknown change type!");
 		}
 	}
+	
+	public UMLModel(UMLModel source, int changeType, DrawableUML newDrawable)
+	{
+		this(source);
+		if (changeType == REMOVE) {
+			objects.remove(newDrawable);
+			relations.remove(newDrawable);
+		}
+	}
+	
 	
 	//********************************************************************
 	// Observers
@@ -158,6 +175,11 @@ public class UMLModel {
 		return new ArrayList<UMLObject>(this.objects);
 	}
 
+	public Set<UMLRelation> getRelations() 
+	{ 
+		return this.relations; 
+	}
+	
 	// Gets the object with id n
 	public UMLObject getObject(int n) {
 		return objects.get(n);
@@ -198,5 +220,43 @@ public class UMLModel {
 		throws Exception
 	{
 		return new UMLModel(this, ADD_RELATION, relation);
+	}
+
+	public UMLModel remove(DrawableUML drawable) 
+	{
+		return new UMLModel(this, REMOVE, drawable);
+	}
+	
+	//********************************************************************
+	// Iterators
+	
+	public Iterator<DrawableUML> zIterator()
+	{
+		PriorityQueue<DrawableUML> zQueue = new PriorityQueue<DrawableUML>(1 + this.objects.size()+this.relations.size(),
+				new ZComparator());
+		
+		Iterator<UMLObject> oIter = objects.iterator();
+		while (oIter.hasNext())
+		{
+			zQueue.add(oIter.next());
+		}
+		
+		Iterator<UMLRelation> rIter = relations.iterator();
+		while (rIter.hasNext())
+		{
+			zQueue.add(rIter.next());
+		}
+		
+		return zQueue.iterator();
+	}
+
+	public Iterator<UMLObject> objectIterator()
+	{
+		return objects.iterator();
+	}
+	
+	public Iterator<UMLRelation> relationIterator()
+	{
+		return relations.iterator();
 	}
 }
