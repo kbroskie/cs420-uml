@@ -1,3 +1,8 @@
+/**
+ * @author Team Segfault
+ * @version 1.0
+ * @since 2014-02-20
+ */
 package edu.millersville.cs.segfault.model;
 
 import java.util.ArrayList;
@@ -29,7 +34,9 @@ public class UMLModel {
 	// Constructors	
 	//******************************************************************
 	
-	// Empty constructor
+	/**
+	 * Empty constructor
+	 */
 	public UMLModel() 
 	{ 
 		modelName = "New UML Model";
@@ -37,7 +44,11 @@ public class UMLModel {
 		this.relations = new HashSet<UMLRelation>();
 	}
 
-	// De-serialization constructor
+	/**
+	 * De-serialization constructor
+	 * @param serialized The string to be de-serialized.
+	 * @throws Exception
+	 */
 	public UMLModel(String serialized) throws Exception 
 	{
 		this();
@@ -74,7 +85,10 @@ public class UMLModel {
 		}
 	}
 	
-	// Copy constructor
+	/**
+	 * Copy constructor
+	 * @param source The UMLModel to be copied.
+	 */
 	public UMLModel(UMLModel source) 
 	{
 		this();
@@ -83,7 +97,13 @@ public class UMLModel {
 		this.relations = new HashSet<UMLRelation>(source.getRelations());
 	}
 	
-	// Copy/change string constructor
+	/**
+	 * Copy/change string constructor
+	 * @param source The UMLModel to be renamed.
+	 * @param changeType The action to be done.
+	 * @param newString  The string the action will be done to.
+	 * @throws Exception
+	 */
 	public UMLModel(UMLModel source, int changeType, String newString) 
 			throws Exception 
 	{
@@ -95,7 +115,13 @@ public class UMLModel {
 		}
 	}
 	
-	// Copy + Object reference constructor
+	/**
+	 * Copy + Object reference constructor.
+	 * @param source The UMLModel to be copied/changed.
+	 * @param changeType The action to be done.
+	 * @param newObject  The object the action will be done to.
+	 * @throws Exception
+	 */
 	public UMLModel(UMLModel source, int changeType, UMLObject newObject)
 		throws Exception
 	{
@@ -111,7 +137,13 @@ public class UMLModel {
 		}
 	}
 	
-	// Copy + Relation reference constructor
+	/**
+	 *  Copy + Relation reference constructor.
+	 * @param source The UMLModel with the relation to be copied/changed.
+	 * @param changeType The action to be done.
+	 * @param newRelation The relation the action will be done to.
+	 * @throws Exception
+	 */
 	public UMLModel(UMLModel source, int changeType, UMLRelation newRelation)
 		throws Exception
 	{
@@ -125,6 +157,12 @@ public class UMLModel {
 		}
 	}
 	
+	/**
+	 * Removes a drawable object.
+	 * @param source The UMLModel where the object is.
+	 * @param changeType The action to be done.
+	 * @param newDrawable The drawable object the action will be done to.
+	 */
 	public UMLModel(UMLModel source, int changeType, DrawableUML newDrawable)
 	{
 		this(source);
@@ -139,7 +177,10 @@ public class UMLModel {
 	// Observers
 	//********************************************************************
 	
-	// Turns all data in the model into a string.
+	/**
+	 *  Turns all data in the model into a string.
+	 * @return modelString The serialized string.
+	 */
 	public String serialize() 
 	{
 		String modelString = "";
@@ -164,28 +205,43 @@ public class UMLModel {
 		return modelString;
 	}
 
-	// Return the given name of the model.
+	/**
+	 *  Return the given name of the model.
+	 */
 	public String getName() 
 	{
 		return this.modelName;
 	}
 
-	// Returns a copy of the set of objects
+	/**
+	 * Returns a copy of the set of objects.
+	 */
 	public List<UMLObject> getObjects() {
 		return new ArrayList<UMLObject>(this.objects);
 	}
 
+	/**
+	 * Gets relations.
+	 */
 	public Set<UMLRelation> getRelations() 
 	{ 
 		return this.relations; 
 	}
 	
-	// Gets the object with id n
+	/**
+	 *  Gets the object with id n.
+	 * @param n Object ID
+	 * @return
+	 */
 	public UMLObject getObject(int n) {
 		return objects.get(n);
 	}
 	
-	// Gets the id of a given object
+	/**
+	 * Gets the id of a given object
+	 * @param target The desired UMLObject.
+	 * @return
+	 */
 	public int getId(UMLObject target)
 	{
 		for (int i=0; i<objects.size(); ++i)
@@ -202,26 +258,45 @@ public class UMLModel {
 	// Mutators
 	//********************************************************************
 	
-	// Returns a copy of the model with a different name.
+	/**
+	 *  Returns a copy of the model with a different name.
+	 * @param newName The new name of the model.
+	 * @return
+	 * @throws Exception
+	 */
 	public UMLModel changeName(String newName) throws Exception 
 	{
 		return new UMLModel(this, SET_NAME, newName);
 	}
 
-	// Adds an object to the model.
+	/**
+	 * Adds an object to the model.
+	 * @param newObject The new object.
+	 * @return
+	 * @throws Exception
+	 */
 	public UMLModel add(UMLObject newObject)
 		throws Exception
 	{
 		return new UMLModel(this, ADD_OBJECT, newObject);
 	}
 	
-	// Adds a relation between two objects
+	/**
+	 * Adds a relation between two objects.
+	 * @param relation The relation to be added.
+	 * @return
+	 * @throws Exception
+	 */
 	public UMLModel link(UMLRelation relation)
 		throws Exception
 	{
 		return new UMLModel(this, ADD_RELATION, relation);
 	}
-
+	/**
+	 * Removes a drawable object.
+	 * @param drawable The drawable object to be removed.
+	 * @return
+	 */
 	public UMLModel remove(DrawableUML drawable) 
 	{
 		return new UMLModel(this, REMOVE, drawable);
