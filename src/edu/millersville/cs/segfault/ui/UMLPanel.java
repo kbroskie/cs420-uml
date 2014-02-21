@@ -163,7 +163,7 @@ public class UMLPanel extends JPanel {
 						/*** IF ONE DOES NOT EXIST, APPEND ".uml"***/
 						if( !file.getName().contains(".") )
 						{
-							file.renameTo(new File(file.getName() + ".uml"));
+							file = new File(file.getAbsolutePath() + ".uml");
 						}
 						file.createNewFile();
 					}
@@ -177,6 +177,7 @@ public class UMLPanel extends JPanel {
 				
 					hasFile = true;
 					srcFile = file;
+
 					return( true );
 				} catch (IOException e) {
 					System.err.println("ERROR: Failed to write file!");
@@ -237,7 +238,7 @@ public class UMLPanel extends JPanel {
  * Presents a graphical interface to save and passes the resulting
  * path to 'saveObject'
  */
-	public static boolean saveAs( String serialized )
+	public boolean saveAs( String serialized )
 	{
 		// Create save menu through JFileChooser
 	    JFileChooser chooser = new JFileChooser();
@@ -261,7 +262,7 @@ public class UMLPanel extends JPanel {
  * 
  * If file does not exist, open the saveAs interface
  */
-	public static boolean save( String serialized )
+	public boolean save( String serialized )
 	{
 		if(hasFile)
 		{
@@ -279,7 +280,7 @@ public class UMLPanel extends JPanel {
  * Presents a graphical interface to load a file, passes the resulting
  * path to 'loadObject' and gives back the resultant UMLObject
  */
-	public static UMLObject load()
+	public boolean load()
 	{
 		// Create load menu through JFileChooser
 	    JFileChooser chooser = new JFileChooser();
@@ -290,14 +291,17 @@ public class UMLPanel extends JPanel {
 	    	// Load the file
 	    	try{
 	    		// Run the result of FileChooser through 'loadObject()'
-	    		return( new UMLObject( loadObject(chooser.getSelectedFile()) ) );
+				undoStack.push(currentModel);
+				currentModel = new UMLModel( loadObject(chooser.getSelectedFile()) );;
+				repaint();
+				return(true);
 	    	} catch(Exception e) {
 	    		System.err.println("ERROR: Failed to create UML Object!");
-	    		return(null);
+	    		return(false);
 	    	}
 	    } else {
 		  	//Oh no! JFileChooser failed!!!
-		   	return(null);
+		   	return(false);
 	    }
 	}
 }
