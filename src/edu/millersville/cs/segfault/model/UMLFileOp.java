@@ -25,27 +25,40 @@ public class UMLFileOp {
  * Takes a serialized string from Model.serialize()
  * Writes serialized string to a file at given location
  * 
- * Bool saveObject( String serialized, String path );
+ * Boolean saveObject( String serialized, String path );
  */
 	private static boolean saveObject( String serialized, File file )
-	{
-		try{
-			/*** CHECK FOR FILE, IF NOT FOUND CREATE ONE ***/
-			if( !file.exists())
-			{
+	{	
+		if( file != null)
+		{
+			try{
+				/*** CHECK FOR FILE, IF NOT FOUND CREATE ONE ***/
+				if( !file.exists())
+				{
+					/***      CHECK FOR FILE EXTENSION       ***/
+					/*** IF ONE DOES NOT EXIST, APPEND ".uml"***/
+					if( !file.getName().contains(".") )
+					{
+						file.renameTo(new File(file.getName() + ".uml"));
+					}
 					file.createNewFile();
+				}
+			
+				/*** SET UP FILE TO WRITE ***/
+				FileWriter fw = new FileWriter(file);
+				BufferedWriter bw = new BufferedWriter(fw);
+			
+				bw.write( serialized );		// Write the serialized string
+				bw.close();					// Close the file
+			
+				return( true );
+			} catch (IOException e) {
+				System.err.println("ERROR: Failed to write file!");
+				return( false );
 			}
-			
-			/*** SET UP FILE TO WRITE ***/
-			FileWriter fw = new FileWriter(file);
-			BufferedWriter bw = new BufferedWriter(fw);
-			
-			bw.write( serialized );						// Write the serialized string
-			bw.close();									// Close the file
-			
-			return( true );
-		} catch (IOException e) {
-			System.err.println("ERROR: Failed to write file!");
+		} else {
+			System.err.println("WARNING: JFileChooser closed unexpectedly.");
+			System.err.println("Nothing saved.");
 			return( false );
 		}
 	}
@@ -60,23 +73,30 @@ public class UMLFileOp {
  */
 	private static String loadObject( File file )
 	{
-		try{
-			String serialized = new String();
+		if( file != null )
+		{
+			try{
+				String serialized = new String();
 			
-			/*** READ THE FILE ***/
-			FileReader fr = new FileReader(file);
-			BufferedReader br = new BufferedReader(fr);
+				/*** READ THE FILE ***/
+				FileReader fr = new FileReader(file);
+				BufferedReader br = new BufferedReader(fr);
 			
-			while( br.ready())
-			{
-				serialized = serialized + br.readLine() + "\n";
+				while( br.ready())
+				{
+					serialized = serialized + br.readLine() + "\n";
+				}
+				br.close();						// Close the file
+			
+				return(serialized);				// Return the serialized string
+			
+			} catch (IOException e) {
+				System.err.println("ERROR: Failed to open file!");
+				return(null);
 			}
-			br.close();						// Close the file
-			
-			return(serialized);				// Return the serialized string
-			
-		} catch (IOException e) {
-			System.err.println("ERROR: Failed to open file!");
+		} else {
+			System.err.println("ERROR: JFileChooser closed unexpectedly.");
+			System.err.println("Aborting.");
 			return(null);
 		}
 

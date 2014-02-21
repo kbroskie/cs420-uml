@@ -19,6 +19,7 @@ public class ObjectTest {
 		UMLFileOp.save(testObject.serialize());
 		testObject = UMLFileOp.load();
 		
+		testObject = (testObject == null) ? new UMLObject() : testObject;
 		System.out.println(testObject.serialize());
 	}
 
