@@ -34,6 +34,7 @@ public class WindowUI extends JPanel
 	private static final String newMenuText = "New";
 	private static final String openMenuText = "Open";
 	private static final String saveMenuText = "Save";
+	private static final String saveAsMenuText = "Save as...";
 	private static final String exitMenuText = "Exit";	
 	private static final String editMenuText = "Edit";
 	private static final String undoMenuText = "Undo";
@@ -118,6 +119,9 @@ public class WindowUI extends JPanel
 	   JMenuItem saveItem = new JMenuItem(saveMenuText);
 	   saveItem.addActionListener(this);
 	   saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
+	   
+	   JMenuItem saveAsItem = new JMenuItem(saveAsMenuText);
+	   saveAsItem.addActionListener(this);
 
 	   JMenuItem exitItem = new JMenuItem(exitMenuText);
 	   exitItem.addActionListener(new ExitListener());
@@ -127,6 +131,7 @@ public class WindowUI extends JPanel
 	   fileMenu.add(newItem);
 	   fileMenu.add(openItem);
 	   fileMenu.add(saveItem);
+	   fileMenu.add(saveAsItem);
 	   fileMenu.add(exitItem);
 	   
 	   return fileMenu;
@@ -233,13 +238,16 @@ public class WindowUI extends JPanel
 			 umlPanel.changeModel(new UMLModel());
 		 }
 		 else if (selectedCommand == openMenuText) {
-			 // Call to puzzles open method.
+			 umlPanel.load();
 		 }
 		 else if (selectedCommand == saveMenuText) {
-			 // Call to puzzles save method.
+			 umlPanel.save(umlPanel.model().serialize());
+		 }
+		 else if (selectedCommand == saveAsMenuText) {
+			 umlPanel.saveAs(umlPanel.model().serialize());
 		 }
 		 else if (selectedCommand == undoMenuText) {
-			 umlPanel.undo();
+			 umlPanel.undo();	
 		 }
 		 else if (selectedCommand == redoMenuText) {
 			 umlPanel.redo();

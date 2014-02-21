@@ -1,0 +1,22 @@
+<title>New UML Model</title>
+<object>
+  <label></label>
+  <x>154</x>
+  <y>81</y>
+  <z>1</z>
+  <width>197</width>
+  <height>171</height>
+</object>
+<object>
+  <label></label>
+  <x>51</x>
+  <y>316</y>
+  <z>1</z>
+  <width>172</width>
+  <height>119</height>
+</object>
+<relation>
+  <source>0</source>
+  <target>1</target>
+  <z>-1</z>
+</relation>
