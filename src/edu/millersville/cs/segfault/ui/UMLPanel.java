@@ -41,7 +41,7 @@ public class UMLPanel extends JPanel {
 		currentModel = new UMLModel();
 		undoStack = new LinkedList<UMLModel>();
 		redoStack = new LinkedList<UMLModel>();
-		currentInteractionMode = new SelectionMode(this);
+		currentInteractionMode = new DrawObjectMode(this);
 		this.addMouseListener(currentInteractionMode);
 		this.addMouseMotionListener(currentInteractionMode);
 		this.addKeyListener(currentInteractionMode);
@@ -68,7 +68,15 @@ public class UMLPanel extends JPanel {
 
 	public void changeInteractionMode(PanelInteractionMode newMode)
 	{
+		this.removeMouseListener(currentInteractionMode);
+		this.removeMouseMotionListener(currentInteractionMode);
+		this.removeKeyListener(currentInteractionMode);
 		currentInteractionMode = newMode;
+		this.addMouseListener(currentInteractionMode);
+		this.addMouseMotionListener(currentInteractionMode);
+		this.addKeyListener(currentInteractionMode);
+		repaint();
+		
 	}
 	
 	public Dimension getPreferredSize() {
@@ -116,6 +124,7 @@ public class UMLPanel extends JPanel {
 		{
 			redoStack.push(currentModel);
 			currentModel = undoStack.pop();
+			repaint();
 		}
 	}
 	
@@ -125,6 +134,7 @@ public class UMLPanel extends JPanel {
 		{
 			undoStack.push(currentModel);
 			currentModel = redoStack.pop();
+			repaint();
 		}
 	}
 	
