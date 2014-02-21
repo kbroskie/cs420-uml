@@ -7,6 +7,7 @@ public class ExampleSubclass extends UMLObject {
 
 	private int anAttribute;
 	
+	//*******************************************************************
 	//
 	// Constructors
 	//
@@ -32,6 +33,9 @@ public class ExampleSubclass extends UMLObject {
 		this.anAttribute = anAttr;
 	}
 	
+	
+	
+	//**********************************************************************
 	//Observers
 	
 	//Serialize
@@ -49,6 +53,8 @@ public class ExampleSubclass extends UMLObject {
 		return this.anAttribute;
 	}
 	
+	
+	//**********************************************************************
 	// Mutators
 	// !!!You must override all mutators!!!
 	public ExampleSubclass changeLabel(String newLabel)
@@ -81,6 +87,8 @@ public class ExampleSubclass extends UMLObject {
 				this.getHeight(), false, this.anAttribute);
 	}
 	
+	
+	//************************************************************************
 	// Drawing code.
 	public void draw(Graphics g)
 	{
