@@ -110,7 +110,7 @@ public class UMLFileOp {
  * Presents a graphical interface to save and passes the resulting
  * path to 'saveObject'
  */
-	public static boolean save( String serialized )
+	public static boolean saveAs( String serialized )
 	{
 		// Create save menu through JFileChooser
 	    JFileChooser chooser = new JFileChooser();
