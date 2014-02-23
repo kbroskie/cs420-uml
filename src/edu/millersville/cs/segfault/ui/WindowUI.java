@@ -3,8 +3,11 @@ package edu.millersville.cs.segfault.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Event;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -18,6 +21,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import javax.swing.border.TitledBorder;
 
 import edu.millersville.cs.segfault.model.UMLModel;
 
@@ -171,44 +175,85 @@ public class WindowUI extends JPanel
 	 */
 	private void buildOptionsPanel(JFrame wFrame) {
 		
+	   // Create the main panel and set the layout.
 	   GridBagLayout gridBag = new GridBagLayout();
 	   JPanel optionsPanel = new JPanel();
 	   optionsPanel.setLayout(gridBag);
-	   
-	   GridBagConstraints optionsConstraints = new GridBagConstraints();
-	   optionsConstraints.fill = GridBagConstraints.HORIZONTAL;
-	   //optionsConstraints.anchor = GridBagConstraints.PAGE_START;
-	   optionsConstraints.gridx = 0;
-	   optionsConstraints.gridy = 0;
-	   
 	   optionsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); 
 	   
-	   JButton objectButton = new JButton(optionsPaneObjectDraw);
-	   objectButton.addActionListener(this);
-	   gridBag.setConstraints(objectButton, optionsConstraints);
-	   optionsPanel.add(objectButton);
-	   
-	   
+	   // Set the gridbag options for the options panel.
+	   GridBagConstraints optionsConstraints = new GridBagConstraints();
+	   optionsConstraints.fill = GridBagConstraints.HORIZONTAL;
+	   optionsConstraints.anchor = GridBagConstraints.PAGE_START;
+	   optionsConstraints.gridx = 0;
+	   optionsConstraints.gridy = 0;
+	   optionsConstraints.weighty = 0.5;
+	   optionsConstraints.insets = new Insets(2,0,0,0);
+	   	   
+	   // Build and add the objects panel
+	   JPanel objectsPanel = new JPanel();
+	   buildObjectsPanel(objectsPanel);
+	   gridBag.setConstraints(objectsPanel, optionsConstraints);
+	   optionsPanel.add(objectsPanel);   
+
+	   // Build and add the relations panel.
 	   ++optionsConstraints.gridy;
-	   JButton relationButton = new JButton(optionsPaneRelationDraw);
-	   relationButton.addActionListener(this);
-	   gridBag.setConstraints(relationButton, optionsConstraints);
-	   optionsPanel.add(relationButton);
+	   JPanel relationsPanel = new JPanel();
+	   buildRelationsPanel(relationsPanel);  
+	   gridBag.setConstraints(relationsPanel, optionsConstraints);	  
+	   optionsPanel.add(relationsPanel);
 	   
+	   // Set the options so the last item appears on the bottom of the panel.
 	   ++optionsConstraints.gridy;
+	   optionsConstraints.weighty = 1.0;
+	   optionsConstraints.anchor = GridBagConstraints.PAGE_END;
+	   optionsConstraints.insets = new Insets(2,5,3,5);
+
+	   // Build and add the select button.
 	   JButton selectionButton = new JButton(optionsPaneSelect);
 	   selectionButton.addActionListener(this);
 	   gridBag.setConstraints(selectionButton, optionsConstraints);
 	   optionsPanel.add(selectionButton);
 	   
-	   ++optionsConstraints.gridy;
-	   optionsConstraints.weighty = 1.0;
-	   JPanel emptySpace = new JPanel();
-	   gridBag.setConstraints(emptySpace, optionsConstraints);
-	   optionsPanel.add(emptySpace);
-	   
+	   // Add the optionsPanel to the main frame.
 	   wFrame.add(optionsPanel, BorderLayout.WEST);
 	} 
+	
+	/**
+	 * Builds a panel to hold all the object options for the main options panel.
+	 * @param objectsPanel Holds all the object options a user can select.
+	 */
+	private void buildObjectsPanel(JPanel objectsPanel) {
+		// Set the panel layout and title.
+		objectsPanel.setLayout(new GridLayout(7,1));
+		objectsPanel.setBorder(BorderFactory.createTitledBorder(
+				BorderFactory.createEmptyBorder(), "Objects", 
+				TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, 
+				new Font("SansSerif", Font.PLAIN, 15), Color.BLACK));
+		
+		// Create the object buttons and action listeners.
+		JButton objectButton = new JButton(optionsPaneObjectDraw);
+		objectButton.addActionListener(this);
+		objectsPanel.add(objectButton, BorderLayout.CENTER);		
+	}
+	
+	/**
+	 * Builds a panel to hold all the relations options for the main options panel.
+	 * @param relationsPanel Holds all the relation options a user can select.
+	 */
+	private void buildRelationsPanel(JPanel relationsPanel) {
+		// Set the panel layout and title.
+		relationsPanel.setLayout(new GridLayout(7,1));
+		relationsPanel.setBorder(BorderFactory.createTitledBorder(
+				BorderFactory.createEmptyBorder(), "Relations", 
+				TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, 
+				new Font("SansSerif", Font.PLAIN, 15), Color.BLACK));
+		
+		// Create the object buttons and action listeners.
+		JButton relationButton = new JButton(optionsPaneRelationDraw);
+		relationButton.addActionListener(this);
+		relationsPanel.add(relationButton);
+	}	
 	
 	/**
 	 * Handles the event generated when the user selects 
