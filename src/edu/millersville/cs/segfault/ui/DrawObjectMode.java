@@ -44,9 +44,33 @@ public class DrawObjectMode implements PanelInteractionMode
 		} else {
 			engaged = false;
 			try {
-				UMLObject newObject = new UMLObject().move(start_x, start_y, 1);
-				int width = e.getX() - start_x;
-				int height = e.getY() - start_y;
+				UMLObject newObject;
+				last_x = e.getX();
+				last_y = e.getY();
+				
+				/*** Is the second x to the left of the first? ***/
+				if( last_x < start_x )
+				{
+					/*** swap values ***/
+					int tmp = last_x;
+					last_x = start_x;
+					start_x = tmp;
+				}
+				
+				/*** Is the second y above of the first? ***/
+				if( last_y < start_y )
+				{
+					/*** swap values ***/
+					int tmp = last_y;
+					last_y = start_y;
+					start_y = tmp;
+				}
+				
+				int width = last_x - start_x;
+				int height = last_y - start_y;
+				
+				newObject = new UMLObject().move(start_x, start_y, 1);
+				
 				newObject = newObject.resize(width, height);
 				caller.changeModel(caller.model().add(newObject));
 			} catch (Exception ex) {
@@ -89,6 +113,8 @@ public class DrawObjectMode implements PanelInteractionMode
 	public void mouseMoved(MouseEvent e) {
 		this.last_x = e.getX();
 		this.last_y = e.getY();
+		
+		
 		caller.repaint();
 		
 	}
