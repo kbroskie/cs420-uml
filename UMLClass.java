@@ -26,3 +26,4 @@ public class UMLClass extends UMLObject {
 	//**********************************************************************
 
 	//Mutators
+}
