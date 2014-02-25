@@ -7,18 +7,12 @@ public class UMLClass extends UMLObject {
 	public UMLClass () 
 	{
 		super();
-		this.x1 = 0;
-		this.y1 = 0;
-		this.z1	= 0;
 	}
 
 	//Copy constructor
 	public UMLClass (UMLClass source)
 	{
 		super(UMLObject source);
-		this.x1 = source.getX();
-		this.y1 = source.getY();
-		this.z1 = source.getZ();
 	}
 
 	//Modification constructor
