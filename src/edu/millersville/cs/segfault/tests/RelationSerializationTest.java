@@ -1,23 +1,20 @@
 package edu.millersville.cs.segfault.tests;
 
-import edu.millersville.cs.segfault.model.*;
+import java.awt.Point;
+
+import edu.millersville.cs.segfault.model.Path;
+import edu.millersville.cs.segfault.model.UMLRelation;
 
 public class RelationSerializationTest {
 	public static void main(String[] args)
 		throws Exception
 	{
 		
-		UMLModel testModel = new UMLModel();
-		testModel = testModel.changeName("A test model.");
-		testModel = testModel.add(new UMLObject().changeLabel("First test object"));
-		testModel = testModel.add(new UMLObject().changeLabel("Second test object"));
+		Path testPath = new Path(new Point(0,0)).addPoint(new Point(1,1));
+		UMLRelation testRelation = new UMLRelation(testPath);
+		UMLRelation testTwo = new UMLRelation(testRelation.serialize());
 		
-		testModel = testModel.link(new UMLRelation(testModel.getObject(0), testModel.getObject(1)));
-		
-		System.out.println(testModel.serialize());
-		
-		testModel = new UMLModel(testModel.serialize());
-		
-		System.out.println(testModel.serialize());
+		System.out.println(testRelation);
+		System.out.println(testTwo);
 	}
 }

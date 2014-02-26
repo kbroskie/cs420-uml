@@ -68,7 +68,7 @@ public class UMLModel {
 		{
 			int startRelation = serialized.indexOf("<relation>", relationSearch);
 			int endRelation = serialized.indexOf("</relation>", relationSearch);
-			UMLRelation newRelation = new UMLRelation(this, serialized.substring(startRelation, endRelation));
+			UMLRelation newRelation = new UMLRelation(serialized.substring(startRelation, endRelation));
 			relations.add(newRelation);
 			relationSearch = endRelation + 1;
 		}
@@ -158,7 +158,7 @@ public class UMLModel {
 		Iterator<UMLRelation> relationIterator = relations.iterator();
 		while (relationIterator.hasNext())
 		{
-			modelString += "<relation>\n" + relationIterator.next().serialize(this) + "</relation>\n"; 
+			modelString += "<relation>\n" + relationIterator.next().serialize() + "</relation>\n"; 
 		}
 		
 		return modelString;

@@ -18,7 +18,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-
+import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.UMLModel;
 
 public class WindowUI extends JPanel 
@@ -254,7 +254,7 @@ public class WindowUI extends JPanel
 		 } else if (selectedCommand == optionsPaneObjectDraw ) {
 			 umlPanel.changeInteractionMode(new DrawObjectMode(umlPanel));
 		 } else if (selectedCommand == optionsPaneRelationDraw ) {
-			 umlPanel.changeInteractionMode(new DrawRelationMode(umlPanel));
+			 umlPanel.changeInteractionMode(new DrawMode(DrawableType.RELATION, umlPanel));
 		 } else if (selectedCommand == optionsPaneSelect ) {
 			 umlPanel.changeInteractionMode(new SelectionMode(umlPanel));
 		 }

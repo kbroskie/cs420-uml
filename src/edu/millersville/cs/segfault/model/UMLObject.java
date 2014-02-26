@@ -3,6 +3,10 @@ package edu.millersville.cs.segfault.model;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.geom.Line2D;
+import java.awt.geom.Line2D.Double;
+
+import edu.millersville.cs.segfault.ui.DrawMode;
 
 public class UMLObject implements DrawableUML {
 	
@@ -225,18 +229,8 @@ public class UMLObject implements DrawableUML {
 		g.drawString(this.label, this.x+15, this.y+15);
 	}
 
-	@Override
-	public Point getOrigin() 
-	{
-		return new Point(this.x, this.y);
-	}
-
-	@Override
-	public Point getBound() {
-		return new Point(this.x + this.width, this.y + this.height);
-	}
 	
-	public int getType() { return DrawableUML.OBJECT; }
+	public DrawableType getType() { return DrawableType.OBJECT; }
 
 	@Override
 	public void select() {
@@ -246,5 +240,36 @@ public class UMLObject implements DrawableUML {
 	@Override
 	public void unselect() {
 		this.selected = false;
+	}
+
+	@Override
+	public Point snapPoint(int x, int y) {
+		Line2D[] lines = new Line2D[4];
+		lines[0] = new Line2D.Double(this.x, this.y, this.x+this.width, this.y); // Top
+		lines[1] = new Line2D.Double(this.x + this.width, this.y,				 // Right 
+				this.x + this.width, this.y + this.height);
+		lines[2] = new Line2D.Double(this.x, this.y + height, this.x + 			 // Bottom
+				width, this.x + height);
+		lines[3] = new Line2D.Double(this.x, this.y, this.x, this.y + height);   // Left
+		
+		int min = 0;
+		for (int line = 1; line < 4; ++line) {
+			if (lines[0].ptLineDist(x,  y) > lines[line].ptLineDist(x,  y)) {
+				min = line;
+			}
+		}
+		
+		if (lines[min].ptLineDist(x, y) <= DrawMode.snapDistance) {
+			if (min == 0) {
+				return new Point(x, this.y);
+			} else if (min == 1) {
+				return new Point(this.x + this.width, y);
+			} else if (min == 2) {
+				return new Point(x, this.y + this.height);
+			} else {
+				return new Point(this.x, y);
+			}
+		}
+		return null;
 	}
 }
