@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Line2D;
-import java.awt.geom.Line2D.Double;
 
 import edu.millersville.cs.segfault.ui.DrawMode;
 

@@ -1,16 +1,23 @@
 package edu.millersville.cs.segfault.model;
 
+//****************************************************************************
+// Import Statement
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.util.Iterator;
 
+/*****************************************************************************
+ * Root of the class heirarchy for various types of Relations and arrows.    
+ * @author Daniel Rabiega                                                    
+ *****************************************************************************/
 public class UMLRelation implements DrawableUML {
 	
 	//*************************************************************************
-	// Serialization helpers
-	public static int findIntAttr(String attr, String serialized)
+	// Static Functions
+	private static int findIntAttr(String attr, String serialized)
 			throws Exception
 		{
 			int value;
@@ -26,24 +33,40 @@ public class UMLRelation implements DrawableUML {
 			
 			return value;
 		}
-	//*************************************************************************
+
 	
 	//*************************************************************************
 	// Member variables
 	//*************************************************************************
-	Path path;
-	int z;
-	boolean selected;
+	private Path path;
+	private int z;
+	private boolean selected;
+	
+	
+	//*************************************************************************
+	
+	
 	
 	//*************************************************************************
 	// Constructors
-	public UMLRelation(Path path)
+	
+	/**************************************************************************
+	 * Creates a new UMLRelation with a given path                            
+	 * @param path The path of the new UMLRelation                            
+	 **************************************************************************/
+	public UMLRelation(Path path, int z, boolean selected)
 	{
-		this.z = -1;
-		this.selected = false;
+		this.z = z;
+		this.selected = selected;
 		this.path = path;
 	}
 	
+	/*************************************************************************
+	 * Creates a new UMLRelation from a string representing a serialized     
+	 * UMLRelation                                                           
+	 * @param serialized The string representing a serialized UMLRelation
+	 * @throws Exception Thrown when it fails to find a mandatory attribute
+	 *************************************************************************/
 	public UMLRelation(String serialized)
 		throws Exception
 	{
@@ -56,19 +79,30 @@ public class UMLRelation implements DrawableUML {
 	
 	//*************************************************************************
 	// Observers
-	public String serialize() 
+	private String serialize() 
 	{
 		String relationString = "";
 
 		relationString += "  <z>" + this.z + "</z>\n";
-		relationString += path.serialize();
+		relationString += path.toString();
 		
 		return relationString;
 	}
 	
+	/*************************************************************************
+	 * Returns the Z attribute of this Relation
+	 * Drawing and Click calculation uses this attribute for ordering.
+	 *************************************************************************/
 	public int getZ() { return this.z; }
 
-	public boolean near(int x, int y, int maxdist)
+	/*************************************************************************
+	 * Returns true if point is within maxdist for any segment of the Relation
+	 * @param point   The point to test for distance.
+	 * @param maxdist Cutoff distance for the test.
+	 * @return True when the shortest distance between point and any segment  
+	 *         of the relation is less than maxdist. False otherwise.
+	 *************************************************************************/
+	public boolean near(Point point, int maxdist)
 	{
 		if (this.path.getSize() < 2) {
 			return false;
@@ -83,13 +117,17 @@ public class UMLRelation implements DrawableUML {
 			second = pIter.next();
 			
 			Line2D line = new Line2D.Double(first, second);
-			if (line.ptLineDist(x, y) < maxdist) {
+			if (line.ptLineDist(point) < maxdist) {
 				return true;
 			}
 		}
 		
 		return false;
 	}
+	
+	
+	//*************************************************************************
+	// Drawing Methods
 	
 	public void draw(Graphics g) 
 	{
@@ -121,13 +159,17 @@ public class UMLRelation implements DrawableUML {
 	public DrawableType getType() { return DrawableType.RELATION; }
 
 	@Override
-	public void select() {
-		this.selected = true;
+	public UMLRelation select() {
+		return new UMLRelation(this.getPath(), this.getZ(), true);
+	}
+
+	private Path getPath() {
+		return this.path;
 	}
 
 	@Override
-	public void unselect() {
-		this.selected = false;
+	public UMLRelation unselect() {
+		return new UMLRelation(this.getPath(), this.getZ(), false);
 	}
 
 	public String toString() {
@@ -137,6 +179,6 @@ public class UMLRelation implements DrawableUML {
 	@Override
 	public Point snapPoint(int x, int y) {
 		
-		return this.path.snapPoint(new Point(x, y));
+		return this.path.closestPointTo(new Point(x, y));
 	}
 }

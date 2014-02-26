@@ -158,7 +158,7 @@ public class UMLModel {
 		Iterator<UMLRelation> relationIterator = relations.iterator();
 		while (relationIterator.hasNext())
 		{
-			modelString += "<relation>\n" + relationIterator.next().serialize() + "</relation>\n"; 
+			modelString += "<relation>\n" + relationIterator.next().toString() + "</relation>\n"; 
 		}
 		
 		return modelString;

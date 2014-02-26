@@ -1,13 +1,15 @@
 package edu.millersville.cs.segfault.ui;
+/***
+ * Implements the PanelInteractionMode to accept user input events and add {@link DrawableUML}
+ * objects to the model of the given panel.
+ */
+
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.Iterator;
 
 import edu.millersville.cs.segfault.model.DrawableType;
@@ -18,34 +20,58 @@ import edu.millersville.cs.segfault.model.RelationType;
 import edu.millersville.cs.segfault.model.UMLObject;
 import edu.millersville.cs.segfault.model.UMLRelation;
 
-public class DrawMode implements MouseListener, MouseMotionListener, KeyListener, PanelInteractionMode {
+public class DrawMode implements PanelInteractionMode {
 
+	/***
+	 * The distance within which mouse interactions will snap to snap-points.
+	 */
 	public static final int snapDistance=20;
 	
-	public static final DrawableType[] drawableToRelation = {
+	//*************************************************************************
+	// enum translation keys
+	private static final DrawableType[] drawableToRelation = {
 		DrawableType.RELATION
 	};
 	
-	public static final RelationType[] relationToDrawable = {
+	private static final RelationType[] relationToDrawable = {
 		RelationType.RELATION
 	};
 	
+	private static final DrawableType[] drawableToObject = {
+		DrawableType.OBJECT
+	};
 	
-	DrawableType type;
-	UMLPanel panel;
+	private static final ObjectType[] objectToDrawable = {
+		ObjectType.OBJECT
+	};
 	
-	boolean drawing;
-	boolean drawingRelation;
+	//*************************************************************************
+	// Private Instance Variables 
+	//*************************************************************************
+	// General drawing variables
+	private UMLPanel panel;
+	private boolean drawing;
+	private boolean drawingRelation;  // false when drawing an object
+	private Point lastPoint;
 	
-	Path drawPath;
+	// Object drawing variables
+	private ObjectType objectType;
 	
-	RelationType relationType;
-	ObjectType objectType;
+	// Relation drawing variables
+	private Path drawPath;
+	private RelationType relationType;
 	
-	Point lastPoint;
+	//*************************************************************************
+	// Constructors
+	//*************************************************************************	
 	
+	/***
+	 * Constructs a new DrawMode which interprets mouse and key actions to
+	 * add {@link DrawableUML}s into the {@link UMLModel} held by a {@link UMLPanel}.
+	 * @param type  The type of Drawable to add to the panel.
+	 * @param panel The panel to which the Drawable will be added.
+	 */	
 	public DrawMode(DrawableType type, UMLPanel panel) {
-		this.type = type;
 		this.panel = panel;
 		
 		drawing = false;
@@ -54,12 +80,18 @@ public class DrawMode implements MouseListener, MouseMotionListener, KeyListener
 		if (isRelationType(type)) {
 			drawingRelation=true;
 			relationType = getRelationType(type);
+		} else {
+			drawingRelation=false;
 		}
 		
 		
 	}
 	
-	public static UMLObject makeObject(ObjectType type, int x, int y, int z, int width, int height) {
+	//*************************************************************************
+	// Object Factories
+	//*************************************************************************
+	// Returns a UMLObject of subclass ObjectType type
+	private static UMLObject makeObject(ObjectType type, int x, int y, int z, int width, int height) {
 
 		// Calls to make other object types go here.
 		// I.E.
@@ -71,19 +103,33 @@ public class DrawMode implements MouseListener, MouseMotionListener, KeyListener
 		// return new UMLObject(x, y, z, width, height);
 		return null;		
 	}
-	
-	public static UMLRelation makeRelation(RelationType type, Path path) {
-		return new UMLRelation(path);
+	// Returns a UMLRelation of subclass RelationType type
+	private static UMLRelation makeRelation(RelationType type, Path path) {
+		return new UMLRelation(path, -1, false);
 	}
 
-	public boolean isRelationType(DrawableType dType) {
-		if (dType == DrawableType.RELATION) {
-			return true;
+	//*************************************************************************
+	// Type translation methods
+	//*************************************************************************
+	private boolean isRelationType(DrawableType dType) {
+		for (int i=0; i<drawableToRelation.length; ++i) {
+			if (drawableToRelation[i]==dType) {
+				return true;
+			}
 		}
 		return false;
 	}
 	
-	public static RelationType getRelationType(DrawableType dType) {
+	private boolean isObjectType(DrawableType dType) {
+		for (int i=0; i<drawableToObject.length; ++i) {
+			if (drawableToObject[i]==dType) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private static RelationType getRelationType(DrawableType dType) {
 		for (int i=0; i<drawableToRelation.length; ++i) {
 			if (drawableToRelation[i] == dType) {
 				return relationToDrawable[i];
@@ -92,6 +138,18 @@ public class DrawMode implements MouseListener, MouseMotionListener, KeyListener
 		return null;
 	}
 	
+	private static ObjectType getObjectType(DrawableType dType) {
+		for (int i=0; i<drawableToObject.length; ++i) {
+			if (drawableToObject[i]==dType) {
+				return objectToDrawable[i];
+			}
+		}
+		return null;
+	}
+	
+	//*************************************************************************
+	// Action Listener Methods
+	//*************************************************************************
 	@Override
 	public void keyTyped(KeyEvent e) {}
 
@@ -153,6 +211,14 @@ public class DrawMode implements MouseListener, MouseMotionListener, KeyListener
 		
 	}
 
+	
+	//*************************************************************************
+	// Drawing Methods
+	//*************************************************************************
+	
+	/***
+	 * Draws any partially completed objects on it's panel.
+	 */
 	@Override
 	public void draw(Graphics g) {
 		if (drawing) {
@@ -164,7 +230,11 @@ public class DrawMode implements MouseListener, MouseMotionListener, KeyListener
 		
 	}
 	
-	public Point orSnap(MouseEvent e) {
+	//*************************************************************************
+	// Helpers
+	//*************************************************************************
+	
+	private Point orSnap(MouseEvent e) {
 		
 		Point mousePoint = new Point(e.getX(), e.getY());
 		Point snapPoint = null;
