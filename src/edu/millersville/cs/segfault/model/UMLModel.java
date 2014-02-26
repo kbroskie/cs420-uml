@@ -3,27 +3,17 @@ package edu.millersville.cs.segfault.model;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Set;
+
 
 
 public class UMLModel {
 	
-	//******************************************************************
-	// Change type values
-	static final int SET_NAME = 0; // Change type for chaning the name
-	                               // of the model.
-	static final int ADD_OBJECT = 1; // Add an object to the diagram.
-	static final int ADD_RELATION = 2;
-	static final int REMOVE = 3;
-	//******************************************************************
-	
-	
+
 	private String modelName;    // Name of the model.
 	
-	private List<UMLObject> objects;
-	private Set<UMLRelation> relations;
+	private ArrayList<UMLObject> objects;
+	private HashSet<UMLRelation> relations;
 	
 	//******************************************************************
 	// Constructors	
@@ -37,6 +27,13 @@ public class UMLModel {
 		this.relations = new HashSet<UMLRelation>();
 	}
 
+	public UMLModel(UMLModel source)
+	{
+		this.modelName = source.getName();
+		this.objects = source.getObjects();
+		this.relations = source.getRelations();
+	}
+	
 	// De-serialization constructor
 	public UMLModel(String serialized) throws Exception 
 	{
@@ -74,66 +71,13 @@ public class UMLModel {
 		}
 	}
 	
-	// Copy constructor
-	public UMLModel(UMLModel source) 
+	// Descriptive Constructor
+	public UMLModel(String copy_name, ArrayList<UMLObject> copy_objects, HashSet<UMLRelation> copy_relations)
 	{
-		this();
-		this.modelName = source.getName();
-		this.objects = new ArrayList<UMLObject>(source.getObjects());
-		this.relations = new HashSet<UMLRelation>(source.getRelations());
+		this.modelName = copy_name;
+		this.objects = copy_objects;
+		this.relations = copy_relations;
 	}
-	
-	// Copy/change string constructor
-	public UMLModel(UMLModel source, int changeType, String newString) 
-			throws Exception 
-	{
-		this(source);
-		if (changeType == SET_NAME) {
-			this.modelName = newString;
-		} else {
-			throw new Exception("Invalid change type / parameter to constructor.");
-		}
-	}
-	
-	// Copy + Object reference constructor
-	public UMLModel(UMLModel source, int changeType, UMLObject newObject)
-		throws Exception
-	{
-		this(source);
-		
-		if (changeType == ADD_OBJECT) 
-		{
-			this.objects.add(newObject);
-		} else if(changeType == REMOVE) {
-			objects.remove(newObject);
-		} else {
-			throw new Exception("Unknown change type!");
-		}
-	}
-	
-	// Copy + Relation reference constructor
-	public UMLModel(UMLModel source, int changeType, UMLRelation newRelation)
-		throws Exception
-	{
-		this(source);
-		if (changeType == ADD_RELATION) {
-			this.relations.add(newRelation);
-		} else if (changeType == REMOVE) {
-			relations.remove(newRelation);
-		} else {
-			throw new Exception("Unknown change type!");
-		}
-	}
-	
-	public UMLModel(UMLModel source, int changeType, DrawableUML newDrawable)
-	{
-		this(source);
-		if (changeType == REMOVE) {
-			objects.remove(newDrawable);
-			relations.remove(newDrawable);
-		}
-	}
-	
 	
 	//********************************************************************
 	// Observers
@@ -171,13 +115,13 @@ public class UMLModel {
 	}
 
 	// Returns a copy of the set of objects
-	public List<UMLObject> getObjects() {
+	public ArrayList<UMLObject> getObjects() {
 		return new ArrayList<UMLObject>(this.objects);
 	}
 
-	public Set<UMLRelation> getRelations() 
+	public HashSet<UMLRelation> getRelations() 
 	{ 
-		return this.relations; 
+		return new HashSet<UMLRelation>(this.relations); 
 	}
 	
 	// Gets the object with id n
@@ -205,26 +149,50 @@ public class UMLModel {
 	// Returns a copy of the model with a different name.
 	public UMLModel changeName(String newName) throws Exception 
 	{
-		return new UMLModel(this, SET_NAME, newName);
+		return new UMLModel(newName, 
+				new ArrayList<UMLObject>(this.objects),
+				new HashSet<UMLRelation>(this.relations));
 	}
 
 	// Adds an object to the model.
 	public UMLModel add(UMLObject newObject)
-		throws Exception
 	{
-		return new UMLModel(this, ADD_OBJECT, newObject);
+		ArrayList<UMLObject> newList = new ArrayList<UMLObject>(this.objects);
+		newList.add(newObject);
+		return new UMLModel(this.modelName, newList, new HashSet<UMLRelation>(this.relations));
 	}
 	
 	// Adds a relation between two objects
 	public UMLModel link(UMLRelation relation)
-		throws Exception
 	{
-		return new UMLModel(this, ADD_RELATION, relation);
+		HashSet<UMLRelation> newSet = new HashSet<UMLRelation>(this.relations);
+		newSet.add(relation);
+		return new UMLModel(this.modelName, new ArrayList<UMLObject>(this.objects), newSet);
 	}
 
 	public UMLModel remove(DrawableUML drawable) 
 	{
-		return new UMLModel(this, REMOVE, drawable);
+		ArrayList<UMLObject> newObjects = new ArrayList<UMLObject>(this.objects);
+		Iterator<UMLObject> oIter = objects.iterator();
+		UMLObject current = new UMLObject();
+		while (oIter.hasNext()) {
+			current = oIter.next();
+			if (current == drawable) {
+				newObjects.remove(current);
+			}
+		}
+		
+		HashSet<UMLRelation> newRelations = new HashSet<UMLRelation>(this.relations);
+		Iterator<UMLRelation> rIter = relations.iterator();
+		UMLRelation nowCurrent = new UMLRelation();
+		while (rIter.hasNext()) {
+			nowCurrent = rIter.next();
+			if (nowCurrent == drawable) {
+				newRelations.remove(nowCurrent);
+			}
+		}
+		
+		return new UMLModel(this.modelName, newObjects, newRelations);
 	}
 	
 	//********************************************************************

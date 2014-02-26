@@ -15,4 +15,6 @@ public interface DrawableUML {
 	DrawableUML select();
 	DrawableUML unselect();
 	Point snapPoint(int x, int y);
+	DrawableUML select();
+	DrawableUML unselect();
 }
