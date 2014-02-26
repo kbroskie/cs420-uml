@@ -28,8 +28,15 @@ public class UMLClass extends UMLObject {
 	}
 	
 	//Serialization?!?!?!
+	
+	//Modification constructors?!??!
 
 	//**********************************************************************
 
 	//Mutators
+	
+	public UMLClass changeLabel (String newLabel)
+	{
+		super.changeLabel(String newLabel);
+	}
 }
