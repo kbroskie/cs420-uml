@@ -1,22 +1,64 @@
 package edu.millersville.cs.segfault.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.Point;
+import java.util.Iterator;
 
 import org.junit.Test;
 
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 
+//****************************************************************************
+// PathTest
+//
+// Tests the ImmutablePath class.
+//
+// Author: Daniel Rabiega
+//****************************************************************************
+
+
 public class PathTest {
 
 	@Test
 	public void test() {
-		ImmutablePath firstPath = new ImmutablePath(new Point(0, 0));
-		firstPath = firstPath.addPoint(new Point(5, 6));
-		firstPath = firstPath.addPoint(new Point(7,7));
-		ImmutablePath secondPath = new ImmutablePath(firstPath.toString());
-		assertTrue("Serial strings incompatable!", firstPath.toString().equals(secondPath.toString()));
-		assertTrue("Serial string incorrect!", firstPath.toString().equals("<path><point>0,0</point><point>5,6</point><point>7,7</point></path>"));
+		
+		Point[] testPoints = { new Point(0,0), new Point(1,1), new Point(2,2) };
+		//Constructor Tests
+		ImmutablePath arrayTest = new ImmutablePath(testPoints);
+		ImmutablePath pointTest = new ImmutablePath(testPoints[0]);
+		ImmutablePath serialTest = new ImmutablePath(arrayTest.toString());
+		ImmutablePath copyTest = new ImmutablePath(arrayTest);
+	
+		assertTrue("All test paths should have 0 as x of first element.",
+				testPoints[0].getX() == arrayTest.first().getX() &&
+				arrayTest.first().getX() == pointTest.first().getX() &&
+				pointTest.first().getX() == serialTest.first().getX() &&
+				serialTest.first().getX() == copyTest.first().getX());
+		
+		//Ordering Test
+		Iterator<Point> testIterator = arrayTest.iterator();
+		int index = 0;
+		while (testIterator.hasNext()) {
+			assertTrue("Equivelent x's should be equal.", 
+					testIterator.next().getX() == testPoints[index].getX() &&
+					testPoints[index].getX() == serialTest.getPoints()[index].getX() &&
+					arrayTest.getPoints()[index].getX() == serialTest.getPoints()[index].getX() &&
+					serialTest.getPoints()[index].getX() == copyTest.getPoints()[index].getX());
+			++index;
+		}
+		
+		assertTrue("Size test failed.", pointTest.getSize()==1 &&
+				pointTest.addPoint(testPoints[1]).getSize()==2);
+		
+		assertTrue("Last test failed.", testPoints[2].getX() == arrayTest.last().getX());
+		
+		assertTrue("Closeness test failed", arrayTest.closestPointTo(new Point(3,3)).getX() == 2 &&
+				arrayTest.closestPointTo(new Point(3,3)).getY() == 2);
+		
+		
+		
+		assertTrue("", true);
 	}
+
 }
