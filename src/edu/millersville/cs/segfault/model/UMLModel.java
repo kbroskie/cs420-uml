@@ -1,3 +1,8 @@
+/**
+ * @author Team Segfault
+ * @version 1.0
+ * @since 2014-02-20
+ */
 package edu.millersville.cs.segfault.model;
 
 import java.util.Iterator;
@@ -80,13 +85,16 @@ public class UMLModel {
 	// Constructors	
 	//*************************************************************************
 	
-	// Empty constructor
+	/**
+	 * Empty constructor
+	 */
 	public UMLModel() 
 	{ 
 		modelName = "New UML Model";
 		this.objects = new ImmutableSet<UMLObject>();
 		this.relations = new ImmutableSet<UMLRelation>();
 	}
+
 
 	public UMLModel(UMLModel source)
 	{
@@ -96,6 +104,13 @@ public class UMLModel {
 	}
 	
 	// De-serialization constructor
+
+	/**
+	 * De-serialization constructor
+	 * @param serialized The string to be de-serialized.
+	 * @throws Exception
+	 */
+
 	public UMLModel(String serialized) throws Exception 
 	{
 		this();
@@ -132,19 +147,30 @@ public class UMLModel {
 		}
 	}
 	
+
 	// Descriptive Constructor
 	public UMLModel(String copy_name, ImmutableSet<UMLObject> objects, ImmutableSet<UMLRelation> relations)
+
+	/**
+	 * Copy constructor
+	 * @param source The UMLModel to be copied.
+	 */
+	public UMLModel(UMLModel source) 
 	{
-		this.modelName = copy_name;
-		this.objects = objects;
-		this.relations = relations;
+		this();
+		this.modelName = source.getName();
+		this.objects = new ArrayList<UMLObject>(source.getObjects());
+		this.relations = new HashSet<UMLRelation>(source.getRelations());
 	}
 	
 	//********************************************************************
 	// Observers
 	//********************************************************************
 	
-	// Turns all data in the model into a string.
+	/**
+	 *  Turns all data in the model into a string.
+	 * @return modelString The serialized string.
+	 */
 	public String serialize() 
 	{
 		String modelString = "";
@@ -169,11 +195,14 @@ public class UMLModel {
 		return modelString;
 	}
 
-	// Return the given name of the model.
+	/**
+	 *  Return the given name of the model.
+	 */
 	public String getName() 
 	{
 		return this.modelName;
 	}
+
 
 	// Returns a copy of the set of objects
 	public ImmutableSet<UMLObject> getObjects() {
@@ -181,27 +210,52 @@ public class UMLModel {
 	}
 
 	public ImmutableSet<UMLRelation> getRelations() 
+
 	{ 
 		return this.relations; 
 	}
 	
+
 	//********************************************************************
 	// Mutators
 	//********************************************************************
 	
-	// Returns a copy of the model with a different name.
+	/**
+	 *  Returns a copy of the model with a different name.
+	 * @param newName The new name of the model.
+	 * @return
+	 * @throws Exception
+	 */
 	public UMLModel changeName(String newName) throws Exception 
 	{
 		return new UMLModel(newName, this.objects, this.relations);
 	}
 
+
+	/**
+	 * Adds an object to the model.
+	 * @param newObject The new object.
+	 * @return
+	 * @throws Exception
+	 */
+
 	// Adds an object to the model.
 	public UMLModel addObject(UMLObject newObject)
+
 	{
 		return new UMLModel(this.modelName, this.objects.add(newObject), this.relations);
 	}
 	
+
 	// Adds a relation between two objects
+
+	/**
+	 * Adds a relation between two objects.
+	 * @param relation The relation to be added.
+	 * @return
+	 * @throws Exception
+	 */
+
 	public UMLModel addRelation(UMLRelation relation)
 	{
 		return new UMLModel(this.modelName, this.objects, this.relations.add(relation));
@@ -214,6 +268,11 @@ public class UMLModel {
 		return addObject((UMLObject) newDrawable);
 	}
 
+	/**
+	 * Removes a drawable object.
+	 * @param drawable The drawable object to be removed.
+	 * @return
+	 */
 	public UMLModel removeObject(UMLObject oldObject) {
 		return new UMLModel(this.modelName, this.objects.remove(oldObject), this.relations);
 	}
