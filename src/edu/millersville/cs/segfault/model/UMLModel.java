@@ -1,30 +1,91 @@
 package edu.millersville.cs.segfault.model;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
-
+import edu.millersville.cs.segfault.immutable.ImmutableSet;
+import edu.millersville.cs.segfault.model.object.ObjectType;
+import edu.millersville.cs.segfault.model.object.UMLObject;
+import edu.millersville.cs.segfault.model.relation.RelationType;
+import edu.millersville.cs.segfault.model.relation.UMLRelation;
 
 public class UMLModel {
 	
+	//*************************************************************************
+	// enum translation keys
+	private static final DrawableType[] drawableToRelation = {
+		DrawableType.RELATION
+	};
+		
+	private static final RelationType[] relationToDrawable = {
+		RelationType.RELATION
+	};
+		
+	private static final DrawableType[] drawableToObject = {
+		DrawableType.OBJECT
+	};
+		
+	private static final ObjectType[] objectToDrawable = {
+		ObjectType.OBJECT
+	};
 
+	//*************************************************************************
+	// Type translation methods
+	//*************************************************************************
+	public static boolean isRelationType(DrawableType dType) {
+		for (int i=0; i<drawableToRelation.length; ++i) {
+			if (drawableToRelation[i]==dType) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean isObjectType(DrawableType dType) {
+		for (int i=0; i<drawableToObject.length; ++i) {
+			if (drawableToObject[i]==dType) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static RelationType getRelationType(DrawableType dType) {
+		for (int i=0; i<drawableToRelation.length; ++i) {
+			if (drawableToRelation[i] == dType) {
+				return relationToDrawable[i];
+			}
+		}
+		return null;
+	}
+	
+	public static ObjectType getObjectType(DrawableType dType) {
+		for (int i=0; i<drawableToObject.length; ++i) {
+			if (drawableToObject[i]==dType) {
+				return objectToDrawable[i];
+			}
+		}
+		return null;
+	}
+
+	//*************************************************************************
+	// Instance Variables
+	//*************************************************************************
 	private String modelName;    // Name of the model.
 	
-	private ArrayList<UMLObject> objects;
-	private HashSet<UMLRelation> relations;
+	private ImmutableSet<UMLObject> objects;
+	private ImmutableSet<UMLRelation> relations;
 	
-	//******************************************************************
+	//*************************************************************************
 	// Constructors	
-	//******************************************************************
+	//*************************************************************************
 	
 	// Empty constructor
 	public UMLModel() 
 	{ 
 		modelName = "New UML Model";
-		this.objects = new ArrayList<UMLObject>();
-		this.relations = new HashSet<UMLRelation>();
+		this.objects = new ImmutableSet<UMLObject>();
+		this.relations = new ImmutableSet<UMLRelation>();
 	}
 
 	public UMLModel(UMLModel source)
@@ -72,11 +133,11 @@ public class UMLModel {
 	}
 	
 	// Descriptive Constructor
-	public UMLModel(String copy_name, ArrayList<UMLObject> copy_objects, HashSet<UMLRelation> copy_relations)
+	public UMLModel(String copy_name, ImmutableSet<UMLObject> objects, ImmutableSet<UMLRelation> relations)
 	{
 		this.modelName = copy_name;
-		this.objects = copy_objects;
-		this.relations = copy_relations;
+		this.objects = objects;
+		this.relations = relations;
 	}
 	
 	//********************************************************************
@@ -115,31 +176,13 @@ public class UMLModel {
 	}
 
 	// Returns a copy of the set of objects
-	public ArrayList<UMLObject> getObjects() {
-		return new ArrayList<UMLObject>(this.objects);
+	public ImmutableSet<UMLObject> getObjects() {
+		return this.objects;
 	}
 
-	public HashSet<UMLRelation> getRelations() 
+	public ImmutableSet<UMLRelation> getRelations() 
 	{ 
-		return new HashSet<UMLRelation>(this.relations); 
-	}
-	
-	// Gets the object with id n
-	public UMLObject getObject(int n) {
-		return objects.get(n);
-	}
-	
-	// Gets the id of a given object
-	public int getId(UMLObject target)
-	{
-		for (int i=0; i<objects.size(); ++i)
-		{
-			if (objects.get(i) == target)
-			{
-				return i;
-			}
-		}
-		return -1;
+		return this.relations; 
 	}
 	
 	//********************************************************************
@@ -149,50 +192,73 @@ public class UMLModel {
 	// Returns a copy of the model with a different name.
 	public UMLModel changeName(String newName) throws Exception 
 	{
-		return new UMLModel(newName, 
-				new ArrayList<UMLObject>(this.objects),
-				new HashSet<UMLRelation>(this.relations));
+		return new UMLModel(newName, this.objects, this.relations);
 	}
 
 	// Adds an object to the model.
-	public UMLModel add(UMLObject newObject)
+	public UMLModel addObject(UMLObject newObject)
 	{
-		ArrayList<UMLObject> newList = new ArrayList<UMLObject>(this.objects);
-		newList.add(newObject);
-		return new UMLModel(this.modelName, newList, new HashSet<UMLRelation>(this.relations));
+		return new UMLModel(this.modelName, this.objects.add(newObject), this.relations);
 	}
 	
 	// Adds a relation between two objects
-	public UMLModel link(UMLRelation relation)
+	public UMLModel addRelation(UMLRelation relation)
 	{
-		HashSet<UMLRelation> newSet = new HashSet<UMLRelation>(this.relations);
-		newSet.add(relation);
-		return new UMLModel(this.modelName, new ArrayList<UMLObject>(this.objects), newSet);
+		return new UMLModel(this.modelName, this.objects, this.relations.add(relation));
+	}
+	
+	public UMLModel add(DrawableUML newDrawable) {
+		if (isRelationType(newDrawable.getType())) {
+			return addRelation((UMLRelation) newDrawable);
+		}
+		return addObject((UMLObject) newDrawable);
 	}
 
-	public UMLModel remove(DrawableUML drawable) 
+	public UMLModel removeObject(UMLObject oldObject) {
+		return new UMLModel(this.modelName, this.objects.remove(oldObject), this.relations);
+	}
+	
+	public UMLModel removeRelation(UMLRelation oldRelation) {
+		return new UMLModel(this.modelName, this.objects, this.relations.remove(oldRelation));
+	}
+	
+	public UMLModel remove(Object o) 
 	{
-		ArrayList<UMLObject> newObjects = new ArrayList<UMLObject>(this.objects);
-		Iterator<UMLObject> oIter = objects.iterator();
-		UMLObject current = new UMLObject();
-		while (oIter.hasNext()) {
-			current = oIter.next();
-			if (current == drawable) {
-				newObjects.remove(current);
+		return new UMLModel(this.modelName, this.objects.remove(o), this.relations.remove(o));
+	}
+	
+	public UMLModel select(DrawableUML drawable) {
+		UMLModel temp = remove(drawable);
+		return temp.add(drawable.select());
+	}
+	
+	public UMLModel unselect(DrawableUML drawable) {
+		UMLModel temp = remove(drawable);
+		return temp.add(drawable.unselect());
+	}
+	
+	public UMLModel unselectAll() {
+		UMLModel workingModel = new UMLModel(this);
+		Iterator<DrawableUML> zIter = this.zIterator();
+		while (zIter.hasNext()) {
+			DrawableUML current = zIter.next();
+			if (current.isSelected()) {
+				workingModel = workingModel.unselect(current);
 			}
 		}
-		
-		HashSet<UMLRelation> newRelations = new HashSet<UMLRelation>(this.relations);
-		Iterator<UMLRelation> rIter = relations.iterator();
-		UMLRelation nowCurrent = new UMLRelation();
-		while (rIter.hasNext()) {
-			nowCurrent = rIter.next();
-			if (nowCurrent == drawable) {
-				newRelations.remove(nowCurrent);
+		return workingModel;
+	}
+	
+	public UMLModel deleteSelected() {
+		UMLModel workingModel = new UMLModel(this);
+		Iterator<DrawableUML> zIter = this.zIterator();
+		while (zIter.hasNext()) {
+			DrawableUML current = zIter.next();
+			if (current.isSelected()) {
+				workingModel = workingModel.remove(current);
 			}
 		}
-		
-		return new UMLModel(this.modelName, newObjects, newRelations);
+		return workingModel;
 	}
 	
 	//********************************************************************
@@ -227,4 +293,6 @@ public class UMLModel {
 	{
 		return relations.iterator();
 	}
+	
+
 }

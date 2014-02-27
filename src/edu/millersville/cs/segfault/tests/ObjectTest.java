@@ -1,7 +1,7 @@
 package edu.millersville.cs.segfault.tests;
 
-import edu.millersville.cs.segfault.model.UMLObject;
 import edu.millersville.cs.segfault.model.UMLFileOp;
+import edu.millersville.cs.segfault.model.object.UMLObject;
 
 public class ObjectTest {
 

@@ -1,4 +1,4 @@
-package edu.millersville.cs.segfault.model;
+package edu.millersville.cs.segfault.model.object;
 
 /***
  * An enum whose types signify the different classes which subclass UMLObject

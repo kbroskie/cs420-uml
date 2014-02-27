@@ -1,4 +1,5 @@
-package edu.millersville.cs.segfault.model;
+package edu.millersville.cs.segfault.model.relation;
+
 
 /*****************************************************************************
  * An enum whose types signify {@link UMLRelation} and it's subclasses.      *

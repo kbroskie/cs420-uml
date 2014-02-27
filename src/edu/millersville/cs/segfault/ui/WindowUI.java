@@ -252,7 +252,7 @@ public class WindowUI extends JPanel
 		 else if (selectedCommand == redoMenuText) {
 			 umlPanel.redo();
 		 } else if (selectedCommand == optionsPaneObjectDraw ) {
-			 umlPanel.changeInteractionMode(new DrawObjectMode(umlPanel));
+			 umlPanel.changeInteractionMode(new DrawMode(DrawableType.OBJECT, umlPanel));
 		 } else if (selectedCommand == optionsPaneRelationDraw ) {
 			 umlPanel.changeInteractionMode(new DrawMode(DrawableType.RELATION, umlPanel));
 		 } else if (selectedCommand == optionsPaneSelect ) {

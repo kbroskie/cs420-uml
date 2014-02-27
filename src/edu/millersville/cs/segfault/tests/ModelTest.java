@@ -1,7 +1,7 @@
 package edu.millersville.cs.segfault.tests;
 
 import edu.millersville.cs.segfault.model.UMLModel;
-import edu.millersville.cs.segfault.model.UMLObject;
+import edu.millersville.cs.segfault.model.object.UMLObject;
 
 public class ModelTest {
 
@@ -15,7 +15,7 @@ public class ModelTest {
 		UMLObject object = new UMLObject();
 		object = object.changeLabel("A new object.");
 		
-		model = model.add(object);
+		model = model.addObject(object);
 		
 		System.out.println(model.serialize());
 		

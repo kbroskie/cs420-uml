@@ -1,7 +1,9 @@
-package edu.millersville.cs.segfault.model;
+package edu.millersville.cs.segfault.model.object;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
 
 public class ExampleSubclass extends UMLObject {
 
@@ -26,9 +28,9 @@ public class ExampleSubclass extends UMLObject {
 	}
 	
 	// Attribute constructor needs all the attributes of the extended class!
-	public ExampleSubclass(String label, int x, int y, int z, int width, int height, boolean selected, int anAttr)
+	public ExampleSubclass(String label, Point origin, int z, Dimension size, boolean selected, int anAttr)
 	{
-		super(label, x, y, z, width, height, selected);
+		super(label, origin, z, size, selected);
 		
 		this.anAttribute = anAttr;
 	}
@@ -59,32 +61,32 @@ public class ExampleSubclass extends UMLObject {
 	// !!!You must override all mutators!!!
 	public ExampleSubclass changeLabel(String newLabel)
 	{
-		return new ExampleSubclass(newLabel, this.getX(), this.getY(), this.getZ(), this.getWidth(),
-				this.getHeight(), this.getSelected(), this.anAttribute);
+		return new ExampleSubclass(newLabel, this.getOrigin(), this.getZ(), 
+				this.getSize(), this.isSelected(), this.anAttribute);
 	}
 	
-	public ExampleSubclass move(int newx, int newy, int newz)
+	public ExampleSubclass move(Point newOrigin, int newz)
 	{
-		return new ExampleSubclass(this.getLabel(), newx, newy, newz, this.getWidth(),
-				this.getHeight(), this.getSelected(), this.anAttribute);
+		return new ExampleSubclass(this.getLabel(), newOrigin, newz, 
+				this.getSize(), this.isSelected(), this.anAttribute);
 	}
 	
-	public ExampleSubclass resize(int newWidth, int newHeight)
+	public ExampleSubclass resize(Dimension newSize)
 	{
-		return new ExampleSubclass(this.getLabel(), this.getX(), this.getY(), this.getZ(), newWidth,
-				newHeight, this.getSelected(), this.anAttribute);
+		return new ExampleSubclass(this.getLabel(), this.getOrigin(), this.getZ(), 
+				newSize, this.isSelected(), this.anAttribute);
 	}
 	
 	public ExampleSubclass select()
 	{
-		return new ExampleSubclass(this.getLabel(), this.getX(), this.getY(), this.getZ(), this.getWidth(),
-				this.getHeight(), true, this.anAttribute);
+		return new ExampleSubclass(this.getLabel(), this.getOrigin(), this.getZ(), 
+				this.getSize(), true, this.anAttribute);
 	}
 	
 	public ExampleSubclass unselect()
 	{
-		return new ExampleSubclass(this.getLabel(), this.getX(), this.getY(), this.getZ(), this.getWidth(),
-				this.getHeight(), false, this.anAttribute);
+		return new ExampleSubclass(this.getLabel(), this.getOrigin(), this.getZ(), 
+				this.getSize(), false, this.anAttribute);
 	}
 	
 	

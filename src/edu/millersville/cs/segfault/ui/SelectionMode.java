@@ -1,68 +1,92 @@
 package edu.millersville.cs.segfault.ui;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 
 import edu.millersville.cs.segfault.model.DrawableUML;
-import edu.millersville.cs.segfault.model.UMLObject;
-import edu.millersville.cs.segfault.model.UMLRelation;
 
 public class SelectionMode implements PanelInteractionMode {
 
-	private DrawableUML target;
-	private UMLPanel caller;
-	private boolean engaged;
+	private UMLPanel panel;
+	
+	private boolean controlDown;
+	private boolean shiftDown;
+	
+	private boolean perhapsDragging; // Sometimes it's hard to detect drag.
+	private Point dragStart;
+	
+	private Point lastPoint;
 	
 	public SelectionMode(UMLPanel caller)
 	{
-		this.caller = caller;
-		this.engaged = false;
+		this.panel = caller;
+		this.perhapsDragging = false;
+		this.controlDown = false;
+		this.shiftDown = false;
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		caller.requestFocusInWindow();
-		boolean onRelation = false;
-		Iterator<UMLRelation> rIter = caller.model().relationIterator();
-		while (rIter.hasNext())
-		{
-			UMLRelation current = rIter.next();
-			if (current.near(e.getX(), e.getY(), 10))
-			{
-				onRelation = true;
-				changeSelection(current);
-			}
+		
+		panel.getFocus();
+		
+		if (!controlDown && !shiftDown) {
+			panel.changeModel(panel.model().unselectAll());
 		}
-		if (!onRelation) {
-			boolean onObject = false;
-			Iterator<UMLObject> oIter = caller.model().objectIterator();
-			while (oIter.hasNext())
-			{
-				UMLObject current = oIter.next();
-				if (current.within(e.getX(), e.getY()))
-				{
-					onObject = true;
-					changeSelection(current);
-				}
-			}
-			if (!onObject)
-			{
-				noSelection();
+		Iterator<DrawableUML> zIter = panel.model().zIterator();
+		while (zIter.hasNext()) {
+			DrawableUML current = zIter.next();
+			if (current.hit(new Point(e.getX(), e.getY()))) {
+				panel.changeModel(panel.currentModel.select(current));
+				break;
 			}
 		}
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		
+		panel.getFocus();
+		
+		if (!controlDown && !shiftDown) {
+			panel.changeModel(panel.model().unselectAll());
+		}
+		this.perhapsDragging = true;
+		this.dragStart = new Point(e.getX(), e.getY());
+		this.lastPoint = this.dragStart;
+		panel.repaint();
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+				
+		panel.getFocus();
+		
+		this.perhapsDragging = false;
+		int x1 = (int) dragStart.getX();
+		int x2 = e.getX();
+		int y1 = (int) dragStart.getY();
+		int y2 = e.getY();
+		Point dragEnd = new Point(x2, y2);
+		Rectangle2D dragArea = new Rectangle2D.Double(Math.min(x1, x2), Math.min(y1, y2),
+				Math.abs(x1-x2), Math.abs(y1-y2));
+		
+		if (dragEnd.distance(dragStart) > 10) {
+			Iterator<DrawableUML> zIter = panel.model().zIterator();
+			DrawableUML current;
+			while (zIter.hasNext()) {
+				current = zIter.next();
+				if (current.isWithin(dragArea)) {
+					panel.changeModel(panel.model().select(current));
+				}
+			}
+		}
+		panel.repaint();
 
 	}
 
@@ -80,8 +104,8 @@ public class SelectionMode implements PanelInteractionMode {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		lastPoint = new Point(e.getX(), e.getY());
+		panel.repaint();
 	}
 
 	@Override
@@ -93,7 +117,16 @@ public class SelectionMode implements PanelInteractionMode {
 	@Override
 	public void draw(Graphics g) 
 	{
-
+		
+		if (perhapsDragging) {
+			int x1 = (int) dragStart.getX();
+			int x2 = (int) lastPoint.getX();
+			int y1 = (int) dragStart.getY();
+			int y2 = (int) lastPoint.getY();
+			
+			g.setColor(Color.BLUE);
+			g.drawRect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2));
+		}
 	}
 	
 
@@ -106,39 +139,50 @@ public class SelectionMode implements PanelInteractionMode {
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode()==KeyEvent.VK_DELETE)
 		{
-			if (engaged)
-			{
-				caller.changeModel(caller.model().remove(target));
-			}
+			panel.changeModel(panel.model().deleteSelected());
+		} else if (e.getKeyCode()==KeyEvent.VK_CONTROL) {
+			controlDown = true;
+		} else if (e.getKeyCode()==KeyEvent.VK_SHIFT) {
+			shiftDown = true;
 		}
+		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		
-	}
-
-	private void changeSelection(DrawableUML target)
-	{
-		if (engaged)
-		{
-			this.target.unselect();
+		if (e.getKeyCode()==KeyEvent.VK_CONTROL) {
+			controlDown = false;
+		} else if (e.getKeyCode()==KeyEvent.VK_SHIFT) {
+			shiftDown = false;
 		}
-		this.engaged = true;
-		target.select();
-		this.target = target;
-		caller.repaint();
 	}
 	
-	private void noSelection()
-	{
-		if (engaged)
-		{
-			this.target.unselect();
-			this.engaged = false;
-		}
-		caller.repaint();
+	public Point orSnap(MouseEvent e) {
 		
+		Point mousePoint = new Point(e.getX(), e.getY());
+		Point snapPoint = null;
+		
+		for (Iterator<DrawableUML> zIter = panel.currentModel.zIterator();
+				zIter.hasNext();) {
+			Point newSnap = zIter.next().snapPoint(new Point(e.getX(), e.getY()));
+			if (newSnap != null && snapPoint == null) {
+				snapPoint = newSnap;
+			} else if (newSnap != null){
+				if (newSnap.distance(mousePoint) < snapPoint.distance(mousePoint)) {
+					snapPoint = newSnap;
+				}
+			}
+		}
+		
+		if (snapPoint != null) {
+			return snapPoint;
+		}
+		return new Point(e.getX(), e.getY());
+	}
+
+	@Override
+	public void leaveMode() {
+		panel.changeModel(panel.model().unselectAll());
 	}
 	
 }

@@ -2,6 +2,7 @@ package edu.millersville.cs.segfault.model;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
 
 /*****************************************************************************
  * An interface for objects which can be inserted into a {@link UMLModel}    *
@@ -14,7 +15,8 @@ public interface DrawableUML {
 	DrawableType getType();
 	DrawableUML select();
 	DrawableUML unselect();
-	Point snapPoint(int x, int y);
-	DrawableUML select();
-	DrawableUML unselect();
+	Point snapPoint(Point point);
+	boolean isSelected();
+	boolean hit(Point point);
+	boolean isWithin(Rectangle2D dragArea);
 }

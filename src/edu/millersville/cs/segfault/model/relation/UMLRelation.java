@@ -1,4 +1,4 @@
-package edu.millersville.cs.segfault.model;
+package edu.millersville.cs.segfault.model.relation;
 
 //****************************************************************************
 // Import Statement
@@ -7,7 +7,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
+
+import edu.millersville.cs.segfault.model.DrawableType;
+import edu.millersville.cs.segfault.model.DrawableUML;
+import edu.millersville.cs.segfault.model.Path;
 
 /*****************************************************************************
  * Root of the class heirarchy for various types of Relations and arrows.    
@@ -177,8 +182,32 @@ public class UMLRelation implements DrawableUML {
 	}
 
 	@Override
-	public Point snapPoint(int x, int y) {
+	public Point snapPoint(Point point) {
 		
-		return this.path.closestPointTo(new Point(x, y));
+		return this.path.closestPointTo(point);
+	}
+
+	@Override
+	public boolean isSelected() {
+		return this.selected;
+	}
+
+	@Override
+	public boolean hit(Point point) {
+		return near(point, 10);
+	}
+
+	@Override
+	public boolean isWithin(Rectangle2D dragArea) {
+		Iterator<Point> iter = this.path.iterator();
+		Point current;
+		while (iter.hasNext()) {
+			current = iter.next();
+			
+			if (!dragArea.contains(current)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

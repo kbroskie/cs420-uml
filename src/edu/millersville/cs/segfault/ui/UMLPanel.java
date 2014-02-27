@@ -17,9 +17,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.model.UMLModel;
-import edu.millersville.cs.segfault.model.UMLObject;
+import edu.millersville.cs.segfault.model.object.UMLObject;
 
 public class UMLPanel extends JPanel {
 	
@@ -40,7 +41,7 @@ public class UMLPanel extends JPanel {
 		currentModel = new UMLModel();
 		undoStack = new LinkedList<UMLModel>();
 		redoStack = new LinkedList<UMLModel>();
-		currentInteractionMode = new DrawObjectMode(this);
+		currentInteractionMode = new DrawMode(DrawableType.OBJECT, this);
 		this.addMouseListener(currentInteractionMode);
 		this.addMouseMotionListener(currentInteractionMode);
 		this.addKeyListener(currentInteractionMode);
@@ -67,6 +68,7 @@ public class UMLPanel extends JPanel {
 
 	public void changeInteractionMode(PanelInteractionMode newMode)
 	{
+		currentInteractionMode.leaveMode();
 		this.removeMouseListener(currentInteractionMode);
 		this.removeMouseMotionListener(currentInteractionMode);
 		this.removeKeyListener(currentInteractionMode);
@@ -74,8 +76,7 @@ public class UMLPanel extends JPanel {
 		this.addMouseListener(currentInteractionMode);
 		this.addMouseMotionListener(currentInteractionMode);
 		this.addKeyListener(currentInteractionMode);
-		repaint();
-		
+		repaint();	
 	}
 	
 	public Dimension getPreferredSize() {
@@ -305,5 +306,9 @@ public class UMLPanel extends JPanel {
 		  	//Oh no! JFileChooser failed!!!
 		   	return(false);
 	    }
+	}
+
+	public void getFocus() {
+		requestFocusInWindow();
 	}
 }

@@ -1,7 +1,7 @@
 package edu.millersville.cs.segfault.tests;
 
 import edu.millersville.cs.segfault.model.UMLModel;
-import edu.millersville.cs.segfault.model.UMLObject;
+import edu.millersville.cs.segfault.model.object.UMLObject;
 
 public class ModelSerializationTest {
 
@@ -11,7 +11,7 @@ public class ModelSerializationTest {
 		UMLObject anObject = (new UMLObject()).changeLabel("An object.");
 				
 		firstModel = firstModel.changeName("Changed Model");
-		firstModel = firstModel.add(anObject);
+		firstModel = firstModel.addObject(anObject);
 		
 		System.out.println("Serializing and deserializing.");
 		// Serialize and De-serialize into a new model.

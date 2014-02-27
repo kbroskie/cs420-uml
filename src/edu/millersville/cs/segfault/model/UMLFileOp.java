@@ -4,10 +4,12 @@ package edu.millersville.cs.segfault.model;
 import java.io.File;
 import java.io.IOException;
 
+
 // JFILECHOOSER
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.*;
 
+import edu.millersville.cs.segfault.model.object.UMLObject;
 
 // READ
 import java.io.FileReader;

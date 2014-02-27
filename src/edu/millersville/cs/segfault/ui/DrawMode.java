@@ -6,6 +6,7 @@ package edu.millersville.cs.segfault.ui;
 
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -14,36 +15,21 @@ import java.util.Iterator;
 
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
-import edu.millersville.cs.segfault.model.ObjectType;
 import edu.millersville.cs.segfault.model.Path;
-import edu.millersville.cs.segfault.model.RelationType;
-import edu.millersville.cs.segfault.model.UMLObject;
-import edu.millersville.cs.segfault.model.UMLRelation;
+import edu.millersville.cs.segfault.model.UMLModel;
+import edu.millersville.cs.segfault.model.object.ObjectType;
+import edu.millersville.cs.segfault.model.object.UMLObject;
+import edu.millersville.cs.segfault.model.relation.RelationType;
+import edu.millersville.cs.segfault.model.relation.UMLRelation;
 
 public class DrawMode implements PanelInteractionMode {
 
-	/***
+	/*************************************************************************
 	 * The distance within which mouse interactions will snap to snap-points.
-	 */
+	 *************************************************************************/
 	public static final int snapDistance=20;
 	
-	//*************************************************************************
-	// enum translation keys
-	private static final DrawableType[] drawableToRelation = {
-		DrawableType.RELATION
-	};
 	
-	private static final RelationType[] relationToDrawable = {
-		RelationType.RELATION
-	};
-	
-	private static final DrawableType[] drawableToObject = {
-		DrawableType.OBJECT
-	};
-	
-	private static final ObjectType[] objectToDrawable = {
-		ObjectType.OBJECT
-	};
 	
 	//*************************************************************************
 	// Private Instance Variables 
@@ -55,7 +41,8 @@ public class DrawMode implements PanelInteractionMode {
 	private Point lastPoint;
 	
 	// Object drawing variables
-	private ObjectType objectType;
+	//private ObjectType objectType;
+	private Point startPoint;
 	
 	// Relation drawing variables
 	private Path drawPath;
@@ -77,11 +64,12 @@ public class DrawMode implements PanelInteractionMode {
 		drawing = false;
 		drawingRelation = false;
 		
-		if (isRelationType(type)) {
+		if (UMLModel.isRelationType(type)) {
 			drawingRelation=true;
-			relationType = getRelationType(type);
+			relationType = UMLModel.getRelationType(type);
 		} else {
 			drawingRelation=false;
+			//objectType = UMLModel.getObjectType(type);
 		}
 		
 		
@@ -91,61 +79,14 @@ public class DrawMode implements PanelInteractionMode {
 	// Object Factories
 	//*************************************************************************
 	// Returns a UMLObject of subclass ObjectType type
-	private static UMLObject makeObject(ObjectType type, int x, int y, int z, int width, int height) {
-
-		// Calls to make other object types go here.
-		// I.E.
-		// if (type == ObjectType.CLASS) {
-		// 		return new UMLClass(int x, int y, int z, int width, int height)
-		// }
-		
-		// TODO Once new objects are in.
-		// return new UMLObject(x, y, z, width, height);
-		return null;		
+	private static UMLObject makeObject(ObjectType type, Point origin, int z, Dimension size) {
+		return new UMLObject("", origin, z, size, false);
 	}
 	// Returns a UMLRelation of subclass RelationType type
 	private static UMLRelation makeRelation(RelationType type, Path path) {
 		return new UMLRelation(path, -1, false);
 	}
 
-	//*************************************************************************
-	// Type translation methods
-	//*************************************************************************
-	private boolean isRelationType(DrawableType dType) {
-		for (int i=0; i<drawableToRelation.length; ++i) {
-			if (drawableToRelation[i]==dType) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	private boolean isObjectType(DrawableType dType) {
-		for (int i=0; i<drawableToObject.length; ++i) {
-			if (drawableToObject[i]==dType) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	private static RelationType getRelationType(DrawableType dType) {
-		for (int i=0; i<drawableToRelation.length; ++i) {
-			if (drawableToRelation[i] == dType) {
-				return relationToDrawable[i];
-			}
-		}
-		return null;
-	}
-	
-	private static ObjectType getObjectType(DrawableType dType) {
-		for (int i=0; i<drawableToObject.length; ++i) {
-			if (drawableToObject[i]==dType) {
-				return objectToDrawable[i];
-			}
-		}
-		return null;
-	}
 	
 	//*************************************************************************
 	// Action Listener Methods
@@ -165,26 +106,37 @@ public class DrawMode implements PanelInteractionMode {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		drawing = true;
-		
-		drawPath = new Path(orSnap(e));
+		if (drawingRelation) {
+			drawPath = new Path(orSnap(e));
+		} else {
+			startPoint = orSnap(e);
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e)
 	{
-		// Draw the relation with ending point as a snap point if one is available
-		
-		drawPath = drawPath.addPoint(orSnap(e));
-		
-		
 		drawing = false;
+		Point releasePoint = orSnap(e);
 		
-		try {
-			panel.changeModel(panel.currentModel.link(makeRelation(relationType, drawPath)));
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
+		if (drawingRelation) {
+		
+			drawPath = drawPath.addPoint(releasePoint);
+			try {
+				panel.changeModel(panel.currentModel.addRelation(makeRelation(relationType, drawPath)));
+			} catch (Exception ex) {
+				System.out.println(ex.getMessage());
+			}
+		} else {
+			int x1 = (int) startPoint.getX();
+			int x2 = (int) releasePoint.getX();
+			int y1 = (int) startPoint.getY();
+			int y2 = (int) releasePoint.getY();
+			
+			panel.changeModel(panel.currentModel.addObject(
+					makeObject(ObjectType.OBJECT, new Point(Math.min(x1, x2), Math.min(y1, y2)), 1, 
+							new Dimension(Math.abs(x1-x2), Math.abs(y1-y2)))));
 		}
-		
 		panel.repaint();
 	}
 
@@ -223,9 +175,18 @@ public class DrawMode implements PanelInteractionMode {
 	public void draw(Graphics g) {
 		if (drawing) {
 			g.setColor(Color.BLUE);
-			g.drawLine((int) drawPath.first().getX(), (int) drawPath.first().getY(), 
-					(int) lastPoint.getX(), (int) lastPoint.getY());
 			
+			if (drawingRelation) {
+				g.drawLine((int) drawPath.first().getX(), (int) drawPath.first().getY(), 
+						(int) lastPoint.getX(), (int) lastPoint.getY());
+			} else {
+				int x1 = (int) startPoint.getX();
+				int x2 = (int) lastPoint.getX();
+				int y1 = (int) startPoint.getY();
+				int y2 = (int) lastPoint.getY();
+				
+				g.drawRect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1-x2), Math.abs(y1-y2));
+			}
 		}
 		
 	}
@@ -241,7 +202,7 @@ public class DrawMode implements PanelInteractionMode {
 		
 		for (Iterator<DrawableUML> zIter = panel.currentModel.zIterator();
 				zIter.hasNext();) {
-			Point newSnap = zIter.next().snapPoint(e.getX(), e.getY());
+			Point newSnap = zIter.next().snapPoint(new Point(e.getX(), e.getY()));
 			if (newSnap != null && snapPoint == null) {
 				snapPoint = newSnap;
 			} else if (newSnap != null){
@@ -255,6 +216,12 @@ public class DrawMode implements PanelInteractionMode {
 			return snapPoint;
 		}
 		return new Point(e.getX(), e.getY());
+	}
+
+	@Override
+	public void leaveMode() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

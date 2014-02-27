@@ -7,4 +7,6 @@ import java.awt.event.MouseMotionListener;
 
 public interface PanelInteractionMode extends MouseListener, MouseMotionListener, KeyListener {
 	void draw(Graphics g);
+	
+	void leaveMode();
 }
