@@ -3,10 +3,10 @@ package edu.millersville.cs.segfault.model.object;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
+import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.ui.DrawMode;
@@ -37,7 +37,7 @@ public class UMLObject implements DrawableUML {
 	
 	private String label;  // Label of the object.
 	
-	private Point origin;
+	private ImmutablePoint origin;
 	private int z;     // Coords of the object.
 	private Dimension size;
 	private boolean selected; 
@@ -49,7 +49,7 @@ public class UMLObject implements DrawableUML {
 	// Empty constructor
 	public UMLObject(){
 		this.label = "";
-		this.origin = new Point(0,0);
+		this.origin = new ImmutablePoint(0,0);
 		this.z = 0;
 		this.size = new Dimension(100,100);
 		selected = false;
@@ -69,7 +69,7 @@ public class UMLObject implements DrawableUML {
 			this.label = serialized.substring(startLabel, endLabel);
 		}
 			
-		this.origin = new Point(findIntAttr("x", serialized), findIntAttr("y", serialized));
+		this.origin = new ImmutablePoint(findIntAttr("x", serialized), findIntAttr("y", serialized));
 		this.z = findIntAttr("z", serialized);
 		this.size = new Dimension(findIntAttr("width", serialized), findIntAttr("height", serialized));
 	}
@@ -88,12 +88,12 @@ public class UMLObject implements DrawableUML {
 		return new Dimension(this.size);
 	}
 
-	public Point getOrigin() {
-		return new Point(this.origin);
+	public ImmutablePoint getOrigin() {
+		return this.origin;
 	}
 
 	// Member constructor
-	public UMLObject(String nLabel, Point origin, int nZ, Dimension size, boolean nSelected) 
+	public UMLObject(String nLabel, ImmutablePoint origin, int nZ, Dimension size, boolean nSelected) 
 	{
 		this.label = nLabel;
 		this.origin = origin;
@@ -139,12 +139,12 @@ public class UMLObject implements DrawableUML {
 	
 	public int getHeight() { return (int) this.size.getHeight(); }
 	
-	public boolean within(Point point) 
+	public boolean within(ImmutablePoint point) 
 	{
 		Rectangle2D box = new Rectangle2D.Double(this.getX(), this.getY(),
 				this.getWidth(), this.getHeight());
 		
-		if (box.contains(point))
+		if (box.contains(point.getPoint()))
 		{
 			return true;
 		}
@@ -165,7 +165,7 @@ public class UMLObject implements DrawableUML {
 	public UMLObject move(int x, int y, int z) 
 		throws Exception
 	{
-		return new UMLObject(this.label, new Point(x, y), z, this.size, this.selected);
+		return new UMLObject(this.label, new ImmutablePoint(x, y), z, this.size, this.selected);
 	}
 
 	public UMLObject resize(int width, int height)
@@ -208,36 +208,38 @@ public class UMLObject implements DrawableUML {
 	}
 
 	@Override
-	public Point snapPoint(Point point) {
-		Point[] corners = new Point[4];
+	public ImmutablePoint snapPoint(ImmutablePoint point) {
+		ImmutablePoint[] corners = new ImmutablePoint[4];
 		Line2D[] lines = new Line2D[4];
 		
-		corners[0] = new Point(this.getX(), this.getY());
-		corners[1] = new Point(this.getX() + this.getWidth(), this.getY());
-		corners[2] = new Point(this.getX() + this.getWidth(), this.getY() + this.getHeight());
-		corners[3] = new Point(this.getX(), this.getY() + this.getHeight());
+		corners[0] = new ImmutablePoint(this.getX(), this.getY());
+		corners[1] = new ImmutablePoint(this.getX() + this.getWidth(), this.getY());
+		corners[2] = new ImmutablePoint(this.getX() + this.getWidth(), 
+				this.getY() + this.getHeight());
+		corners[3] = new ImmutablePoint(this.getX(), this.getY() + this.getHeight());
 		
-		lines[0] = new Line2D.Double(corners[0], corners[1]); // Top
-		lines[1] = new Line2D.Double(corners[1], corners[2]);
-		lines[2] = new Line2D.Double(corners[2], corners[3]);
-		lines[3] = new Line2D.Double(corners[3], corners[0]);   // Left
+		lines[0] = new Line2D.Double(corners[0].getPoint(), corners[1].getPoint()); // Top
+		lines[1] = new Line2D.Double(corners[1].getPoint(), corners[2].getPoint());
+		lines[2] = new Line2D.Double(corners[2].getPoint(), corners[3].getPoint());
+		lines[3] = new Line2D.Double(corners[3].getPoint(), corners[0].getPoint());   // Left
 		
 		int min = 0;
 		for (int line = 1; line < 4; ++line) {
-			if (lines[min].ptLineDist(point) > lines[line].ptLineDist(point)) {
+			if (lines[min].ptLineDist(point.getPoint()) > 
+				lines[line].ptLineDist(point.getPoint())) {
 				min = line;
 			}
 		}
 		
-		if (lines[min].ptLineDist(point) <= DrawMode.snapDistance) {
+		if (lines[min].ptLineDist(point.getPoint()) <= DrawMode.snapDistance) {
 			if (min == 0) {
-				return new Point((int) point.getX(), this.getY());
+				return new ImmutablePoint(point.getX(), this.getY());
 			} else if (min == 1) {
-				return new Point(this.getX() + this.getWidth(), (int) point.getY());
+				return new ImmutablePoint(this.getX() + this.getWidth(), point.getY());
 			} else if (min == 2) {
-				return new Point((int) point.getX(), this.getY() + this.getHeight());
+				return new ImmutablePoint(point.getX(), this.getY() + this.getHeight());
 			} else {
-				return new Point(this.getX(), (int) point.getY());
+				return new ImmutablePoint(this.getX(), point.getY());
 			}
 		}
 		return null;
@@ -249,12 +251,12 @@ public class UMLObject implements DrawableUML {
 	}
 
 	@Override
-	public boolean hit(Point point) {
+	public boolean hit(ImmutablePoint point) {
 		Rectangle2D box = new Rectangle2D.Double(this.getX(),
 												 this.getY(),
 												 this.getX() + this.getWidth(),
 												 this.getY() + this.getHeight());
-		return box.contains(point);
+		return box.contains(point.getPoint());
 	}
 
 	@Override

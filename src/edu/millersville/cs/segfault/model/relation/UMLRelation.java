@@ -5,17 +5,17 @@ package edu.millersville.cs.segfault.model.relation;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
+import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
 
 /*****************************************************************************
- * Root of the class heirarchy for various types of Relations and arrows.    
+ * Root of the class hierarchy for various types of Relations and arrows.    
  * @author Daniel Rabiega                                                    
  *****************************************************************************/
 public class UMLRelation implements DrawableUML {
@@ -43,9 +43,9 @@ public class UMLRelation implements DrawableUML {
 	//*************************************************************************
 	// Member variables
 	//*************************************************************************
-	private ImmutablePath path;
-	private int z;
-	private boolean selected;
+	private final ImmutablePath path;
+	private final int z;
+	private final boolean selected;
 	
 	
 	//*************************************************************************
@@ -107,22 +107,22 @@ public class UMLRelation implements DrawableUML {
 	 * @return True when the shortest distance between point and any segment  
 	 *         of the relation is less than maxdist. False otherwise.
 	 *************************************************************************/
-	public boolean near(Point point, int maxdist)
+	public boolean near(ImmutablePoint point, int maxdist)
 	{
 		if (this.path.getSize() < 2) {
 			return false;
 		}
 		
-		Iterator<Point> pIter = this.path.iterator();
-		Point first;
-		Point second = pIter.next();
+		Iterator<ImmutablePoint> pIter = this.path.iterator();
+		ImmutablePoint first;
+		ImmutablePoint second = pIter.next();
 		
 		while (pIter.hasNext()) {
 			first = second;
 			second = pIter.next();
 			
-			Line2D line = new Line2D.Double(first, second);
-			if (line.ptLineDist(point) < maxdist) {
+			Line2D line = new Line2D.Double(first.getPoint(), second.getPoint());
+			if (line.ptLineDist(point.getPoint()) < maxdist) {
 				return true;
 			}
 		}
@@ -145,10 +145,10 @@ public class UMLRelation implements DrawableUML {
 			return;
 		}
 		
-		Iterator<Point> pIter = this.path.iterator();
+		Iterator<ImmutablePoint> pIter = this.path.iterator();
 		
-		Point first;
-		Point second = pIter.next();
+		ImmutablePoint first;
+		ImmutablePoint second = pIter.next();
 		
 		while (pIter.hasNext()) {
 			first = second;
@@ -182,7 +182,7 @@ public class UMLRelation implements DrawableUML {
 	}
 
 	@Override
-	public Point snapPoint(Point point) {
+	public ImmutablePoint snapPoint(ImmutablePoint point) {
 		
 		return this.path.closestPointTo(point);
 	}
@@ -193,18 +193,18 @@ public class UMLRelation implements DrawableUML {
 	}
 
 	@Override
-	public boolean hit(Point point) {
+	public boolean hit(ImmutablePoint point) {
 		return near(point, 10);
 	}
 
 	@Override
 	public boolean isWithin(Rectangle2D dragArea) {
-		Iterator<Point> iter = this.path.iterator();
-		Point current;
+		Iterator<ImmutablePoint> iter = this.path.iterator();
+		ImmutablePoint current;
 		while (iter.hasNext()) {
 			current = iter.next();
 			
-			if (!dragArea.contains(current)) {
+			if (!dragArea.contains(current.getPoint())) {
 				return false;
 			}
 		}

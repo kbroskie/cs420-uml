@@ -8,7 +8,7 @@ package edu.millersville.cs.segfault.immutable;
 
 //*****************************************************************************
 // Imports
-import java.awt.Point;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -22,7 +22,7 @@ public class ImmutablePath {
 	
 	//*************************************************************************
 	// Instance Variables
-	private final Point[] points;
+	private final ImmutablePoint[] points;
 	
 	//*************************************************************************
 	// Constructors
@@ -31,20 +31,16 @@ public class ImmutablePath {
 	 * Constructs a new Path by copying an Points                       *                                          *
 	 * @param points The array of Points to copy.                                                    *
 	 ********************************************************************/
-	public ImmutablePath(Point[] points) {
-		this.points = new Point[points.length];
-		
-		for (int i=0; i<points.length; ++i) {
-			this.points[i] = points[i];
-		}
+	public ImmutablePath(ImmutablePoint[] points) {
+		this.points = points;
 	}
 	
 	/********************************************************************
 	 * Constructs a new Path which contains a single Point.             *
 	 * @param origin The starting point of the new Path                 *
 	 ********************************************************************/
-	public ImmutablePath(Point origin) {
-		points = new Point[1];
+	public ImmutablePath(ImmutablePoint origin) {
+		points = new ImmutablePoint[1];
 		points[0] = origin;
 	}
 
@@ -54,7 +50,7 @@ public class ImmutablePath {
 	 * @param serialString The serialized Path to construct from.       *
 	 ********************************************************************/
 	public ImmutablePath(String serialString) {
-		ArrayList<Point> newPoints = new ArrayList<Point>();
+		ArrayList<ImmutablePoint> newPoints = new ArrayList<ImmutablePoint>();
 		int searchPosition=0;
 		while(serialString.indexOf("<point>", searchPosition) != -1 &&
 				serialString.indexOf("</point>", searchPosition) != -1) {
@@ -64,7 +60,7 @@ public class ImmutablePath {
 			newPoints.add(deserializePoint(pointString));
 			searchPosition = pointEnd + 8;
 		}
-		Point[] pointArray = new Point[newPoints.size()];
+		ImmutablePoint[] pointArray = new ImmutablePoint[newPoints.size()];
 		for (int i=0; i<pointArray.length; ++i ) {
 			pointArray[i] = newPoints.get(i);
 		}
@@ -80,10 +76,10 @@ public class ImmutablePath {
 
 	//*************************************************************************
 	// Deserialization Helpers
-	private Point deserializePoint(String pointString) {
+	private ImmutablePoint deserializePoint(String pointString) {
 		int x = Integer.parseInt(pointString.substring(0, pointString.indexOf(",")));
 		int y = Integer.parseInt(pointString.substring(pointString.indexOf(",")+1));
-		return new Point(x, y);
+		return new ImmutablePoint(x, y);
 	}
 	
 	//*************************************************************************
@@ -93,7 +89,7 @@ public class ImmutablePath {
 	 * Returns an iterator which returns the points in this path in order.   *
 	 * @return An in-sequence iterator for the contained points.             *
 	 *************************************************************************/
-	public Iterator<Point> iterator() {
+	public Iterator<ImmutablePoint> iterator() {
 		return new PointIterator(this.points);
 	}
 	
@@ -106,8 +102,8 @@ public class ImmutablePath {
 	 * @param newPoint The point to be added to the new Path.                *
 	 * @return A new Path with newPoint added.                               *
 	 *************************************************************************/
-	public ImmutablePath addPoint(Point newPoint){
-		Point[] newPath = Arrays.copyOf(points, points.length + 1);
+	public ImmutablePath addLast(ImmutablePoint newPoint){
+		ImmutablePoint[] newPath = Arrays.copyOf(points, points.length + 1);
 		newPath[newPath.length-1] = newPoint;
 		return new ImmutablePath(newPath);		
 	}
@@ -134,8 +130,8 @@ public class ImmutablePath {
 	 * Returns a new Point array which is a copy of the points in this Path. 
 	 * @return A new Point[] 
 	 *************************************************************************/
-	public Point[] getPoints() {
-		Point[] newPoints = new Point[this.points.length];
+	public ImmutablePoint[] getPoints() {
+		ImmutablePoint[] newPoints = new ImmutablePoint[this.points.length];
 		for (int i=0; i<this.points.length; ++i) {
 			newPoints[i] = this.points[i];
 		}
@@ -146,16 +142,16 @@ public class ImmutablePath {
 	 * Returns a copy of the first point in this Path.                       *
 	 * @return A copy of the first point in this Path.                       *
 	 *************************************************************************/
-	public Point first() {
-		return new Point(points[0]);
+	public ImmutablePoint first() {
+		return points[0];
 	}
 	
 	/*************************************************************************
 	 * Returns a copy of the last point in this Path.                        *
 	 * @return A copy of the last point in this Path.                        *
 	 *************************************************************************/
-	public Point last() {
-		return new Point(points[points.length-1]);
+	public ImmutablePoint last() {
+		return points[points.length-1];
 	}
 
 	/*************************************************************************
@@ -163,8 +159,8 @@ public class ImmutablePath {
 	 * @param testPoint The point to test for distance.                      *
 	 * @return The closest point on this Path to testPoint                   *
 	 *************************************************************************/
-	public Point closestPointTo(Point testPoint) {
-		Point snapPoint = null;
+	public ImmutablePoint closestPointTo(ImmutablePoint testPoint) {
+		ImmutablePoint snapPoint = null;
 		for (int i=0; i<this.points.length; ++i) {
 			if (points[i].distance(testPoint) < DrawMode.snapDistance)  {
 				if (snapPoint==null) {
@@ -199,12 +195,12 @@ public class ImmutablePath {
 	 * An in-sequence const-iterator for ImmutablePaths
 	 * @author Daniel Rabiega
 	 */
-	private class PointIterator implements Iterator<Point> {
+	private class PointIterator implements Iterator<ImmutablePoint> {
 		
-		Point[] points;
+		ImmutablePoint[] points;
 		int index;
 		
-		public PointIterator(Point[] points) {
+		public PointIterator(ImmutablePoint[] points) {
 			this.points = points;
 			index = 0;
 		}
@@ -215,7 +211,7 @@ public class ImmutablePath {
 		}
 
 		@Override
-		public Point next() {
+		public ImmutablePoint next() {
 			return points[index++];
 		}
 

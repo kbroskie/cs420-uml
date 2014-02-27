@@ -2,12 +2,12 @@ package edu.millersville.cs.segfault.ui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 
+import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableUML;
 
 public class SelectionMode implements PanelInteractionMode {
@@ -18,9 +18,9 @@ public class SelectionMode implements PanelInteractionMode {
 	private boolean shiftDown;
 	
 	private boolean perhapsDragging; // Sometimes it's hard to detect drag.
-	private Point dragStart;
+	private ImmutablePoint dragStart;
 	
-	private Point lastPoint;
+	private ImmutablePoint lastImmutablePoint;
 	
 	public SelectionMode(UMLPanel caller)
 	{
@@ -41,7 +41,7 @@ public class SelectionMode implements PanelInteractionMode {
 		Iterator<DrawableUML> zIter = panel.model().zIterator();
 		while (zIter.hasNext()) {
 			DrawableUML current = zIter.next();
-			if (current.hit(new Point(e.getX(), e.getY()))) {
+			if (current.hit(new ImmutablePoint(e.getX(), e.getY()))) {
 				panel.changeModel(panel.currentModel.select(current));
 				break;
 			}
@@ -57,8 +57,8 @@ public class SelectionMode implements PanelInteractionMode {
 			panel.changeModel(panel.model().unselectAll());
 		}
 		this.perhapsDragging = true;
-		this.dragStart = new Point(e.getX(), e.getY());
-		this.lastPoint = this.dragStart;
+		this.dragStart = new ImmutablePoint(e.getX(), e.getY());
+		this.lastImmutablePoint = this.dragStart;
 		panel.repaint();
 	}
 
@@ -72,7 +72,7 @@ public class SelectionMode implements PanelInteractionMode {
 		int x2 = e.getX();
 		int y1 = (int) dragStart.getY();
 		int y2 = e.getY();
-		Point dragEnd = new Point(x2, y2);
+		ImmutablePoint dragEnd = new ImmutablePoint(x2, y2);
 		Rectangle2D dragArea = new Rectangle2D.Double(Math.min(x1, x2), Math.min(y1, y2),
 				Math.abs(x1-x2), Math.abs(y1-y2));
 		
@@ -104,7 +104,7 @@ public class SelectionMode implements PanelInteractionMode {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		lastPoint = new Point(e.getX(), e.getY());
+		lastImmutablePoint = new ImmutablePoint(e.getX(), e.getY());
 		panel.repaint();
 	}
 
@@ -120,9 +120,9 @@ public class SelectionMode implements PanelInteractionMode {
 		
 		if (perhapsDragging) {
 			int x1 = (int) dragStart.getX();
-			int x2 = (int) lastPoint.getX();
+			int x2 = (int) lastImmutablePoint.getX();
 			int y1 = (int) dragStart.getY();
-			int y2 = (int) lastPoint.getY();
+			int y2 = (int) lastImmutablePoint.getY();
 			
 			g.setColor(Color.BLUE);
 			g.drawRect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2));
@@ -157,27 +157,27 @@ public class SelectionMode implements PanelInteractionMode {
 		}
 	}
 	
-	public Point orSnap(MouseEvent e) {
+	public ImmutablePoint orSnap(MouseEvent e) {
 		
-		Point mousePoint = new Point(e.getX(), e.getY());
-		Point snapPoint = null;
+		ImmutablePoint mouseImmutablePoint = new ImmutablePoint(e.getX(), e.getY());
+		ImmutablePoint snapImmutablePoint = null;
 		
 		for (Iterator<DrawableUML> zIter = panel.currentModel.zIterator();
 				zIter.hasNext();) {
-			Point newSnap = zIter.next().snapPoint(new Point(e.getX(), e.getY()));
-			if (newSnap != null && snapPoint == null) {
-				snapPoint = newSnap;
+			ImmutablePoint newSnap = zIter.next().snapPoint(new ImmutablePoint(e.getX(), e.getY()));
+			if (newSnap != null && snapImmutablePoint == null) {
+				snapImmutablePoint = newSnap;
 			} else if (newSnap != null){
-				if (newSnap.distance(mousePoint) < snapPoint.distance(mousePoint)) {
-					snapPoint = newSnap;
+				if (newSnap.distance(mouseImmutablePoint) < snapImmutablePoint.distance(mouseImmutablePoint)) {
+					snapImmutablePoint = newSnap;
 				}
 			}
 		}
 		
-		if (snapPoint != null) {
-			return snapPoint;
+		if (snapImmutablePoint != null) {
+			return snapImmutablePoint;
 		}
-		return new Point(e.getX(), e.getY());
+		return new ImmutablePoint(e.getX(), e.getY());
 	}
 
 	@Override

@@ -7,8 +7,10 @@
 package edu.millersville.cs.segfault.model;
 
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.geom.Rectangle2D;
+
+import edu.millersville.cs.segfault.immutable.ImmutablePoint;
+import edu.millersville.cs.segfault.ui.UMLPanel;
 
 
 /*****************************************************************************
@@ -22,8 +24,8 @@ public interface DrawableUML {
 	DrawableType getType();
 	DrawableUML select();
 	DrawableUML unselect();
-	Point snapPoint(Point point);
+	ImmutablePoint snapPoint(ImmutablePoint point);
 	boolean isSelected();
-	boolean hit(Point point);
+	boolean hit(ImmutablePoint point);
 	boolean isWithin(Rectangle2D dragArea);
 }
