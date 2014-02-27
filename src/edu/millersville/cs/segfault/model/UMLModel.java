@@ -95,6 +95,10 @@ public class UMLModel {
 		this.relations = new ImmutableSet<UMLRelation>();
 	}
 
+	/**
+	 * Copy constructor
+	 * @param source The UMLModel to be copied.
+	 */
 
 	public UMLModel(UMLModel source)
 	{
@@ -149,19 +153,13 @@ public class UMLModel {
 	
 
 	// Descriptive Constructor
-	public UMLModel(String copy_name, ImmutableSet<UMLObject> objects, ImmutableSet<UMLRelation> relations)
-
-	/**
-	 * Copy constructor
-	 * @param source The UMLModel to be copied.
-	 */
-	public UMLModel(UMLModel source) 
-	{
-		this();
-		this.modelName = source.getName();
-		this.objects = new ArrayList<UMLObject>(source.getObjects());
-		this.relations = new HashSet<UMLRelation>(source.getRelations());
+	public UMLModel(String name, ImmutableSet<UMLObject> objects, ImmutableSet<UMLRelation> relations) {
+		this.modelName = name;
+		this.objects = objects;
+		this.relations = relations;
 	}
+
+
 	
 	//********************************************************************
 	// Observers
