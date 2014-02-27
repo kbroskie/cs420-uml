@@ -311,4 +311,74 @@ public class UMLPanel extends JPanel {
 	public void getFocus() {
 		requestFocusInWindow();
 	}
+	
+	/******************************************************************************
+	 * Select Controller
+	 * --------------------
+	 * Handles Alternation between selectAll and deselectAll
+	 */
+	public void select()
+	{
+		if(fullSelection())
+		{
+			deselectAll();
+		} else {
+			selectAll();
+		}
+		this.repaint();
+	}
+	
+	/******************************************************************************
+	 * All Selected?
+	 * --------------------
+	 * Checks whether the entire model is selected
+	 */
+	public boolean fullSelection()
+	{
+		// Iterate through the set of models
+		Iterator<DrawableUML> zIter = this.model().zIterator();
+		while( zIter.hasNext())
+		{
+			// Check model's selection state
+			if(!( zIter.next().isSelected()))
+			{
+				return( false );
+			}
+		}
+		return( true );
+	}
+	
+	/******************************************************************************
+	 * Select All
+	 * --------------------
+	 * Sets every element in the panel to a selected state
+	 */
+	private void selectAll()
+	{
+		// Iterate through the set of models
+		Iterator<DrawableUML> zIter = this.model().zIterator();
+		while( zIter.hasNext())
+		{
+			// Set each model to a selected state
+			this.changeModel(this.model().select(zIter.next()));
+		}
+		this.repaint();
+	}
+	
+	/******************************************************************************
+	 * Select Deselect All
+	 * --------------------
+	 * Sets every element in the panel to an un-selected state
+	 */
+	private void deselectAll()
+	{
+		// Iterate through the set of models
+		Iterator<DrawableUML> zIter = this.model().zIterator();
+		while( zIter.hasNext())
+		{
+			// Set each model to a selected state
+			this.changeModel(this.model().unselect(zIter.next()));
+		}
+		this.repaint();
+	}
 }
