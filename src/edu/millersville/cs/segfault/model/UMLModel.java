@@ -1,8 +1,3 @@
-/**
- * @author Team Segfault
- * @version 1.0
- * @since 2014-02-20
- */
 package edu.millersville.cs.segfault.model;
 
 import java.util.Iterator;
@@ -14,6 +9,11 @@ import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.relation.RelationType;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
 
+
+/*****************************************************************************
+ * 
+ * @author Daniel Rabiega
+ */
 public class UMLModel {
 	
 	//*************************************************************************

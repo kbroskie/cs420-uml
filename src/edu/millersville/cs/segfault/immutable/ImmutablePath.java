@@ -1,4 +1,4 @@
-package edu.millersville.cs.segfault.model;
+package edu.millersville.cs.segfault.immutable;
 
 /*****************************************************************************
  * An immutable sequence container for Points.                               *
@@ -18,7 +18,7 @@ import edu.millersville.cs.segfault.ui.DrawMode;
 
 //*****************************************************************************
 // Class Definition
-public class Path {
+public class ImmutablePath {
 	
 	//*************************************************************************
 	// Instance Variables
@@ -31,7 +31,7 @@ public class Path {
 	 * Constructs a new Path by copying an Points                       *                                          *
 	 * @param points The array of Points to copy.                                                    *
 	 ********************************************************************/
-	public Path(Point[] points) {
+	public ImmutablePath(Point[] points) {
 		this.points = new Point[points.length];
 		
 		for (int i=0; i<points.length; ++i) {
@@ -43,7 +43,7 @@ public class Path {
 	 * Constructs a new Path which contains a single Point.             *
 	 * @param origin The starting point of the new Path                 *
 	 ********************************************************************/
-	public Path(Point origin) {
+	public ImmutablePath(Point origin) {
 		points = new Point[1];
 		points[0] = origin;
 	}
@@ -53,7 +53,7 @@ public class Path {
 	 * a Path object.                                                   *
 	 * @param serialString The serialized Path to construct from.       *
 	 ********************************************************************/
-	public Path(String serialString) {
+	public ImmutablePath(String serialString) {
 		ArrayList<Point> newPoints = new ArrayList<Point>();
 		int searchPosition=0;
 		while(serialString.indexOf("<point>", searchPosition) != -1 &&
@@ -71,7 +71,10 @@ public class Path {
 		this.points = pointArray;
 	}
 	
-	public Path(Path path) {
+	/*************************************************************************
+	 * Creates a new ImmutablePath as a copy of an existing Path.
+	 */
+	public ImmutablePath(ImmutablePath path) {
 		this.points = path.getPoints();
 	}
 
@@ -103,10 +106,10 @@ public class Path {
 	 * @param newPoint The point to be added to the new Path.                *
 	 * @return A new Path with newPoint added.                               *
 	 *************************************************************************/
-	public Path addPoint(Point newPoint){
+	public ImmutablePath addPoint(Point newPoint){
 		Point[] newPath = Arrays.copyOf(points, points.length + 1);
 		newPath[newPath.length-1] = newPoint;
-		return new Path(newPath);		
+		return new ImmutablePath(newPath);		
 	}
 	
 	//*************************************************************************
@@ -192,8 +195,11 @@ public class Path {
 	//*************************************************************************
 	// Nested Classes
 	
+	/*************************************************************************
+	 * An in-sequence const-iterator for ImmutablePaths
+	 * @author Daniel Rabiega
+	 */
 	private class PointIterator implements Iterator<Point> {
-		
 		
 		Point[] points;
 		int index;
@@ -213,7 +219,9 @@ public class Path {
 			return points[index++];
 		}
 
-		@Override
+		/*********************************************************************
+		 * Throws an UnsupportedOperationException
+		 */
 		public void remove() {
 			throw new UnsupportedOperationException("Path is immutable.");
 		}

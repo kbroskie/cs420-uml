@@ -13,9 +13,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 
+import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
-import edu.millersville.cs.segfault.model.Path;
 import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.object.ObjectType;
 import edu.millersville.cs.segfault.model.object.UMLObject;
@@ -45,7 +45,7 @@ public class DrawMode implements PanelInteractionMode {
 	private Point startPoint;
 	
 	// Relation drawing variables
-	private Path drawPath;
+	private ImmutablePath drawPath;
 	private RelationType relationType;
 	
 	//*************************************************************************
@@ -83,7 +83,7 @@ public class DrawMode implements PanelInteractionMode {
 		return new UMLObject("", origin, z, size, false);
 	}
 	// Returns a UMLRelation of subclass RelationType type
-	private static UMLRelation makeRelation(RelationType type, Path path) {
+	private static UMLRelation makeRelation(RelationType type, ImmutablePath path) {
 		return new UMLRelation(path, -1, false);
 	}
 
@@ -107,7 +107,7 @@ public class DrawMode implements PanelInteractionMode {
 	public void mousePressed(MouseEvent e) {
 		drawing = true;
 		if (drawingRelation) {
-			drawPath = new Path(orSnap(e));
+			drawPath = new ImmutablePath(orSnap(e));
 		} else {
 			startPoint = orSnap(e);
 		}

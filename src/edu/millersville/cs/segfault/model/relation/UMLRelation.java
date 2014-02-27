@@ -10,9 +10,9 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 
+import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
-import edu.millersville.cs.segfault.model.Path;
 
 /*****************************************************************************
  * Root of the class heirarchy for various types of Relations and arrows.    
@@ -43,7 +43,7 @@ public class UMLRelation implements DrawableUML {
 	//*************************************************************************
 	// Member variables
 	//*************************************************************************
-	private Path path;
+	private ImmutablePath path;
 	private int z;
 	private boolean selected;
 	
@@ -59,7 +59,7 @@ public class UMLRelation implements DrawableUML {
 	 * Creates a new UMLRelation with a given path                            
 	 * @param path The path of the new UMLRelation                            
 	 **************************************************************************/
-	public UMLRelation(Path path, int z, boolean selected)
+	public UMLRelation(ImmutablePath path, int z, boolean selected)
 	{
 		this.z = z;
 		this.selected = selected;
@@ -77,7 +77,7 @@ public class UMLRelation implements DrawableUML {
 	{
 		this.selected = false;
 		this.z = findIntAttr("z", serialized);
-		this.path = new Path(serialized.substring(
+		this.path = new ImmutablePath(serialized.substring(
 				serialized.indexOf("<path>")+6,
 				serialized.indexOf("</path>")));
 	}
@@ -168,7 +168,7 @@ public class UMLRelation implements DrawableUML {
 		return new UMLRelation(this.getPath(), this.getZ(), true);
 	}
 
-	private Path getPath() {
+	private ImmutablePath getPath() {
 		return this.path;
 	}
 
