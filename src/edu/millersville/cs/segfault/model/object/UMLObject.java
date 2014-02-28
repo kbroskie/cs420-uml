@@ -116,8 +116,8 @@ public class UMLObject implements DrawableUML {
 		serialString += "  <x>" + this.origin.getX() + "</x>\n";
 		serialString += "  <y>" + this.origin.getY() + "</y>\n";
 		serialString += "  <z>" + this.z + "</z>\n";
-		serialString += "  <width>" + this.size.getWidth() + "</width>\n";
-		serialString += "  <height>" + this.size.getHeight() + "</height>\n";
+		serialString += "  <width>" + (int) Math.round(this.size.getWidth()) + "</width>\n";
+		serialString += "  <height>" + (int) Math.round(this.size.getHeight()) + "</height>\n";
 		
 		return serialString;
 	}

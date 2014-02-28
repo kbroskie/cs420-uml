@@ -50,17 +50,22 @@ public class ImmutablePath {
 	 * @param serialString The serialized Path to construct from.       *
 	 ********************************************************************/
 	public ImmutablePath(String serialString) {
-		ArrayList<ImmutablePoint> newPoints = new ArrayList<ImmutablePoint>();
+		ArrayList<ImmutablePoint> newPoints = 
+				new ArrayList<ImmutablePoint>();
 		int searchPosition=0;
 		while(serialString.indexOf("<point>", searchPosition) != -1 &&
 				serialString.indexOf("</point>", searchPosition) != -1) {
-			int pointStart = serialString.indexOf("<point>", searchPosition) + 7;
-			int pointEnd = serialString.indexOf("</point>", searchPosition);
-			String pointString = serialString.substring(pointStart, pointEnd);
+			int pointStart = 
+					serialString.indexOf("<point>", searchPosition) + 7;
+			int pointEnd = 
+					serialString.indexOf("</point>", searchPosition);
+			String pointString = 
+					serialString.substring(pointStart, pointEnd);
 			newPoints.add(deserializePoint(pointString));
 			searchPosition = pointEnd + 8;
 		}
-		ImmutablePoint[] pointArray = new ImmutablePoint[newPoints.size()];
+		ImmutablePoint[] pointArray = 
+				new ImmutablePoint[newPoints.size()];
 		for (int i=0; i<pointArray.length; ++i ) {
 			pointArray[i] = newPoints.get(i);
 		}
@@ -77,8 +82,10 @@ public class ImmutablePath {
 	//*************************************************************************
 	// Deserialization Helpers
 	private ImmutablePoint deserializePoint(String pointString) {
-		int x = Integer.parseInt(pointString.substring(0, pointString.indexOf(",")));
-		int y = Integer.parseInt(pointString.substring(pointString.indexOf(",")+1));
+		int x = Integer.parseInt(pointString.substring(0, 
+				pointString.indexOf(",")));
+		int y = Integer.parseInt(pointString.substring(
+				pointString.indexOf(",")+1));
 		return new ImmutablePoint(x, y);
 	}
 	
@@ -165,7 +172,8 @@ public class ImmutablePath {
 			if (points[i].distance(testPoint) < DrawMode.snapDistance)  {
 				if (snapPoint==null) {
 					snapPoint = points[i];
-				} else if (snapPoint.distance(testPoint) > points[i].distance(testPoint)) {
+				} else if (snapPoint.distance(testPoint) > 
+						points[i].distance(testPoint)) {
 					snapPoint = points[i];
 				}
 			}
@@ -185,7 +193,8 @@ public class ImmutablePath {
 	}
 	
 	private String serializePoint(int index) {
-		return "<point>" + (int) points[index].getX() + "," + (int) points[index].getY() + "</point>";
+		return "<point>" + points[index].getX() + "," + points[index].getY() + 
+				"</point>";
 	}
 	
 	//*************************************************************************

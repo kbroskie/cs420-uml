@@ -76,10 +76,10 @@ public class UMLModel {
 	//*************************************************************************
 	// Instance Variables
 	//*************************************************************************
-	private String modelName;    // Name of the model.
+	private final String modelName;    // Name of the model.
 	
-	private ImmutableSet<UMLObject> objects;
-	private ImmutableSet<UMLRelation> relations;
+	private final ImmutableSet<UMLObject> objects;
+	private final ImmutableSet<UMLRelation> relations;
 	
 	//*************************************************************************
 	// Constructors	
@@ -117,7 +117,6 @@ public class UMLModel {
 
 	public UMLModel(String serialized) throws Exception 
 	{
-		this();
 		
 		// De-serialize title
 		int startTitle = serialized.indexOf("<title>") + 7;
@@ -130,25 +129,29 @@ public class UMLModel {
 		
 		// De-serialize any objects
 		int objectSearch = 0;
+		ImmutableSet<UMLObject> objects = new ImmutableSet<UMLObject>();
 		while (serialized.indexOf("<object>", objectSearch) != -1) 
 		{
 			int startObject = serialized.indexOf("<object>", objectSearch);
 			int endObject = serialized.indexOf("</object>", objectSearch);
 			UMLObject newObject = new UMLObject(serialized.substring(startObject, endObject));
-			objects.add(newObject);
+			objects = objects.add(newObject);
 			objectSearch = endObject + 1;
 		}
+		this.objects = objects;
 		
 		// De-serialize any relations
 		int relationSearch = 0;
+		ImmutableSet<UMLRelation> relations = new ImmutableSet<UMLRelation>();
 		while (serialized.indexOf("<relation>", relationSearch) != -1)
 		{
 			int startRelation = serialized.indexOf("<relation>", relationSearch);
 			int endRelation = serialized.indexOf("</relation>", relationSearch);
 			UMLRelation newRelation = new UMLRelation(serialized.substring(startRelation, endRelation));
-			relations.add(newRelation);
+			relations = relations.add(newRelation);
 			relationSearch = endRelation + 1;
 		}
+		this.relations = relations;
 	}
 	
 
