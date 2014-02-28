@@ -35,15 +35,19 @@ public class WindowUI extends JPanel
 	private UMLPanel umlPanel;
 	
 	// Menu Items
+	/**** FILE */
 	private static final String fileMenuText = "File";
 	private static final String newMenuText = "New";
 	private static final String openMenuText = "Open";
 	private static final String saveMenuText = "Save";
 	private static final String saveAsMenuText = "Save as...";
-	private static final String exitMenuText = "Exit";	
+	private static final String exitMenuText = "Exit";
+	
+	/**** EDIT */
 	private static final String editMenuText = "Edit";
 	private static final String undoMenuText = "Undo";
 	private static final String redoMenuText = "Redo";
+	private static final String selectAllText = "Select/Deselect All";
 	
 	// Options Pane Items
 	private static final String optionsPaneObjectDraw = "Object";
@@ -157,10 +161,15 @@ public class WindowUI extends JPanel
 	   JMenuItem redoItem = new JMenuItem(redoMenuText);
 	   redoItem.addActionListener(this);
 	   redoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, Event.CTRL_MASK));
-
+	   
+	   JMenuItem selectAllItem = new JMenuItem(selectAllText);
+	   selectAllItem.addActionListener(this);
+	   selectAllItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
+	   
 	   // Add the sub-menus to the Edit menu.
 	   editMenu.add(undoItem);
 	   editMenu.add(redoItem);
+	   editMenu.add(selectAllItem);
 	   
 	   return editMenu;
 	}
@@ -297,6 +306,9 @@ public class WindowUI extends JPanel
 		 }
 		 else if (selectedCommand == redoMenuText) {
 			 umlPanel.redo();
+		 }
+		 else if (selectedCommand == selectAllText) {
+			 umlPanel.select();
 		 } else if (selectedCommand == optionsPaneObjectDraw ) {
 			 umlPanel.changeInteractionMode(new DrawMode(DrawableType.OBJECT, umlPanel));
 		 } else if (selectedCommand == optionsPaneRelationDraw ) {
