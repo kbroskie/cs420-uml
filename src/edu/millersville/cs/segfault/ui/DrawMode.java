@@ -79,12 +79,12 @@ public class DrawMode implements PanelInteractionMode {
 	// Object Factories
 	//*************************************************************************
 	// Returns a UMLObject of subclass ObjectType type
-	private static UMLObject makeObject(ObjectType type, ImmutablePoint origin, int z, Dimension size) {
-		return new UMLObject("", origin, z, size, false);
+	private UMLObject makeObject(ObjectType type, ImmutablePoint origin, Dimension size) {
+		return new UMLObject("", origin, panel.model().highestZ() + 1, size, false);
 	}
 	// Returns a UMLRelation of subclass RelationType type
-	private static UMLRelation makeRelation(RelationType type, ImmutablePath path) {
-		return new UMLRelation(path, -1, false);
+	private UMLRelation makeRelation(RelationType type, ImmutablePath path) {
+		return new UMLRelation(path, panel.model().highestZ() + 1, false);
 	}
 
 	
@@ -134,8 +134,10 @@ public class DrawMode implements PanelInteractionMode {
 			int y2 = (int) releaseImmutablePoint.getY();
 			
 			panel.changeModel(panel.currentModel.addObject(
-					makeObject(ObjectType.OBJECT, new ImmutablePoint(Math.min(x1, x2), Math.min(y1, y2)), 1, 
-							new Dimension(Math.abs(x1-x2), Math.abs(y1-y2)))));
+					makeObject(ObjectType.OBJECT, 
+							   new ImmutablePoint(Math.min(x1, x2), 
+							   Math.min(y1, y2)), 
+							   new Dimension(Math.abs(x1-x2), Math.abs(y1-y2)))));
 		}
 		panel.repaint();
 	}

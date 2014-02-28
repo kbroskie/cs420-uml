@@ -3,6 +3,7 @@ package edu.millersville.cs.segfault.model.object;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
@@ -194,6 +195,9 @@ public class UMLObject implements DrawableUML {
 		g.drawString(this.label, this.getX()+15, this.getY()+15);
 	}
 
+	public void contextMenu(MouseEvent e) {
+		
+	}
 	
 	public DrawableType getType() { return DrawableType.OBJECT; }
 
@@ -252,11 +256,11 @@ public class UMLObject implements DrawableUML {
 
 	@Override
 	public boolean hit(ImmutablePoint point) {
-		Rectangle2D box = new Rectangle2D.Double(this.getX(),
-												 this.getY(),
-												 this.getX() + this.getWidth(),
-												 this.getY() + this.getHeight());
-		return box.contains(point.getPoint());
+		return point.getX() > this.origin.getX() &&
+			   point.getX() < this.origin.getX() + this.size.getWidth() &&
+			   point.getY() > this.origin.getY() && 
+			   point.getY() < this.origin.getY() + this.size.getHeight();
+		
 	}
 
 	@Override
@@ -267,4 +271,6 @@ public class UMLObject implements DrawableUML {
 		}
 		return false;
 	}
+
+
 }

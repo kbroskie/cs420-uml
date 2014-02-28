@@ -5,6 +5,7 @@ package edu.millersville.cs.segfault.model.relation;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
@@ -159,6 +160,10 @@ public class UMLRelation implements DrawableUML {
 				g.drawArc((int) second.getX()-5, (int) second.getY()-5, 10, 10, 0, (int) Math.PI*2); 
 			}
 		}
+	}
+	
+	public void contextMenu(MouseEvent e) {
+		
 	}
 	
 	public DrawableType getType() { return DrawableType.RELATION; }

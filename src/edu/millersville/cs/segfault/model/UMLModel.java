@@ -216,7 +216,21 @@ public class UMLModel {
 		return this.relations; 
 	}
 	
-
+	public int highestZ() {
+		Iterator<DrawableUML> zIter = zIterator();
+		int highZ = 0;
+		while (zIter.hasNext()) {
+			int newZ = zIter.next().getZ();
+			assert(newZ >= highZ);
+			highZ = newZ;
+		}
+		return highZ;
+	}
+	
+	public int lowestZ() {
+		return zIterator().next().getZ();
+	}
+	
 	//********************************************************************
 	// Mutators
 	//********************************************************************

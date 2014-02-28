@@ -39,13 +39,18 @@ public class SelectionMode implements PanelInteractionMode {
 			panel.changeModel(panel.model().unselectAll());
 		}
 		Iterator<DrawableUML> zIter = panel.model().zIterator();
+		DrawableUML currentTarget = null;
 		while (zIter.hasNext()) {
+			
 			DrawableUML current = zIter.next();
 			if (current.hit(new ImmutablePoint(e.getX(), e.getY()))) {
-				panel.changeModel(panel.currentModel.select(current));
-				break;
+				currentTarget = current;
 			}
 		}
+		if (currentTarget != null) {
+			panel.changeModel(panel.currentModel.select(currentTarget));
+		}
+		
 	}
 
 	@Override
