@@ -142,10 +142,7 @@ public class SelectionMode implements PanelInteractionMode {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode()==KeyEvent.VK_DELETE)
-		{
-			panel.changeModel(panel.model().deleteSelected());
-		} else if (e.getKeyCode()==KeyEvent.VK_CONTROL) {
+		if (e.getKeyCode()==KeyEvent.VK_CONTROL) {
 			controlDown = true;
 		} else if (e.getKeyCode()==KeyEvent.VK_SHIFT) {
 			shiftDown = true;
