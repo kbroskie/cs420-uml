@@ -48,11 +48,6 @@ public class UMLRelation implements DrawableUML {
 	private final int z;
 	private final boolean selected;
 	
-	
-	//*************************************************************************
-	
-	
-	
 	//*************************************************************************
 	// Constructors
 	
