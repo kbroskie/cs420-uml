@@ -5,10 +5,11 @@ package edu.millersville.cs.segfault.ui;
  */
 
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.Iterator;
 
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
@@ -35,6 +36,9 @@ public class DrawMode extends PanelInteractionMode {
 	private final UMLPanel panel;
 	private final DrawableType drawType;
 	
+	private ImmutablePoint lastPoint;
+	private ImmutablePoint startPoint;
+	
 	//*************************************************************************
 	// Constructors
 	//*************************************************************************	
@@ -47,7 +51,9 @@ public class DrawMode extends PanelInteractionMode {
 	 */	
 	public DrawMode(DrawableType type, UMLPanel panel) {
 		this.drawType = type;
-		this.panel = panel;		
+		this.panel = panel;	
+		this.lastPoint = null;
+		this.startPoint = null;
 	}
 	
 	//*************************************************************************
@@ -55,23 +61,57 @@ public class DrawMode extends PanelInteractionMode {
 	//*************************************************************************
 	// Returns a UMLObject of subclass ObjectType type
 	private UMLObject makeObject(ObjectType type, ImmutablePoint origin, Dimension size) {
-		return new UMLObject("", origin, panel.model().highestZ() + 1, size, false);
+		return new UMLObject("", origin, panel.getModel().highestZ() + 1, size, false);
 	}
 	// Returns a UMLRelation of subclass RelationType type
 	private UMLRelation makeRelation(RelationType type, ImmutablePath path) {
-		return new UMLRelation(path, panel.model().highestZ() + 1, false);
+		return new UMLRelation(path, panel.getModel().highestZ() + 1, false);
 	}
 
 	
 	//*************************************************************************
 	// Action Listener Methods
 	//*************************************************************************
-	
 
+	public void mouseDragged(MouseEvent e) {
+		super.mouseDragged(e);
+		lastPoint = snap(new ImmutablePoint(e.getX(), e.getY()));
+		panel.repaint();
+	}
+
+	public void mousePressed(MouseEvent e) {
+		super.mousePressed(e);
+		startPoint = snap(new ImmutablePoint(e.getX(), e.getY()));
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		super.mouseReleased(e);
+		
+		if (startPoint != null && lastPoint != null) {
+			addToModel(startPoint, lastPoint);
+			startPoint = null;
+			lastPoint = null;
+		}	
+	}
+	
 	//*************************************************************************
 	// Interface Actions
 	//*************************************************************************
 	
+	private void addToModel(ImmutablePoint first, ImmutablePoint second) {
+		if (UMLModel.isRelationType(drawType)) {
+			panel.changeModel(panel.getModel().addRelation(
+					makeRelation(UMLModel.getRelationType(drawType),
+							     new ImmutablePath(first).addLast(second))));
+		} else {
+			panel.changeModel(panel.getModel().addObject(
+				makeObject(UMLModel.getObjectType(drawType),
+					   new ImmutablePoint(Math.min(first.getX(), second.getX()),
+							   			  Math.min(first.getY(), second.getY())),
+					   new Dimension(Math.abs(first.getX()-second.getX()),
+							         Math.abs(first.getY()-second.getY())))));
+		}
+	}
 	
 	//*************************************************************************
 	// Drawing Methods
@@ -82,19 +122,42 @@ public class DrawMode extends PanelInteractionMode {
 	 */
 	@Override
 	public void draw(Graphics g) {
-		
+		g.setColor(Color.BLUE);
+		if (startPoint != null && lastPoint != null) {
+			if (UMLModel.isObjectType(drawType)) {
+				g.drawRect(Math.min(startPoint.getX(), lastPoint.getX()), 
+						   Math.min(startPoint.getY(), lastPoint.getY()), 
+						   Math.abs(startPoint.getX() - lastPoint.getX()), 
+						   Math.abs(startPoint.getY() - lastPoint.getY()));
+			} else {
+				g.drawLine(startPoint.getX(), startPoint.getY(), 
+						   lastPoint.getX(), lastPoint.getY());
+			}
+		}
 	}
 	
-	//*************************************************************************
-	// Helpers
-	//*************************************************************************
+	public ImmutablePoint snap(ImmutablePoint p) {
+		Iterator<DrawableUML> zIter = panel.getModel().zIterator();
+		
+		ImmutablePoint closest = null;
+		
+		while (zIter.hasNext()) {
+			ImmutablePoint current = zIter.next().snapPoint(p);
+			if ((current != null && closest == null) ||
+				 current != null && current.distance(p) < closest.distance(p)) {
+				closest = current;
+			}
+		}
+		
+		if (closest != null && p.distance(closest) < snapDistance) {
+			return closest;
+		}
+		return p;
+	}
 
 
 	@Override
-	public void leaveMode() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void leaveMode() {}
 	
 	
 }

@@ -36,9 +36,9 @@ public class SelectionMode extends PanelInteractionMode {
 		panel.getFocus();
 		
 		if (!controlDown && !shiftDown) {
-			panel.changeModel(panel.model().unselectAll());
+			panel.changeModel(panel.getModel().unselectAll());
 		}
-		Iterator<DrawableUML> zIter = panel.model().zIterator();
+		Iterator<DrawableUML> zIter = panel.getModel().zIterator();
 		DrawableUML currentTarget = null;
 		while (zIter.hasNext()) {
 			
@@ -59,7 +59,7 @@ public class SelectionMode extends PanelInteractionMode {
 		panel.getFocus();
 		
 		if (!controlDown && !shiftDown) {
-			panel.changeModel(panel.model().unselectAll());
+			panel.changeModel(panel.getModel().unselectAll());
 		}
 		this.perhapsDragging = true;
 		this.dragStart = new ImmutablePoint(e.getX(), e.getY());
@@ -82,43 +82,23 @@ public class SelectionMode extends PanelInteractionMode {
 				Math.abs(x1-x2), Math.abs(y1-y2));
 		
 		if (dragEnd.distance(dragStart) > 10) {
-			Iterator<DrawableUML> zIter = panel.model().zIterator();
+			Iterator<DrawableUML> zIter = panel.getModel().zIterator();
 			DrawableUML current;
 			while (zIter.hasNext()) {
 				current = zIter.next();
 				if (current.isWithin(dragArea)) {
-					panel.changeModel(panel.model().select(current));
+					panel.changeModel(panel.getModel().select(current));
 				}
 			}
 		}
 		panel.repaint();
 
 	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		lastImmutablePoint = new ImmutablePoint(e.getX(), e.getY());
 		panel.repaint();
 	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public void draw(Graphics g) 
 	{
@@ -134,17 +114,11 @@ public class SelectionMode extends PanelInteractionMode {
 		}
 	}
 	
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		
-	}
-
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode()==KeyEvent.VK_DELETE)
 		{
-			panel.changeModel(panel.model().deleteSelected());
+			panel.changeModel(panel.getModel().deleteSelected());
 		} else if (e.getKeyCode()==KeyEvent.VK_CONTROL) {
 			controlDown = true;
 		} else if (e.getKeyCode()==KeyEvent.VK_SHIFT) {
@@ -187,7 +161,7 @@ public class SelectionMode extends PanelInteractionMode {
 
 	@Override
 	public void leaveMode() {
-		panel.changeModel(panel.model().unselectAll());
+		panel.changeModel(panel.getModel().unselectAll());
 	}
 	
 }

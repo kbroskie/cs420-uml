@@ -64,4 +64,8 @@ public class ImmutablePoint {
 		return Math.sqrt((Math.pow(this.x - p.getX(), 2) + 
 				          Math.pow(this.y - p.getY(), 2))*1.0);
 	}
+	
+	public String toString() {
+		return this.x + "," + this.y;
+	}
 }

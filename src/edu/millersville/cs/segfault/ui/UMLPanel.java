@@ -51,7 +51,7 @@ public class UMLPanel extends JPanel {
 		hasFile = false;
 		srcFile = new File("");
 		setFocusable(true);
-		gridOn = false;
+		gridOn = true;
 		
 	}
 
@@ -133,12 +133,12 @@ public class UMLPanel extends JPanel {
 		
 		g.setColor(Color.LIGHT_GRAY);
 		
-		for (int vertical = 0; vertical * 10 < width; ++vertical) {
-			g.drawLine(vertical*10, 0, vertical*10, height);
+		for (int vertical = 0; vertical * DrawMode.snapDistance < width; ++vertical) {
+			g.drawLine(vertical*DrawMode.snapDistance, 0, vertical*DrawMode.snapDistance, height);
 		}
 		
-		for (int horizontal = 0; horizontal * 10 < height; ++horizontal) {
-			g.drawLine(0, horizontal*10, width, horizontal*10);
+		for (int horizontal = 0; horizontal * DrawMode.snapDistance < height; ++horizontal) {
+			g.drawLine(0, horizontal*DrawMode.snapDistance, width, horizontal*DrawMode.snapDistance);
 		}
 	}
 	
@@ -162,7 +162,7 @@ public class UMLPanel extends JPanel {
 		}
 	}
 	
-	public UMLModel model()
+	public UMLModel getModel()
 	{
 		return currentModel;
 	}
@@ -357,7 +357,7 @@ public class UMLPanel extends JPanel {
 	public boolean fullSelection()
 	{
 		// Iterate through the set of models
-		Iterator<DrawableUML> zIter = this.model().zIterator();
+		Iterator<DrawableUML> zIter = this.getModel().zIterator();
 		while( zIter.hasNext())
 		{
 			// Check model's selection state
@@ -377,11 +377,11 @@ public class UMLPanel extends JPanel {
 	private void selectAll()
 	{
 		// Iterate through the set of models
-		Iterator<DrawableUML> zIter = this.model().zIterator();
+		Iterator<DrawableUML> zIter = this.getModel().zIterator();
 		while( zIter.hasNext())
 		{
 			// Set each model to a selected state
-			this.changeModel(this.model().select(zIter.next()));
+			this.changeModel(this.getModel().select(zIter.next()));
 		}
 		this.repaint();
 	}
@@ -394,11 +394,11 @@ public class UMLPanel extends JPanel {
 	private void deselectAll()
 	{
 		// Iterate through the set of models
-		Iterator<DrawableUML> zIter = this.model().zIterator();
+		Iterator<DrawableUML> zIter = this.getModel().zIterator();
 		while( zIter.hasNext())
 		{
 			// Set each model to a selected state
-			this.changeModel(this.model().unselect(zIter.next()));
+			this.changeModel(this.getModel().unselect(zIter.next()));
 		}
 		this.repaint();
 	}

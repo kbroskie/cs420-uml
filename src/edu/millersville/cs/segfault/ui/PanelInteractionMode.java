@@ -8,6 +8,11 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class PanelInteractionMode implements MouseListener, MouseMotionListener, KeyListener {
+	
+	private boolean controlDown;
+	private boolean shiftDown;
+
+	
 	void draw(Graphics g) {
 		
 	}
@@ -17,62 +22,54 @@ public class PanelInteractionMode implements MouseListener, MouseMotionListener,
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyTyped(KeyEvent e) {}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+		switch(e.getKeyCode()) {
+		case KeyEvent.VK_CONTROL: controlDown=true;
+								  break;
+		case KeyEvent.VK_SHIFT:   shiftDown=true;
+								  break;
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+		switch(e.getKeyCode()) {
+		case KeyEvent.VK_CONTROL: controlDown=false;
+								  break;
+		case KeyEvent.VK_SHIFT:   shiftDown=false;
+								  break;
+		}
 	}
 
 	@Override
-	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseDragged(MouseEvent e) {}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseMoved(MouseEvent e) {}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseReleased(MouseEvent e) {}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void mouseExited(MouseEvent e) {}
+
+	public boolean isControlDown() {
+		return controlDown;
+	}
+	
+	public boolean isShiftDown() {
+		return shiftDown;
 	}
 }

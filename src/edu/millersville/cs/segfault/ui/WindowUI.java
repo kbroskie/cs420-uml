@@ -296,10 +296,10 @@ public class WindowUI extends JPanel
 			 umlPanel.load();
 		 }
 		 else if (selectedCommand == saveMenuText) {
-			 umlPanel.save(umlPanel.model().serialize());
+			 umlPanel.save(umlPanel.getModel().serialize());
 		 }
 		 else if (selectedCommand == saveAsMenuText) {
-			 umlPanel.saveAs(umlPanel.model().serialize());
+			 umlPanel.saveAs(umlPanel.getModel().serialize());
 		 }
 		 else if (selectedCommand == undoMenuText) {
 			 umlPanel.undo();	

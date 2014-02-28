@@ -129,7 +129,7 @@ public class ImmutablePath {
 	 * Returns the number of Points in this Path                             *
 	 * @return The number of Points in this Path                             *
 	 *************************************************************************/
-	public int getSize() {
+	public int size() {
 		return points.length;
 	}
 	
@@ -231,6 +231,30 @@ public class ImmutablePath {
 			throw new UnsupportedOperationException("Path is immutable.");
 		}
 		
+	}
+
+	public ImmutablePoint snapPoint(ImmutablePoint point) {
+		if (this.size() < 2) {
+			return null;
+		}
+		Iterator<ImmutablePoint> iter = this.iterator();
+		ImmutablePoint last;
+		ImmutablePoint current = iter.next();
+		
+		ImmutablePoint closest = null;
+		
+		while (iter.hasNext()) {
+			last = current;
+			current = iter.next();
+			ImmutableLine line = new ImmutableLine(last, current);
+			ImmutablePoint newClosest = line.snapPoint(point);
+			
+			if ((newClosest != null && closest == null) || 
+				(newClosest != null && newClosest.distance(point) < closest.distance(point))) {
+				closest = newClosest;
+			}
+		}
+		return closest;
 	}
 	
 	

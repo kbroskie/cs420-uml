@@ -105,7 +105,7 @@ public class UMLRelation implements DrawableUML {
 	 *************************************************************************/
 	public boolean near(ImmutablePoint point, int maxdist)
 	{
-		if (this.path.getSize() < 2) {
+		if (this.path.size() < 2) {
 			return false;
 		}
 		
@@ -137,7 +137,7 @@ public class UMLRelation implements DrawableUML {
 			g.setColor(Color.BLUE);
 		}
 		
-		if (this.path.getSize() < 2) {
+		if (this.path.size() < 2) {
 			return;
 		}
 		
@@ -183,8 +183,7 @@ public class UMLRelation implements DrawableUML {
 
 	@Override
 	public ImmutablePoint snapPoint(ImmutablePoint point) {
-		
-		return this.path.closestPointTo(point);
+		return this.path.snapPoint(point);
 	}
 
 	@Override

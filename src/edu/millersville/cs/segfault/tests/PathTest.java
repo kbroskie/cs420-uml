@@ -49,8 +49,8 @@ public class PathTest {
 			++index;
 		}
 		
-		assertTrue("Size test failed.", pointTest.getSize()==1 &&
-				pointTest.addLast(testPoints[1]).getSize()==2);
+		assertTrue("Size test failed.", pointTest.size()==1 &&
+				pointTest.addLast(testPoints[1]).size()==2);
 		
 		assertTrue("Last test failed.", testPoints[2].getX() == arrayTest.last().getX());
 		
