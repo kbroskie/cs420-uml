@@ -34,6 +34,7 @@ public class UMLPanel extends JPanel {
 	int lastY;
 	static boolean hasFile;
 	static File srcFile;
+	boolean gridOn;
 	
 	enum change_types {}
 	
@@ -50,6 +51,7 @@ public class UMLPanel extends JPanel {
 		hasFile = false;
 		srcFile = new File("");
 		setFocusable(true);
+		gridOn = false;
 		
 	}
 
@@ -111,6 +113,10 @@ public class UMLPanel extends JPanel {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		
+		if (gridOn) {
+			paintGrid(g);
+		}
+		
 		Iterator<DrawableUML> zIter = currentModel.zIterator();
 		
 		while (zIter.hasNext())
@@ -119,6 +125,21 @@ public class UMLPanel extends JPanel {
 		}
 		
 		currentInteractionMode.draw(g);
+	}
+	
+	public void paintGrid(Graphics g) {
+		int width = this.getWidth();
+		int height = this.getHeight();
+		
+		g.setColor(Color.LIGHT_GRAY);
+		
+		for (int vertical = 0; vertical * 10 < width; ++vertical) {
+			g.drawLine(vertical*10, 0, vertical*10, height);
+		}
+		
+		for (int horizontal = 0; horizontal * 10 < height; ++horizontal) {
+			g.drawLine(0, horizontal*10, width, horizontal*10);
+		}
 	}
 	
 	public void undo()
@@ -380,5 +401,13 @@ public class UMLPanel extends JPanel {
 			this.changeModel(this.model().unselect(zIter.next()));
 		}
 		this.repaint();
+	}
+
+	public void showGrid() {
+		this.gridOn = true;
+	}
+	
+	public void hideGrid() {
+		this.gridOn = false;
 	}
 }

@@ -157,7 +157,7 @@ public class UMLRelation implements DrawableUML {
 		}
 	}
 	
-	public void contextMenu(MouseEvent e) {
+	public void showContextMenu(MouseEvent e) {
 		
 	}
 	

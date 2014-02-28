@@ -3,10 +3,9 @@ package edu.millersville.cs.segfault.model.object;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
+import edu.millersville.cs.segfault.immutable.ImmutableLine;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
@@ -195,10 +194,6 @@ public class UMLObject implements DrawableUML {
 		g.drawString(this.label, this.getX()+15, this.getY()+15);
 	}
 
-	public void contextMenu(MouseEvent e) {
-		
-	}
-	
 	public DrawableType getType() { return DrawableType.OBJECT; }
 
 	@Override
@@ -214,7 +209,7 @@ public class UMLObject implements DrawableUML {
 	@Override
 	public ImmutablePoint snapPoint(ImmutablePoint point) {
 		ImmutablePoint[] corners = new ImmutablePoint[4];
-		Line2D[] lines = new Line2D[4];
+		ImmutableLine[] lines = new ImmutableLine[4];
 		
 		corners[0] = new ImmutablePoint(this.getX(), this.getY());
 		corners[1] = new ImmutablePoint(this.getX() + this.getWidth(), this.getY());
@@ -222,20 +217,20 @@ public class UMLObject implements DrawableUML {
 				this.getY() + this.getHeight());
 		corners[3] = new ImmutablePoint(this.getX(), this.getY() + this.getHeight());
 		
-		lines[0] = new Line2D.Double(corners[0].getPoint(), corners[1].getPoint()); // Top
-		lines[1] = new Line2D.Double(corners[1].getPoint(), corners[2].getPoint());
-		lines[2] = new Line2D.Double(corners[2].getPoint(), corners[3].getPoint());
-		lines[3] = new Line2D.Double(corners[3].getPoint(), corners[0].getPoint());   // Left
+		lines[0] = new ImmutableLine(corners[0], corners[1]); // Top
+		lines[1] = new ImmutableLine(corners[1], corners[2]);
+		lines[2] = new ImmutableLine(corners[2], corners[3]);
+		lines[3] = new ImmutableLine(corners[3], corners[0]);   // Left
 		
 		int min = 0;
 		for (int line = 1; line < 4; ++line) {
-			if (lines[min].ptLineDist(point.getPoint()) > 
-				lines[line].ptLineDist(point.getPoint())) {
+			if (lines[min].distance(point) > 
+				lines[line].distance(point)) {
 				min = line;
 			}
 		}
 		
-		if (lines[min].ptLineDist(point.getPoint()) <= DrawMode.snapDistance) {
+		if (lines[min].distance(point) <= DrawMode.snapDistance) {
 			if (min == 0) {
 				return new ImmutablePoint(point.getX(), this.getY());
 			} else if (min == 1) {

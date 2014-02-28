@@ -10,7 +10,7 @@ import java.util.Iterator;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableUML;
 
-public class SelectionMode implements PanelInteractionMode {
+public class SelectionMode extends PanelInteractionMode {
 
 	private UMLPanel panel;
 	
