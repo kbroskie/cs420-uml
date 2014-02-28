@@ -344,6 +344,8 @@ public class UMLPanel extends JPanel {
 		{
 			deselectAll();
 		} else {
+			//Make sure you are in selection mode
+			this.changeInteractionMode(new SelectionMode(this));
 			selectAll();
 		}
 		this.repaint();
@@ -393,13 +395,7 @@ public class UMLPanel extends JPanel {
 	 */
 	private void deselectAll()
 	{
-		// Iterate through the set of models
-		Iterator<DrawableUML> zIter = this.getModel().zIterator();
-		while( zIter.hasNext())
-		{
-			// Set each model to a selected state
-			this.changeModel(this.getModel().unselect(zIter.next()));
-		}
+		this.changeModel(this.getModel().unselectAll());
 		this.repaint();
 	}
 

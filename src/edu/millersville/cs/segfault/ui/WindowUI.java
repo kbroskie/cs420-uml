@@ -48,6 +48,7 @@ public class WindowUI extends JPanel
 	private static final String undoMenuText = "Undo";
 	private static final String redoMenuText = "Redo";
 	private static final String selectAllText = "Select/Deselect All";
+	private static final String deleteText = "Delete";
 	
 	// Options Pane Items
 	private static final String optionsPaneObjectDraw = "Object";
@@ -166,10 +167,15 @@ public class WindowUI extends JPanel
 	   selectAllItem.addActionListener(this);
 	   selectAllItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
 	   
+	   JMenuItem deleteItem = new JMenuItem(deleteText);
+	   deleteItem.addActionListener(this);
+	   deleteItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
+	   
 	   // Add the sub-menus to the Edit menu.
 	   editMenu.add(undoItem);
 	   editMenu.add(redoItem);
 	   editMenu.add(selectAllItem);
+	   editMenu.add(deleteItem);
 	   
 	   return editMenu;
 	}
@@ -309,6 +315,9 @@ public class WindowUI extends JPanel
 		 }
 		 else if (selectedCommand == selectAllText) {
 			 umlPanel.select();
+		 }
+		 else if (selectedCommand == deleteText ) {
+			 umlPanel.changeModel(umlPanel.getModel().deleteSelected());
 		 } else if (selectedCommand == optionsPaneObjectDraw ) {
 			 umlPanel.changeInteractionMode(new DrawMode(DrawableType.OBJECT, umlPanel));
 		 } else if (selectedCommand == optionsPaneRelationDraw ) {
