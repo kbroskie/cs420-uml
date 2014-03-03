@@ -55,9 +55,9 @@ public class RelationTest {
 		//**********************************************************************************//
 		
 		testR1 = testR1.select();
-		assertTrue("Object was not selected!", testR1.isSelected());
+		assertTrue("Relation was not selected!", testR1.isSelected());
 		testR1 = testR1.unselect();
-		assertFalse("Object was not unselected!", testR1.isSelected());
+		assertFalse("Relation was not unselected!", testR1.isSelected());
 		
 		//**********************************************************************************//
 		//toString Test
@@ -77,6 +77,8 @@ public class RelationTest {
 		assertFalse("Should not hit point when 10 away!", testR1.hit(new ImmutablePoint(70, 110)));
 		assertTrue("Should now hit at 11 away!", testR1.near(new ImmutablePoint(70, 110), 11));
 		
+		
+		//Shouldn't this not hit? For some reason it does. Might relate to snapping issue.
 		//???
 		//assertFalse("Hit is hitting a line that isn't draw there!", testR1.hit(new ImmutablePoint(80, 500)));
 		//???
