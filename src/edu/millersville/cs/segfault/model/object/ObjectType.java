@@ -6,5 +6,5 @@ package edu.millersville.cs.segfault.model.object;
  *
  */
 public enum ObjectType {
-	OBJECT, CLASS
+	OBJECT, CLASS, ACTIVE_CLASS, COMPONENT
 }

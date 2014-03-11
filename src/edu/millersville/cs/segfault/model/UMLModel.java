@@ -28,11 +28,13 @@ public class UMLModel {
 	};
 		
 	private static final DrawableType[] drawableToObject = {
-		DrawableType.OBJECT, DrawableType.CLASS
+		DrawableType.OBJECT, DrawableType.CLASS, DrawableType.ACTIVE_CLASS,
+		DrawableType.COMPONENT
 	};
 		
 	private static final ObjectType[] objectToDrawable = {
-		ObjectType.OBJECT, ObjectType.CLASS
+		ObjectType.OBJECT, ObjectType.CLASS, ObjectType.ACTIVE_CLASS,
+		ObjectType.COMPONENT
 	};
 
 	//*************************************************************************

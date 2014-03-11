@@ -53,6 +53,8 @@ public class WindowUI extends JPanel
 	// Options Pane Items
 	private static final String optionsPaneObjectDraw = "Object";
 	private static final String optionsPaneClassDraw = "Class";
+	private static final String optionsPaneActiveClassDraw = "Active Class";
+	private static final String optionsPaneComponentDraw = "Component";
 	private static final String optionsPaneRelationDraw = "Relation";
 	private static final String optionsPaneAggregationDraw = "Aggregation";
 	private static final String optionsPaneSelect = "Select";
@@ -262,6 +264,14 @@ public class WindowUI extends JPanel
 		JButton classButton = new JButton(optionsPaneClassDraw);
 		classButton.addActionListener(this);
 		objectsPanel.add(classButton, BorderLayout.CENTER);
+		
+		JButton activeButton = new JButton(optionsPaneActiveClassDraw);
+		activeButton.addActionListener(this);
+		objectsPanel.add(activeButton, BorderLayout.CENTER);
+		
+		JButton componentButton = new JButton(optionsPaneComponentDraw);
+		componentButton.addActionListener(this);
+		objectsPanel.add(componentButton, BorderLayout.CENTER);
 	}
 	
 	/**
@@ -338,6 +348,10 @@ public class WindowUI extends JPanel
 			 umlPanel.changeInteractionMode(new SelectionMode(umlPanel));
 		 } else if (selectedCommand == optionsPaneAggregationDraw) {
 			 umlPanel.changeInteractionMode(new DrawMode(DrawableType.AGGREGATION, umlPanel));
+		 } else if (selectedCommand == optionsPaneActiveClassDraw) {
+			 umlPanel.changeInteractionMode(new DrawMode(DrawableType.ACTIVE_CLASS, umlPanel));
+		 } else if (selectedCommand == optionsPaneComponentDraw) {
+			 umlPanel.changeInteractionMode(new DrawMode(DrawableType.COMPONENT, umlPanel));
 		 }
 	 } 	 
 }
