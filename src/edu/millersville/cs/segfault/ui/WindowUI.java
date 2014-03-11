@@ -52,6 +52,7 @@ public class WindowUI extends JPanel
 	
 	// Options Pane Items
 	private static final String optionsPaneObjectDraw = "Object";
+	private static final String optionsPaneClassDraw = "Class";
 	private static final String optionsPaneRelationDraw = "Relation";
 	private static final String optionsPaneAggregationDraw = "Aggregation";
 	private static final String optionsPaneSelect = "Select";
@@ -257,6 +258,10 @@ public class WindowUI extends JPanel
 		JButton objectButton = new JButton(optionsPaneObjectDraw);
 		objectButton.addActionListener(this);
 		objectsPanel.add(objectButton, BorderLayout.CENTER);		
+		
+		JButton classButton = new JButton(optionsPaneClassDraw);
+		classButton.addActionListener(this);
+		objectsPanel.add(classButton, BorderLayout.CENTER);
 	}
 	
 	/**
@@ -325,6 +330,8 @@ public class WindowUI extends JPanel
 			 umlPanel.changeModel(umlPanel.getModel().deleteSelected());
 		 } else if (selectedCommand == optionsPaneObjectDraw ) {
 			 umlPanel.changeInteractionMode(new DrawMode(DrawableType.OBJECT, umlPanel));
+		 } else if (selectedCommand == optionsPaneClassDraw){
+			 umlPanel.changeInteractionMode(new DrawMode(DrawableType.CLASS, umlPanel));
 		 } else if (selectedCommand == optionsPaneRelationDraw ) {
 			 umlPanel.changeInteractionMode(new DrawMode(DrawableType.RELATION, umlPanel));
 		 } else if (selectedCommand == optionsPaneSelect ) {
