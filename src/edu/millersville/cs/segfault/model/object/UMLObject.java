@@ -176,15 +176,16 @@ public class UMLObject implements DrawableUML {
 	
 	public void draw(Graphics g)
 	{
-		if (this.selected)
-		{
-			g.setColor(Color.BLUE);
-			g.fillRect(this.getX() - 5, this.getY() - 5, this.getWidth() + 10, this.getHeight() + 10);
-		}
+		
 		
 		g.setColor(Color.WHITE);
 		g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		
 		g.setColor(Color.BLACK);
+		if (this.selected)
+		{
+			g.setColor(Color.BLUE);
+		}
 		g.drawRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 		
 		g.drawString(this.label, this.getX()+15, this.getY()+15);
@@ -202,6 +203,21 @@ public class UMLObject implements DrawableUML {
 		return new UMLObject(this.label, this.origin, this.z, this.size, false);
 	}
 
+	public ImmutablePath getPath() {
+		int x1 = this.origin.getX();
+		int x2 = x1 + this.size.width;
+		int y1 = this.origin.getY();
+		int y2 = y1 + this.size.height;
+		
+		ImmutablePath newPath = new ImmutablePath(this.origin);
+		newPath = newPath.addLast(new ImmutablePoint(x2, y1));
+		newPath = newPath.addLast(new ImmutablePoint(x2, y2));
+		newPath = newPath.addLast(new ImmutablePoint(x1, y2));
+		newPath = newPath.addLast(this.origin);
+		
+		return newPath;
+	}
+	
 	@Override
 	public ImmutablePoint snapPoint(ImmutablePoint point) {
 		int x1 = this.origin.getX();

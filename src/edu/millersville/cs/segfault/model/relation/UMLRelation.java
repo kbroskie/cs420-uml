@@ -126,12 +126,38 @@ public class UMLRelation implements DrawableUML {
 		return false;
 	}
 	
+	/**************************************************************************
+	 * Returns the path of this relation.
+	 */
+	public ImmutablePath getPath() {
+		return this.path;
+	}
+	
+	/**************************************************************************
+	 * Returns the endpoint of this relation.
+	 */
+	public ImmutablePoint getEnd() {
+		return this.path.last();
+	}
+	
+	//*************************************************************************
+	// Mutators
+	
+	public UMLRelation extend(ImmutablePoint p) {
+		return new UMLRelation(this.path.addLast(p), this.z, this.selected);
+	}
+	
 	
 	//*************************************************************************
 	// Drawing Methods
 	
 	public void draw(Graphics g) 
 	{
+		this.drawPath(g);
+		this.drawArrow(g);
+	}
+	
+	public void drawPath(Graphics g) {
 		g.setColor(Color.BLACK);
 		if (this.selected) {
 			g.setColor(Color.BLUE);
@@ -151,10 +177,20 @@ public class UMLRelation implements DrawableUML {
 			second = pIter.next();
 			
 			g.drawLine((int) first.getX(), (int) first.getY(), (int) second.getX(), (int) second.getY());
-			if (pIter.hasNext()) {
-				g.drawArc((int) second.getX()-5, (int) second.getY()-5, 10, 10, 0, (int) Math.PI*2); 
+			if (!pIter.hasNext()) {
+				
 			}
 		}
+	}
+	
+	public void drawArrow(Graphics g) {
+		g.setColor(Color.BLACK);
+		if (this.selected) {
+			g.setColor(Color.BLUE);
+		}
+		g.fillArc(this.getPath().last().getX() - 5, this.getPath().last().getY() - 5, 10, 10, 0, 360);
+		g.setColor(Color.WHITE);
+		g.fillArc(this.getPath().last().getX() - 4, this.getPath().last().getY() - 4, 8, 8, 0, 360);
 	}
 	
 	public void showContextMenu(MouseEvent e) {
@@ -168,9 +204,7 @@ public class UMLRelation implements DrawableUML {
 		return new UMLRelation(this.getPath(), this.getZ(), true);
 	}
 
-	private ImmutablePath getPath() {
-		return this.path;
-	}
+	
 
 	@Override
 	public UMLRelation unselect() {

@@ -100,6 +100,14 @@ public class ImmutablePath {
 		return new PointIterator(this.points);
 	}
 	
+	/**************************************************************************
+	 * Returns an iterator which composes the points in the path into lines.
+	 */
+	public Iterator<ImmutableLine> lineIterator() {
+		return new LineIterator(this.iterator());
+	}
+	
+	
 	//*************************************************************************
 	// Mutators
 	
@@ -233,6 +241,36 @@ public class ImmutablePath {
 		
 	}
 
+	private class LineIterator implements Iterator<ImmutableLine> {
+
+		Iterator<ImmutablePoint> pIter;
+		ImmutablePoint lastPoint;
+		
+		public LineIterator(Iterator<ImmutablePoint> pIter) {
+			this.pIter = pIter;
+			lastPoint = pIter.next();
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return pIter.hasNext();
+		}
+
+		@Override
+		public ImmutableLine next() {
+			ImmutablePoint nextPoint = pIter.next();
+			ImmutableLine newLine = new ImmutableLine(lastPoint, nextPoint);
+			lastPoint = nextPoint;
+			return newLine;
+		}
+
+		@Override
+		public void remove() {
+			
+		}
+		
+	}
+	
 	public ImmutablePoint snapPoint(ImmutablePoint point) {
 		if (this.size() < 2) {
 			return null;

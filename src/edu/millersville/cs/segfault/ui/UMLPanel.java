@@ -51,7 +51,7 @@ public class UMLPanel extends JPanel {
 		hasFile = false;
 		srcFile = new File("");
 		setFocusable(true);
-		gridOn = true;
+		gridOn = false;
 		
 	}
 

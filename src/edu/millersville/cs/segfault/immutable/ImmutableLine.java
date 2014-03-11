@@ -49,7 +49,7 @@ public class ImmutableLine {
 	 * Returns the slope of this line segment.
 	 *************************************************************************/
 	public double slope() {
-		if (firstPoint.getY() != secondPoint.getY()) {
+		if (firstPoint.getY() != secondPoint.getY() && firstPoint.getX() != secondPoint.getX()) {
 			return ((firstPoint.getX()-secondPoint.getX())*1.0)/
 					((firstPoint.getY() - secondPoint.getY())*1.0);
 		}
@@ -113,6 +113,37 @@ public class ImmutableLine {
 		return secondPoint;
 	}
 
+	public ImmutablePoint snapAtX(int x) {
+		if (x >= Math.max(firstPoint.getX(), secondPoint.getX()) &&
+			x <= Math.min(firstPoint.getX(), secondPoint.getX())) {
+				if (this.slope() == 0 ) {
+					if (firstPoint.getY() == secondPoint.getY()) {
+						return new ImmutablePoint(x, firstPoint.getY());
+					}
+				} else {
+					return new ImmutablePoint(x, (int) Math.round((x * this.slope())+this.intercept()));
+				}
+			}
+		return null;
+	}
+	
+	
+	public ImmutablePoint snapAtY(int y) {
+		if (y >= Math.max(firstPoint.getY(), secondPoint.getY()) &&
+				y <= Math.min(firstPoint.getY(), secondPoint.getY())) {
+			
+			if (this.slope()==0) {
+				if (firstPoint.getX() == secondPoint.getX()) {
+					return new ImmutablePoint(firstPoint.getX(), y);
+				}
+			} else {
+				return new ImmutablePoint((int) Math.round((y - this.intercept())/this.slope()),y);
+			}
+			
+		}
+		
+		return null;
+	}
 	
 	/*************************************************************************
 	 * Returns the minimum distance between this line segment and a point.

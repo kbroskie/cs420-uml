@@ -9,6 +9,7 @@ package edu.millersville.cs.segfault.model;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 
+import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.ui.UMLPanel;
 
@@ -28,4 +29,5 @@ public interface DrawableUML {
 	boolean isSelected();
 	boolean hit(ImmutablePoint point);
 	boolean isWithin(Rectangle2D dragArea);
+	ImmutablePath getPath();
 }

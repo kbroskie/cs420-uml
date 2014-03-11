@@ -6,6 +6,7 @@ import java.util.PriorityQueue;
 import edu.millersville.cs.segfault.immutable.ImmutableSet;
 import edu.millersville.cs.segfault.model.object.ObjectType;
 import edu.millersville.cs.segfault.model.object.UMLObject;
+import edu.millersville.cs.segfault.model.relation.Aggregation;
 import edu.millersville.cs.segfault.model.relation.RelationType;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
 
@@ -19,11 +20,11 @@ public class UMLModel {
 	//*************************************************************************
 	// enum translation keys
 	private static final DrawableType[] drawableToRelation = {
-		DrawableType.RELATION
+		DrawableType.RELATION, DrawableType.AGGREGATION
 	};
 		
 	private static final RelationType[] relationToDrawable = {
-		RelationType.RELATION
+		RelationType.RELATION, RelationType.AGGREGATION
 	};
 		
 	private static final DrawableType[] drawableToObject = {
@@ -148,6 +149,16 @@ public class UMLModel {
 			int startRelation = serialized.indexOf("<relation>", relationSearch);
 			int endRelation = serialized.indexOf("</relation>", relationSearch);
 			UMLRelation newRelation = new UMLRelation(serialized.substring(startRelation, endRelation));
+			relations = relations.add(newRelation);
+			relationSearch = endRelation + 1;
+		}
+		// De-serialize any aggregations
+		relationSearch = 0;
+		while (serialized.indexOf("<aggregation>", relationSearch) != -1)
+		{
+			int startRelation = serialized.indexOf("<aggregation>", relationSearch);
+			int endRelation = serialized.indexOf("</aggregation>", relationSearch);
+			UMLRelation newRelation = new Aggregation(serialized.substring(startRelation, endRelation));
 			relations = relations.add(newRelation);
 			relationSearch = endRelation + 1;
 		}
