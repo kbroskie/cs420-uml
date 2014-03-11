@@ -1,12 +1,13 @@
 package edu.millersville.cs.segfault.ui;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 
 /**
  * Window is the class responsible for instantiating 
  * and controlling the UML editor window.
- * @author Team Seg Fault
+ * @author Kimberlyn Broskie
  *
  */
 public class WindowController {
@@ -24,7 +25,7 @@ public class WindowController {
 	    }
 	    JFrame.setDefaultLookAndFeelDecorated(true);
 	    
-	    windowFrame = new JFrame("UML Editor");    
+	    windowFrame = new JFrame("SegUE");    
 	    windowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    windowFrame.setLayout(new BorderLayout());
 	    umlPanel = new UMLPanel();
@@ -48,7 +49,7 @@ public class WindowController {
 	public static void main(String[] args) {
 	   javax.swing.SwingUtilities.invokeLater(new Runnable() {
 		   public void run() {
-				new WindowController();
+			   new WindowController();
 		   }
 	   });
 	}
