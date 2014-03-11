@@ -18,6 +18,7 @@ import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.object.ObjectType;
+import edu.millersville.cs.segfault.model.object.UMLClassObject;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.relation.Aggregation;
 import edu.millersville.cs.segfault.model.relation.RelationType;
@@ -68,6 +69,14 @@ public class DrawMode extends PanelInteractionMode {
 	// Returns a UMLObject of subclass ObjectType type
 	private UMLObject makeObject(ObjectType type, ImmutablePoint origin,
 			Dimension size) {
+		
+		if (type == ObjectType.CLASS) {
+			try {
+				return new UMLClassObject("", origin, panel.getModel().highestZ() + 1, size, false);
+			} catch (Exception e) {
+				
+			}
+		}
 		return new UMLObject("", origin, panel.getModel().highestZ() + 1, size,
 				false);
 	}

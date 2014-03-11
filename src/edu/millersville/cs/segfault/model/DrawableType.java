@@ -6,6 +6,6 @@ package edu.millersville.cs.segfault.model;
  * @author Daniel Rabiega                                                    *
  *****************************************************************************/
 public enum DrawableType {
-	OBJECT,
+	OBJECT, CLASS,
 	RELATION, AGGREGATION
 }
