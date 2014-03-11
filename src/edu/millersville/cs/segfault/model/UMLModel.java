@@ -20,11 +20,11 @@ public class UMLModel {
 	//*************************************************************************
 	// enum translation keys
 	private static final DrawableType[] drawableToRelation = {
-		DrawableType.RELATION, DrawableType.AGGREGATION
+		DrawableType.RELATION, DrawableType.AGGREGATION, DrawableType.COMPOSITION
 	};
 		
 	private static final RelationType[] relationToDrawable = {
-		RelationType.RELATION, RelationType.AGGREGATION
+		RelationType.RELATION, RelationType.AGGREGATION, RelationType.COMPOSITION
 	};
 		
 	private static final DrawableType[] drawableToObject = {

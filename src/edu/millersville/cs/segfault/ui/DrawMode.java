@@ -23,6 +23,7 @@ import edu.millersville.cs.segfault.model.object.UMLClassObject;
 import edu.millersville.cs.segfault.model.object.UMLComponent;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.relation.Aggregation;
+import edu.millersville.cs.segfault.model.relation.Composition;
 import edu.millersville.cs.segfault.model.relation.RelationType;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
 
@@ -96,6 +97,9 @@ public class DrawMode extends PanelInteractionMode {
 	private UMLRelation makeRelation(RelationType type, ImmutablePath path) {
 		if (type == RelationType.AGGREGATION) {
 			return new Aggregation(path, panel.getModel().highestZ() + 1, false);
+		}
+		if (type == RelationType.COMPOSITION) {
+			return new Composition(path, panel.getModel().highestZ() + 1, false);
 		}
 		return new UMLRelation(path, panel.getModel().highestZ() + 1, false);
 	}
@@ -225,7 +229,8 @@ public class DrawMode extends PanelInteractionMode {
 				
 		while (rIter.hasNext()) {
 			UMLRelation current = rIter.next();
-			if (current.getEnd().getX() == p.getX() && current.getEnd().getY() == p.getY()) {
+			if (Math.abs(current.getEnd().getX() - p.getX()) < snapDistance && 
+					Math.abs(current.getEnd().getY() - p.getY()) < snapDistance) {
 				if (highest == null || current.getZ() > highest.getZ()) {
 					highest = current;
 				}

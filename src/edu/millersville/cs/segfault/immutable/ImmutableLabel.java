@@ -39,5 +39,7 @@ public class ImmutableLabel {
 	public ImmutableLabel alterText(String text) {
 		return new ImmutableLabel(text, this.font, this.highlighted);
 	}
+	
+	
 		
 }
