@@ -8,29 +8,25 @@ import java.util.Iterator;
 
 import edu.millersville.cs.segfault.immutable.ImmutableLine;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
-import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 
-public class Aggregation extends UMLRelation {
-	
-	private static int[] xPoints = {0,   10,   0, -10,  0};
-	private static int[] yPoints = {0,  -20, -30, -20,  0};
-	private static int[] newXs   = {0,    7,   0,  -7,  0};
-	private static int[] newYs   = {-4, -20, -27, -20, -4};
+public class Association extends UMLRelation {
 
 	
 	
-	public Aggregation(ImmutablePath path, int z, boolean selected) {
+
+	public Association(ImmutablePath path, int z, boolean selected)
+	{
 		super(path, z, selected);
 	}
 	
-	public Aggregation(String serialized) 
+	public Association(String serialized)
 		throws Exception
 	{
 		super(serialized);
 	}
 	
 	public void drawArrow(Graphics g) {
-		if (this.getPath().size() >= 2) {
+		if (this.getPath().size() > 1) {
 			Iterator<ImmutableLine> lIter = this.getPath().lineIterator();
 			ImmutableLine lastLine = null;
 			while (lIter.hasNext()) { lastLine = lIter.next(); }
@@ -48,15 +44,11 @@ public class Aggregation extends UMLRelation {
 			newG.transform(rotate);
 			
 			newG.setColor(Color.BLACK);
-			newG.fillPolygon(xPoints, yPoints, 5);
-			
-				
-			newG.setColor(Color.WHITE);
-			newG.fillPolygon(newXs, newYs, 5);
+			newG.drawLine(0, 0, 15, -15);
+			newG.drawLine(0, 0, -15, -15);
 		}
 	}
 	
-	public Aggregation extend(ImmutablePoint p) {
-		return new Aggregation(this.getPath().addLast(p), this.getZ(), this.isSelected());
-	}
+	
+	
 }

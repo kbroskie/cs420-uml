@@ -58,6 +58,7 @@ public class WindowUI extends JPanel
 	private static final String optionsPaneRelationDraw = "Relation";
 	private static final String optionsPaneAggregationDraw = "Aggregation";
 	private static final String optionsPaneCompositionDraw = "Composition";
+	private static final String optionsPaneAssociationDraw = "Association";
 	private static final String optionsPaneSelect = "Select";
 
 	
@@ -299,6 +300,11 @@ public class WindowUI extends JPanel
 		JButton compositionButton = new JButton(optionsPaneCompositionDraw);
 		compositionButton.addActionListener(this);
 		relationsPanel.add(compositionButton);
+		
+		JButton associationButton = new JButton(optionsPaneAssociationDraw);
+		associationButton.addActionListener(this);
+		relationsPanel.add(associationButton);
+		
 	}	
 	
 	/**
@@ -359,6 +365,8 @@ public class WindowUI extends JPanel
 			 umlPanel.changeInteractionMode(new DrawMode(DrawableType.COMPONENT, umlPanel));
 		 } else if (selectedCommand == optionsPaneCompositionDraw) {
 			 umlPanel.changeInteractionMode(new DrawMode(DrawableType.COMPOSITION, umlPanel));
+		 } else if (selectedCommand == optionsPaneAssociationDraw) {
+			 umlPanel.changeInteractionMode(new DrawMode(DrawableType.ASSOCIATION, umlPanel));
 		 }
 	 } 	 
 }

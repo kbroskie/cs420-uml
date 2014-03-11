@@ -15,6 +15,8 @@ public class Composition extends UMLRelation {
 	private static int[] xPoints = {0, 10, 0, -10, 0};
 	private static int[] yPoints = {0, -20, -30, -20, 0};
 
+	
+	
 	public Composition(ImmutablePath path, int z, boolean selected) {
 		super(path, z, selected);
 	}

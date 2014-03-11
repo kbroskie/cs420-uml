@@ -184,13 +184,6 @@ public class UMLRelation implements DrawableUML {
 	}
 	
 	public void drawArrow(Graphics g) {
-		g.setColor(Color.BLACK);
-		if (this.selected) {
-			g.setColor(Color.BLUE);
-		}
-		g.fillArc(this.getPath().last().getX() - 5, this.getPath().last().getY() - 5, 10, 10, 0, 360);
-		g.setColor(Color.WHITE);
-		g.fillArc(this.getPath().last().getX() - 4, this.getPath().last().getY() - 4, 8, 8, 0, 360);
 	}
 	
 	public void showContextMenu(MouseEvent e) {

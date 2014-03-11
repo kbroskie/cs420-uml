@@ -91,6 +91,13 @@ public class UMLObject implements DrawableUML {
 	// Member constructor
 	public UMLObject(String nLabel, ImmutablePoint origin, int nZ, Dimension size, boolean nSelected) 
 	{
+		if (size.width < 50) {
+			size = new Dimension(50, size.height);
+		}
+		if (size.height < 50) {
+			size = new Dimension(size.width, 50);
+		}
+		
 		this.label = nLabel;
 		this.origin = origin;
 		this.size = size;

@@ -23,6 +23,7 @@ import edu.millersville.cs.segfault.model.object.UMLClassObject;
 import edu.millersville.cs.segfault.model.object.UMLComponent;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.relation.Aggregation;
+import edu.millersville.cs.segfault.model.relation.Association;
 import edu.millersville.cs.segfault.model.relation.Composition;
 import edu.millersville.cs.segfault.model.relation.RelationType;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
@@ -100,6 +101,9 @@ public class DrawMode extends PanelInteractionMode {
 		}
 		if (type == RelationType.COMPOSITION) {
 			return new Composition(path, panel.getModel().highestZ() + 1, false);
+		}
+		if (type == RelationType.ASSOCIATION) {
+			return new Association(path, panel.getModel().highestZ() + 1, false);
 		}
 		return new UMLRelation(path, panel.getModel().highestZ() + 1, false);
 	}

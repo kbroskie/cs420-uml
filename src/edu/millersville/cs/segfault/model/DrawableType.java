@@ -7,6 +7,6 @@ package edu.millersville.cs.segfault.model;
  *****************************************************************************/
 public enum DrawableType {
 	OBJECT, CLASS, ACTIVE_CLASS, COMPONENT,
-	RELATION, AGGREGATION, COMPOSITION
+	RELATION, AGGREGATION, COMPOSITION, ASSOCIATION
 }
  

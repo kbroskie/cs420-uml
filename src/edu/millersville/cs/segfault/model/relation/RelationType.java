@@ -6,5 +6,5 @@ package edu.millersville.cs.segfault.model.relation;
  * @author Daniel Rabiega                                                    *
  *****************************************************************************/
 public enum RelationType {
-	RELATION, AGGREGATION, COMPOSITION
+	RELATION, AGGREGATION, COMPOSITION, ASSOCIATION
 }
