@@ -26,7 +26,7 @@ public class RelationTest {
 		//**********************************************************************************//
 		
 		UMLObject testO1 = new UMLObject();
-		testModel.add(testO1);
+		testModel = testModel.add(testO1);
 		
 		UMLRelation testR1 = new UMLRelation(new ImmutablePath(
 				new ImmutablePoint(80, 10)).addLast(new ImmutablePoint(80, 150)), 2, false);
@@ -34,8 +34,8 @@ public class RelationTest {
 		UMLRelation testR2 = new UMLRelation(new ImmutablePath(
 				new ImmutablePoint(10, 60)).addLast(new ImmutablePoint(150, 60)), 1, false);
 		
-		testModel.addRelation(testR1);
-		testModel.addRelation(testR2);
+		testModel = testModel.addRelation(testR1);
+		testModel = testModel.addRelation(testR2);
 		
 		//**********************************************************************************//
 		//Get Tests
