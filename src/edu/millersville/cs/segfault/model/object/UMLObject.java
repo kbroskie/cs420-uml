@@ -12,6 +12,8 @@ import edu.millersville.cs.segfault.model.DrawableUML;
 
 public class UMLObject implements DrawableUML {
 	
+	public static String typeString = "object";
+	
 	// De-Serialization helpers
 	public static int findIntAttr(String attr, String serialized)
 		throws Exception

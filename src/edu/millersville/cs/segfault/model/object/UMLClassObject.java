@@ -42,6 +42,12 @@ import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 			this.line2Y = p.getY() + line2Height;
 		}
 
+		public UMLClassObject (String serialized) 
+			throws Exception
+		{
+			super(serialized);
+		}
+		
 //**********************************************************************
 //Observers
 

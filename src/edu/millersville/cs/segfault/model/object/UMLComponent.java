@@ -26,6 +26,12 @@ public class UMLComponent extends UMLObject
 		
 	}
 	
+	public UMLComponent(String serialized) 
+		throws Exception
+	{
+		super(serialized);
+	}
+	
 	/*****************************************************************************************/
 	//Let's draw this
 	

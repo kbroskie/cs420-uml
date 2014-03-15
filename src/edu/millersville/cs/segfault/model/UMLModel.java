@@ -39,6 +39,18 @@ public class UMLModel {
 		ObjectType.COMPONENT
 	};
 
+	private static final DrawableType[] drawableToString= {
+		DrawableType.OBJECT, DrawableType.CLASS, DrawableType.ACTIVE_CLASS, 
+		DrawableType.COMPONENT,	DrawableType.RELATION, DrawableType.AGGREGATION, 
+		DrawableType.COMPOSITION, DrawableType.ASSOCIATION
+	};
+	
+	private static final String[] stringToDrawable = {
+		"object", "class", "activeclass",
+		"component", "relation", "aggregation",
+		"composition", "association"
+	};
+	
 	//*************************************************************************
 	// Type translation methods
 	//*************************************************************************
@@ -77,7 +89,36 @@ public class UMLModel {
 		}
 		return null;
 	}
+	
+	public static String drawableTypeString(DrawableType type) {
+		for (int i=0; i<drawableToString.length; ++i) {
+			if (drawableToString[i]==type) {
+				return stringToDrawable[i];
+			}
+		}
+		return null;
+	}
 
+	private static ImmutableSet<UMLObject> deserializeObjects(String serialized)
+		throws Exception
+	{
+		ImmutableSet<UMLObject> objects = new ImmutableSet<UMLObject>();
+		for (int type = 0; type < drawableToObject.length; ++type) {
+				String typeString = drawableTypeString(drawableToObject[type]);
+				int objectSearch = 0;		
+				while (serialized.indexOf("<" + typeString + ">", objectSearch) != -1) 
+				{
+					int startObject = serialized.indexOf("<" + typeString + ">", objectSearch);
+					int endObject = serialized.indexOf("<" + typeString + ">", objectSearch);
+					UMLObject newObject = DrawableFactory.makeObject(
+							serialized.substring(startObject, endObject), objectToDrawable[type]);
+					objects = objects.add(newObject);
+					objectSearch = endObject + 1;
+				}
+		}
+		return objects;
+	}
+	
 	//*************************************************************************
 	// Instance Variables
 	//*************************************************************************
@@ -132,18 +173,7 @@ public class UMLModel {
 			this.modelName = serialized.substring(startTitle, endTitle);
 		}
 		
-		// De-serialize any objects
-		int objectSearch = 0;
-		ImmutableSet<UMLObject> objects = new ImmutableSet<UMLObject>();
-		while (serialized.indexOf("<object>", objectSearch) != -1) 
-		{
-			int startObject = serialized.indexOf("<object>", objectSearch);
-			int endObject = serialized.indexOf("</object>", objectSearch);
-			UMLObject newObject = new UMLObject(serialized.substring(startObject, endObject));
-			objects = objects.add(newObject);
-			objectSearch = endObject + 1;
-		}
-		this.objects = objects;
+		this.objects = deserializeObjects(serialized);
 		
 		// De-serialize any relations
 		int relationSearch = 0;

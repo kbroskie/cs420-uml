@@ -26,6 +26,12 @@ public class UMLActiveClass extends UMLClassObject {
 			
 		}
 		
+		public UMLActiveClass (String serialized) 
+			throws Exception
+		{
+			super(serialized);
+		}
+		
 		//Draw active class
 		
 		public void draw (Graphics g) {

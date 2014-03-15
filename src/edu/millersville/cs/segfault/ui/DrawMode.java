@@ -14,18 +14,10 @@ import java.util.Iterator;
 import edu.millersville.cs.segfault.immutable.ImmutableLine;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
+import edu.millersville.cs.segfault.model.DrawableFactory;
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.model.UMLModel;
-import edu.millersville.cs.segfault.model.object.ObjectType;
-import edu.millersville.cs.segfault.model.object.UMLActiveClass;
-import edu.millersville.cs.segfault.model.object.UMLClassObject;
-import edu.millersville.cs.segfault.model.object.UMLComponent;
-import edu.millersville.cs.segfault.model.object.UMLObject;
-import edu.millersville.cs.segfault.model.relation.Aggregation;
-import edu.millersville.cs.segfault.model.relation.Association;
-import edu.millersville.cs.segfault.model.relation.Composition;
-import edu.millersville.cs.segfault.model.relation.RelationType;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
 
 public class DrawMode extends PanelInteractionMode {
@@ -67,46 +59,7 @@ public class DrawMode extends PanelInteractionMode {
 		this.startPoint = null;
 	}
 
-	// *************************************************************************
-	// Object Factories
-	// *************************************************************************
-	// Returns a UMLObject of subclass ObjectType type
-	private UMLObject makeObject(ObjectType type, ImmutablePoint origin,
-			Dimension size) {
-		
-		
-			try {
-				if (type == ObjectType.CLASS) {
-					return new UMLClassObject("", origin, panel.getModel().highestZ() + 1, size, false);
-				}
-				if (type == ObjectType.ACTIVE_CLASS) {
-					return new UMLActiveClass("", origin, panel.getModel().highestZ() + 1, size, false);
-				}
-				if (type == ObjectType.COMPONENT) {
-					return new UMLComponent("", origin, panel.getModel().highestZ() + 1, size, false);
-				}
-			} catch (Exception e) {
-				
-			}
-		
-		
-		return new UMLObject("", origin, panel.getModel().highestZ() + 1, size,
-				false);
-	}
-
-	// Returns a UMLRelation of subclass RelationType type
-	private UMLRelation makeRelation(RelationType type, ImmutablePath path) {
-		if (type == RelationType.AGGREGATION) {
-			return new Aggregation(path, panel.getModel().highestZ() + 1, false);
-		}
-		if (type == RelationType.COMPOSITION) {
-			return new Composition(path, panel.getModel().highestZ() + 1, false);
-		}
-		if (type == RelationType.ASSOCIATION) {
-			return new Association(path, panel.getModel().highestZ() + 1, false);
-		}
-		return new UMLRelation(path, panel.getModel().highestZ() + 1, false);
-	}
+	
 
 	// *************************************************************************
 	// Action Listener Methods
@@ -151,9 +104,10 @@ public class DrawMode extends PanelInteractionMode {
 			
 			if (previous == null) {
 				// This is a new actual relation.
-				UMLRelation newRelation = makeRelation(
+				UMLRelation newRelation = DrawableFactory.makeRelation(
 						UMLModel.getRelationType(drawType),
-						new ImmutablePath(first).addLast(this.straitSnap(second, first, e)));
+						new ImmutablePath(first).addLast(this.straitSnap(second, first, e)),
+						panel);
 				panel.changeModel(panel.getModel().addRelation(newRelation));
 
 			} else {
@@ -167,14 +121,14 @@ public class DrawMode extends PanelInteractionMode {
 		} else {
 
 			panel.changeModel(panel.getModel().addObject(
-					makeObject(
+					DrawableFactory.makeObject(
 							UMLModel.getObjectType(drawType),
 							new ImmutablePoint(Math.min(first.getX(),
 									second.getX()), Math.min(first.getY(),
 									second.getY())),
 							new Dimension(
 									Math.abs(first.getX() - second.getX()),
-									Math.abs(first.getY() - second.getY())))));
+									Math.abs(first.getY() - second.getY())), panel)));
 
 		}
 
