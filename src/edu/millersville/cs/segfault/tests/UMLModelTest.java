@@ -44,8 +44,8 @@ public class UMLModelTest {
 		//Manipulation and Observation Tests
 		//**********************************************************************************//
 		
-		testModel = testModel.changeName("MLP");
-		assertTrue("Name Change ERROR!", testModel.getName() == "MLP");
+		testModel = testModel.changeName("RainbowDash");
+		assertTrue("Name Change ERROR!", testModel.getName() == "RainbowDash");
 		
 		testModel.getObjects();
 		testModel.getRelations();
@@ -94,11 +94,12 @@ public class UMLModelTest {
 		//**********************************************************************************//
 		
 		//int count = 0;
-		//do {
-		//	count++;
-		//	testModel.objectIterator().next();
-		//} while (testModel.objectIterator().hasNext());
-		//System.out.println(count);
+		  //while(testModel.objectIterator().hasNext())
+		  //{
+		   //++count;
+		   //testModel.objectIterator().next();
+		  //}
+		  //System.out.println(count);
 		
 		testModel.remove(testO1);
 		testModel.remove(testR1);
