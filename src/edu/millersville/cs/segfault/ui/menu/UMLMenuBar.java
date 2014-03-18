@@ -1,16 +1,18 @@
-package edu.millersville.cs.segfault.ui;
+package edu.millersville.cs.segfault.ui.menu;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
-/**
+import edu.millersville.cs.segfault.ui.UMLPanel;
+
+/**************************************************************************
  * UMLMenuBar is the class responsible for instantiating 
  * a menubar composed of submenus.
  * @author Kimberlyn Broskie
- *
- */ 
-class UMLMenuBar extends JMenuBar {
+ *************************************************************************/
+
+public class UMLMenuBar extends JMenuBar {
 	 
 	//*************************************************************************
 	// Instance Variables
@@ -23,11 +25,11 @@ class UMLMenuBar extends JMenuBar {
 	// Constructors	
 	//*************************************************************************
 	
-	/*
+	/**************************************************************************
 	 * Constructor to build the menu bar.
 	 * @param wFrame the frame for the interface
 	 * @param umlPanel the panel for the current UML model
-	 */
+	 *************************************************************************/
 	public UMLMenuBar (JFrame wFrame, UMLPanel umlPanel) {
 		super();
 				   
