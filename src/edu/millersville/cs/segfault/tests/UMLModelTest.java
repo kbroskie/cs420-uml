@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import java.util.Iterator;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.UMLModel;
@@ -72,11 +73,29 @@ public class UMLModelTest {
 		assertTrue(testO3.isSelected());
 		testModel.deleteSelected();
 		
-		//???
-		//after deletion, the Object "testO3" can still be referenced? Might be because of undo/redo but unsure.
-		//assertTrue(testO3.isSelected());
-		//System.out.println(testO3.getSize());
-		//???
+		//**********************************************************************************//
+		//Iteration Test
+		//**********************************************************************************//
+		
+		int count = 0;
+		UMLObject obj1 = new UMLObject();
+		Iterator<UMLObject> Oiter = testModel.objectIterator();
+		while(Oiter.hasNext())
+		{
+			++count;
+			Oiter.next();
+		}
+		assertTrue("There should be only 2 objects remaining in testModel", count == 2);
+		
+		
+		UMLObject obj2 = new UMLObject();
+		Iterator<UMLRelation> IterR = testModel.relationIterator();
+		while(Oiter.hasNext())
+		{
+			++count;
+			Oiter.next();
+		}
+		assertTrue("There should be only 2 relations in testModel", count == 2);
 		
 		//**********************************************************************************//
 		//Type Check Tests
@@ -92,14 +111,6 @@ public class UMLModelTest {
 		//**********************************************************************************//
 		//Remove Tests
 		//**********************************************************************************//
-		
-		//int count = 0;
-		  //while(testModel.objectIterator().hasNext())
-		  //{
-		   //++count;
-		   //testModel.objectIterator().next();
-		  //}
-		  //System.out.println(count);
 		
 		testModel.remove(testO1);
 		testModel.remove(testR1);
