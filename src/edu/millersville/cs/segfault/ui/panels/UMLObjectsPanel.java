@@ -2,6 +2,7 @@ package edu.millersville.cs.segfault.ui.panels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -10,6 +11,8 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+//import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
 
 import edu.millersville.cs.segfault.model.DrawableType;
@@ -59,7 +62,7 @@ public class UMLObjectsPanel extends JPanel
 		// Create the object buttons and action listeners.
 		JButton objectButton = new JButton(optionsPaneObjectDraw);
 		objectButton.addActionListener(this);
-		add(objectButton, BorderLayout.CENTER);				
+		add(objectButton, BorderLayout.CENTER);
 	}
 	
 	//*************************************************************************

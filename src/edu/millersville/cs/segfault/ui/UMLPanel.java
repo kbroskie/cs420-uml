@@ -50,7 +50,6 @@ public class UMLPanel extends JPanel {
 		hasFile = false;
 		srcFile = new File("");
 		setFocusable(true);
-		
 	}
 
 	public UMLPanel(UMLModel new_model) {

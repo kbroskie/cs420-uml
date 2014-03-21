@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 import edu.millersville.cs.segfault.ui.SelectionMode;
 import edu.millersville.cs.segfault.ui.UMLPanel;
@@ -32,6 +34,7 @@ public class UMLOptionsPanel extends JPanel
 	
 	private static final String optionsPaneSelect = "Select";
 	
+	
 	//*************************************************************************
 	// Constructors	
 	//*************************************************************************
@@ -53,29 +56,38 @@ public class UMLOptionsPanel extends JPanel
 			   
 		 // Set the gridbag options for the options panel.
 		 GridBagConstraints optionsConstraints = new GridBagConstraints();
-		 optionsConstraints.fill = GridBagConstraints.HORIZONTAL;
+		 optionsConstraints.fill = GridBagConstraints.BOTH;
 		 optionsConstraints.anchor = GridBagConstraints.PAGE_START;
 		 optionsConstraints.gridx = 0;
 		 optionsConstraints.gridy = 0;
-		 optionsConstraints.weighty = 0.5;
-	 	 optionsConstraints.insets = new Insets(2,0,0,0);
-			   	   
-	 	 // Build and add the objects panel
-	 	 UMLObjectsPanel objectsPanel = new UMLObjectsPanel(umlPanel);
-	 	 gridBag.setConstraints(objectsPanel, optionsConstraints);
-	 	 add(objectsPanel);   
+		 optionsConstraints.weighty = 1;
+	 	 optionsConstraints.insets = new Insets(3,0,0,0);
 
-	 	 // Build and add the relations panel.
+	 	 
+	 	 // Build and add the scrollable objects panel
+	 	 UMLObjectsPanel objectsPanel = new UMLObjectsPanel(umlPanel);	 	 
+		 JScrollPane scrollableObjectsPanel = new JScrollPane(objectsPanel);
+		 scrollableObjectsPanel.createVerticalScrollBar();
+		 scrollableObjectsPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		 gridBag.setConstraints(scrollableObjectsPanel, optionsConstraints);
+	 	 add(scrollableObjectsPanel);  
+	 	 
+	
+	 	 // Build and add the scrollable relations panel.
 	 	 ++optionsConstraints.gridy;
 	 	 UMLRelationsPanel relationsPanel = new UMLRelationsPanel(umlPanel);
-		 gridBag.setConstraints(relationsPanel, optionsConstraints);	  
-		 add(relationsPanel);
+		 JScrollPane scrollableRelationsPanel = new JScrollPane(relationsPanel);
+		 scrollableRelationsPanel.createVerticalScrollBar();
+		 scrollableRelationsPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		 gridBag.setConstraints(scrollableRelationsPanel, optionsConstraints);	  
+		 add(scrollableRelationsPanel);
 			   
 		 // Set the options so the last item appears on the bottom of the panel.
+		 optionsConstraints.fill = GridBagConstraints.HORIZONTAL;
 		 ++optionsConstraints.gridy;
-		 optionsConstraints.weighty = 1.0;
+		 optionsConstraints.weighty = 0.1;
 		 optionsConstraints.anchor = GridBagConstraints.PAGE_END;
-		 optionsConstraints.insets = new Insets(2,5,3,5);
+		 optionsConstraints.insets = new Insets(0,5,3,5);
 
 		 // Build and add the select button.
 		 JButton selectionButton = new JButton(optionsPaneSelect);
@@ -84,6 +96,7 @@ public class UMLOptionsPanel extends JPanel
 		 add(selectionButton);   
 	} 
 
+	 
 	//*************************************************************************
 	// Action Listeners
 	//*************************************************************************
