@@ -167,111 +167,133 @@ public class UMLPanel extends JPanel {
 		return currentModel;
 	}
 	
-	/******************************************************************************
+	/*************************************************************************
 	 * Save File
-	 * -------------------------
-	 * Takes a serialized string from Model.serialize()
-	 * Writes serialized string to a file at given location
-	 * 
-	 * Boolean saveObject( String serialized, String path );
-	 */
-		private static boolean saveObject( String serialized, File file )
-		{	
-			if( file != null)
-			{
-				try{
-					/*** CHECK FOR FILE, IF NOT FOUND CREATE ONE ***/
-					if( !file.exists())
+	 * Takes a serialized String from Model.serialize() and writes
+	 * that string to a file at a given location
+	 * -----------------------------------------------------------------------
+	 * @param serialized file
+	 * @return boolean
+	 *************************************************************************/
+	private static boolean saveObject( String serialized, File file )
+	{
+		if( file != null)
+		{
+			try{
+				//***********************************************
+				//*** CHECK FOR FILE, IF NOT FOUND CREATE ONE ***
+				//..............................................,
+				if( !file.exists())
+				{
+					//*********************************************
+					//***      CHECK FOR FILE EXTENSION         ***
+					//*** IF ONE DOES NOT EXIST, APPEND ".uml"  ***
+					//............................................,
+					if( !file.getName().contains(".") )
 					{
-						/***      CHECK FOR FILE EXTENSION       ***/
-						/*** IF ONE DOES NOT EXIST, APPEND ".uml"***/
-						if( !file.getName().contains(".") )
-						{
-							file = new File(file.getAbsolutePath() + ".uml");
-						}
-						file.createNewFile();
+						file = new File(file.getAbsolutePath() + ".uml");
 					}
-				
-					/*** SET UP FILE TO WRITE ***/
-					FileWriter fw = new FileWriter(file);
-					BufferedWriter bw = new BufferedWriter(fw);
-				
-					bw.write( serialized );		// Write the serialized string
-					bw.close();					// Close the file
-				
-					hasFile = true;
-					srcFile = file;
-
-					return( true );
-				} catch (IOException e) {
-					System.err.println("ERROR: Failed to write file!");
-					return( false );
+					file.createNewFile();
 				}
-			} else {
-				System.err.println("WARNING: JFileChooser closed unexpectedly.");
-				System.err.println("Nothing saved.");
+			
+				//***********************************************
+				//***			WRITE TO THE FILE		 	  ***
+				//..............................................,
+				FileWriter fw = new FileWriter(file);
+				BufferedWriter bw = new BufferedWriter(fw);
+			
+				bw.write( serialized );		// Write the serialized string
+				bw.close();					// Close the file
+			
+				hasFile = true;
+				srcFile = file;
+				return( true );
+			} catch (IOException e) {
+				System.err.println("ERROR: Failed to write file!");
 				return( false );
 			}
+		} else {
+			System.err.println("WARNING: JFileChooser closed unexpectedly.");
+			System.err.println("Nothing saved.");
+			return( false );
 		}
-		
-	/******************************************************************************
+	}
+	
+	/*************************************************************************
 	 * Load File
-	 * -------------------------
 	 * Takes a path location and returns a serialized string
-	 * from the contents of the file
-	 * 
-	 * String loadObject( String path );
-	 */
-		private static String loadObject( File file )
+	 * corresponding to the contents found in the file at the
+	 * given location.
+	 * -----------------------------------------------------------------------
+	 * @param file
+	 * @return String
+	 *************************************************************************/
+	private static String loadObject( File file )
+	{
+		if( file != null )
 		{
-			if( file != null )
-			{
-				try{
-					String serialized = new String();
-				
-					/*** READ THE FILE ***/
-					FileReader fr = new FileReader(file);
-					BufferedReader br = new BufferedReader(fr);
-				
-					while( br.ready())
-					{
-						serialized = serialized + br.readLine() + "\n";
-					}
-					br.close();						// Close the file
-				
-					hasFile = true;
-					srcFile = file;
-					return(serialized);				// Return the serialized string
-				
-				} catch (IOException e) {
-					System.err.println("ERROR: Failed to open file!");
-					return(null);
+			try{
+				String serialized = new String();
+			
+				//***********************************************
+				//***				READ THE FILE			  ***
+				//..............................................,
+				FileReader fr = new FileReader(file);
+				BufferedReader br = new BufferedReader(fr);
+			
+				// Anything left?
+				while( br.ready())
+				{
+					// Append the next line to the serialized string
+					serialized = serialized + br.readLine() + "\n";
 				}
-			} else {
-				System.err.println("ERROR: JFileChooser closed unexpectedly.");
-				System.err.println("Aborting.");
+				br.close();						// Close the file
+			
+				hasFile = true;
+				srcFile = file;
+				return(serialized);				// Return the serialized string
+			
+			} catch (IOException e) {
+				System.err.println("ERROR: Failed to open file!");
 				return(null);
 			}
-
+		} else {
+			//********************************************************************
+			//*** The file is null here. This means that there wasn't even	   ***
+			//*** an attempt to open anything. This is most likely due to	   ***
+			//*** the user closing the FileChooser without making a selection. ***
+			//...................................................................,
+			System.err.println("ERROR: JFileChooser closed unexpectedly.");
+			System.err.println("Aborting.");
+			return(null);
 		}
-/******************************************************************************
- * SaveAs
- * -------------------
- * Prompt for save information
- * 
- * Presents a graphical interface to save and passes the resulting
- * path to 'saveObject'
- */
+	}
+	
+	/*************************************************************************
+	 * Public Save
+	 * Prompts the user with the JFileChooser to obtain information about
+	 * the file's parameters to be saved. This will present a graphical
+	 * interface and then pass the resulting path to 'saveObject()'
+	 * -----------------------------------------------------------------------
+	 * @param serialized
+	 * @return boolean
+	 *************************************************************************/
 	public boolean saveAs( String serialized )
 	{
-		// Create save menu through JFileChooser
+		//*********************************************
+		//*** Create save menu through JFileChooser ***
+		//............................................,
 	    JFileChooser chooser = new JFileChooser();
 	    FileNameExtensionFilter filter = new FileNameExtensionFilter( "UML Diagram (.uml)", "uml" );
 	    chooser.setFileFilter(filter);
 	    int returnVal = chooser.showSaveDialog(chooser);
-	    if(returnVal == JFileChooser.APPROVE_OPTION) {
-	    	// Save the file through function call to saveObject(serialized)
-	    	// and return 'True' if saveObject is successful
+	    
+	    //******************************************************
+	    //*** Save the file through a call to 'saveObject()' ***
+	    //*** returning saveObject()'s success status		 ***
+	    //.....................................................,
+	    if(returnVal == JFileChooser.APPROVE_OPTION)
+	    {
 			return(saveObject(serialized, chooser.getSelectedFile()));
 	    } else {
 	    	// Oh no! JFileChooser failed!!!
@@ -279,31 +301,40 @@ public class UMLPanel extends JPanel {
 	    }
 	}
 	
-/******************************************************************************
- * Save
- * -------------------
- * Save to existing file immediately
- * 
- * If file does not exist, open the saveAs interface
- */
+
+	/*************************************************************************
+	 * Save Controller
+	 * Determine whether a given project has a file associated with it already
+	 * If so, simply overwrite that file, otherwise, prompt the user to create
+	 * one through the saveAs() function.
+	 * -----------------------------------------------------------------------
+	 * @param serialized
+	 * @return boolean
+	 *************************************************************************/
 	public boolean save( String serialized )
 	{
+		//***********************************************
+		//***			CHECK FOR THE FILE			  ***
+		//..............................................,
 		if(hasFile)
 		{
+			// We have one! Overwrite it
 			return( saveObject(serialized, srcFile ) );
 		} else {
+			// There is no file. Let's make one
 			return( saveAs(serialized) );
 		}
 	}
 			
-/******************************************************************************
- * Load
- * --------------------
- * Prompt for load information
- * 
- * Presents a graphical interface to load a file, passes the resulting
- * path to 'loadObject' and gives back the resultant UMLObject
- */
+	/*************************************************************************
+	 * Public Load
+	 * Prompts the user with the JFileChooser to obtain information about
+	 * the file to be loaded. This will present a graphical interface and
+	 * then pass the resulting path to 'LoadObject()' which will then give
+	 * back the resultant 'UMLObject'.
+	 * -----------------------------------------------------------------------
+	 * @return boolean
+	 *************************************************************************/
 	public boolean load()
 	{
 		// Create load menu through JFileChooser
@@ -328,38 +359,44 @@ public class UMLPanel extends JPanel {
 		   	return(false);
 	    }
 	}
-
-	public void getFocus() {
-		requestFocusInWindow();
-	}
 	
 	/******************************************************************************
 	 * Select Controller
-	 * --------------------
 	 * Handles Alternation between selectAll and deselectAll
-	 */
+	 ******************************************************************************/
 	public void select()
 	{
+		//*********************************************************
+		//*** 		CHECK IF ALL ELEMENTS ARE SELECTED			***
+		//*** If so, deselect everything. Otherwise, ensure		***
+		//*** that the application is in selection mode and set ***
+		//*** all objects to the 'selected' state.				***
+		//........................................................,
 		if(fullSelection())
 		{
-			deselectAll();
+			// De-select everything
+			this.changeModel(this.getModel().unselectAll());
 		} else {
-			//Make sure you are in selection mode
+			// Enter selection mode
 			this.changeInteractionMode(new SelectionMode(this));
 			selectAll();
 		}
+		
+		// Update the screen to reflect changes
 		this.repaint();
 	}
 	
 	/******************************************************************************
 	 * All Selected?
-	 * --------------------
 	 * Checks whether the entire model is selected
-	 */
+	 * ----------------------------------------------------------------------------
+	 * @return boolean
+	 ******************************************************************************/
 	public boolean fullSelection()
 	{
 		// Iterate through the set of models
 		Iterator<DrawableUML> zIter = this.getModel().zIterator();
+		
 		while( zIter.hasNext())
 		{
 			// Check model's selection state
@@ -373,29 +410,20 @@ public class UMLPanel extends JPanel {
 	
 	/******************************************************************************
 	 * Select All
-	 * --------------------
 	 * Sets every element in the panel to a selected state
-	 */
+	 ******************************************************************************/
 	private void selectAll()
 	{
 		// Iterate through the set of models
 		Iterator<DrawableUML> zIter = this.getModel().zIterator();
+		
 		while( zIter.hasNext())
 		{
 			// Set each model to a selected state
 			this.changeModel(this.getModel().select(zIter.next()));
 		}
-		this.repaint();
-	}
-	
-	/******************************************************************************
-	 * Select Deselect All
-	 * --------------------
-	 * Sets every element in the panel to an un-selected state
-	 */
-	private void deselectAll()
-	{
-		this.changeModel(this.getModel().unselectAll());
+		
+		// Update the screen to reflect changes
 		this.repaint();
 	}
 
@@ -405,5 +433,9 @@ public class UMLPanel extends JPanel {
 	
 	public void hideGrid() {
 		this.gridOn = false;
+	}
+
+	public void getFocus() {
+		requestFocusInWindow();
 	}
 }

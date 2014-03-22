@@ -60,6 +60,7 @@ public class UMLObject implements DrawableUML {
 		int startLabel = serialized.indexOf("<label>") + 7;
 		int endLabel = serialized.lastIndexOf("</label>");
 		if (startLabel == 6 || endLabel == -1) {
+			System.out.println(startLabel + " " + endLabel);
 			throw new Exception("Object with no label!");
 		} else if (startLabel == endLabel) {
 			this.label = "";

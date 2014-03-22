@@ -6,7 +6,6 @@ import org.junit.Test;
 import java.io.File;
 import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.object.UMLObject;
-import edu.millersville.cs.segfault.model.UMLFileOp;
 
 //READ
 import java.io.FileReader;
