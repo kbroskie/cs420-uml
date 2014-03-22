@@ -12,55 +12,65 @@ import javax.swing.KeyStroke;
 
 import edu.millersville.cs.segfault.ui.UMLPanel;
 
+/**************************************************************************
+ * UMLEditMenu is the class responsible for instantiating
+ * the Edit submenu and handling the user selections for the submenu.
+ * @author Kimberlyn Broskie
+ *************************************************************************/
 public class UMLEditMenu extends JMenu
 						implements ActionListener {
 	
 	//*************************************************************************
-	// Instance Variables
+	// Static Instance Variables
 	//*************************************************************************
-	
 	private static final long serialVersionUID = -3884476289367851522L;
-
-	private UMLPanel umlPanel;
 	
-	/**** EDIT MENU VARIABLES */
+	// EDIT MENU VARIABLES
 	private static final String editMenuText = "Edit";
 	private static final String undoMenuText = "Undo";
 	private static final String redoMenuText = "Redo";
 	private static final String selectAllText = "Select/Deselect All";
 	
+	//*************************************************************************
+	// Instance Variables
+	//*************************************************************************
+	// Panel containing the model
+	private UMLPanel umlPanel;
 	
 	//*************************************************************************
 	// Constructors	
 	//*************************************************************************
 		
 	/**************************************************************************
-	* Constructor to build the Edit submenu
-	* @param wFrame the frame for the interface
-	* @param umlPanel the panel for the current UML model
+	* Constructor that builds the Edit submenu, with each submenu option
+	* having a key accelerator.
+	* @param wFrame the frame for the interface.
+	* @param umlPanel the panel for the current UML model.
 	*************************************************************************/
 	public UMLEditMenu (JFrame wFrame, UMLPanel umlPanel) {
 	   super(editMenuText);
 	   
 	   this.umlPanel = umlPanel;
 
-	   // Create the edit submenu items, and add accelerators.
+	   // Create the undo menu item and add an accelerator.
 	   JMenuItem undoItem = new JMenuItem(undoMenuText);
 	   undoItem.addActionListener(this);
 	   undoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, Event.CTRL_MASK));
 
+	   // Create the redo menu item and add an action listener and accelerator.	  
 	   JMenuItem redoItem = new JMenuItem(redoMenuText);
 	   redoItem.addActionListener(this);
 	   redoItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, Event.CTRL_MASK));
 	   
+	   // Create the select all menu item and add an action listener and accelerator.	  
 	   JMenuItem selectAllItem = new JMenuItem(selectAllText);
 	   selectAllItem.addActionListener(this);
 	   selectAllItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
 	   
 	   // Add the sub-menus to the Edit menu.
-	   this.add(undoItem);
-	   this.add(redoItem);
-	   this.add(selectAllItem);
+	   add(undoItem);
+	   add(redoItem);
+	   add(selectAllItem);
 	}
 	
 	

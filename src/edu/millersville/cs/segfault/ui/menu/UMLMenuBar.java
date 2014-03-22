@@ -8,19 +8,17 @@ import edu.millersville.cs.segfault.ui.UMLPanel;
 
 /**************************************************************************
  * UMLMenuBar is the class responsible for instantiating 
- * a menubar composed of submenus.
+ * a menubar.
  * @author Kimberlyn Broskie
  *************************************************************************/
 
 public class UMLMenuBar extends JMenuBar {
 	 
 	//*************************************************************************
-	// Instance Variables
+	// Static Instance Variables
 	//*************************************************************************
-	
 	private static final long serialVersionUID = 8104072242520475736L;
-	
-	
+		
 	//*************************************************************************
 	// Constructors	
 	//*************************************************************************

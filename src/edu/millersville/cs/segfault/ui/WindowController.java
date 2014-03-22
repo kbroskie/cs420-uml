@@ -9,7 +9,6 @@ import javax.swing.JFrame;
  * controlling the UML editor window.
  * @author Kimberlyn Broskie
  *************************************************************************/
-
 public class WindowController {
 	
 	//*************************************************************************
@@ -19,15 +18,13 @@ public class WindowController {
 	private WindowUI winUI;
 	private UMLPanel umlPanel;
 	
-	
 	//*************************************************************************
 	// Constructors	
 	//*************************************************************************
 	
-	/**************************************************************************
-	 * Constructs the UML window object.
-	 *************************************************************************/
+	// Constructs the UML window.
 	private WindowController() {
+		
 	    // Set the look and feel.
 	    if (System.getProperty("mrj.version") != null) {
 	    	System.setProperty("apple.laf.useScreenMenuBar", "true");
