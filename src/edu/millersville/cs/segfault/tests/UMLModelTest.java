@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import java.util.Iterator;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.UMLModel;
@@ -13,7 +14,8 @@ import edu.millersville.cs.segfault.model.relation.UMLRelation;
 public class UMLModelTest {
 
 	@Test
-	public void test() {
+	public void test() throws Exception {
+		
 		UMLModel testModel = new UMLModel();
 		
 		//**********************************************************************************//
@@ -21,26 +23,80 @@ public class UMLModelTest {
 		//**********************************************************************************//
 		
 		UMLObject testO1 = new UMLObject();
-		testModel.add(testO1);
+		testO1 = testO1.move(100, 100, 5);
+		testModel = testModel.add(testO1);
 		
 		UMLObject testO2 = new UMLObject();
 		testModel.addObject(testO2);
 		
+		UMLObject testO3 = new UMLObject();
+		testO3 = testO3.move(100, 100, -2);
+		testModel = testModel.add(testO3);
+		
 		UMLRelation testR1 = new UMLRelation(new ImmutablePath(
 				new ImmutablePoint(20, 70)).addLast(new ImmutablePoint(80, 150)), 2, false);
-		testModel.add(testR1);
+		testModel = testModel.add(testR1);
 		
 		UMLRelation testR2 = new UMLRelation(new ImmutablePath(
 				new ImmutablePoint(30, 20)).addLast(new ImmutablePoint(50, 200)), 1, false);
-		testModel.addRelation(testR2);
+		testModel = testModel.addRelation(testR2);
 
+		//**********************************************************************************//
+		//Manipulation and Observation Tests
+		//**********************************************************************************//
+		
+		testModel = testModel.changeName("RainbowDash");
+		assertTrue("Name Change ERROR!", testModel.getName() == "RainbowDash");
+		
+		testModel.getObjects();
+		testModel.getRelations();
+		
+		assertTrue(testModel.highestZ() == 5);
+		assertTrue(testModel.lowestZ() == -2);
+		
+		System.out.print("UMLObject Type: ");
+		System.out.println(testModel.getObjectType(testO1.getType()));
+		
+		System.out.print("UMLRelation Type: ");
+		System.out.println(testModel.getRelationType(testR1.getType()));
+		
 		//**********************************************************************************//
 		//Selection Tests
 		//**********************************************************************************//
 		
+		testO1 = testO1.select();
+		assertTrue(testO1.isSelected());
+		testO1 = testO1.unselect();
+		assertFalse(testO1.isSelected());
+		
+		testO3 = testO3.select();
+		assertTrue(testO3.isSelected());
+		testModel.deleteSelected();
+		
+		//**********************************************************************************//
+		//Iteration Test
+		//**********************************************************************************//
+		
+		int count = 0;
+		UMLObject obj1 = new UMLObject();
+		Iterator<UMLObject> Oiter = testModel.objectIterator();
+		while(Oiter.hasNext())
+		{
+			++count;
+			Oiter.next();
+		}
+		assertTrue("There should be only 2 objects remaining in testModel", count == 2);
 		
 		
-
+		UMLObject obj2 = new UMLObject();
+		Iterator<UMLRelation> IterR = testModel.relationIterator();
+		while(Oiter.hasNext())
+		{
+			++count;
+			Oiter.next();
+		}
+		assertTrue("There should be only 2 relations in testModel", count == 2);
+		
 		//**********************************************************************************//
 		//Type Check Tests
 		//**********************************************************************************//
@@ -60,29 +116,8 @@ public class UMLModelTest {
 		testModel.remove(testR1);
 		testModel.removeObject(testO2);
 		testModel.removeRelation(testR2);
-		//needs check to make sure they are removed!
 		
-		//**********************************************************************************//
-		
-		//getRelationType
-		//getObjectType
-		//serialize
-		//getName
-		//getObjects
-		//getRelations
-		//highestZ
-		//lowestZ
-		//changeName
-		//select
-		//unselect
-		//unselectAll
-		//deleteSelected
-		//zIterator
-		//objectIterator
-		//relationIterator
-		
-		
-		
+		//**********************************************************************************//						
 	}
 
 }

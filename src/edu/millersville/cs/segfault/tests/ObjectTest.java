@@ -23,8 +23,8 @@ public class ObjectTest {
 		UMLObject new1 = new UMLObject();
 		UMLObject new2 = new UMLObject();
 		UMLObject new3 = new UMLObject();
-		testModel.add(new1);
-		testModel.add(new2);
+		testModel = testModel.add(new1);
+		testModel = testModel.add(new2);
 		assertTrue(new1.getLabel() == new2.getLabel());
 		
 		//**********************************************************************************//
