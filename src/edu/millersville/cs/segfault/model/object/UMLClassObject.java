@@ -1,3 +1,9 @@
+/*
+ * A subclass that extends the UML object to draw the class UML
+ * object.
+ * @author Lindsay Blank (Team Seg Fault) lindsayrblank@gmail.com
+ */
+
 package edu.millersville.cs.segfault.model.object;
 
 import java.awt.*;
@@ -5,13 +11,19 @@ import java.awt.*;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 
 	public class UMLClassObject extends UMLObject {
+		
+//*********************************************************************
+//Static variables
+		
 		int line1Height;
 		int line2Height;
 		int line1Y;
 		int line2Y;
-
+		
 //*********************************************************************
-//Empty constructor
+//Constructors
+		
+		//Empty constructor
 		public UMLClassObject()
 		{
 			super();
@@ -21,7 +33,7 @@ import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 			line2Y = 0;
 		}
 
-//Copy constructor
+		//Copy constructor
 		public UMLClassObject (UMLClassObject source)
 		{
 			super(source);
@@ -31,7 +43,7 @@ import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 			this.line2Y = source.getLine2Y();
 }
 
-	//Member constructor.
+		//Member constructor.
 		public UMLClassObject (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
 				throws Exception
 		{
@@ -68,23 +80,23 @@ import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 //**********************************************************************
 //Mutators
 
-//changelabel
+	//Change Label
 		
 
-//Move
-
+	//Move
 	public UMLClassObject moveClass (ImmutablePoint p, int z) throws Exception
 	{
 		return new UMLClassObject (this.getLabel(), p, z, this.getSize(), this.isSelected());
 	}
 
-//Resize
+	//Resize
 	public UMLClassObject resizeClass (Dimension size) throws Exception
 	{
 		return new UMLClassObject (this.getLabel(), this.getOrigin(), this.getZ(), size, this.isSelected());
 	}
 	
-// We are attempting to draw this thing.
+//************************************************************************
+//Drawing Method
 
 	public void draw (Graphics g)
 	{
