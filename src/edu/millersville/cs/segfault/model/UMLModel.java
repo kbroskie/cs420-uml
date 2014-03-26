@@ -3,11 +3,11 @@ package edu.millersville.cs.segfault.model;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
+import javax.management.relation.RelationType;
+
 import edu.millersville.cs.segfault.immutable.ImmutableSet;
-import edu.millersville.cs.segfault.model.object.ObjectType;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.relation.Aggregation;
-import edu.millersville.cs.segfault.model.relation.RelationType;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
 
 
@@ -17,106 +17,30 @@ import edu.millersville.cs.segfault.model.relation.UMLRelation;
  */
 public class UMLModel {
 	
-	//*************************************************************************
-	// enum translation keys
-	private static final DrawableType[] drawableToRelation = {
-		DrawableType.RELATION, DrawableType.AGGREGATION, DrawableType.COMPOSITION,
-		DrawableType.ASSOCIATION
-	};
-		
-	private static final RelationType[] relationToDrawable = {
-		RelationType.RELATION, RelationType.AGGREGATION, RelationType.COMPOSITION,
-		RelationType.ASSOCIATION
-	};
-		
-	private static final DrawableType[] drawableToObject = {
-		DrawableType.OBJECT, DrawableType.CLASS, DrawableType.ACTIVE_CLASS,
-		DrawableType.COMPONENT
-	};
-		
-	private static final ObjectType[] objectToDrawable = {
-		ObjectType.OBJECT, ObjectType.CLASS, ObjectType.ACTIVE_CLASS,
-		ObjectType.COMPONENT
-	};
-
-	private static final DrawableType[] drawableToString= {
-		DrawableType.OBJECT, DrawableType.CLASS, DrawableType.ACTIVE_CLASS, 
-		DrawableType.COMPONENT,	DrawableType.RELATION, DrawableType.AGGREGATION, 
-		DrawableType.COMPOSITION, DrawableType.ASSOCIATION
-	};
-	
-	private static final String[] stringToDrawable = {
-		"object", "class", "activeclass",
-		"component", "relation", "aggregation",
-		"composition", "association"
-	};
-	
-	//*************************************************************************
-	// Type translation methods
-	//*************************************************************************
-	public static boolean isRelationType(DrawableType dType) {
-		for (int i=0; i<drawableToRelation.length; ++i) {
-			if (drawableToRelation[i]==dType) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static boolean isObjectType(DrawableType dType) {
-		for (int i=0; i<drawableToObject.length; ++i) {
-			if (drawableToObject[i]==dType) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static RelationType getRelationType(DrawableType dType) {
-		for (int i=0; i<drawableToRelation.length; ++i) {
-			if (drawableToRelation[i] == dType) {
-				return relationToDrawable[i];
-			}
-		}
-		return null;
-	}
-	
-	public static ObjectType getObjectType(DrawableType dType) {
-		for (int i=0; i<drawableToObject.length; ++i) {
-			if (drawableToObject[i]==dType) {
-				return objectToDrawable[i];
-			}
-		}
-		return null;
-	}
-	
-	public static String drawableTypeString(DrawableType type) {
-		for (int i=0; i<drawableToString.length; ++i) {
-			if (drawableToString[i]==type) {
-				return stringToDrawable[i];
-			}
-		}
-		return null;
-	}
-
-	private static ImmutableSet<UMLObject> deserializeObjects(String serialized)
+	private static ImmutableSet<UMLObject> deserializeObjects(String s)
 		throws Exception
 	{
 		ImmutableSet<UMLObject> objects = new ImmutableSet<UMLObject>();
-		for (int type = 0; type < drawableToObject.length; ++type) {
-				String typeString = drawableTypeString(drawableToObject[type]);
-				int objectSearch = 0;		
-				while (serialized.indexOf("<" + typeString + ">", objectSearch) != -1) 
-				{
-					int startObject = serialized.indexOf("<" + typeString + ">", objectSearch);
-					int endObject = serialized.indexOf("<" + typeString + ">", objectSearch);
-					UMLObject newObject = DrawableFactory.makeObject(
-							serialized.substring(startObject, endObject), objectToDrawable[type]);
-					objects = objects.add(newObject);
-					objectSearch = endObject + 1;
-				}
-		}
+		
 		return objects;
+	}
+	
+	private static ImmutableSet<UMLRelation> deserializeRelations(String s){
+		ImmutableSet<UMLRelation> relations = new ImmutableSet<UMLRelation>();
+		
+		return relations;
+	}
+	
+	private static String deserializeAttribute(String s, String name) 
+		throws Exception
+	{
+		int start = s.indexOf("<" + name + ">");
+		int end = s.indexOf("</" + name + ">");
+		if (start == -1 || end ==-1) {
+			throw new Exception("Deserialization: Attribute " + name + "not found!");
+		}
+		start += name.length() + 2;
+		return s.substring(start, end);
 	}
 	
 	//*************************************************************************
@@ -164,39 +88,9 @@ public class UMLModel {
 	public UMLModel(String serialized) throws Exception 
 	{
 		
-		// De-serialize title
-		int startTitle = serialized.indexOf("<title>") + 7;
-		int endTitle = serialized.indexOf("</title>");
-		if (startTitle == 6 || endTitle == -1) {
-			throw new Exception("Model has no title!");
-		} else {
-			this.modelName = serialized.substring(startTitle, endTitle);
-		}
-		
-		this.objects = deserializeObjects(serialized);
-		
-		// De-serialize any relations
-		int relationSearch = 0;
-		ImmutableSet<UMLRelation> relations = new ImmutableSet<UMLRelation>();
-		while (serialized.indexOf("<relation>", relationSearch) != -1)
-		{
-			int startRelation = serialized.indexOf("<relation>", relationSearch);
-			int endRelation = serialized.indexOf("</relation>", relationSearch);
-			UMLRelation newRelation = new UMLRelation(serialized.substring(startRelation, endRelation));
-			relations = relations.add(newRelation);
-			relationSearch = endRelation + 1;
-		}
-		// De-serialize any aggregations
-		relationSearch = 0;
-		while (serialized.indexOf("<aggregation>", relationSearch) != -1)
-		{
-			int startRelation = serialized.indexOf("<aggregation>", relationSearch);
-			int endRelation = serialized.indexOf("</aggregation>", relationSearch);
-			UMLRelation newRelation = new Aggregation(serialized.substring(startRelation, endRelation));
-			relations = relations.add(newRelation);
-			relationSearch = endRelation + 1;
-		}
-		this.relations = relations;
+		this.modelName = deserializeAttribute("title");
+		this.objects   = deserializeObjects(serialized);
+		this.relations = deserializeRelations(serialized);
 	}
 	
 
