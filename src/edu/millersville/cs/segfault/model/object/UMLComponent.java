@@ -1,3 +1,9 @@
+/*
+ * A subclass that extends UML object to draw the class UML
+ * object.
+ * @author Lindsay Blank (Team Seg Fault) lindsayrblank@gmail.com
+ */
+
 package edu.millersville.cs.segfault.model.object;
 
 import java.awt.*;
@@ -6,6 +12,10 @@ import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 
 public class UMLComponent extends UMLObject 
 {	
+	
+//***************************************************************
+//Constructors
+	
 	//Empty constructor
 	public UMLComponent ()
 	{
@@ -26,14 +36,9 @@ public class UMLComponent extends UMLObject
 		
 	}
 	
-	public UMLComponent(String serialized) 
-		throws Exception
-	{
-		super(serialized);
-	}
-	
-	/*****************************************************************************************/
-	//Let's draw this
+
+//*****************************************************************************************/
+//Drawing Method
 	
 	public void draw (Graphics g)
 	{
