@@ -4,21 +4,27 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 
-/**
- * Window is the class responsible for instantiating 
- * and controlling the UML editor window.
+/**************************************************************************
+ * WindowController is the class responsible for
+ * controlling the UML editor window.
  * @author Kimberlyn Broskie
- *
- */
+ *************************************************************************/
 public class WindowController {
+	
+	//*************************************************************************
+	// Instance Variables
+	//*************************************************************************
 	private JFrame windowFrame;
 	private WindowUI winUI;
 	private UMLPanel umlPanel;
 	
-	/**
-	 * Constructs the UML window object.
-	 */
+	//*************************************************************************
+	// Constructors	
+	//*************************************************************************
+	
+	// Constructs the UML window.
 	private WindowController() {
+		
 	    // Set the look and feel.
 	    if (System.getProperty("mrj.version") != null) {
 	    	System.setProperty("apple.laf.useScreenMenuBar", "true");
@@ -34,18 +40,36 @@ public class WindowController {
 	    windowFrame.setVisible(true);
 	}
 	
+	
+	//********************************************************************
+	// Observers
+	//********************************************************************
+	
+	/**************************************************************************
+	 * Returns the current umlPanel.
+	 * @return returns the current umlPanel.
+	 *************************************************************************/
 	public UMLPanel uml() {
 		return umlPanel;
 	}
 	
+	/**************************************************************************
+	 * Returns the current windowUI.
+	 * @return returns the current windowUI.
+	 *************************************************************************/
 	public WindowUI windowUI() {
 		return winUI;
 	}
+	
+	
+	//********************************************************************
+	// Main method
+	//********************************************************************
 
-	/*
+	/**************************************************************************
 	 * Creates and shows the UML editor GUI.
 	 * @param args are not used
-	 */
+	 *************************************************************************/
 	public static void main(String[] args) {
 	   javax.swing.SwingUtilities.invokeLater(new Runnable() {
 		   public void run() {

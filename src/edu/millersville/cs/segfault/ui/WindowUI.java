@@ -1,148 +1,73 @@
 package edu.millersville.cs.segfault.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Event;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.Dimension;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.ScrollPaneConstants;
 
+import edu.millersville.cs.segfault.ui.menu.UMLMenuBar;
 
-import edu.millersville.cs.segfault.model.DrawableType;
-import javax.swing.border.TitledBorder;
-import edu.millersville.cs.segfault.model.UMLModel;
-
-public class WindowUI extends JPanel 
-			implements ActionListener {
+/**************************************************************************
+ * WindowUI is the class responsible for instantiating 
+ * the UML editor window.
+ * @author Kimberlyn Broskie
+ *************************************************************************/
+public class WindowUI extends JPanel {
 	
+	//*************************************************************************
+	// Static Instance Variables
+	//*************************************************************************
 	private static final long serialVersionUID = 1L;
+	
+	// Dimensions for the main frame.
+	private static final Dimension WINDOW_PREFERRED_SIZE = new Dimension(600, 520);
+	private static final Dimension UML_PANE_MIN_SIZE = new Dimension(500, 520);
+	private static final Dimension OPTIONS_PANE_MIN_SIZE = new Dimension(100, 520);
+	
+	
+	//*************************************************************************
+	// Instance Variables
+	//*************************************************************************
 	private JFrame winFrame;
 	private WindowController winController;
+	
+	// Components of the main frame.
 	private UMLPanel umlPanel;
+	private JScrollPane scrollableUMLPanel;
+	private JSplitPane splitPane;
+	private UMLOptionsPanel optionsPane;
+	private JScrollPane scrollableOptionsPanel;
 	
-	// Menu Items
-	/**** FILE */
-	private static final String fileMenuText = "File";
-	private static final String newMenuText = "New";
-	private static final String openMenuText = "Open";
-	private static final String saveMenuText = "Save";
-	private static final String saveAsMenuText = "Save as...";
-	private static final String exitMenuText = "Exit";
-	
-	/**** EDIT */
-	private static final String editMenuText = "Edit";
-	private static final String undoMenuText = "Undo";
-	private static final String redoMenuText = "Redo";
-	private static final String selectAllText = "Select/Deselect All";
-	private static final String deleteText = "Delete";
-	
-	// Options Pane Items
-	private static final String optionsPaneObjectDraw = "Object";
-	private static final String optionsPaneClassDraw = "Class";
-	private static final String optionsPaneActiveClassDraw = "Active Class";
-	private static final String optionsPaneComponentDraw = "Component";
-	private static final String optionsPaneRelationDraw = "Relation";
-	private static final String optionsPaneAggregationDraw = "Aggregation";
-	private static final String optionsPaneCompositionDraw = "Composition";
-	private static final String optionsPaneAssociationDraw = "Association";
-	private static final String optionsPaneSelect = "Select";
+	//*************************************************************************
+	// Constructors	
+	//*************************************************************************
 
 	
-	/**
-	 * WindowUI constructor that constructs a window
-	 * and adds the basic components.
-	 */
+	/**************************************************************************
+	 * Constructor to create a splitpane window with two main panels.
+	 *************************************************************************/
 	public WindowUI (WindowController wController, JFrame wFrame) {
 		winFrame = wFrame;
 		winController = wController;
-		JPanel mainUIPanel = setMainPanelLayout();
-		winFrame.getContentPane().add(mainUIPanel, BorderLayout.CENTER);
-		buildMenu(winFrame);
-		buildUMLPanel(winFrame);
-		buildOptionsPanel(winFrame);
-	}
-	
-	/** 
-	 * Returns the current UML model.
-	 * @return the current UML model
-	 */
-	public UMLPanel uml () {
-			return winController.uml();
-	}
-	
-	/**
-	 * Sets the layout for the main interface.
-	 * @return returns the JPanel that holds all UI components.
-	 */
-	private JPanel setMainPanelLayout() {
-		JPanel mainPanel = new JPanel();
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		mainPanel.setLayout(new BorderLayout());
-		mainPanel.add(this);	
-	    setLayout(new BorderLayout());
-	    return mainPanel;
-	}
 		
-	/*
-	 * Builds the menu bar.
-	 * @param wFrame the frame for the interface
-	 */
-	private void buildMenu(JFrame wFrame) {
-	   JMenuBar menuBar = new JMenuBar();
-	   
-	   // Create the sub-menus.
-	   JMenu fileSubmenu = buildFileMenu();
-	   JMenu editSubmenu = buildEditMenu();
-	   
-	   // Add the menus to the menu bar.
-	   menuBar.add(fileSubmenu);
-	   menuBar.add(editSubmenu);
-	   
-	   // Set the window's menu bar.
-	   wFrame.setJMenuBar(menuBar);
-	}
-	
-	/**
-	 * Builds the File menu.
-	 * @return returns the file submenu
-	 */
-	private JMenu buildFileMenu() { 
-	   // Create the menu items, adding action listeners and accelerators.
-	   JMenu fileMenu = new JMenu(fileMenuText);
-	   
-	   JMenuItem newItem = new JMenuItem(newMenuText);
-	   newItem.addActionListener(this);
-	   newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK));
-	   
-	   JMenuItem openItem = new JMenuItem(openMenuText);
-	   openItem.addActionListener(this);
-	   openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK));
+		// Panels to add to the main frame.
+		umlPanel = new UMLPanel();	
+		optionsPane = new UMLOptionsPanel(umlPanel);
+		scrollableUMLPanel = new JScrollPane(umlPanel);
+		scrollableOptionsPanel = new JScrollPane(optionsPane);
+		scrollableOptionsPanel.setVerticalScrollBarPolicy(
+				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-	   JMenuItem saveItem = new JMenuItem(saveMenuText);
-	   saveItem.addActionListener(this);
-	   saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
-	   
-	   JMenuItem saveAsItem = new JMenuItem(saveAsMenuText);
-	   saveAsItem.addActionListener(this);
+		// Create a split pane consisting of the drawing area and options area.
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+								   scrollableOptionsPanel, scrollableUMLPanel);
+		splitPane.setOneTouchExpandable(true);
+		splitPane.setDividerLocation(109);	
 
-	   JMenuItem exitItem = new JMenuItem(exitMenuText);
-	   exitItem.addActionListener(new ExitListener());
-	   exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK));
-
+<<<<<<< HEAD
 	   // Add the sub-menus to the File menu.
 	   fileMenu.add(newItem);
 	   fileMenu.add(openItem);
@@ -306,18 +231,24 @@ public class WindowUI extends JPanel
 		relationsPanel.add(associationButton);
 		
 	}	
-	
-	/**
-	 * Handles the event generated when the user selects 
-	 * the exit option from the File menu.
-	 * @param e the event information triggered by selecting the exit option
-	 */
-	private class ExitListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			System.exit(0);
-		}
+=======
+		// Set the components sizes.
+		splitPane.setPreferredSize(WINDOW_PREFERRED_SIZE);
+		optionsPane.setMinimumSize(OPTIONS_PANE_MIN_SIZE);
+		scrollableUMLPanel.setMinimumSize(UML_PANE_MIN_SIZE);
+		
+	    // Add the splitpane and menu to the main frame.
+		winFrame.getContentPane().add(splitPane);
+	    winFrame.setJMenuBar(new UMLMenuBar(winFrame, umlPanel));
 	}
 	
+>>>>>>> gui_improvement
+	
+	//********************************************************************
+	// Observers
+	//********************************************************************
+	
+<<<<<<< HEAD
 	/**
 	 * Handles the events generated by the user selecting
 	 * a menu option.
@@ -369,4 +300,13 @@ public class WindowUI extends JPanel
 			 umlPanel.changeInteractionMode(new DrawMode(DrawableType.ASSOCIATION, umlPanel));
 		 }
 	 } 	 
+=======
+	/**************************************************************************
+	 * Returns the current UML model.
+	 * @return the current UML model
+	 *************************************************************************/
+	public UMLPanel uml () {
+		return winController.uml();
+	}
+>>>>>>> gui_improvement
 }
