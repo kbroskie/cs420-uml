@@ -17,32 +17,6 @@ import edu.millersville.cs.segfault.model.relation.UMLRelation;
  */
 public class UMLModel {
 	
-	private static ImmutableSet<UMLObject> deserializeObjects(String s)
-		throws Exception
-	{
-		ImmutableSet<UMLObject> objects = new ImmutableSet<UMLObject>();
-		
-		return objects;
-	}
-	
-	private static ImmutableSet<UMLRelation> deserializeRelations(String s){
-		ImmutableSet<UMLRelation> relations = new ImmutableSet<UMLRelation>();
-		
-		return relations;
-	}
-	
-	private static String deserializeAttribute(String s, String name) 
-		throws Exception
-	{
-		int start = s.indexOf("<" + name + ">");
-		int end = s.indexOf("</" + name + ">");
-		if (start == -1 || end ==-1) {
-			throw new Exception("Deserialization: Attribute " + name + "not found!");
-		}
-		start += name.length() + 2;
-		return s.substring(start, end);
-	}
-	
 	//*************************************************************************
 	// Instance Variables
 	//*************************************************************************
@@ -88,7 +62,17 @@ public class UMLModel {
 	public UMLModel(String serialized) throws Exception 
 	{
 		
-		this.modelName = deserializeAttribute("title");
+		this.modelName = XMLAttribute.getAttribute(serialized, "title");
+		
+		ImmutableSet<UMLObject> objects = new ImmutableSet<UMLObject>();
+		
+		for (DrawableType type: DrawableType.objectTypeList()) {
+			int search=0;
+			while(XMLAttribute.hasAttr(serialized, type.name(), search)) {
+				
+				search = XMLAttribute.endAttribute(serialized, type.name(), search) + 2;
+			}
+		}
 		this.objects   = deserializeObjects(serialized);
 		this.relations = deserializeRelations(serialized);
 	}
