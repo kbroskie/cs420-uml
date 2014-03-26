@@ -115,10 +115,10 @@ public class UMLFileMenu extends JMenu
 			 umlPanel.load();
 		 }
 		 else if (selectedCommand == saveMenuText) {
-			 umlPanel.save(umlPanel.model().serialize());
+			 umlPanel.save(umlPanel.getModel().serialize());
 		 }
 		 else if (selectedCommand == saveAsMenuText) {
-			 umlPanel.saveAs(umlPanel.model().serialize());
+			 umlPanel.saveAs(umlPanel.getModel().serialize());
 		 }
 	 }
 }

@@ -26,10 +26,10 @@ public class UMLPanel extends JPanel {
 	
 	
 	private static final long serialVersionUID = 3691818181393202313L;
-	UMLModel currentModel;
-	LinkedList<UMLModel> undoStack;
-	LinkedList<UMLModel> redoStack;
-	PanelInteractionMode currentInteractionMode;
+	private UMLModel currentModel;
+	private LinkedList<UMLModel> undoStack;
+	private LinkedList<UMLModel> redoStack;
+	private PanelInteractionMode currentInteractionMode;
 	int lastX;
 	int lastY;
 	static boolean hasFile;

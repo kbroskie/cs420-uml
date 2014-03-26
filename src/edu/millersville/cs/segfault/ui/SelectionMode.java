@@ -48,7 +48,7 @@ public class SelectionMode extends PanelInteractionMode {
 			}
 		}
 		if (currentTarget != null) {
-			panel.changeModel(panel.currentModel.select(currentTarget));
+			panel.changeModel(panel.getModel().select(currentTarget));
 		}
 		
 	}
@@ -141,7 +141,7 @@ public class SelectionMode extends PanelInteractionMode {
 		ImmutablePoint mouseImmutablePoint = new ImmutablePoint(e.getX(), e.getY());
 		ImmutablePoint snapImmutablePoint = null;
 		
-		for (Iterator<DrawableUML> zIter = panel.currentModel.zIterator();
+		for (Iterator<DrawableUML> zIter = panel.getModel().zIterator();
 				zIter.hasNext();) {
 			ImmutablePoint newSnap = zIter.next().snapPoint(new ImmutablePoint(e.getX(), e.getY()));
 			if (newSnap != null && snapImmutablePoint == null) {
