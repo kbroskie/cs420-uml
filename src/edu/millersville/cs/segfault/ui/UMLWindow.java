@@ -27,12 +27,14 @@ public class UMLWindow extends JFrame {
 	private static final Dimension UML_PANE_MIN_SIZE = new Dimension(500, 520);
 	private static final Dimension OPTIONS_PANE_MIN_SIZE = new Dimension(100, 520);
 	
+	// Component of the main frame.
+	private static UMLPanel umlPanel;
+
 	
 	//*************************************************************************
 	// Instance Variables
 	//*************************************************************************	
 	// Components of the main frame.
-	private static UMLPanel umlPanel;
 	private UMLOptionsPanel optionsPane;
 
 	private JScrollPane scrollableUMLPanel;
@@ -46,7 +48,8 @@ public class UMLWindow extends JFrame {
 	//*************************************************************************
 	
 	/**************************************************************************
-	 * Constructor to create a splitpane window with two main panels.
+	 * Constructor to create a splitpane window comprised of two scrollable 
+	 * panels that hold the user options and model drawing area.
 	 *************************************************************************/
 	public UMLWindow () {
 
@@ -56,7 +59,7 @@ public class UMLWindow extends JFrame {
 	
 		// Panels to add to the frame.
 		umlPanel = new UMLPanel();	
-		optionsPane = new UMLOptionsPanel(umlPanel);
+		optionsPane = new UMLOptionsPanel();
 		scrollableUMLPanel = new JScrollPane(umlPanel);
 		scrollableOptionsPanel = new JScrollPane(optionsPane);
 		scrollableOptionsPanel.setVerticalScrollBarPolicy(

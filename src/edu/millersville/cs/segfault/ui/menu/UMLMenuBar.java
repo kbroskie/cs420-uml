@@ -30,12 +30,12 @@ public class UMLMenuBar extends JMenuBar {
 		super();
 				   
 		// Create the sub-menus.
-		JMenu fileSubmenu = new UMLFileMenu(wFrame);
-		JMenu editSubmenu = new UMLEditMenu(wFrame);
+		JMenu fileSubmenu = new UMLFileMenu();
+		JMenu editSubmenu = new UMLEditMenu();
 		   
 		// Add the submenus to the menu bar.
-		this.add(fileSubmenu);
-		this.add(editSubmenu);
+		add(fileSubmenu);
+		add(editSubmenu);
 		   
 		// Set the window's menu bar.
 		wFrame.setJMenuBar(this);

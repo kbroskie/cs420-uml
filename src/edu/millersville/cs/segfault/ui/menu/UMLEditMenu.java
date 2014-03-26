@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
@@ -41,7 +40,7 @@ public class UMLEditMenu extends JMenu
 	* @param wFrame the frame for the interface.
 	* @param umlPanel the panel for the current UML model.
 	*************************************************************************/
-	public UMLEditMenu (JFrame wFrame) {
+	public UMLEditMenu() {
 	   super(editMenuText);
 	   
 	   // Create the undo menu item and add an accelerator.
@@ -67,7 +66,7 @@ public class UMLEditMenu extends JMenu
 	
 	
 	//*************************************************************************
-	// Action Listeners
+	// Event Listeners
 	//*************************************************************************
 	
 	/**************************************************************************
@@ -80,7 +79,6 @@ public class UMLEditMenu extends JMenu
 		 
 	 	 if (selectedCommand == undoMenuText) {
 			 UMLWindow.getUMLPanel().undo();	
-
 		 }
 		 else if (selectedCommand == redoMenuText) {
 			 UMLWindow.getUMLPanel().redo();
