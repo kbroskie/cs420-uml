@@ -4,8 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
-import edu.millersville.cs.segfault.ui.UMLPanel;
-
 /**************************************************************************
  * UMLMenuBar is the class responsible for instantiating 
  * a menubar.
@@ -28,12 +26,12 @@ public class UMLMenuBar extends JMenuBar {
 	 * @param wFrame the frame for the interface
 	 * @param umlPanel the panel for the current UML model
 	 *************************************************************************/
-	public UMLMenuBar (JFrame wFrame, UMLPanel umlPanel) {
+	public UMLMenuBar (JFrame wFrame) {
 		super();
 				   
 		// Create the sub-menus.
-		JMenu fileSubmenu = new UMLFileMenu(wFrame, umlPanel);
-		JMenu editSubmenu = new UMLEditMenu(wFrame, umlPanel);
+		JMenu fileSubmenu = new UMLFileMenu(wFrame);
+		JMenu editSubmenu = new UMLEditMenu(wFrame);
 		   
 		// Add the submenus to the menu bar.
 		this.add(fileSubmenu);

@@ -10,7 +10,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
-import edu.millersville.cs.segfault.ui.UMLPanel;
+import edu.millersville.cs.segfault.ui.UMLWindow;
 
 /**************************************************************************
  * UMLEditMenu is the class responsible for instantiating
@@ -32,12 +32,6 @@ public class UMLEditMenu extends JMenu
 	private static final String selectAllText = "Select/Deselect All";
 	
 	//*************************************************************************
-	// Instance Variables
-	//*************************************************************************
-	// Panel containing the model
-	private UMLPanel umlPanel;
-	
-	//*************************************************************************
 	// Constructors	
 	//*************************************************************************
 		
@@ -47,11 +41,9 @@ public class UMLEditMenu extends JMenu
 	* @param wFrame the frame for the interface.
 	* @param umlPanel the panel for the current UML model.
 	*************************************************************************/
-	public UMLEditMenu (JFrame wFrame, UMLPanel umlPanel) {
+	public UMLEditMenu (JFrame wFrame) {
 	   super(editMenuText);
 	   
-	   this.umlPanel = umlPanel;
-
 	   // Create the undo menu item and add an accelerator.
 	   JMenuItem undoItem = new JMenuItem(undoMenuText);
 	   undoItem.addActionListener(this);
@@ -87,10 +79,11 @@ public class UMLEditMenu extends JMenu
 		 String selectedCommand = se.getActionCommand();
 		 
 	 	 if (selectedCommand == undoMenuText) {
-			 umlPanel.undo();	
+			 UMLWindow.getUMLPanel().undo();	
+
 		 }
 		 else if (selectedCommand == redoMenuText) {
-			 umlPanel.redo();
+			 UMLWindow.getUMLPanel().redo();
 		 } 
 	}
 }

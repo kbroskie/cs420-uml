@@ -11,7 +11,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import edu.millersville.cs.segfault.model.UMLModel;
-import edu.millersville.cs.segfault.ui.UMLPanel;
+import edu.millersville.cs.segfault.ui.UMLWindow;
 
 /**************************************************************************
  * UMLFileMenu is the class responsible for instantiating 
@@ -35,12 +35,6 @@ public class UMLFileMenu extends JMenu
 	private static final String exitMenuText = "Exit";
 	
 	//*************************************************************************
-	// Instance Variables
-	//*************************************************************************
-	// Panel containing the model
-	private UMLPanel umlPanel;
-	
-	//*************************************************************************
 	// Constructors	
 	//*************************************************************************
 	
@@ -50,10 +44,8 @@ public class UMLFileMenu extends JMenu
 	 * @param wFrame the frame for the interface
 	 * @param umlPanel the panel for the current UML model
 	 *************************************************************************/
-	public UMLFileMenu (JFrame wFrame, UMLPanel umlPanel) {
+	public UMLFileMenu (JFrame wFrame) {
 		super(fileMenuText);
-
-		this.umlPanel = umlPanel;
 		
 	   // Create the new menu item and add an action listener and accelerator.	   
 	   JMenuItem newItem = new JMenuItem(newMenuText);
@@ -109,16 +101,16 @@ public class UMLFileMenu extends JMenu
 		 String selectedCommand = se.getActionCommand();
 	 	 	 
 		 if (selectedCommand == newMenuText) {
-			 umlPanel.changeModel(new UMLModel());
+			 UMLWindow.getUMLPanel().changeModel(new UMLModel());
 		 }
 		 else if (selectedCommand == openMenuText) {
-			 umlPanel.load();
+			 UMLWindow.getUMLPanel().load();
 		 }
 		 else if (selectedCommand == saveMenuText) {
-			 umlPanel.save(umlPanel.model().serialize());
+			 UMLWindow.getUMLPanel().save(UMLWindow.getUMLPanel().model().serialize());
 		 }
 		 else if (selectedCommand == saveAsMenuText) {
-			 umlPanel.saveAs(umlPanel.model().serialize());
+			 UMLWindow.getUMLPanel().saveAs(UMLWindow.getUMLPanel().model().serialize());
 		 }
 	 }
 }
