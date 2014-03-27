@@ -6,83 +6,65 @@
 
 package edu.millersville.cs.segfault.model.object;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
 
+import edu.millersville.cs.segfault.immutable.ImmutableLine;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
+import edu.millersville.cs.segfault.model.DrawableType;
+import edu.millersville.cs.segfault.model.XMLAttribute;
 
 	public class UMLClassObject extends UMLObject {
 		
 //*********************************************************************
 //Static variables
 		
-		int line1Height;
-		int line2Height;
-		int line1Y;
-		int line2Y;
+	public final ImmutableLine firstLine;
+	public final ImmutableLine secondLine;
+		
 		
 //*********************************************************************
 //Constructors
 		
-		//Empty constructor
-		public UMLClassObject()
-		{
-			super();
-			line1Height = 0;
-			line2Height = 0;
-			line1Y = 0;
-			line2Y = 0;
-		}
+	//Empty constructor
+	public UMLClassObject()
+	{
+		super();
+		this.firstLine  = new ImmutableLine(new ImmutablePoint(this.origin.x, this.size.height/3), 
+						  new ImmutablePoint(this.origin.x + this.size.width, this.size.height/3));
+		this.secondLine = new ImmutableLine(new ImmutablePoint(this.origin.x, (this.size.height/3)*2), 
+				          new ImmutablePoint(this.origin.x + this.size.width, (this.size.height/3)*2));
+	}
 
-		//Copy constructor
-		public UMLClassObject (UMLClassObject source)
-		{
-			super(source);
-			this.line1Height = source.getL1Height();
-			this.line2Height = source.getL2Height();
-			this.line1Y = source.getLine1Y();
-			this.line2Y = source.getLine2Y();
-}
-
-		//Member constructor.
-		public UMLClassObject (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
-				throws Exception
-		{
-			super(nLabel, p, nZ, size, nSelected);
-			this.line1Height = size.height/2;
-			this.line2Height = size.height/4;
-			this.line1Y = p.getY() + line1Height;
-			this.line2Y = p.getY() + line2Height;
-		}
-
-		public UMLClassObject (String serialized) 
+	//Member constructor.
+	public UMLClassObject (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
 			throws Exception
-		{
-			super(serialized);
-		}
+	{
+		super(nLabel, p, nZ, size, nSelected);
+		this.firstLine  = new ImmutableLine(new ImmutablePoint(this.origin.x, this.size.height/3), 
+		        		  new ImmutablePoint(this.origin.x + this.size.width, this.size.height/3));
+		this.secondLine = new ImmutableLine(new ImmutablePoint(this.origin.x, (this.size.height/3)*2), 
+		          		  new ImmutablePoint(this.origin.x + this.size.width, (this.size.height/3)*2));
+	}
+
+	public UMLClassObject (String s) 
+		throws Exception
+	{
+		super(s);
+		this.firstLine = new ImmutableLine(XMLAttribute.getAttribute(s, "firstLine"));
+		this.secondLine = new ImmutableLine(XMLAttribute.getAttribute(s, "secondLine"));
+	}
 		
 //**********************************************************************
 //Observers
 
-		public int getL1Height ()
-		{
-			return this.line1Height;
-		}
+	public String toString(String name) {
+		return super.toString() + firstLine.serialize("firstLine") + secondLine.serialize("secondLine"); 
+	}
 
-		public int getL2Height ()
-		{
-			return this.line2Height;
-		}
-
-		public int getLine1Y ()
-		{
-			return this.line1Y;
-		}
-
-		public int getLine2Y ()
-		{
-			return this.line2Y;
-		}
-
+	public DrawableType getType() { return DrawableType.CLASS; }
+	
 //**********************************************************************
 //Mutators
 
@@ -108,8 +90,8 @@ import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 	{
 		super.draw(g);
 		g.setColor(Color.black);
-		g.drawLine(this.getX(), line1Y, this.getX() + this.getWidth(), line1Y);
-		g.drawLine(this.getX(), line2Y, this.getX() + this.getWidth(), line2Y);
+		firstLine.draw(g);
+		secondLine.draw(g);
 	}
 
 }

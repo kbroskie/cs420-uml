@@ -2,6 +2,8 @@ package edu.millersville.cs.segfault.immutable;
 
 import java.awt.Point;
 
+import edu.millersville.cs.segfault.model.XMLAttribute;
+
 /*****************************************************************************
  * An immutable, integer based Point implementation.
  * @author Daniel Rabiega
@@ -11,8 +13,8 @@ public class ImmutablePoint {
 	//************************************************************************
 	// Instance Variables
 	
-	private final int x;
-	private final int y;
+	public final int x;
+	public final int y;
 	
 	//************************************************************************
 	// Constructors
@@ -33,8 +35,25 @@ public class ImmutablePoint {
 		this.y = y;
 	}
 	
+	public ImmutablePoint(String s) {
+		this.x = XMLAttribute.getIntAttribute(s, "x");
+		this.y = XMLAttribute.getIntAttribute(s, "y");
+	}
+	
 	//************************************************************************
 	// Observers
+	
+	public String serialize() {
+		return XMLAttribute.makeTag("point", 
+									XMLAttribute.makeTag("x", this.x) + 
+									XMLAttribute.makeTag("y", this.y));	
+	}
+	
+	public String serialize(String name) {
+		return XMLAttribute.makeTag(name, 
+				XMLAttribute.makeTag("x", this.x) + 
+				XMLAttribute.makeTag("y", this.y));	
+	}
 	
 	/*************************************************************************
 	 * Returns the X coordinate of this point.

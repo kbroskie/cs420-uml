@@ -351,7 +351,8 @@ public class UMLPanel extends JPanel {
 				repaint();
 				return(true);
 	    	} catch(Exception e) {
-	    		System.err.println("ERROR: Failed to create UML Object!");
+	    		System.err.println("Load failed: " + e.getMessage());
+	    		e.printStackTrace();
 	    		return(false);
 	    	}
 	    } else {

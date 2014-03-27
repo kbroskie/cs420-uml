@@ -14,32 +14,13 @@ import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
+import edu.millersville.cs.segfault.model.XMLAttribute;
 
 /*****************************************************************************
  * Root of the class hierarchy for various types of Relations and arrows.    
  * @author Daniel Rabiega                                                    
  *****************************************************************************/
 public class UMLRelation implements DrawableUML {
-	
-	//*************************************************************************
-	// Static Functions
-	private static int findIntAttr(String attr, String serialized)
-			throws Exception
-		{
-			int value;
-			
-			if (!serialized.contains("<" + attr + ">"))
-			{
-				throw new Exception("Attribute " + attr + "not found in object!");
-			} else {
-				value = Integer.parseInt(serialized.substring(
-							serialized.indexOf("<"+attr+">") + attr.length() + 2,
-							serialized.indexOf("</"+attr+">")));
-			}
-			
-			return value;
-		}
-
 	
 	//*************************************************************************
 	// Member variables
@@ -68,26 +49,24 @@ public class UMLRelation implements DrawableUML {
 	 * @param serialized The string representing a serialized UMLRelation
 	 * @throws Exception Thrown when it fails to find a mandatory attribute
 	 *************************************************************************/
-	public UMLRelation(String serialized)
+	public UMLRelation(String s)
 		throws Exception
 	{
+		this.z = XMLAttribute.getIntAttribute(s, "z");
+		this.path = new ImmutablePath(XMLAttribute.getAttribute(s, "path"));
 		this.selected = false;
-		this.z = findIntAttr("z", serialized);
-		this.path = new ImmutablePath(serialized.substring(
-				serialized.indexOf("<path>")+6,
-				serialized.indexOf("</path>")));
 	}
 	
 	//*************************************************************************
 	// Observers
-	private String serialize() 
+	public String serialize() 
 	{
-		String relationString = "";
-
-		relationString += "  <z>" + this.z + "</z>\n";
-		relationString += path.toString();
-		
-		return relationString;
+		return XMLAttribute.makeTag(this.getType().name(), this.toString());
+	}
+	
+	public String toString() {
+		return XMLAttribute.makeTag("z", this.z)
+			 + XMLAttribute.makeTag("path", this.path.toString());	
 	}
 	
 	/*************************************************************************
@@ -139,6 +118,7 @@ public class UMLRelation implements DrawableUML {
 	public ImmutablePoint getEnd() {
 		return this.path.last();
 	}
+	
 	
 	//*************************************************************************
 	// Mutators
@@ -202,10 +182,6 @@ public class UMLRelation implements DrawableUML {
 	@Override
 	public UMLRelation unselect() {
 		return new UMLRelation(this.getPath(), this.getZ(), false);
-	}
-
-	public String toString() {
-		return this.serialize();
 	}
 
 	@Override

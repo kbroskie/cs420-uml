@@ -1,5 +1,9 @@
 package edu.millersville.cs.segfault.immutable;
 
+import java.awt.Graphics;
+
+import edu.millersville.cs.segfault.model.XMLAttribute;
+
 /*****************************************************************************
  * An immutable line class.
  * @author Daniel Rabiega
@@ -9,8 +13,8 @@ public class ImmutableLine {
 	//************************************************************************
 	// Instance Variables
 	
-	private final ImmutablePoint firstPoint;
-	private final ImmutablePoint secondPoint;
+	public final ImmutablePoint first;
+	public final ImmutablePoint second;
 	
 	//************************************************************************
 	// Constructors
@@ -19,19 +23,31 @@ public class ImmutableLine {
 	 * Creates a new immutable line between two immutable points.
 	 *************************************************************************/
 	public ImmutableLine(ImmutablePoint first, ImmutablePoint second) {
-		this.firstPoint = first;
-		this.secondPoint = second;
+		this.first = first;
+		this.second = second;
+	}
+	
+	public ImmutableLine(String s) {
+		this.first = new ImmutablePoint(XMLAttribute.getAttribute(s, "first"));
+		this.second = new ImmutablePoint(XMLAttribute.getAttribute(s, "second"));
 	}
 	
 	//************************************************************************
 	// Observers
 	
-	public ImmutablePoint getFirst() {
-		return this.firstPoint;
+	public String serialize() {
+		return XMLAttribute.makeTag("line", first.serialize("first")+second.serialize("second"));
 	}
 	
-	public ImmutablePoint getSecond() {
-		return this.secondPoint;
+	public String serialize(String name) {
+		return XMLAttribute.makeTag(name, first.serialize("first")+second.serialize("second"));
+	}
+	
+	//************************************************************************
+	// Drawing Methods
+	
+	public void draw(Graphics g) {
+		g.drawLine(first.x, first.y, second.x, second.y);
 	}
 	
 	//************************************************************************
@@ -41,17 +57,17 @@ public class ImmutableLine {
 	 * Returns the length of this line segment.
 	 *************************************************************************/
 	public double length() {
-		return Math.sqrt((Math.pow(firstPoint.getX() - secondPoint.getX(), 2) 
-				+ Math.pow(firstPoint.getY() - secondPoint.getY(), 2))*1.0);
+		return Math.sqrt((Math.pow(first.getX() - second.getX(), 2) 
+				+ Math.pow(first.getY() - second.getY(), 2))*1.0);
 	}
 	
 	/*************************************************************************
 	 * Returns the slope of this line segment.
 	 *************************************************************************/
 	public double slope() {
-		if (firstPoint.getY() != secondPoint.getY() && firstPoint.getX() != secondPoint.getX()) {
-			return ((firstPoint.getX()-secondPoint.getX())*1.0)/
-					((firstPoint.getY() - secondPoint.getY())*1.0);
+		if (first.getY() != second.getY() && first.getX() != second.getX()) {
+			return ((first.getX()-second.getX())*1.0)/
+					((first.getY() - second.getY())*1.0);
 		}
 		return 0; // Sadly, used for both 0 and infinite slope.
 	}
@@ -59,7 +75,7 @@ public class ImmutableLine {
 	 * Returns the y intercept of this line segment.
 	 *************************************************************************/
 	public double intercept() {
-		return firstPoint.getY() - this.slope() * firstPoint.getX();
+		return first.getY() - this.slope() * first.getX();
 	}
 	
 	/*************************************************************************
@@ -77,24 +93,24 @@ public class ImmutableLine {
 			int newY = (int) (this.slope()*newX - this.intercept());
 
 			// Make sure that point is within this line segment
-			if (newX > Math.min(firstPoint.getX(), secondPoint.getX()) &&
-					newX < Math.max(firstPoint.getX(), secondPoint.getX())) {
+			if (newX > Math.min(first.getX(), second.getX()) &&
+					newX < Math.max(first.getX(), second.getX())) {
 				return new ImmutableLine(p, new ImmutablePoint(newX, newY));
 			} 
 		} else {
 			// If we get here, one of our lines is horizontal.
-			if (firstPoint.getY() == secondPoint.getY()) {
+			if (first.getY() == second.getY()) {
 				// We are horizontal.
-				if (p.getX() > Math.min(firstPoint.getX(), secondPoint.getX()) ||
-						p.getX() < Math.max(firstPoint.getX(), secondPoint.getX()))
+				if (p.getX() > Math.min(first.getX(), second.getX()) ||
+						p.getX() < Math.max(first.getX(), second.getX()))
 				{
-					return new ImmutableLine(p, new ImmutablePoint(p.getX(), firstPoint.getY()));
+					return new ImmutableLine(p, new ImmutablePoint(p.getX(), first.getY()));
 				}
 			} else {
 				// We are vertical.
-				if (p.getY() > Math.min(firstPoint.getY(), secondPoint.getY()) && 
-						p.getY() < Math.max(firstPoint.getY(), secondPoint.getY())) {
-					return new ImmutableLine(p, new ImmutablePoint(firstPoint.getX(), p.getY()));
+				if (p.getY() > Math.min(first.getY(), second.getY()) && 
+						p.getY() < Math.max(first.getY(), second.getY())) {
+					return new ImmutableLine(p, new ImmutablePoint(first.getX(), p.getY()));
 				}
 			}
 		}
@@ -104,21 +120,21 @@ public class ImmutableLine {
 	public ImmutablePoint snapPoint(ImmutablePoint p) {
 		ImmutableLine perpLine = this.perpendicular(p);
 		if (perpLine != null) {
-			return perpLine.secondPoint;
+			return perpLine.second;
 		}
 		
-		if (firstPoint.distance(p) < secondPoint.distance(p)) {
-			return firstPoint;
+		if (first.distance(p) < second.distance(p)) {
+			return first;
 		}
-		return secondPoint;
+		return second;
 	}
 
 	public ImmutablePoint snapAtX(int x) {
-		if (x >= Math.max(firstPoint.getX(), secondPoint.getX()) &&
-			x <= Math.min(firstPoint.getX(), secondPoint.getX())) {
+		if (x >= Math.max(first.getX(), second.getX()) &&
+			x <= Math.min(first.getX(), second.getX())) {
 				if (this.slope() == 0 ) {
-					if (firstPoint.getY() == secondPoint.getY()) {
-						return new ImmutablePoint(x, firstPoint.getY());
+					if (first.getY() == second.getY()) {
+						return new ImmutablePoint(x, first.getY());
 					}
 				} else {
 					return new ImmutablePoint(x, (int) Math.round((x * this.slope())+this.intercept()));
@@ -129,12 +145,12 @@ public class ImmutableLine {
 	
 	
 	public ImmutablePoint snapAtY(int y) {
-		if (y >= Math.max(firstPoint.getY(), secondPoint.getY()) &&
-				y <= Math.min(firstPoint.getY(), secondPoint.getY())) {
+		if (y >= Math.max(first.getY(), second.getY()) &&
+				y <= Math.min(first.getY(), second.getY())) {
 			
 			if (this.slope()==0) {
-				if (firstPoint.getX() == secondPoint.getX()) {
-					return new ImmutablePoint(firstPoint.getX(), y);
+				if (first.getX() == second.getX()) {
+					return new ImmutablePoint(first.getX(), y);
 				}
 			} else {
 				return new ImmutablePoint((int) Math.round((y - this.intercept())/this.slope()),y);
@@ -153,7 +169,7 @@ public class ImmutableLine {
 		if (perpLine != null) {
 			return perpLine.length();
 		}
-		return Math.min(firstPoint.distance(point), secondPoint.distance(point));
+		return Math.min(first.distance(point), second.distance(point));
 	}
 
 }

@@ -9,24 +9,19 @@ package edu.millersville.cs.segfault.model.object;
 import java.awt.*;
 
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
+import edu.millersville.cs.segfault.model.DrawableType;
 
 public class UMLActiveClass extends UMLClassObject {
 
-//***************************************************************************
-//Constructors	
+	//*************************************************************************
+	//Constructors	
 		
 	//Empty constructor
 	public UMLActiveClass () 
 	{
 		super();
 	}
-		
-	//Copy constructor
-	public UMLActiveClass (UMLActiveClass source)
-	{
-		super(source);
-	}
-		
+				
 	//Member constructor
 	public UMLActiveClass (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected) 
 			throws Exception
@@ -35,8 +30,19 @@ public class UMLActiveClass extends UMLClassObject {
 			
 	}
 	
-//*****************************************************************************
-//Drawing Method
+	public UMLActiveClass(String serial) 
+		throws Exception
+	{
+		super(serial);
+	}
+	
+	//*************************************************************************
+	// Observers
+	
+	public DrawableType getType() { return DrawableType.ACTIVE_CLASS; }
+	
+	//*************************************************************************
+	// Drawing Methods
 	
 	//Draw active class
 	public void draw (Graphics g) 

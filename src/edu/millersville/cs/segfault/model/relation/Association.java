@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 import edu.millersville.cs.segfault.immutable.ImmutableLine;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
+import edu.millersville.cs.segfault.model.DrawableType;
 
 public class Association extends UMLRelation {
 
@@ -25,6 +26,8 @@ public class Association extends UMLRelation {
 		super(serialized);
 	}
 	
+	public DrawableType getType() { return DrawableType.ASSOCIATION; }
+	
 	public void drawArrow(Graphics g) {
 		if (this.getPath().size() > 1) {
 			Iterator<ImmutableLine> lIter = this.getPath().lineIterator();
@@ -32,10 +35,10 @@ public class Association extends UMLRelation {
 			while (lIter.hasNext()) { lastLine = lIter.next(); }
 			
 			Graphics2D newG = (Graphics2D) g.create();
-			newG.translate(lastLine.getSecond().getX(), lastLine.getSecond().getY());
+			newG.translate(lastLine.second.getX(), lastLine.second.getY());
 			
-			double theta = Math.atan2(lastLine.getFirst().getY()-lastLine.getSecond().getY(),
-									  lastLine.getFirst().getX()-lastLine.getSecond().getX());
+			double theta = Math.atan2(lastLine.first.getY()-lastLine.second.getY(),
+									  lastLine.first.getX()-lastLine.second.getX());
 			
 			theta = theta + Math.PI*.5;
 			

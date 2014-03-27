@@ -27,6 +27,7 @@ public class XMLAttribute {
 	}
 	
 	public static String getAttribute(String s, String name) {
+
 		return s.substring(s.indexOf(openTag(name))+2+name.length(),
 						   s.indexOf(closeTag(name)));
 	}
@@ -47,5 +48,11 @@ public class XMLAttribute {
 		return "</" + name + ">";
 	}
 	
+	public static String makeTag(String name, String content) {
+		return openTag(name) + content + closeTag(name);
+	}
 	
+	public static String makeTag(String name, int content) {
+		return makeTag(name, ""+content);
+	}
 }

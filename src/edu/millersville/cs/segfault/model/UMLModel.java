@@ -64,6 +64,7 @@ public class UMLModel {
 		
 		this.objects   = deserializeObjects(serialized);
 		this.relations = deserializeRelations(serialized);
+		
 	}
 	
 
@@ -84,8 +85,8 @@ public class UMLModel {
 		for (DrawableType type: DrawableType.objectTypeList()) {
 			int search=0;
 			while (XMLAttribute.hasAttr(s, type.name(), search)) {
-				objects.add(DrawableType.makeObject(type, XMLAttribute.getAttribute(s, type.name(), search)));
-				search = XMLAttribute.endAttribute(s, type.name(), search);
+				objects = objects.add(DrawableType.makeObject(type, XMLAttribute.getAttribute(s, type.name(), search)));
+				search = XMLAttribute.endAttribute(s, type.name(), search) + 1;
 			}
 		}
 		return objects;
@@ -99,8 +100,8 @@ public class UMLModel {
 		for (DrawableType type: DrawableType.relationTypeList()) {
 			int search=0;
 			while (XMLAttribute.hasAttr(s, type.name(), search)) {
-				relations.add(DrawableType.makeRelation(type, XMLAttribute.getAttribute(s, type.name(), search)));
-				search = XMLAttribute.endAttribute(s, type.name(), search);
+				relations = relations.add(DrawableType.makeRelation(type, XMLAttribute.getAttribute(s, type.name(), search)));
+				search = XMLAttribute.endAttribute(s, type.name(), search) + 1;
 			}
 		}
 		return relations;
@@ -132,7 +133,7 @@ public class UMLModel {
 		Iterator<UMLRelation> relationIterator = relations.iterator();
 		while (relationIterator.hasNext())
 		{
-			modelString += relationIterator.next().toString() + "\n"; 
+			modelString += relationIterator.next().serialize() + "\n"; 
 		}
 		
 		return modelString;

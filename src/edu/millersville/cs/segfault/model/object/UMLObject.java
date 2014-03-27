@@ -9,6 +9,7 @@ import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
+import edu.millersville.cs.segfault.model.XMLAttribute;
 
 public class UMLObject implements DrawableUML {
 	
@@ -33,12 +34,13 @@ public class UMLObject implements DrawableUML {
 	}
 	//********************************************************************
 	
-	private String label;  // Label of the object.
+	public final String label;  // Label of the object.
 	
-	private ImmutablePoint origin;
-	private int z;     // Coords of the object.
-	private Dimension size;
-	private boolean selected; 
+	public final ImmutablePoint origin;
+	public final int z;     // Coords of the object.
+	public final Dimension size;
+	public final boolean selected; 
+	
 	
 	//********************************************************************
 	// Constructors
@@ -55,32 +57,13 @@ public class UMLObject implements DrawableUML {
 	}
 	
 	// De-serialization constructor
-	public UMLObject(String serialized) throws Exception {
-		this();
-		int startLabel = serialized.indexOf("<label>") + 7;
-		int endLabel = serialized.lastIndexOf("</label>");
-		if (startLabel == 6 || endLabel == -1) {
-			System.out.println(startLabel + " " + endLabel);
-			throw new Exception("Object with no label!");
-		} else if (startLabel == endLabel) {
-			this.label = "";
-		} else {
-			this.label = serialized.substring(startLabel, endLabel);
-		}
-			
-		this.origin = new ImmutablePoint(findIntAttr("x", serialized), findIntAttr("y", serialized));
-		this.z = findIntAttr("z", serialized);
-		this.size = new Dimension(findIntAttr("width", serialized), findIntAttr("height", serialized));
-	}
-	
-	// Copy constructor
-	public UMLObject(UMLObject source) 
-	{
-		this();
-		this.label = source.getLabel();
-		this.origin = source.getOrigin();
-		this.z = source.getZ();
-		this.size = source.getSize();
+	public UMLObject(String s) throws Exception {
+		this.label = XMLAttribute.getAttribute(s, "label");
+		this.z = new Integer(XMLAttribute.getAttribute(s, "z"));
+		this.origin = new ImmutablePoint(XMLAttribute.getAttribute(s, "origin"));
+		this.size = new Dimension(XMLAttribute.getIntAttribute(s, "width"), 
+								  XMLAttribute.getIntAttribute(s, "height"));
+		this.selected = false;
 	}
 	
 	public Dimension getSize() {
@@ -115,17 +98,7 @@ public class UMLObject implements DrawableUML {
 	// Returns serialized version of object.
 	public String serialize()
 	{
-		String serialString = "";
-		
-		serialString += "  <label>" + this.label + "</label>\n";
-		
-		serialString += "  <x>" + this.origin.getX() + "</x>\n";
-		serialString += "  <y>" + this.origin.getY() + "</y>\n";
-		serialString += "  <z>" + this.z + "</z>\n";
-		serialString += "  <width>" + (int) Math.round(this.size.getWidth()) + "</width>\n";
-		serialString += "  <height>" + (int) Math.round(this.size.getHeight()) + "</height>\n";
-		
-		return serialString;
+		return XMLAttribute.makeTag(this.getType().name(), this.toString());
 	}
 		
 	// Returns object's label.
@@ -156,6 +129,16 @@ public class UMLObject implements DrawableUML {
 		}
 		return false;
 	}
+	
+	public String toString() {
+		return XMLAttribute.makeTag("label", this.label) 
+			 + XMLAttribute.makeTag("origin", this.origin.serialize())
+			 + XMLAttribute.makeTag("width", this.size.width)
+			 + XMLAttribute.makeTag("height", this.size.height)
+			 + XMLAttribute.makeTag("z", this.z);
+	}
+	
+	public DrawableType getType() { return DrawableType.OBJECT; }
 	
 	//********************************************************************
 	// Mutators
@@ -200,8 +183,6 @@ public class UMLObject implements DrawableUML {
 		
 		g.drawString(this.label, this.getX()+15, this.getY()+15);
 	}
-
-	public DrawableType getType() { return DrawableType.OBJECT; }
 
 	@Override
 	public UMLObject select() {
