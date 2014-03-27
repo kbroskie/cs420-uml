@@ -9,6 +9,7 @@ package edu.millersville.cs.segfault.model.object;
 import java.awt.*;
 
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
+import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 
 public class UMLState extends UMLObject {
@@ -21,13 +22,7 @@ public class UMLState extends UMLObject {
 	{
 		super();
 	}
-			
-	//Copy constructor
-	public UMLState (UMLState source)
-	{
-		super(source);
-	}
-			
+						
 	//Member constructor
 	public UMLState (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected) 
 				throws Exception
@@ -35,7 +30,15 @@ public class UMLState extends UMLObject {
 		super(nLabel, p, nZ, size, nSelected);
 				
 	}
+	
+	public UMLState (String duper) 
+		throws Exception
+	{
+		super(duper);
+	}
 
+	
+	public DrawableType getType() { return DrawableType.STATE; }
 //***********************************************************************************
 //Drawing Method
 	

@@ -27,6 +27,8 @@ public enum DrawableType {
 	CLASS        (true),
 	ACTIVE_CLASS (true), 
 	COMPONENT    (true),
+	NODE         (true),
+	STATE        (true),
 	RELATION     (false), 
 	AGGREGATION  (false), 
 	COMPOSITION  (false), 

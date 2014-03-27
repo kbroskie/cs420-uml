@@ -9,6 +9,7 @@ package edu.millersville.cs.segfault.model.object;
 import java.awt.*;
 
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
+import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 
 public class UMLNode extends UMLObject {
@@ -26,19 +27,21 @@ public class UMLNode extends UMLObject {
 	{
 		super();
 	}
-	
-	//Copy Constructor
-	public UMLNode (UMLNode source)
-	{
-		super(source);
-	}
-	
+		
 	//Member constructor
 	public UMLNode (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
 		throws Exception
 	{
 		super(nLabel, p, nZ, size, nSelected);
 	}
+	
+	public UMLNode(String s) 
+		throws Exception
+	{
+		super(s);
+	}
+	
+	public DrawableType getType() { return DrawableType.NODE; }
 	
 //***************************************************************************
 //Drawing Method
