@@ -4,10 +4,7 @@ import java.util.Iterator;
 import java.util.PriorityQueue;
 
 import edu.millersville.cs.segfault.immutable.ImmutableSet;
-import edu.millersville.cs.segfault.model.object.ObjectType;
 import edu.millersville.cs.segfault.model.object.UMLObject;
-import edu.millersville.cs.segfault.model.relation.Aggregation;
-import edu.millersville.cs.segfault.model.relation.RelationType;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
 
 
@@ -16,108 +13,6 @@ import edu.millersville.cs.segfault.model.relation.UMLRelation;
  * @author Daniel Rabiega
  */
 public class UMLModel {
-	
-	//*************************************************************************
-	// enum translation keys
-	private static final DrawableType[] drawableToRelation = {
-		DrawableType.RELATION, DrawableType.AGGREGATION, DrawableType.COMPOSITION,
-		DrawableType.ASSOCIATION
-	};
-		
-	private static final RelationType[] relationToDrawable = {
-		RelationType.RELATION, RelationType.AGGREGATION, RelationType.COMPOSITION,
-		RelationType.ASSOCIATION
-	};
-		
-	private static final DrawableType[] drawableToObject = {
-		DrawableType.OBJECT, DrawableType.CLASS, DrawableType.ACTIVE_CLASS,
-		DrawableType.COMPONENT
-	};
-		
-	private static final ObjectType[] objectToDrawable = {
-		ObjectType.OBJECT, ObjectType.CLASS, ObjectType.ACTIVE_CLASS,
-		ObjectType.COMPONENT
-	};
-
-	private static final DrawableType[] drawableToString= {
-		DrawableType.OBJECT, DrawableType.CLASS, DrawableType.ACTIVE_CLASS, 
-		DrawableType.COMPONENT,	DrawableType.RELATION, DrawableType.AGGREGATION, 
-		DrawableType.COMPOSITION, DrawableType.ASSOCIATION
-	};
-	
-	private static final String[] stringToDrawable = {
-		"object", "class", "activeclass",
-		"component", "relation", "aggregation",
-		"composition", "association"
-	};
-	
-	//*************************************************************************
-	// Type translation methods
-	//*************************************************************************
-	public static boolean isRelationType(DrawableType dType) {
-		for (int i=0; i<drawableToRelation.length; ++i) {
-			if (drawableToRelation[i]==dType) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static boolean isObjectType(DrawableType dType) {
-		for (int i=0; i<drawableToObject.length; ++i) {
-			if (drawableToObject[i]==dType) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static RelationType getRelationType(DrawableType dType) {
-		for (int i=0; i<drawableToRelation.length; ++i) {
-			if (drawableToRelation[i] == dType) {
-				return relationToDrawable[i];
-			}
-		}
-		return null;
-	}
-	
-	public static ObjectType getObjectType(DrawableType dType) {
-		for (int i=0; i<drawableToObject.length; ++i) {
-			if (drawableToObject[i]==dType) {
-				return objectToDrawable[i];
-			}
-		}
-		return null;
-	}
-	
-	public static String drawableTypeString(DrawableType type) {
-		for (int i=0; i<drawableToString.length; ++i) {
-			if (drawableToString[i]==type) {
-				return stringToDrawable[i];
-			}
-		}
-		return null;
-	}
-
-	private static ImmutableSet<UMLObject> deserializeObjects(String serialized)
-		throws Exception
-	{
-		ImmutableSet<UMLObject> objects = new ImmutableSet<UMLObject>();
-		for (int type = 0; type < drawableToObject.length; ++type) {
-				String typeString = drawableTypeString(drawableToObject[type]);
-				int objectSearch = 0;		
-				while (serialized.indexOf("<" + typeString + ">", objectSearch) != -1) 
-				{
-					int startObject = serialized.indexOf("<" + typeString + ">", objectSearch);
-					int endObject = serialized.indexOf("<" + typeString + ">", objectSearch);
-					UMLObject newObject = DrawableFactory.makeObject(
-							serialized.substring(startObject, endObject), objectToDrawable[type]);
-					objects = objects.add(newObject);
-					objectSearch = endObject + 1;
-				}
-		}
-		return objects;
-	}
 	
 	//*************************************************************************
 	// Instance Variables
@@ -164,50 +59,52 @@ public class UMLModel {
 	public UMLModel(String serialized) throws Exception 
 	{
 		
-		// De-serialize title
-		int startTitle = serialized.indexOf("<title>") + 7;
-		int endTitle = serialized.indexOf("</title>");
-		if (startTitle == 6 || endTitle == -1) {
-			throw new Exception("Model has no title!");
-		} else {
-			this.modelName = serialized.substring(startTitle, endTitle);
-		}
+		this.modelName = XMLAttribute.getAttribute(serialized, "title");
 		
-		this.objects = deserializeObjects(serialized);
 		
-		// De-serialize any relations
-		int relationSearch = 0;
-		ImmutableSet<UMLRelation> relations = new ImmutableSet<UMLRelation>();
-		while (serialized.indexOf("<relation>", relationSearch) != -1)
-		{
-			int startRelation = serialized.indexOf("<relation>", relationSearch);
-			int endRelation = serialized.indexOf("</relation>", relationSearch);
-			UMLRelation newRelation = new UMLRelation(serialized.substring(startRelation, endRelation));
-			relations = relations.add(newRelation);
-			relationSearch = endRelation + 1;
-		}
-		// De-serialize any aggregations
-		relationSearch = 0;
-		while (serialized.indexOf("<aggregation>", relationSearch) != -1)
-		{
-			int startRelation = serialized.indexOf("<aggregation>", relationSearch);
-			int endRelation = serialized.indexOf("</aggregation>", relationSearch);
-			UMLRelation newRelation = new Aggregation(serialized.substring(startRelation, endRelation));
-			relations = relations.add(newRelation);
-			relationSearch = endRelation + 1;
-		}
-		this.relations = relations;
+		this.objects   = deserializeObjects(serialized);
+		this.relations = deserializeRelations(serialized);
 	}
 	
 
 	// Descriptive Constructor
-	public UMLModel(String name, ImmutableSet<UMLObject> objects, ImmutableSet<UMLRelation> relations) {
+	public UMLModel(String name, ImmutableSet<UMLObject> objects, ImmutableSet<UMLRelation> relations) 
+		throws Exception
+	{
 		this.modelName = name;
 		this.objects = objects;
 		this.relations = relations;
 	}
 
-
+	private ImmutableSet<UMLObject> deserializeObjects(String s) 
+		throws Exception
+	{
+		ImmutableSet<UMLObject> objects = new ImmutableSet<UMLObject>();
+				
+		for (DrawableType type: DrawableType.objectTypeList()) {
+			int search=0;
+			while (XMLAttribute.hasAttr(s, type.name(), search)) {
+				objects.add(DrawableType.makeObject(type, XMLAttribute.getAttribute(s, type.name(), search)));
+				search = XMLAttribute.endAttribute(s, type.name(), search);
+			}
+		}
+		return objects;
+	}
+	
+	private ImmutableSet<UMLRelation> deserializeRelations(String s) 
+		throws Exception
+	{
+		ImmutableSet<UMLRelation> relations = new ImmutableSet<UMLRelation>();
+		
+		for (DrawableType type: DrawableType.relationTypeList()) {
+			int search=0;
+			while (XMLAttribute.hasAttr(s, type.name(), search)) {
+				relations.add(DrawableType.makeRelation(type, XMLAttribute.getAttribute(s, type.name(), search)));
+				search = XMLAttribute.endAttribute(s, type.name(), search);
+			}
+		}
+		return relations;
+	}
 	
 	//********************************************************************
 	// Observers
@@ -228,14 +125,14 @@ public class UMLModel {
 		Iterator<UMLObject> objectIterator = objects.iterator();
 		while (objectIterator.hasNext()) 
 		{
-			modelString += ("<object>\n" + objectIterator.next().serialize() + "</object>\n"); 
+			modelString += objectIterator.next().serialize() +"\n"; 
 		}
 		
 		// Serialize relations
 		Iterator<UMLRelation> relationIterator = relations.iterator();
 		while (relationIterator.hasNext())
 		{
-			modelString += "<relation>\n" + relationIterator.next().toString() + "</relation>\n"; 
+			modelString += relationIterator.next().toString() + "\n"; 
 		}
 		
 		return modelString;
@@ -301,7 +198,7 @@ public class UMLModel {
 
 	// Adds an object to the model.
 	public UMLModel addObject(UMLObject newObject)
-
+		throws Exception
 	{
 		return new UMLModel(this.modelName, this.objects.add(newObject), this.relations);
 	}
@@ -317,12 +214,15 @@ public class UMLModel {
 	 */
 
 	public UMLModel addRelation(UMLRelation relation)
+		throws Exception
 	{
 		return new UMLModel(this.modelName, this.objects, this.relations.add(relation));
 	}
 	
-	public UMLModel add(DrawableUML newDrawable) {
-		if (isRelationType(newDrawable.getType())) {
+	public UMLModel add(DrawableUML newDrawable) 
+		throws Exception
+	{
+		if (!newDrawable.getType().isObject) {
 			return addRelation((UMLRelation) newDrawable);
 		}
 		return addObject((UMLObject) newDrawable);
@@ -333,30 +233,41 @@ public class UMLModel {
 	 * @param drawable The drawable object to be removed.
 	 * @return
 	 */
-	public UMLModel removeObject(UMLObject oldObject) {
+	public UMLModel removeObject(UMLObject oldObject) 
+			throws Exception
+	{
 		return new UMLModel(this.modelName, this.objects.remove(oldObject), this.relations);
 	}
 	
-	public UMLModel removeRelation(UMLRelation oldRelation) {
+	public UMLModel removeRelation(UMLRelation oldRelation) 
+		throws Exception
+	{
 		return new UMLModel(this.modelName, this.objects, this.relations.remove(oldRelation));
 	}
 	
 	public UMLModel remove(Object o) 
+			throws Exception
 	{
 		return new UMLModel(this.modelName, this.objects.remove(o), this.relations.remove(o));
 	}
 	
-	public UMLModel select(DrawableUML drawable) {
+	public UMLModel select(DrawableUML drawable) 
+		throws Exception
+	{
 		UMLModel temp = remove(drawable);
 		return temp.add(drawable.select());
 	}
 	
-	public UMLModel unselect(DrawableUML drawable) {
+	public UMLModel unselect(DrawableUML drawable) 
+		throws Exception
+	{
 		UMLModel temp = remove(drawable);
 		return temp.add(drawable.unselect());
 	}
 	
-	public UMLModel unselectAll() {
+	public UMLModel unselectAll() 
+		throws Exception
+	{
 		UMLModel workingModel = new UMLModel(this);
 		Iterator<DrawableUML> zIter = this.zIterator();
 		while (zIter.hasNext()) {
@@ -368,7 +279,9 @@ public class UMLModel {
 		return workingModel;
 	}
 	
-	public UMLModel deleteSelected() {
+	public UMLModel deleteSelected() 
+		throws Exception
+	{
 		UMLModel workingModel = new UMLModel(this);
 		Iterator<DrawableUML> zIter = this.zIterator();
 		while (zIter.hasNext()) {
