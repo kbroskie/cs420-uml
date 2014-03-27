@@ -31,6 +31,10 @@ public class XMLAttribute {
 						   s.indexOf(closeTag(name)));
 	}
 	
+	public static String getAttribute(String s, String name, int start) {
+		return getAttribute(s.substring(start), name);
+	}
+	
 	public static int getIntAttribute(String s, String name) {
 		return new Integer(getAttribute(s, name));
 	}

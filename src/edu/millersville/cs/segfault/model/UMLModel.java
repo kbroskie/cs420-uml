@@ -3,11 +3,8 @@ package edu.millersville.cs.segfault.model;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
-import javax.management.relation.RelationType;
-
 import edu.millersville.cs.segfault.immutable.ImmutableSet;
 import edu.millersville.cs.segfault.model.object.UMLObject;
-import edu.millersville.cs.segfault.model.relation.Aggregation;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
 
 
@@ -64,28 +61,50 @@ public class UMLModel {
 		
 		this.modelName = XMLAttribute.getAttribute(serialized, "title");
 		
-		ImmutableSet<UMLObject> objects = new ImmutableSet<UMLObject>();
 		
-		for (DrawableType type: DrawableType.objectTypeList()) {
-			int search=0;
-			while(XMLAttribute.hasAttr(serialized, type.name(), search)) {
-				
-				search = XMLAttribute.endAttribute(serialized, type.name(), search) + 2;
-			}
-		}
 		this.objects   = deserializeObjects(serialized);
 		this.relations = deserializeRelations(serialized);
 	}
 	
 
 	// Descriptive Constructor
-	public UMLModel(String name, ImmutableSet<UMLObject> objects, ImmutableSet<UMLRelation> relations) {
+	public UMLModel(String name, ImmutableSet<UMLObject> objects, ImmutableSet<UMLRelation> relations) 
+		throws Exception
+	{
 		this.modelName = name;
 		this.objects = objects;
 		this.relations = relations;
 	}
 
-
+	private ImmutableSet<UMLObject> deserializeObjects(String s) 
+		throws Exception
+	{
+		ImmutableSet<UMLObject> objects = new ImmutableSet<UMLObject>();
+				
+		for (DrawableType type: DrawableType.objectTypeList()) {
+			int search=0;
+			while (XMLAttribute.hasAttr(s, type.name(), search)) {
+				objects.add(DrawableType.makeObject(type, XMLAttribute.getAttribute(s, type.name(), search)));
+				search = XMLAttribute.endAttribute(s, type.name(), search);
+			}
+		}
+		return objects;
+	}
+	
+	private ImmutableSet<UMLRelation> deserializeRelations(String s) 
+		throws Exception
+	{
+		ImmutableSet<UMLRelation> relations = new ImmutableSet<UMLRelation>();
+		
+		for (DrawableType type: DrawableType.relationTypeList()) {
+			int search=0;
+			while (XMLAttribute.hasAttr(s, type.name(), search)) {
+				relations.add(DrawableType.makeRelation(type, XMLAttribute.getAttribute(s, type.name(), search)));
+				search = XMLAttribute.endAttribute(s, type.name(), search);
+			}
+		}
+		return relations;
+	}
 	
 	//********************************************************************
 	// Observers
@@ -106,14 +125,14 @@ public class UMLModel {
 		Iterator<UMLObject> objectIterator = objects.iterator();
 		while (objectIterator.hasNext()) 
 		{
-			modelString += ("<object>\n" + objectIterator.next().serialize() + "</object>\n"); 
+			modelString += objectIterator.next().serialize() +"\n"; 
 		}
 		
 		// Serialize relations
 		Iterator<UMLRelation> relationIterator = relations.iterator();
 		while (relationIterator.hasNext())
 		{
-			modelString += "<relation>\n" + relationIterator.next().toString() + "</relation>\n"; 
+			modelString += relationIterator.next().toString() + "\n"; 
 		}
 		
 		return modelString;
@@ -179,7 +198,7 @@ public class UMLModel {
 
 	// Adds an object to the model.
 	public UMLModel addObject(UMLObject newObject)
-
+		throws Exception
 	{
 		return new UMLModel(this.modelName, this.objects.add(newObject), this.relations);
 	}
@@ -195,12 +214,15 @@ public class UMLModel {
 	 */
 
 	public UMLModel addRelation(UMLRelation relation)
+		throws Exception
 	{
 		return new UMLModel(this.modelName, this.objects, this.relations.add(relation));
 	}
 	
-	public UMLModel add(DrawableUML newDrawable) {
-		if (isRelationType(newDrawable.getType())) {
+	public UMLModel add(DrawableUML newDrawable) 
+		throws Exception
+	{
+		if (!newDrawable.getType().isObject) {
 			return addRelation((UMLRelation) newDrawable);
 		}
 		return addObject((UMLObject) newDrawable);
@@ -211,30 +233,41 @@ public class UMLModel {
 	 * @param drawable The drawable object to be removed.
 	 * @return
 	 */
-	public UMLModel removeObject(UMLObject oldObject) {
+	public UMLModel removeObject(UMLObject oldObject) 
+			throws Exception
+	{
 		return new UMLModel(this.modelName, this.objects.remove(oldObject), this.relations);
 	}
 	
-	public UMLModel removeRelation(UMLRelation oldRelation) {
+	public UMLModel removeRelation(UMLRelation oldRelation) 
+		throws Exception
+	{
 		return new UMLModel(this.modelName, this.objects, this.relations.remove(oldRelation));
 	}
 	
 	public UMLModel remove(Object o) 
+			throws Exception
 	{
 		return new UMLModel(this.modelName, this.objects.remove(o), this.relations.remove(o));
 	}
 	
-	public UMLModel select(DrawableUML drawable) {
+	public UMLModel select(DrawableUML drawable) 
+		throws Exception
+	{
 		UMLModel temp = remove(drawable);
 		return temp.add(drawable.select());
 	}
 	
-	public UMLModel unselect(DrawableUML drawable) {
+	public UMLModel unselect(DrawableUML drawable) 
+		throws Exception
+	{
 		UMLModel temp = remove(drawable);
 		return temp.add(drawable.unselect());
 	}
 	
-	public UMLModel unselectAll() {
+	public UMLModel unselectAll() 
+		throws Exception
+	{
 		UMLModel workingModel = new UMLModel(this);
 		Iterator<DrawableUML> zIter = this.zIterator();
 		while (zIter.hasNext()) {
@@ -246,7 +279,9 @@ public class UMLModel {
 		return workingModel;
 	}
 	
-	public UMLModel deleteSelected() {
+	public UMLModel deleteSelected() 
+		throws Exception
+	{
 		UMLModel workingModel = new UMLModel(this);
 		Iterator<DrawableUML> zIter = this.zIterator();
 		while (zIter.hasNext()) {

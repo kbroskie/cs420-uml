@@ -375,7 +375,11 @@ public class UMLPanel extends JPanel {
 		if(fullSelection())
 		{
 			// De-select everything
-			this.changeModel(this.getModel().unselectAll());
+			try {
+				this.changeModel(this.getModel().unselectAll());
+			} catch (Exception e) {
+				System.out.println("Could not unselect all:" + e.getMessage());
+			}
 		} else {
 			// Enter selection mode
 			this.changeInteractionMode(new SelectionMode(this));
@@ -420,7 +424,11 @@ public class UMLPanel extends JPanel {
 		while( zIter.hasNext())
 		{
 			// Set each model to a selected state
-			this.changeModel(this.getModel().select(zIter.next()));
+			try {
+				this.changeModel(this.getModel().select(zIter.next()));
+			} catch (Exception e) {
+				System.out.println("Could not select:" + e.getMessage());
+			}
 		}
 		
 		// Update the screen to reflect changes

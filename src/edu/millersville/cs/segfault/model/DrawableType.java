@@ -1,7 +1,10 @@
 package edu.millersville.cs.segfault.model;
 
+import java.awt.Dimension;
 import java.util.LinkedList;
 
+import edu.millersville.cs.segfault.immutable.ImmutablePath;
+import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.object.UMLActiveClass;
 import edu.millersville.cs.segfault.model.object.UMLClassObject;
 import edu.millersville.cs.segfault.model.object.UMLComponent;
@@ -10,6 +13,7 @@ import edu.millersville.cs.segfault.model.relation.Aggregation;
 import edu.millersville.cs.segfault.model.relation.Association;
 import edu.millersville.cs.segfault.model.relation.Composition;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
+import edu.millersville.cs.segfault.ui.UMLPanel;
 
 
 /*****************************************************************************
@@ -62,13 +66,10 @@ public enum DrawableType {
 	// Factories
 	
 	// Drawable Factories - Call a specialized factory
-	public DrawableUML makeDrawable(DrawableType type) {
-		//TODO Drawable factory
-		return null;
-	}
+	
 	
 	// Object Factories - Make an object or one of it's subclasses
-	public UMLObject makeObject(DrawableType type, String serial) 
+	public static UMLObject makeObject(DrawableType type, String serial) 
 		throws Exception
 	{
 		if (!type.isObject) {
@@ -83,13 +84,24 @@ public enum DrawableType {
 		}
 	}
 	
-	public UMLObject   makeObject(){
-		//TODO Object Factory
-		return null;
+	public static UMLObject makeObject(DrawableType type, ImmutablePoint origin,
+									   Dimension size, UMLPanel panel)
+		throws Exception {
+		if (!type.isObject) {
+			throw new Exception("Factory: Type is not an object.");
+		}
+		switch(type) {
+		case OBJECT: return new UMLObject("", origin, panel.getModel().highestZ() + 1, size, false);
+		case ACTIVE_CLASS: return new UMLActiveClass("", origin, panel.getModel().highestZ() + 1, size, false);
+		case CLASS: return new UMLClassObject("", origin, panel.getModel().highestZ() + 1, size, false);
+		case COMPONENT: return new UMLComponent("", origin, panel.getModel().highestZ() + 1, size, false);
+		default: return null;
+		}
 	}
 	
+	
 	// Relation factories - make a relation or one of it's subclasses
-	public UMLRelation makeRelation(DrawableType type, String serial) 
+	public static UMLRelation makeRelation(DrawableType type, String serial) 
 		throws Exception
 	{
 		if (type.isObject) throw new Exception("Factory: Type is object.");
@@ -103,9 +115,19 @@ public enum DrawableType {
 		}
 	}
 	
-	public UMLRelation makeRelation(){
-		//TODO Relation factory
-		return null;
+	public static UMLRelation makeRelation(DrawableType type, ImmutablePath path, UMLPanel panel)
+		throws Exception
+	{
+		if (type.isObject) throw new Exception("Factory: Type is object.");
+		
+		switch(type) {
+		case RELATION: return new UMLRelation(path, panel.getModel().lowestZ()-1, false);
+		case AGGREGATION: return new Aggregation(path, panel.getModel().lowestZ()-1, false);
+		case ASSOCIATION: return new Association(path, panel.getModel().lowestZ()-1, false);
+		case COMPOSITION: return new Composition(path, panel.getModel().lowestZ()-1, false);
+		default: return null;
+		}
 	}
+	
 }
  

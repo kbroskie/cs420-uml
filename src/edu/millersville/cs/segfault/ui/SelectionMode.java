@@ -31,12 +31,17 @@ public class SelectionMode extends PanelInteractionMode {
 	}
 	
 	@Override
-	public void mouseClicked(MouseEvent e) {
+	public void mouseClicked(MouseEvent e) 
+	{
 		
 		panel.getFocus();
 		
 		if (!controlDown && !shiftDown) {
-			panel.changeModel(panel.getModel().unselectAll());
+			try {
+				panel.changeModel(panel.getModel().unselectAll());
+			} catch (Exception ex) {
+				System.out.println("Could no remove selection:" + ex.getMessage());
+			}
 		}
 		Iterator<DrawableUML> zIter = panel.getModel().zIterator();
 		DrawableUML currentTarget = null;
@@ -48,7 +53,12 @@ public class SelectionMode extends PanelInteractionMode {
 			}
 		}
 		if (currentTarget != null) {
+		try {
 			panel.changeModel(panel.getModel().select(currentTarget));
+		} catch (Exception ex) {
+			System.out.println("Could not select:" + ex.getMessage());
+		}
+			
 		}
 		
 	}
@@ -59,7 +69,11 @@ public class SelectionMode extends PanelInteractionMode {
 		panel.getFocus();
 		
 		if (!controlDown && !shiftDown) {
-			panel.changeModel(panel.getModel().unselectAll());
+			try {
+				panel.changeModel(panel.getModel().unselectAll());
+			} catch (Exception ex) {
+				System.out.println("Could not unselect:" + ex.getMessage());
+			}
 		}
 		this.perhapsDragging = true;
 		this.dragStart = new ImmutablePoint(e.getX(), e.getY());
@@ -87,7 +101,11 @@ public class SelectionMode extends PanelInteractionMode {
 			while (zIter.hasNext()) {
 				current = zIter.next();
 				if (current.isWithin(dragArea)) {
-					panel.changeModel(panel.getModel().select(current));
+					try {
+						panel.changeModel(panel.getModel().select(current));
+					} catch (Exception ex) {
+						System.out.println("Could not select:" + ex.getMessage());
+					}
 				}
 			}
 		}
@@ -118,7 +136,11 @@ public class SelectionMode extends PanelInteractionMode {
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode()==KeyEvent.VK_DELETE)
 		{
-			panel.changeModel(panel.getModel().deleteSelected());
+			try {
+				panel.changeModel(panel.getModel().deleteSelected());
+			} catch (Exception ex) {
+				System.out.println("Could not delete:" + ex.getMessage());
+			}
 		} else if (e.getKeyCode()==KeyEvent.VK_CONTROL) {
 			controlDown = true;
 		} else if (e.getKeyCode()==KeyEvent.VK_SHIFT) {
@@ -161,7 +183,11 @@ public class SelectionMode extends PanelInteractionMode {
 
 	@Override
 	public void leaveMode() {
-		panel.changeModel(panel.getModel().unselectAll());
+		try {
+			panel.changeModel(panel.getModel().unselectAll());
+		} catch (Exception ex) {
+			System.out.println("Could not unselect all:" + ex.getMessage());
+		}
 	}
 	
 }

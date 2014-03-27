@@ -14,7 +14,6 @@ import java.util.Iterator;
 import edu.millersville.cs.segfault.immutable.ImmutableLine;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
-import edu.millersville.cs.segfault.model.DrawableFactory;
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.model.UMLModel;
@@ -68,7 +67,7 @@ public class DrawMode extends PanelInteractionMode {
 	public void mouseDragged(MouseEvent e) {
 		super.mouseDragged(e);
 		
-		if (UMLModel.isRelationType(drawType) || this.isShiftDown()) {
+		if (!drawType.isObject || this.isShiftDown()) {
 			lastPoint = this.straitSnap(new ImmutablePoint(e.getX(), e.getY()), startPoint, e);
 		} else {
 			lastPoint = snap(new ImmutablePoint(e.getX(), e.getY()));
@@ -82,11 +81,16 @@ public class DrawMode extends PanelInteractionMode {
 		startPoint = snap(new ImmutablePoint(e.getX(), e.getY()));
 	}
 
-	public void mouseReleased(MouseEvent e) {
+	public void mouseReleased(MouseEvent e)
+	{
 		super.mouseReleased(e);
 
 		if (startPoint != null && lastPoint != null) {
-			addToModel(startPoint, lastPoint, e);
+			try {
+				addToModel(startPoint, lastPoint, e);
+			} catch (Exception exc) {
+				System.out.println(exc.getMessage());
+			}
 			startPoint = null;
 			lastPoint = null;
 		}
@@ -96,18 +100,19 @@ public class DrawMode extends PanelInteractionMode {
 	// Interface Actions
 	// *************************************************************************
 
-	private void addToModel(ImmutablePoint first, ImmutablePoint second, MouseEvent e) {
-		if (UMLModel.isRelationType(drawType)) {
+	private void addToModel(ImmutablePoint first, ImmutablePoint second, MouseEvent e) 
+		throws Exception
+	{
+		if (!drawType.isObject) {
 			// Drawing a relation.
 
 			UMLRelation previous = findByEndPoint(first);
 			
 			if (previous == null) {
 				// This is a new actual relation.
-				UMLRelation newRelation = DrawableFactory.makeRelation(
-						UMLModel.getRelationType(drawType),
-						new ImmutablePath(first).addLast(this.straitSnap(second, first, e)),
-						panel);
+				UMLRelation newRelation = DrawableType.makeRelation(
+						drawType,
+						new ImmutablePath(first).addLast(this.straitSnap(second, first, e)), panel);
 				panel.changeModel(panel.getModel().addRelation(newRelation));
 
 			} else {
@@ -121,8 +126,8 @@ public class DrawMode extends PanelInteractionMode {
 		} else {
 
 			panel.changeModel(panel.getModel().addObject(
-					DrawableFactory.makeObject(
-							UMLModel.getObjectType(drawType),
+					DrawableType.makeObject(
+							drawType,
 							new ImmutablePoint(Math.min(first.getX(),
 									second.getX()), Math.min(first.getY(),
 									second.getY())),
@@ -145,7 +150,7 @@ public class DrawMode extends PanelInteractionMode {
 	public void draw(Graphics g) {
 		g.setColor(Color.BLUE);
 		if (startPoint != null && lastPoint != null) {
-			if (UMLModel.isObjectType(drawType)) {
+			if (drawType.isObject) {
 				g.drawRect(Math.min(startPoint.getX(), lastPoint.getX()),
 						Math.min(startPoint.getY(), lastPoint.getY()),
 						Math.abs(startPoint.getX() - lastPoint.getX()),
