@@ -45,6 +45,7 @@ public class DrawableFactory {
 		return new UMLObject(serialized);
 	}
 	
+	
 		// Returns a UMLRelation of subclass RelationType type
 	public static UMLRelation makeRelation(RelationType type, ImmutablePath path, UMLPanel panel) {
 		if (type == RelationType.AGGREGATION) {
