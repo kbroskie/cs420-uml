@@ -34,7 +34,13 @@ public class UMLOptionsPanel extends JPanel
 	
 	// OTHER OPTION VARIABLES
 	private static final String optionsPaneSelect = "Select";
-		
+	
+	
+	//*************************************************************************
+	// Instance Variables
+	//*************************************************************************
+	private UMLWindow parentWindow;
+	
 	//*************************************************************************
 	// Constructors	
 	//*************************************************************************
@@ -44,9 +50,10 @@ public class UMLOptionsPanel extends JPanel
 	 * relations that a user can select.
 	 * @param umlPanel the panel for the current UML model.
 	 *************************************************************************/
-	 public UMLOptionsPanel () {
+	 public UMLOptionsPanel (UMLWindow parent) {
 		 super();
-		 		 
+		 parentWindow = parent;
+		 
 		 // Set the layout.
 		 setLayout(new GridLayout(15, 2));
 		 setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); 
@@ -81,16 +88,16 @@ public class UMLOptionsPanel extends JPanel
 		String selectedCommand = se.getActionCommand();
 
 		if (selectedCommand == optionsPaneSelect ) {
-			UMLWindow.getUMLPanel().changeInteractionMode(
-					new SelectionMode(UMLWindow.getUMLPanel()));
+			parentWindow.getUMLPanel().changeInteractionMode(
+					new SelectionMode(parentWindow.getUMLPanel()));
 		}
 		else if (selectedCommand == optionsPaneRelationDraw ) {
-			UMLWindow.getUMLPanel().changeInteractionMode(
-					new DrawMode(DrawableType.RELATION, UMLWindow.getUMLPanel()));
+			parentWindow.getUMLPanel().changeInteractionMode(
+					new DrawMode(DrawableType.RELATION, parentWindow.getUMLPanel()));
 		}
 		else if (selectedCommand == optionsPaneObjectDraw ) {
-			UMLWindow.getUMLPanel().changeInteractionMode(
-					new DrawMode(DrawableType.OBJECT, UMLWindow.getUMLPanel()));
+			parentWindow.getUMLPanel().changeInteractionMode(
+					new DrawMode(DrawableType.OBJECT, parentWindow.getUMLPanel()));
 		}			
 	} 	 
 }

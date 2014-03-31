@@ -31,6 +31,11 @@ public class UMLEditMenu extends JMenu
 	private static final String selectAllText = "Select/Deselect All";
 	
 	//*************************************************************************
+	// Instance Variables
+	//*************************************************************************
+	private final UMLWindow parentWindow;
+	
+	//*************************************************************************
 	// Constructors	
 	//*************************************************************************
 		
@@ -40,8 +45,9 @@ public class UMLEditMenu extends JMenu
 	* @param wFrame the frame for the interface.
 	* @param umlPanel the panel for the current UML model.
 	*************************************************************************/
-	public UMLEditMenu() {
+	public UMLEditMenu(UMLWindow parent) {
 	   super(editMenuText);
+	   parentWindow = parent;
 	   
 	   // Create the undo menu item and add an accelerator.
 	   JMenuItem undoItem = new JMenuItem(undoMenuText);
@@ -78,10 +84,10 @@ public class UMLEditMenu extends JMenu
 		 String selectedCommand = se.getActionCommand();
 		 
 	 	 if (selectedCommand == undoMenuText) {
-			 UMLWindow.getUMLPanel().undo();	
+	 		parentWindow.getUMLPanel().undo();	
 		 }
 		 else if (selectedCommand == redoMenuText) {
-			 UMLWindow.getUMLPanel().redo();
+			 parentWindow.getUMLPanel().redo();
 		 } 
 	}
 }
