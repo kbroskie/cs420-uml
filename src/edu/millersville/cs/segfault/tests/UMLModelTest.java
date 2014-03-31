@@ -117,8 +117,7 @@ public class UMLModelTest {
 		
 		testModel.remove(testO1);
 		testModel.remove(testR1);
-		testModel.removeObject(testO2);
-		testModel.removeRelation(testR2);
+		
 		
 		//**********************************************************************************//	
 		//makeObject & makeRelation Tests

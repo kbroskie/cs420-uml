@@ -35,6 +35,9 @@ public class ImmutablePoint {
 		this.y = y;
 	}
 	
+	/*************************************************************************
+	 * Creates a new immutable point from a serialized XML representation.
+	 */
 	public ImmutablePoint(String s) {
 		this.x = XMLAttribute.getIntAttribute(s, "x");
 		this.y = XMLAttribute.getIntAttribute(s, "y");
@@ -43,12 +46,20 @@ public class ImmutablePoint {
 	//************************************************************************
 	// Observers
 	
+	/*************************************************************************
+	 * Returns a serialized XML representation of this point wrapped in a 
+	 * <point></point> tag.
+	 */
 	public String serialize() {
 		return XMLAttribute.makeTag("point", 
 									XMLAttribute.makeTag("x", this.x) + 
 									XMLAttribute.makeTag("y", this.y));	
 	}
 	
+	/*************************************************************************
+	 * Returns a serialized XML representation of this point wrapped in a 
+	 * custom tag name. 
+	 */
 	public String serialize(String name) {
 		return XMLAttribute.makeTag(name, 
 				XMLAttribute.makeTag("x", this.x) + 
@@ -84,6 +95,9 @@ public class ImmutablePoint {
 				          Math.pow(this.y - p.getY(), 2))*1.0);
 	}
 	
+	/*************************************************************************
+	 * Returns a generic string representation of this point.
+	 */
 	public String toString() {
 		return this.x + "," + this.y;
 	}

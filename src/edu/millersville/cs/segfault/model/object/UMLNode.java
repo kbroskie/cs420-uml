@@ -48,7 +48,7 @@ public class UMLNode extends UMLObject {
 	
 	public void draw (Graphics g)
 	{
-		g.draw3DRect(this.getX(), this.getY(), this.getWidth(), this.getHeight(), raised);
+		g.draw3DRect(this.origin.x, this.origin.y, this.size.width, this.size.height, raised);
 	}
 
 }

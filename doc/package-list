@@ -5,3 +5,4 @@ edu.millersville.cs.segfault.model.object
 edu.millersville.cs.segfault.model.relation
 edu.millersville.cs.segfault.tests
 edu.millersville.cs.segfault.ui
+edu.millersville.cs.segfault.ui.menu

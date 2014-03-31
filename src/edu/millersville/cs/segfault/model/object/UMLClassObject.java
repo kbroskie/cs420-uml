@@ -74,13 +74,13 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
 	//Move
 	public UMLClassObject moveClass (ImmutablePoint p, int z) throws Exception
 	{
-		return new UMLClassObject (this.getLabel(), p, z, this.getSize(), this.isSelected());
+		return new UMLClassObject (this.label, p, z, this.size, this.isSelected());
 	}
 
 	//Resize
 	public UMLClassObject resizeClass (Dimension size) throws Exception
 	{
-		return new UMLClassObject (this.getLabel(), this.getOrigin(), this.getZ(), size, this.isSelected());
+		return new UMLClassObject (this.label, this.origin, this.getZ(), size, this.isSelected());
 	}
 	
 //************************************************************************

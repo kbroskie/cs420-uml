@@ -20,13 +20,13 @@ import edu.millersville.cs.segfault.ui.UMLPanel;
  * @author Daniel Rabiega                                                    *
  *****************************************************************************/
 public interface DrawableUML {
+	boolean isSelected();
 	int getZ();
 	void draw(Graphics g);
 	DrawableType getType();
 	DrawableUML select();
 	DrawableUML unselect();
 	ImmutablePoint snapPoint(ImmutablePoint point);
-	boolean isSelected();
 	boolean hit(ImmutablePoint point);
 	boolean isWithin(Rectangle2D dragArea);
 	ImmutablePath getPath();

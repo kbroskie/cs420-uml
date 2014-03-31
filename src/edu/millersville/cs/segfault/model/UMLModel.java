@@ -69,6 +69,10 @@ public class UMLModel {
 	
 
 	// Descriptive Constructor
+	/*************************************************************************
+	 * Creates a new model with a given name and containing sets of objects and
+	 * relations.
+	 */
 	public UMLModel(String name, ImmutableSet<UMLObject> objects, ImmutableSet<UMLRelation> relations) 
 		throws Exception
 	{
@@ -77,6 +81,10 @@ public class UMLModel {
 		this.relations = relations;
 	}
 
+	/*************************************************************************
+	 * Creates an Immutable Set of UMLObjects and it's subclasses from 
+	 * their serialized representations in a serialzied UMLModel
+	 */
 	private ImmutableSet<UMLObject> deserializeObjects(String s) 
 		throws Exception
 	{
@@ -92,6 +100,10 @@ public class UMLModel {
 		return objects;
 	}
 	
+	/*************************************************************************
+	 * Creates an Immutable Set of UMLRelations and it's subclasses from 
+	 * their serialized representations in a serialzied UMLModel
+	 */
 	private ImmutableSet<UMLRelation> deserializeRelations(String s) 
 		throws Exception
 	{
@@ -148,17 +160,25 @@ public class UMLModel {
 	}
 
 
-	// Returns a copy of the set of objects
+	/*************************************************************************
+	 * Returns the set of objects held by this model.
+	 */
 	public ImmutableSet<UMLObject> getObjects() {
 		return this.objects;
 	}
 
+	/*************************************************************************
+	 * Returns the set of relations held by this model.
+	 */
 	public ImmutableSet<UMLRelation> getRelations() 
-
 	{ 
 		return this.relations; 
 	}
 	
+	/*************************************************************************
+	 * Returns the highest Z value present in objects and relations in this
+	 * model.
+	 */
 	public int highestZ() {
 		Iterator<DrawableUML> zIter = zIterator();
 		int highZ = 0;
@@ -170,6 +190,9 @@ public class UMLModel {
 		return highZ;
 	}
 	
+	/*************************************************************************
+	 * Returns the lowest Z value present in objects and relations in this model.
+	 */
 	public int lowestZ() {
 		return zIterator().next().getZ();
 	}
@@ -220,6 +243,9 @@ public class UMLModel {
 		return new UMLModel(this.modelName, this.objects, this.relations.add(relation));
 	}
 	
+	/*************************************************************************
+	 * Adds a drawable of any type to this diagram.
+	 */
 	public UMLModel add(DrawableUML newDrawable) 
 		throws Exception
 	{
@@ -230,35 +256,30 @@ public class UMLModel {
 	}
 
 	/**
-	 * Removes a drawable object.
-	 * @param drawable The drawable object to be removed.
-	 * @return
+	 * Returns a new model with all of the objects and relations in this one except
+	 * for the passed drawable.
 	 */
-	public UMLModel removeObject(UMLObject oldObject) 
-			throws Exception
-	{
-		return new UMLModel(this.modelName, this.objects.remove(oldObject), this.relations);
-	}
-	
-	public UMLModel removeRelation(UMLRelation oldRelation) 
-		throws Exception
-	{
-		return new UMLModel(this.modelName, this.objects, this.relations.remove(oldRelation));
-	}
-	
-	public UMLModel remove(Object o) 
+	public UMLModel remove(Object o)
 			throws Exception
 	{
 		return new UMLModel(this.modelName, this.objects.remove(o), this.relations.remove(o));
 	}
 	
+	/*************************************************************************
+	 * Returns a new model where the passed drawable has been replaced by a 
+	 * selected copy.
+	 */
 	public UMLModel select(DrawableUML drawable) 
 		throws Exception
 	{
 		UMLModel temp = remove(drawable);
 		return temp.add(drawable.select());
 	}
-	
+
+	/*************************************************************************
+	 * Returns a new model where the passed drawable has been replaced by a 
+	 * deselected copy.
+	 */
 	public UMLModel unselect(DrawableUML drawable) 
 		throws Exception
 	{
@@ -266,6 +287,9 @@ public class UMLModel {
 		return temp.add(drawable.unselect());
 	}
 	
+	/*************************************************************************
+	 * Returns a new model where the all the drawables are not selected.
+	 */
 	public UMLModel unselectAll() 
 		throws Exception
 	{
@@ -280,6 +304,9 @@ public class UMLModel {
 		return workingModel;
 	}
 	
+	/*************************************************************************
+	 * Returns a new model in which all selected drawables have been removed.
+	 */
 	public UMLModel deleteSelected() 
 		throws Exception
 	{
@@ -297,6 +324,10 @@ public class UMLModel {
 	//********************************************************************
 	// Iterators
 	
+	/*************************************************************************
+	 * Returns an Iterator<DrawableUML> object which iterates over all objects
+	 * and relations in the model in order of their Z values.
+	 */
 	public Iterator<DrawableUML> zIterator()
 	{
 		PriorityQueue<DrawableUML> zQueue = new PriorityQueue<DrawableUML>(1 + this.objects.size()+this.relations.size(),
@@ -317,11 +348,16 @@ public class UMLModel {
 		return zQueue.iterator();
 	}
 
+	/*************************************************************************
+	 * Returns an iterator which iterates over all of the objects in the model.
+	 */
 	public Iterator<UMLObject> objectIterator()
 	{
 		return objects.iterator();
 	}
-	
+	/*************************************************************************
+	 * Returns an iterator which iterates over all of the relations in the model.
+	 */
 	public Iterator<UMLRelation> relationIterator()
 	{
 		return relations.iterator();

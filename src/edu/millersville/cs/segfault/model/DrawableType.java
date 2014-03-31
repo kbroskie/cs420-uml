@@ -38,6 +38,7 @@ public enum DrawableType {
 	COMPOSITION  (false), 
 	ASSOCIATION  (false);
 	
+	
 	public final boolean      isObject;
 	public final ImageIcon    icon; 
 	
@@ -46,6 +47,9 @@ public enum DrawableType {
 		this.icon     = new ImageIcon("img/64/" + this.name() + ".png");
 	}
 	
+	/************************************************************************* 
+	 * 	 A simple method for returning all of the types in this enum.
+	 */
 	public static LinkedList<DrawableType> typeList() {
 		LinkedList<DrawableType> types = new LinkedList<DrawableType>();
 		for (DrawableType type: OBJECT.getDeclaringClass().getEnumConstants()) {
@@ -54,6 +58,9 @@ public enum DrawableType {
 		return types;
 	}
 
+	/*************************************************************************
+	 * Returns all of the types in this enum which coorespond to Objects
+	 */
 	public static LinkedList<DrawableType> objectTypeList() {
 		LinkedList<DrawableType> types = new LinkedList<DrawableType>();
 		for (DrawableType type: OBJECT.getDeclaringClass().getEnumConstants()) {
@@ -62,6 +69,9 @@ public enum DrawableType {
 		return types;
 	}
 	
+	/*************************************************************************
+	 * Returns all of the types in this enum which coorespond to Relations
+	 */
 	public static LinkedList<DrawableType> relationTypeList() {
 		LinkedList<DrawableType> types = new LinkedList<DrawableType>();
 		for (DrawableType type: OBJECT.getDeclaringClass().getEnumConstants()) {
@@ -77,6 +87,9 @@ public enum DrawableType {
 	
 	
 	// Object Factories - Make an object or one of it's subclasses
+	/*************************************************************************
+	 * Produces an object of a given type from a given serial string.
+	 */
 	public static UMLObject makeObject(DrawableType type, String serial) 
 		throws Exception
 	{
@@ -84,14 +97,19 @@ public enum DrawableType {
 			throw new Exception("Factory: Type is not an object.");
 		}
 		switch(type) {
-		case OBJECT: return new UMLObject(serial);
+		case OBJECT:       return new UMLObject(serial);
 		case ACTIVE_CLASS: return new UMLActiveClass(serial);
-		case CLASS: return new UMLClassObject(serial);
-		case COMPONENT: return new UMLComponent(serial);
-		default: return null;
+		case CLASS:        return new UMLClassObject(serial);
+		case COMPONENT:    return new UMLComponent(serial);
+		case NODE:         return new UMLNode(serial);
+		case STATE:        return new UMLState(serial);
+		default:           return null;
 		}
 	}
 	
+	/**************************************************************************
+	 * Produces an object of a given type with a given set of properties.
+	 */
 	public static UMLObject makeObject(DrawableType type, ImmutablePoint origin,
 									   Dimension size, UMLPanel panel)
 		throws Exception {
@@ -99,18 +117,21 @@ public enum DrawableType {
 			throw new Exception("Factory: Type is not an object.");
 		}
 		switch(type) {
-		case OBJECT: return new UMLObject("", origin, panel.getModel().highestZ() + 1, size, false);
+		case OBJECT:       return new UMLObject("", origin, panel.getModel().highestZ() + 1, size, false);
 		case ACTIVE_CLASS: return new UMLActiveClass("", origin, panel.getModel().highestZ() + 1, size, false);
-		case CLASS: return new UMLClassObject("", origin, panel.getModel().highestZ() + 1, size, false);
-		case COMPONENT: return new UMLComponent("", origin, panel.getModel().highestZ() + 1, size, false);
-		case NODE: return new UMLNode("", origin, panel.getModel().highestZ() + 1, size, false);
-		case STATE: return new UMLState("", origin, panel.getModel().highestZ() + 1, size, false);
-		default: return null;
+		case CLASS:        return new UMLClassObject("", origin, panel.getModel().highestZ() + 1, size, false);
+		case COMPONENT:    return new UMLComponent("", origin, panel.getModel().highestZ() + 1, size, false);
+		case NODE:         return new UMLNode("", origin, panel.getModel().highestZ() + 1, size, false);
+		case STATE:        return new UMLState("", origin, panel.getModel().highestZ() + 1, size, false);
+		default:           return null;
 		}
 	}
 	
 	
 	// Relation factories - make a relation or one of it's subclasses
+	/*************************************************************************
+	 * Produces a relation of a given type from a given serial string.
+	 */
 	public static UMLRelation makeRelation(DrawableType type, String serial) 
 		throws Exception
 	{
@@ -125,6 +146,9 @@ public enum DrawableType {
 		}
 	}
 	
+	/*************************************************************************
+	 * Produces a relation of a given type with given properties.
+	 */
 	public static UMLRelation makeRelation(DrawableType type, ImmutablePath path, UMLPanel panel)
 		throws Exception
 	{

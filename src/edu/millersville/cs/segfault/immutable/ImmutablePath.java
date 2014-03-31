@@ -271,6 +271,9 @@ public class ImmutablePath {
 		
 	}
 	
+	/*************************************************************************
+	 * Returns the closest point on this path to a given point.
+	 */
 	public ImmutablePoint snapPoint(ImmutablePoint point) {
 		if (this.size() < 2) {
 			return null;

@@ -89,8 +89,8 @@ public class UMLPanel extends JPanel {
 		while (oIter.hasNext())
 		{
 			UMLObject current = oIter.next();
-			int objectMaxX = current.getX() + current.getWidth();
-			int objectMaxY = current.getY() + current.getHeight();
+			int objectMaxX = current.origin.x + current.size.width;
+			int objectMaxY = current.origin.y + current.size.height;
 			if (maxX < objectMaxX)
 			{
 				maxX = objectMaxX;

@@ -27,6 +27,10 @@ public class ImmutableLine {
 		this.second = second;
 	}
 	
+	/*************************************************************************
+	 * Creates a new Immutable Line from a serialized XML representation of one.
+	 * @param s
+	 */
 	public ImmutableLine(String s) {
 		this.first = new ImmutablePoint(XMLAttribute.getAttribute(s, "first"));
 		this.second = new ImmutablePoint(XMLAttribute.getAttribute(s, "second"));
@@ -35,16 +39,29 @@ public class ImmutableLine {
 	//************************************************************************
 	// Observers
 	
+	/*************************************************************************
+	 * Creates an XML serialization of this object wrapped in <line></line>
+	 */
 	public String serialize() {
 		return XMLAttribute.makeTag("line", first.serialize("first")+second.serialize("second"));
 	}
 	
+	/*************************************************************************
+	 * Returns a serialized representation of this object wrapped in an XML tag.
+	 * @param name The property name of the tag wrapped around this object
+	 * @return An XML serial representation of this object.
+	 */
 	public String serialize(String name) {
 		return XMLAttribute.makeTag(name, first.serialize("first")+second.serialize("second"));
 	}
 	
 	//************************************************************************
 	// Drawing Methods
+	
+	/*************************************************************************
+	 * Draws a line with these coordinates on the given graphics object.
+	 * @param g The graphics object to draw on.
+	 */
 	
 	public void draw(Graphics g) {
 		g.drawLine(first.x, first.y, second.x, second.y);
@@ -117,6 +134,9 @@ public class ImmutableLine {
 		return null; // No line exists that meets these requirements.
 	}
 	
+	/*************************************************************************
+	 * Returns the closest point upon this line to a given point.
+	 */
 	public ImmutablePoint snapPoint(ImmutablePoint p) {
 		ImmutableLine perpLine = this.perpendicular(p);
 		if (perpLine != null) {
@@ -129,6 +149,11 @@ public class ImmutableLine {
 		return second;
 	}
 
+	/*************************************************************************
+	 * Returns the point along this line at a given x value, if one exists.
+	 * @param x The value of y to find a point for.
+	 * @return Either null, if the line does not exist at that value of x, or a point with x=x.
+	 */
 	public ImmutablePoint snapAtX(int x) {
 		if (x >= Math.max(first.getX(), second.getX()) &&
 			x <= Math.min(first.getX(), second.getX())) {
@@ -143,11 +168,14 @@ public class ImmutableLine {
 		return null;
 	}
 	
-	
+	/*************************************************************************
+	 * Returns the point along this line at a given y value, if one exists.
+	 * @param y The value of y to find a point for.
+	 * @return Either null, if the line does not exist at that value of y, or a point with y=y.
+	 */
 	public ImmutablePoint snapAtY(int y) {
 		if (y >= Math.max(first.getY(), second.getY()) &&
 				y <= Math.min(first.getY(), second.getY())) {
-			
 			if (this.slope()==0) {
 				if (first.getX() == second.getX()) {
 					return new ImmutablePoint(first.getX(), y);

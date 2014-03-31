@@ -48,8 +48,8 @@ public class UMLComponent extends UMLObject
 	public void draw (Graphics g)
 	{
 		super.draw(g);
-		g.drawRect(this.getX() - 5, this.getY()/4, this.getWidth()/2, this.getHeight()/4);
-		g.drawRect(this.getX() - 5, (this.getY()/4)*3, this.getWidth()/2, this.getHeight()/4);
+		g.drawRect(this.origin.x - 5, this.origin.y/4, this.size.width/2, this.size.height/4);
+		g.drawRect(this.origin.x - 5, (this.origin.y/4)*3, this.size.width/2, this.size.height/4);
 		
 	}
 }
