@@ -5,13 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import edu.millersville.cs.segfault.model.UMLModel;
-import edu.millersville.cs.segfault.ui.UMLPanel;
+import edu.millersville.cs.segfault.ui.UMLWindow;
 
 /**************************************************************************
  * UMLFileMenu is the class responsible for instantiating 
@@ -35,12 +34,6 @@ public class UMLFileMenu extends JMenu
 	private static final String exitMenuText = "Exit";
 	
 	//*************************************************************************
-	// Instance Variables
-	//*************************************************************************
-	// Panel containing the model
-	private UMLPanel umlPanel;
-	
-	//*************************************************************************
 	// Constructors	
 	//*************************************************************************
 	
@@ -50,46 +43,44 @@ public class UMLFileMenu extends JMenu
 	 * @param wFrame the frame for the interface
 	 * @param umlPanel the panel for the current UML model
 	 *************************************************************************/
-	public UMLFileMenu (JFrame wFrame, UMLPanel umlPanel) {
+	public UMLFileMenu () {
 		super(fileMenuText);
-
-		this.umlPanel = umlPanel;
 		
-	   // Create the new menu item and add an action listener and accelerator.	   
-	   JMenuItem newItem = new JMenuItem(newMenuText);
-	   newItem.addActionListener(this);
-	   newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK));
+		// Create the new menu item and add an action listener and accelerator.	   
+		JMenuItem newItem = new JMenuItem(newMenuText);
+		newItem.addActionListener(this);
+		newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK));
 	   
-	   // Create the open menu item and add an action listener and accelerator.	   
-	   JMenuItem openItem = new JMenuItem(openMenuText);
-	   openItem.addActionListener(this);
-	   openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK));
+		// Create the open menu item and add an action listener and accelerator.	   
+		JMenuItem openItem = new JMenuItem(openMenuText);
+		openItem.addActionListener(this);
+		openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK));
 
-	   // Create the save menu item and add an action listener and accelerator.	   
-	   JMenuItem saveItem = new JMenuItem(saveMenuText);
-	   saveItem.addActionListener(this);
-	   saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
+		// Create the save menu item and add an action listener and accelerator.	   
+		JMenuItem saveItem = new JMenuItem(saveMenuText);
+		saveItem.addActionListener(this);
+		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
 	   
-	   // Create the save as menu item and add an action listener.	   
-	   JMenuItem saveAsItem = new JMenuItem(saveAsMenuText);
-	   saveAsItem.addActionListener(this);
+		// Create the save as menu item and add an action listener.	   
+		JMenuItem saveAsItem = new JMenuItem(saveAsMenuText);
+		saveAsItem.addActionListener(this);
 
-	   // Create the exit menu item and add an action listener and accelerator.
-	   JMenuItem exitItem = new JMenuItem(exitMenuText);
-	   exitItem.addActionListener(new ExitListener());
-	   exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK));
+		// Create the exit menu item and add an action listener and accelerator.
+		JMenuItem exitItem = new JMenuItem(exitMenuText);
+		exitItem.addActionListener(new ExitListener());
+		exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK));
 
-	   // Add the sub-menus to the File menu.
-	   add(newItem);
-	   add(openItem);
-	   add(saveItem);
-	   add(saveAsItem);
-	   add(exitItem);
+		// Add the sub-menus to the File menu.
+		add(newItem);
+		add(openItem);
+		add(saveItem);
+		add(saveAsItem);
+		add(exitItem);
 	}
 	
 	
 	//*************************************************************************
-	// Action Listeners
+	// Event Listeners
 	//*************************************************************************
 	
 	// Handles the event generated when the user selects 
@@ -109,16 +100,18 @@ public class UMLFileMenu extends JMenu
 		 String selectedCommand = se.getActionCommand();
 	 	 	 
 		 if (selectedCommand == newMenuText) {
-			 umlPanel.changeModel(new UMLModel());
+			 UMLWindow.getUMLPanel().changeModel(new UMLModel());
 		 }
 		 else if (selectedCommand == openMenuText) {
-			 umlPanel.load();
+			 UMLWindow.getUMLPanel().load();
 		 }
 		 else if (selectedCommand == saveMenuText) {
-			 umlPanel.save(umlPanel.getModel().serialize());
+			 UMLWindow.getUMLPanel().save(
+					 UMLWindow.getUMLPanel().model().serialize());
 		 }
 		 else if (selectedCommand == saveAsMenuText) {
-			 umlPanel.saveAs(umlPanel.getModel().serialize());
+			 UMLWindow.getUMLPanel().saveAs(
+					 UMLWindow.getUMLPanel().model().serialize());
 		 }
 	 }
 }

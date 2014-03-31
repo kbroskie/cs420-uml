@@ -34,12 +34,6 @@ public class UMLOptionsPanel extends JPanel
 	
 	// OTHER OPTION VARIABLES
 	private static final String optionsPaneSelect = "Select";
-	
-	//*************************************************************************
-	// Instance Variables
-	//*************************************************************************
-	// Panel containing the model
-	private UMLPanel umlPanel;
 		
 	//*************************************************************************
 	// Constructors	
@@ -50,11 +44,9 @@ public class UMLOptionsPanel extends JPanel
 	 * relations that a user can select.
 	 * @param umlPanel the panel for the current UML model.
 	 *************************************************************************/
-	 public UMLOptionsPanel (UMLPanel umlPanel) {
+	 public UMLOptionsPanel () {
 		 super();
-		 
-		 this.umlPanel = umlPanel;
-		 
+		 		 
 		 // Set the layout.
 		 setLayout(new GridLayout(15, 2));
 		 setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); 
@@ -77,7 +69,7 @@ public class UMLOptionsPanel extends JPanel
 	 
 	 
 	//*************************************************************************
-	// Action Listeners
+	// Event Listeners
 	//*************************************************************************
 	 
 	/**************************************************************************
@@ -89,13 +81,16 @@ public class UMLOptionsPanel extends JPanel
 		String selectedCommand = se.getActionCommand();
 
 		if (selectedCommand == optionsPaneSelect ) {
-			umlPanel.changeInteractionMode(new SelectionMode(umlPanel));
+			UMLWindow.getUMLPanel().changeInteractionMode(
+					new SelectionMode(UMLWindow.getUMLPanel()));
 		}
 		else if (selectedCommand == optionsPaneRelationDraw ) {
-			umlPanel.changeInteractionMode(new DrawMode(DrawableType.RELATION, umlPanel));
+			UMLWindow.getUMLPanel().changeInteractionMode(
+					new DrawMode(DrawableType.RELATION, UMLWindow.getUMLPanel()));
 		}
 		else if (selectedCommand == optionsPaneObjectDraw ) {
-			umlPanel.changeInteractionMode(new DrawMode(DrawableType.OBJECT, umlPanel));
+			UMLWindow.getUMLPanel().changeInteractionMode(
+					new DrawMode(DrawableType.OBJECT, UMLWindow.getUMLPanel()));
 		}			
 	} 	 
 }
