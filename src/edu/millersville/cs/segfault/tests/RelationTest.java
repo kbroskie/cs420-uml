@@ -8,6 +8,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.junit.Test;
 
+import edu.millersville.cs.segfault.model.relation.Aggregation;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.UMLModel;
@@ -101,6 +102,16 @@ public class RelationTest {
 		//		new ImmutablePoint(10, 60)).addLast(testR1.snapPoint(new ImmutablePoint(90, 150))), 1, false);
 		//
 		//assertTrue(testR3.near(new ImmutablePoint(90, 150), 3));
+		
+		//**********************************************************************************//
+		//Aggregation Test
+		//**********************************************************************************//
+		
+		Aggregation testAgg = new Aggregation(testR1.serialize());
+		
+		
+		
+		
 		
 		//**********************************************************************************//
 		
