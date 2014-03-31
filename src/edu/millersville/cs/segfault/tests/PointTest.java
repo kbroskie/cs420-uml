@@ -10,6 +10,7 @@ public class PointTest {
 
 	@Test
 	public void test() {
+				
 		ImmutablePoint testOrigin = new ImmutablePoint();
 		assertTrue("Origin point not at origin", testOrigin.getX()==0 &&
 				testOrigin.getY()==0);
@@ -20,5 +21,6 @@ public class PointTest {
 		
 		assertTrue("Distance calculation incorrect.", 
 				testPoint.distance(testOrigin)==5);
-	}
+		
+		}
 }
