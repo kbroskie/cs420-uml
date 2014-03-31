@@ -12,7 +12,7 @@ import edu.millersville.cs.segfault.ui.WindowController;
 import edu.millersville.cs.segfault.ui.DrawMode;
 import edu.millersville.cs.segfault.ui.PanelInteractionMode;
 import edu.millersville.cs.segfault.ui.SelectionMode;
-import edu.millersville.cs.segfault.ui.WindowUI;
+import edu.millersville.cs.segfault.ui.UMLWindow;
 
 public class UMLPanelTest {
 

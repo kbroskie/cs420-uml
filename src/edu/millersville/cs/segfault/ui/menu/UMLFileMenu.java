@@ -107,11 +107,11 @@ public class UMLFileMenu extends JMenu
 		 }
 		 else if (selectedCommand == saveMenuText) {
 			 UMLWindow.getUMLPanel().save(
-					 UMLWindow.getUMLPanel().model().serialize());
+					 UMLWindow.getUMLPanel().getModel().serialize());
 		 }
 		 else if (selectedCommand == saveAsMenuText) {
 			 UMLWindow.getUMLPanel().saveAs(
-					 UMLWindow.getUMLPanel().model().serialize());
+					 UMLWindow.getUMLPanel().getModel().serialize());
 		 }
 	 }
 }
