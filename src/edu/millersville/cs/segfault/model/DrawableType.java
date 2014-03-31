@@ -3,12 +3,16 @@ package edu.millersville.cs.segfault.model;
 import java.awt.Dimension;
 import java.util.LinkedList;
 
+import javax.swing.ImageIcon;
+
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.object.UMLActiveClass;
 import edu.millersville.cs.segfault.model.object.UMLClassObject;
 import edu.millersville.cs.segfault.model.object.UMLComponent;
+import edu.millersville.cs.segfault.model.object.UMLNode;
 import edu.millersville.cs.segfault.model.object.UMLObject;
+import edu.millersville.cs.segfault.model.object.UMLState;
 import edu.millersville.cs.segfault.model.relation.Aggregation;
 import edu.millersville.cs.segfault.model.relation.Association;
 import edu.millersville.cs.segfault.model.relation.Composition;
@@ -35,9 +39,11 @@ public enum DrawableType {
 	ASSOCIATION  (false);
 	
 	public final boolean      isObject;
+	public final ImageIcon    icon; 
 	
 	DrawableType(boolean isObject) {
 		this.isObject = isObject;
+		this.icon     = new ImageIcon("img/64/" + this.name() + ".png");
 	}
 	
 	public static LinkedList<DrawableType> typeList() {
@@ -97,6 +103,8 @@ public enum DrawableType {
 		case ACTIVE_CLASS: return new UMLActiveClass("", origin, panel.getModel().highestZ() + 1, size, false);
 		case CLASS: return new UMLClassObject("", origin, panel.getModel().highestZ() + 1, size, false);
 		case COMPONENT: return new UMLComponent("", origin, panel.getModel().highestZ() + 1, size, false);
+		case NODE: return new UMLNode("", origin, panel.getModel().highestZ() + 1, size, false);
+		case STATE: return new UMLState("", origin, panel.getModel().highestZ() + 1, size, false);
 		default: return null;
 		}
 	}

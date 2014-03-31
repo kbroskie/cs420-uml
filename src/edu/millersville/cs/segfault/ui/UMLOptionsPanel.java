@@ -1,6 +1,5 @@
 package edu.millersville.cs.segfault.ui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -27,16 +26,12 @@ public class UMLOptionsPanel extends JPanel
 	// Static Instance Variables
 	//*************************************************************************
 	private static final long serialVersionUID = -9118912567292664779L;
+
 	
-	// OBJECT VARIABLES
-	private static final String optionsPaneObjectDraw = "Object";
+	// Non-Drawable Action Commands
+	private static final String selectAction = "SELECT";
+	private static final String textAction   = "TEXT";
 	
-	// RELATION VARIABLES
-	private static final String optionsPaneRelationDraw = "Relation";
-	
-	// OTHER OPTION VARIABLES
-	private static final String optionsPaneSelect = "";
-		
 	//*************************************************************************
 	// Constructors	
 	//*************************************************************************
@@ -50,26 +45,42 @@ public class UMLOptionsPanel extends JPanel
 		 super();
 		 		 
 		 // Set the layout.
-		 setLayout(new GridLayout(15,2));
+		 setLayout(new GridLayout(0,2));
 		 setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); 
 		 
 		 // Build and add the select button.
-		 JButton selectionButton = new JButton(new ImageIcon("img/64/Select.png"));
-		 selectionButton.setMaximumSize(new Dimension(64, 64));
-		 selectionButton.setMinimumSize(new Dimension(64, 64));
-		 
+		 JButton selectionButton = new JButton(new ImageIcon("img/64/selectionMode.png"));
+		 selectionButton.setActionCommand(selectAction);
+		 selectionButton.setPreferredSize(new Dimension(64, 64));
 		 selectionButton.addActionListener(this);
 		 add(selectionButton);  
 		 
-		 // Create the object button and add an action listener.
-		 JButton objectButton = new JButton(optionsPaneObjectDraw);
-		 objectButton.addActionListener(this);
-		 add(objectButton, BorderLayout.CENTER);
-			   
-		 // Create the relation buttons and action listeners.
-		 JButton relationButton = new JButton(optionsPaneRelationDraw);
-		 relationButton.addActionListener(this);
-		 add(relationButton);
+		 // Build and add the text button
+		 JButton textButton = new JButton(new ImageIcon("img/64/textMode.png"));
+		 textButton.setActionCommand(textAction);
+		 textButton.setPreferredSize(new Dimension(64, 64));
+		 add(textButton);
+		 
+		 // Add all the objects
+		 
+		 for (DrawableType type : DrawableType.objectTypeList()) {
+			 JButton newButton = new JButton(type.icon);
+			 newButton.setActionCommand(type.name());
+			 newButton.setPreferredSize(new Dimension(64, 64));
+			 newButton.addActionListener(this);
+			 
+			 add(newButton);
+		 }
+		 
+		 for (DrawableType type: DrawableType.relationTypeList()) {
+			 if (type == DrawableType.RELATION) { continue; }
+			 JButton newButton = new JButton(type.icon);
+			 newButton.setActionCommand(type.name());
+			 newButton.setPreferredSize(new Dimension(64, 64));
+			 newButton.addActionListener(this);
+			 add(newButton);
+		 }
+		 
 	} 
 	 
 	 
@@ -84,18 +95,18 @@ public class UMLOptionsPanel extends JPanel
 	 *************************************************************************/
 	public void actionPerformed(ActionEvent se) {
 		Object selectedCommand = se.getActionCommand();
-
-		if (selectedCommand == optionsPaneSelect ) {
+		System.out.println(selectedCommand);
+		
+		if (selectedCommand.equals(selectAction)) {
 			UMLWindow.getUMLPanel().changeInteractionMode(
 					new SelectionMode(UMLWindow.getUMLPanel()));
+		} else {
+			for (DrawableType type: DrawableType.typeList()) {
+				if (type.name().equals(selectedCommand)) {
+					UMLWindow.getUMLPanel().changeInteractionMode(new DrawMode(type, UMLWindow.getUMLPanel()));
+				}
+			}
 		}
-		else if (selectedCommand == optionsPaneRelationDraw ) {
-			UMLWindow.getUMLPanel().changeInteractionMode(
-					new DrawMode(DrawableType.RELATION, UMLWindow.getUMLPanel()));
-		}
-		else if (selectedCommand == optionsPaneObjectDraw ) {
-			UMLWindow.getUMLPanel().changeInteractionMode(
-					new DrawMode(DrawableType.OBJECT, UMLWindow.getUMLPanel()));
-		}			
+			
 	} 	 
 }

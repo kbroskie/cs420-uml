@@ -25,7 +25,7 @@ public class UMLWindow extends JFrame {
 	// Dimensions for the main frame.
 	private static final Dimension WINDOW_PREFERRED_SIZE = new Dimension(600, 520);
 	private static final Dimension UML_PANE_MIN_SIZE = new Dimension(500, 520);
-	private static final Dimension OPTIONS_PANE_MIN_SIZE = new Dimension(100, 520);
+	private static final Dimension OPTIONS_PANE_PREFERRED_SIZE = new Dimension(128, 520);
 	
 	// Component of the main frame.
 	private static UMLPanel umlPanel;
@@ -61,21 +61,21 @@ public class UMLWindow extends JFrame {
 		umlPanel = new UMLPanel();	
 		optionsPane = new UMLOptionsPanel();
 		scrollableUMLPanel = new JScrollPane(umlPanel);
-		scrollableOptionsPanel = new JScrollPane(optionsPane);
-		scrollableOptionsPanel.setVerticalScrollBarPolicy(
-				ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		//scrollableOptionsPanel = new JScrollPane(optionsPane);
+		//scrollableOptionsPanel.setVerticalScrollBarPolicy(
+		//		ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 		// Create a split pane consisting of the drawing area and options area.
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-								   scrollableOptionsPanel, scrollableUMLPanel);
+								   optionsPane, scrollableUMLPanel);
 		splitPane.setOneTouchExpandable(true);
 		splitPane.setDividerLocation(109);	
 
 
 		// Set the components sizes.
 		splitPane.setPreferredSize(WINDOW_PREFERRED_SIZE);
-			optionsPane.setMinimumSize(OPTIONS_PANE_MIN_SIZE);
-		scrollableUMLPanel.setMinimumSize(UML_PANE_MIN_SIZE);
+			optionsPane.setPreferredSize(OPTIONS_PANE_PREFERRED_SIZE);
+		scrollableUMLPanel.setPreferredSize(UML_PANE_MIN_SIZE);
 		
 	    // Add the splitpane and menu to the frame.
 		add(splitPane);
