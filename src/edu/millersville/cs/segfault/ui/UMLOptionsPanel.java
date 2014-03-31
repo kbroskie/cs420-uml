@@ -2,11 +2,13 @@ package edu.millersville.cs.segfault.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -33,7 +35,7 @@ public class UMLOptionsPanel extends JPanel
 	private static final String optionsPaneRelationDraw = "Relation";
 	
 	// OTHER OPTION VARIABLES
-	private static final String optionsPaneSelect = "Select";
+	private static final String optionsPaneSelect = "";
 		
 	//*************************************************************************
 	// Constructors	
@@ -48,11 +50,14 @@ public class UMLOptionsPanel extends JPanel
 		 super();
 		 		 
 		 // Set the layout.
-		 setLayout(new GridLayout(15, 2));
+		 setLayout(new GridLayout(15,2));
 		 setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); 
 		 
 		 // Build and add the select button.
-		 JButton selectionButton = new JButton(optionsPaneSelect);
+		 JButton selectionButton = new JButton(new ImageIcon("img/64/Select.png"));
+		 selectionButton.setMaximumSize(new Dimension(64, 64));
+		 selectionButton.setMinimumSize(new Dimension(64, 64));
+		 
 		 selectionButton.addActionListener(this);
 		 add(selectionButton);  
 		 
@@ -78,7 +83,7 @@ public class UMLOptionsPanel extends JPanel
 	 * @param se the selected event and source 
 	 *************************************************************************/
 	public void actionPerformed(ActionEvent se) {
-		String selectedCommand = se.getActionCommand();
+		Object selectedCommand = se.getActionCommand();
 
 		if (selectedCommand == optionsPaneSelect ) {
 			UMLWindow.getUMLPanel().changeInteractionMode(
