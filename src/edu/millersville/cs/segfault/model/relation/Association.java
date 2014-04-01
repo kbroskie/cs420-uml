@@ -10,24 +10,48 @@ import edu.millersville.cs.segfault.immutable.ImmutableLine;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.model.DrawableType;
 
+/*****************************************************************************
+ * A subclass of UMLRelation which creates an unfilled arrow.
+ * 
+ * @author Daniel Rabiega
+ */
+
 public class Association extends UMLRelation {
 
+	//************************************************************************
+	// Constructors
 	
-	
-
+	/*************************************************************************
+	 * Creates a new Association from the supplied coordinates.
+	 */
 	public Association(ImmutablePath path, int z, boolean selected)
 	{
 		super(path, z, selected);
 	}
 	
+	/*************************************************************************
+	 * Creates a new Association from a serialized XML representation.
+	 */
 	public Association(String serialized)
 		throws Exception
 	{
 		super(serialized);
 	}
 	
+	//************************************************************************
+	// Observers
+	
+	/*************************************************************************
+	 * Returns this association's type, ASSOCIATION
+	 */
 	public DrawableType getType() { return DrawableType.ASSOCIATION; }
 	
+	//************************************************************************
+	// Drawing Methods
+	
+	/*************************************************************************
+	 * Draws an unfilled arrow at this aggregation's endpoint.
+	 */
 	public void drawArrow(Graphics g) {
 		if (this.getPath().size() > 1) {
 			Iterator<ImmutableLine> lIter = this.getPath().lineIterator();

@@ -31,10 +31,10 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
 	public UMLClassObject()
 	{
 		super();
-		this.firstLine  = new ImmutableLine(new ImmutablePoint(this.origin.x, this.size.height/3), 
-						  new ImmutablePoint(this.origin.x + this.size.width, this.size.height/3));
-		this.secondLine = new ImmutableLine(new ImmutablePoint(this.origin.x, (this.size.height/3)*2), 
-				          new ImmutablePoint(this.origin.x + this.size.width, (this.size.height/3)*2));
+		this.firstLine  = new ImmutableLine(new ImmutablePoint(this.origin.x, this.origin.y + this.size.height/4), 
+						  new ImmutablePoint(this.origin.x + this.size.width, this.origin.y + this.size.height/4));
+		this.secondLine = new ImmutableLine(new ImmutablePoint(this.origin.x, this.origin.y + (this.size.height/2)), 
+				          new ImmutablePoint(this.origin.x + this.size.width, this.origin.y + (this.size.height/2)));
 	}
 
 	//Member constructor.
@@ -42,10 +42,10 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
 			throws Exception
 	{
 		super(nLabel, p, nZ, size, nSelected);
-		this.firstLine  = new ImmutableLine(new ImmutablePoint(this.origin.x, this.size.height/3), 
-		        		  new ImmutablePoint(this.origin.x + this.size.width, this.size.height/3));
-		this.secondLine = new ImmutableLine(new ImmutablePoint(this.origin.x, (this.size.height/3)*2), 
-		          		  new ImmutablePoint(this.origin.x + this.size.width, (this.size.height/3)*2));
+		this.firstLine  = new ImmutableLine(new ImmutablePoint(this.origin.x, this.origin.y +this.size.height/4), 
+		        		  new ImmutablePoint(this.origin.x + this.size.width, this.origin.y +this.size.height/4));
+		this.secondLine = new ImmutableLine(new ImmutablePoint(this.origin.x, this.origin.y +(this.size.height/2)), 
+		          		  new ImmutablePoint(this.origin.x + this.size.width, this.origin.y +(this.size.height/2)));
 	}
 
 	public UMLClassObject (String s) 
@@ -56,6 +56,8 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
 		this.secondLine = new ImmutableLine(XMLAttribute.getAttribute(s, "secondLine"));
 	}
 		
+
+	
 //**********************************************************************
 //Observers
 
