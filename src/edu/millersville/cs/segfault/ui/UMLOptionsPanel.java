@@ -61,11 +61,11 @@ public class UMLOptionsPanel extends JPanel
 		 selectionButton.addActionListener(this);
 		 add(selectionButton);  
 		 
-		 // Build and add the text button
-		 JButton textButton = new JButton(new ImageIcon("img/64/textMode.png"));
-		 textButton.setActionCommand(textAction);
-		 textButton.setPreferredSize(new Dimension(64, 64));
-		 add(textButton);
+//		 // Build and add the text button
+//		 JButton textButton = new JButton(new ImageIcon("img/64/textMode.png"));
+//		 textButton.setActionCommand(textAction);
+//		 textButton.setPreferredSize(new Dimension(64, 64));
+//		 add(textButton);
 		 
 		 // Add all the objects
 		 
@@ -102,7 +102,6 @@ public class UMLOptionsPanel extends JPanel
 	public void actionPerformed(ActionEvent se) {
 
 		Object selectedCommand = se.getActionCommand();
-		System.out.println(selectedCommand);
 		
 		if (selectedCommand.equals(selectAction)) {
 			parentWindow.getUMLPanel().changeInteractionMode(

@@ -10,8 +10,18 @@ import java.util.Iterator;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableUML;
 
+/*****************************************************************************
+ * Interprets user input and uses it to select and deselect items in the 
+ * current diagram.
+ * 
+ * @author Daniel Rabiega
+ */
+
 public class SelectionMode extends PanelInteractionMode {
 
+	//************************************************************************
+	// Instance Variables
+	
 	private UMLPanel panel;
 	
 	private boolean controlDown;
@@ -22,6 +32,14 @@ public class SelectionMode extends PanelInteractionMode {
 	
 	private ImmutablePoint lastImmutablePoint;
 	
+	//************************************************************************
+	// Constructors
+	
+	/*************************************************************************
+	 * Creates a new Selection Mode.
+	 * 
+	 * @param caller The UMLPanel in which to select and deselect items.
+	 */
 	public SelectionMode(UMLPanel caller)
 	{
 		this.panel = caller;
@@ -29,6 +47,9 @@ public class SelectionMode extends PanelInteractionMode {
 		this.controlDown = false;
 		this.shiftDown = false;
 	}
+	
+	//************************************************************************
+	// Action Listeners
 	
 	@Override
 	public void mouseClicked(MouseEvent e) 
@@ -117,21 +138,8 @@ public class SelectionMode extends PanelInteractionMode {
 		lastImmutablePoint = new ImmutablePoint(e.getX(), e.getY());
 		panel.repaint();
 	}
-	@Override
-	public void draw(Graphics g) 
-	{
-		
-		if (perhapsDragging) {
-			int x1 = (int) dragStart.getX();
-			int x2 = (int) lastImmutablePoint.getX();
-			int y1 = (int) dragStart.getY();
-			int y2 = (int) lastImmutablePoint.getY();
-			
-			g.setColor(Color.BLUE);
-			g.drawRect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2));
-		}
-	}
 	
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode()==KeyEvent.VK_DELETE)
@@ -157,8 +165,36 @@ public class SelectionMode extends PanelInteractionMode {
 			shiftDown = false;
 		}
 	}
+
+	@Override
+	public void leaveMode() {
+		try {
+			panel.changeModel(panel.getModel().unselectAll());
+		} catch (Exception ex) {
+			System.out.println("Could not unselect all:" + ex.getMessage());
+		}
+	}
 	
-	public ImmutablePoint orSnap(MouseEvent e) {
+	//************************************************************************
+	// Drawing Methods
+	
+	@Override
+	public void draw(Graphics g) 
+	{
+		
+		if (perhapsDragging) {
+			int x1 = (int) dragStart.getX();
+			int x2 = (int) lastImmutablePoint.getX();
+			int y1 = (int) dragStart.getY();
+			int y2 = (int) lastImmutablePoint.getY();
+			
+			g.setColor(Color.BLUE);
+			g.drawRect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2));
+		}
+	}
+	
+		
+	private ImmutablePoint orSnap(MouseEvent e) {
 		
 		ImmutablePoint mouseImmutablePoint = new ImmutablePoint(e.getX(), e.getY());
 		ImmutablePoint snapImmutablePoint = null;
@@ -181,13 +217,6 @@ public class SelectionMode extends PanelInteractionMode {
 		return new ImmutablePoint(e.getX(), e.getY());
 	}
 
-	@Override
-	public void leaveMode() {
-		try {
-			panel.changeModel(panel.getModel().unselectAll());
-		} catch (Exception ex) {
-			System.out.println("Could not unselect all:" + ex.getMessage());
-		}
-	}
+	
 	
 }

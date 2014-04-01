@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-//GENERAL FILE OP
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -22,159 +21,33 @@ import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 
+/*****************************************************************************
+ * A custom subclass of JPanel which contains a UMLModel and displays it
+ * as a panel in a swing GUI.
+ * 
+ * @author Daniel Rabiega
+ */
+
 public class UMLPanel extends JPanel {
 	
+	//************************************************************************
+	// Static Members
 	
 	private static final long serialVersionUID = 3691818181393202313L;
-	private UMLModel currentModel;
-	private LinkedList<UMLModel> undoStack;
-	private LinkedList<UMLModel> redoStack;
-	private PanelInteractionMode currentInteractionMode;
-	int lastX;
-	int lastY;
 	static boolean hasFile;
 	static File srcFile;
-	boolean gridOn;
 	
-	enum change_types {}
-	
-	public UMLPanel(){
-		currentModel = new UMLModel();
-		undoStack = new LinkedList<UMLModel>();
-		redoStack = new LinkedList<UMLModel>();
-		currentInteractionMode = new DrawMode(DrawableType.OBJECT, this);
-		this.addMouseListener(currentInteractionMode);
-		this.addMouseMotionListener(currentInteractionMode);
-		this.addKeyListener(currentInteractionMode);
-		lastX = 0;
-		lastY = 0;
-		hasFile = false;
-		srcFile = new File("");
-		setFocusable(true);
-		gridOn = false;
-		
-	}
-
-	public UMLPanel(UMLModel new_model) {
-		this();
-		this.changeModel(new_model);
-		repaint();
-	}
-	
-	public void changeModel(UMLModel new_model) {
-		undoStack.push(currentModel);
-		this.currentModel = new_model;
-		redoStack = new LinkedList<UMLModel>();
-		repaint();
-	}
-
-	public void changeInteractionMode(PanelInteractionMode newMode)
-	{
-		currentInteractionMode.leaveMode();
-		this.removeMouseListener(currentInteractionMode);
-		this.removeMouseMotionListener(currentInteractionMode);
-		this.removeKeyListener(currentInteractionMode);
-		currentInteractionMode = newMode;
-		this.addMouseListener(currentInteractionMode);
-		this.addMouseMotionListener(currentInteractionMode);
-		this.addKeyListener(currentInteractionMode);
-		repaint();	
-	}
-	
-	public Dimension getPreferredSize() {
-		int maxX=0;
-		int maxY=0;
-		
-		Iterator<UMLObject> oIter = currentModel.objectIterator();
-		while (oIter.hasNext())
-		{
-			UMLObject current = oIter.next();
-			int objectMaxX = current.origin.x + current.size.width;
-			int objectMaxY = current.origin.y + current.size.height;
-			if (maxX < objectMaxX)
-			{
-				maxX = objectMaxX;
-			}
-			if (maxY < objectMaxY)
-			{
-				maxY = objectMaxY;
-			}
-		}
-		
-		if (maxX < 500) { maxX = 500; }
-		if (maxY < 500) { maxY = 500; }
-		
-		return new Dimension(maxX+10,maxY+10);
-	}
-	
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-		
-		if (gridOn) {
-			paintGrid(g);
-		}
-		
-		Iterator<DrawableUML> zIter = currentModel.zIterator();
-		
-		while (zIter.hasNext())
-		{
-			zIter.next().draw(g);
-		}
-		
-		currentInteractionMode.draw(g);
-	}
-	
-	public void paintGrid(Graphics g) {
-		int width = this.getWidth();
-		int height = this.getHeight();
-		
-		g.setColor(Color.LIGHT_GRAY);
-		
-		for (int vertical = 0; vertical * DrawMode.snapDistance < width; ++vertical) {
-			g.drawLine(vertical*DrawMode.snapDistance, 0, vertical*DrawMode.snapDistance, height);
-		}
-		
-		for (int horizontal = 0; horizontal * DrawMode.snapDistance < height; ++horizontal) {
-			g.drawLine(0, horizontal*DrawMode.snapDistance, width, horizontal*DrawMode.snapDistance);
-		}
-	}
-	
-	public void undo()
-	{
-		if (undoStack.size() > 0)
-		{
-			redoStack.push(currentModel);
-			currentModel = undoStack.pop();
-			repaint();
-		}
-	}
-	
-	public void redo()
-	{
-		if (redoStack.size() > 0)
-		{
-			undoStack.push(currentModel);
-			currentModel = redoStack.pop();
-			repaint();
-		}
-	}
-	
-	public UMLModel getModel()
-	{
-		return currentModel;
-	}
+	//************************************************************************
+	// Static Methods
 	
 	/*************************************************************************
 	 * Save File
 	 * Takes a serialized String from Model.serialize() and writes
 	 * that string to a file at a given location
-	 * -----------------------------------------------------------------------
+	 * 
 	 * @param serialized file
 	 * @return boolean
-	 *************************************************************************/
+	 */
 	private static boolean saveObject( String serialized, File file )
 	{
 		if( file != null)
@@ -269,6 +142,164 @@ public class UMLPanel extends JPanel {
 		}
 	}
 	
+	
+	
+	//************************************************************************
+	// Instance Variables
+	
+	private UMLModel currentModel;
+	private LinkedList<UMLModel> undoStack;
+	private LinkedList<UMLModel> redoStack;
+	private PanelInteractionMode currentInteractionMode;
+	boolean gridOn;
+	
+	//************************************************************************
+	// Constructors
+	
+	/*************************************************************************
+	 * Creates a new UMLPanel with default values.
+	 */
+	
+	public UMLPanel(){
+		currentModel = new UMLModel();
+		undoStack = new LinkedList<UMLModel>();
+		redoStack = new LinkedList<UMLModel>();
+		currentInteractionMode = new DrawMode(DrawableType.OBJECT, this);
+		this.addMouseListener(currentInteractionMode);
+		this.addMouseMotionListener(currentInteractionMode);
+		this.addKeyListener(currentInteractionMode);
+		hasFile = false;
+		srcFile = new File("");
+		setFocusable(true);
+		gridOn = false;
+		
+	}
+
+	/*************************************************************************
+	 * Creates a new UMLPanel displaying a given model.
+	 * @param new_model The model to display.
+	 */
+	public UMLPanel(UMLModel new_model) {
+		this();
+		this.changeModel(new_model);
+		repaint();
+	}
+	
+	//************************************************************************
+	// Observers
+	
+	public Dimension getPreferredSize() {
+		int maxX=0;
+		int maxY=0;
+		
+		Iterator<UMLObject> oIter = currentModel.objectIterator();
+		while (oIter.hasNext())
+		{
+			UMLObject current = oIter.next();
+			int objectMaxX = current.origin.x + current.size.width;
+			int objectMaxY = current.origin.y + current.size.height;
+			if (maxX < objectMaxX)
+			{
+				maxX = objectMaxX;
+			}
+			if (maxY < objectMaxY)
+			{
+				maxY = objectMaxY;
+			}
+		}
+		
+		if (maxX < 500) { maxX = 500; }
+		if (maxY < 500) { maxY = 500; }
+		
+		return new Dimension(maxX+10,maxY+10);
+	}
+	
+	/*************************************************************************
+	 * Returns the current state of the model.
+	 */
+	public UMLModel getModel()
+	{
+		return currentModel;
+	}
+	
+	/******************************************************************************
+	 * All Selected?
+	 * Checks whether the entire model is selected
+	 * ----------------------------------------------------------------------------
+	 * @return boolean
+	 ******************************************************************************/
+	public boolean fullSelection()
+	{
+		// Iterate through the set of models
+		Iterator<DrawableUML> zIter = this.getModel().zIterator();
+		
+		while( zIter.hasNext())
+		{
+			// Check model's selection state
+			if(!( zIter.next().isSelected()))
+			{
+				return( false );
+			}
+		}
+		return( true );
+	}
+	
+	//************************************************************************
+	// Mutators
+	
+	/*************************************************************************
+	 * Replaces the current state of the model with a new version and places
+	 * the previous version on the undo stack.
+	 */
+	public void changeModel(UMLModel new_model) {
+		undoStack.push(currentModel);
+		this.currentModel = new_model;
+		redoStack = new LinkedList<UMLModel>();
+		repaint();
+	}
+
+	/*************************************************************************
+	 * Reroutes user interaction with the UMLPanel to the given mode.
+	 */
+	public void changeInteractionMode(PanelInteractionMode newMode)
+	{
+		currentInteractionMode.leaveMode();
+		this.removeMouseListener(currentInteractionMode);
+		this.removeMouseMotionListener(currentInteractionMode);
+		this.removeKeyListener(currentInteractionMode);
+		currentInteractionMode = newMode;
+		this.addMouseListener(currentInteractionMode);
+		this.addMouseMotionListener(currentInteractionMode);
+		this.addKeyListener(currentInteractionMode);
+		repaint();	
+	}
+	
+	/*************************************************************************
+	 * Undoes the last change to the model which used changeModel	
+	 */
+	public void undo()
+	{
+		if (undoStack.size() > 0)
+		{
+			redoStack.push(currentModel);
+			currentModel = undoStack.pop();
+			repaint();
+		}
+	}
+	
+	/*************************************************************************
+	 * Redoes an undone change to the model.
+	 */
+	public void redo()
+	{
+		if (redoStack.size() > 0)
+		{
+			undoStack.push(currentModel);
+			currentModel = redoStack.pop();
+			repaint();
+		}
+	}
+	
 	/*************************************************************************
 	 * Public Save
 	 * Prompts the user with the JFileChooser to obtain information about
@@ -360,6 +391,7 @@ public class UMLPanel extends JPanel {
 		   	return(false);
 	    }
 	}
+
 	
 	/******************************************************************************
 	 * Select Controller
@@ -389,28 +421,6 @@ public class UMLPanel extends JPanel {
 		
 		// Update the screen to reflect changes
 		this.repaint();
-	}
-	
-	/******************************************************************************
-	 * All Selected?
-	 * Checks whether the entire model is selected
-	 * ----------------------------------------------------------------------------
-	 * @return boolean
-	 ******************************************************************************/
-	public boolean fullSelection()
-	{
-		// Iterate through the set of models
-		Iterator<DrawableUML> zIter = this.getModel().zIterator();
-		
-		while( zIter.hasNext())
-		{
-			// Check model's selection state
-			if(!( zIter.next().isSelected()))
-			{
-				return( false );
-			}
-		}
-		return( true );
 	}
 	
 	/******************************************************************************
@@ -444,6 +454,45 @@ public class UMLPanel extends JPanel {
 		this.gridOn = false;
 	}
 
+	
+	//************************************************************************
+	// Drawing Methods
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+		
+		if (gridOn) {
+			paintGrid(g);
+		}
+		
+		Iterator<DrawableUML> zIter = currentModel.zIterator();
+		
+		while (zIter.hasNext())
+		{
+			zIter.next().draw(g);
+		}
+		
+		currentInteractionMode.draw(g);
+	}
+	
+	public void paintGrid(Graphics g) {
+		int width = this.getWidth();
+		int height = this.getHeight();
+		
+		g.setColor(Color.LIGHT_GRAY);
+		
+		for (int vertical = 0; vertical * DrawMode.snapDistance < width; ++vertical) {
+			g.drawLine(vertical*DrawMode.snapDistance, 0, vertical*DrawMode.snapDistance, height);
+		}
+		
+		for (int horizontal = 0; horizontal * DrawMode.snapDistance < height; ++horizontal) {
+			g.drawLine(0, horizontal*DrawMode.snapDistance, width, horizontal*DrawMode.snapDistance);
+		}
+	}
+	
 	public void getFocus() {
 		requestFocusInWindow();
 	}

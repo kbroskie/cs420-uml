@@ -28,9 +28,7 @@ public class DrawMode extends PanelInteractionMode {
 
 	// *************************************************************************
 	// Private Instance Variables
-	// *************************************************************************
-	// General drawing variables
-
+	
 	private final UMLPanel panel;
 	private final DrawableType drawType;
 
@@ -39,8 +37,7 @@ public class DrawMode extends PanelInteractionMode {
 
 	// *************************************************************************
 	// Constructors
-	// *************************************************************************
-
+	
 	/***
 	 * Constructs a new DrawMode which interprets mouse and key actions to add
 	 * {@link DrawableUML}s into the {@link UMLModel} held by a {@link UMLPanel}
@@ -62,8 +59,7 @@ public class DrawMode extends PanelInteractionMode {
 
 	// *************************************************************************
 	// Action Listener Methods
-	// *************************************************************************
-
+	
 	public void mouseDragged(MouseEvent e) {
 		super.mouseDragged(e);
 		
@@ -98,8 +94,7 @@ public class DrawMode extends PanelInteractionMode {
 
 	// *************************************************************************
 	// Interface Actions
-	// *************************************************************************
-
+	
 	private void addToModel(ImmutablePoint first, ImmutablePoint second, MouseEvent e) 
 		throws Exception
 	{
@@ -162,6 +157,11 @@ public class DrawMode extends PanelInteractionMode {
 		}
 	}
 
+	/*************************************************************************
+	 * If p is within snapdistance of a snap point the snap point will be
+	 * returned. Otherwise, p will be returned.
+	 */
+	
 	public ImmutablePoint snap(ImmutablePoint p) {
 		Iterator<DrawableUML> zIter = panel.getModel().zIterator();
 
@@ -186,7 +186,8 @@ public class DrawMode extends PanelInteractionMode {
 		
 	}
 
-	public UMLRelation findByEndPoint(ImmutablePoint p) {
+	
+	private UMLRelation findByEndPoint(ImmutablePoint p) {
 		Iterator<UMLRelation> rIter = panel.getModel().getRelations().iterator();
 		UMLRelation highest = null;
 				
