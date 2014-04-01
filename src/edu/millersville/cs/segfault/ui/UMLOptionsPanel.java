@@ -33,6 +33,11 @@ public class UMLOptionsPanel extends JPanel
 	private static final String textAction   = "TEXT";
 	
 	//*************************************************************************
+	// Instance Variables
+	//*************************************************************************
+	private UMLWindow parentWindow;
+	
+	//*************************************************************************
 	// Constructors	
 	//*************************************************************************
 	
@@ -41,9 +46,10 @@ public class UMLOptionsPanel extends JPanel
 	 * relations that a user can select.
 	 * @param umlPanel the panel for the current UML model.
 	 *************************************************************************/
-	 public UMLOptionsPanel () {
+	 public UMLOptionsPanel (UMLWindow parent) {
 		 super();
-		 		 
+		 parentWindow = parent;
+		 
 		 // Set the layout.
 		 setLayout(new GridLayout(0,2));
 		 setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); 
@@ -94,16 +100,17 @@ public class UMLOptionsPanel extends JPanel
 	 * @param se the selected event and source 
 	 *************************************************************************/
 	public void actionPerformed(ActionEvent se) {
+
 		Object selectedCommand = se.getActionCommand();
 		System.out.println(selectedCommand);
 		
 		if (selectedCommand.equals(selectAction)) {
-			UMLWindow.getUMLPanel().changeInteractionMode(
-					new SelectionMode(UMLWindow.getUMLPanel()));
+			parentWindow.getUMLPanel().changeInteractionMode(
+					new SelectionMode(parentWindow.getUMLPanel()));
 		} else {
 			for (DrawableType type: DrawableType.typeList()) {
 				if (type.name().equals(selectedCommand)) {
-					UMLWindow.getUMLPanel().changeInteractionMode(new DrawMode(type, UMLWindow.getUMLPanel()));
+					parentWindow.getUMLPanel().changeInteractionMode(new DrawMode(type, parentWindow.getUMLPanel()));
 				}
 			}
 		}

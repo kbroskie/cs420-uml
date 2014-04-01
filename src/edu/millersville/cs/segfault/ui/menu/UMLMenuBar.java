@@ -1,8 +1,9 @@
 package edu.millersville.cs.segfault.ui.menu;
 
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+
+import edu.millersville.cs.segfault.ui.UMLWindow;
 
 /**************************************************************************
  * UMLMenuBar is the class responsible for instantiating 
@@ -26,18 +27,18 @@ public class UMLMenuBar extends JMenuBar {
 	 * @param wFrame the frame for the interface
 	 * @param umlPanel the panel for the current UML model
 	 *************************************************************************/
-	public UMLMenuBar (JFrame wFrame) {
+	public UMLMenuBar (UMLWindow parent) {
 		super();
 				   
 		// Create the sub-menus.
-		JMenu fileSubmenu = new UMLFileMenu();
-		JMenu editSubmenu = new UMLEditMenu();
+		JMenu fileSubmenu = new UMLFileMenu(parent);
+		JMenu editSubmenu = new UMLEditMenu(parent);
 		   
 		// Add the submenus to the menu bar.
 		add(fileSubmenu);
 		add(editSubmenu);
 		   
 		// Set the window's menu bar.
-		wFrame.setJMenuBar(this);
+		parent.setJMenuBar(this);
 	}
 }

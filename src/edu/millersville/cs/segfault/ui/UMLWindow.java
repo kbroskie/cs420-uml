@@ -26,9 +26,7 @@ public class UMLWindow extends JFrame {
 	private static final Dimension WINDOW_PREFERRED_SIZE = new Dimension(600, 520);
 	private static final Dimension UML_PANE_MIN_SIZE = new Dimension(500, 520);
 	private static final Dimension OPTIONS_PANE_PREFERRED_SIZE = new Dimension(128, 520);
-	
-	// Component of the main frame.
-	private static UMLPanel umlPanel;
+	private static final Dimension OPTIONS_PANE_MIN_SIZE = new Dimension(100, 520);
 
 	
 	//*************************************************************************
@@ -41,6 +39,9 @@ public class UMLWindow extends JFrame {
 	private JScrollPane scrollableOptionsPanel;
 
 	private JSplitPane splitPane;
+	
+	// Component of the main frame.
+	private UMLPanel umlPanel;
 	
 	//*************************************************************************
 	// Constructors	
@@ -59,7 +60,7 @@ public class UMLWindow extends JFrame {
 	
 		// Panels to add to the frame.
 		umlPanel = new UMLPanel();	
-		optionsPane = new UMLOptionsPanel();
+		optionsPane = new UMLOptionsPanel(this);
 		scrollableUMLPanel = new JScrollPane(umlPanel);
 		//scrollableOptionsPanel = new JScrollPane(optionsPane);
 		//scrollableOptionsPanel.setVerticalScrollBarPolicy(
@@ -94,7 +95,7 @@ public class UMLWindow extends JFrame {
 	 * Returns the current UML model.
 	 * @return the current UML model
 	 *************************************************************************/
-	public static UMLPanel getUMLPanel () {
+	public UMLPanel getUMLPanel () {
 		return umlPanel;
 	}
 }

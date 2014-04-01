@@ -34,6 +34,11 @@ public class UMLFileMenu extends JMenu
 	private static final String exitMenuText = "Exit";
 	
 	//*************************************************************************
+	// Static Instance Variables
+	//*************************************************************************
+	private final UMLWindow parentWindow;
+	
+	//*************************************************************************
 	// Constructors	
 	//*************************************************************************
 	
@@ -43,8 +48,9 @@ public class UMLFileMenu extends JMenu
 	 * @param wFrame the frame for the interface
 	 * @param umlPanel the panel for the current UML model
 	 *************************************************************************/
-	public UMLFileMenu () {
+	public UMLFileMenu (UMLWindow parent) {
 		super(fileMenuText);
+		parentWindow = parent;
 		
 		// Create the new menu item and add an action listener and accelerator.	   
 		JMenuItem newItem = new JMenuItem(newMenuText);
@@ -100,18 +106,18 @@ public class UMLFileMenu extends JMenu
 		 String selectedCommand = se.getActionCommand();
 	 	 	 
 		 if (selectedCommand == newMenuText) {
-			 UMLWindow.getUMLPanel().changeModel(new UMLModel());
+			 parentWindow.getUMLPanel().changeModel(new UMLModel());
 		 }
 		 else if (selectedCommand == openMenuText) {
-			 UMLWindow.getUMLPanel().load();
+			 parentWindow.getUMLPanel().load();
 		 }
 		 else if (selectedCommand == saveMenuText) {
-			 UMLWindow.getUMLPanel().save(
-					 UMLWindow.getUMLPanel().getModel().serialize());
+			 parentWindow.getUMLPanel().save(
+					 parentWindow.getUMLPanel().getModel().serialize());
 		 }
 		 else if (selectedCommand == saveAsMenuText) {
-			 UMLWindow.getUMLPanel().saveAs(
-					 UMLWindow.getUMLPanel().getModel().serialize());
+			 parentWindow.getUMLPanel().saveAs(
+					 parentWindow.getUMLPanel().getModel().serialize());
 		 }
 	 }
 }
