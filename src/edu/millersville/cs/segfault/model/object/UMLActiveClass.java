@@ -49,7 +49,7 @@ public class UMLActiveClass extends UMLClassObject {
 	{
 		//Draw outer blackbox
 		g.setColor(Color.BLACK);
-		g.fillRect(this.origin.x - 5, this.origin.y - 5, this.size.width + 5, this.size.height + 5);
+		g.fillRect(this.origin.x - 5, this.origin.y - 5, this.size.width + 10, this.size.height + 10);
 			
 		super.draw(g);
 	}

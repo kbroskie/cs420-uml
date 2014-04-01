@@ -47,7 +47,7 @@ public class UMLState extends UMLObject {
 	{
 		//Currently testing 1 as arcHeight and arcWidth
 		g.setColor(Color.BLACK);
-		g.drawRoundRect(this.origin.x, this.origin.y, this.size.width, this.size.height, 1, 1);
+		g.drawRoundRect(this.origin.x, this.origin.y, this.size.width, this.size.height, 40, 40);
 		
 	}
 }
