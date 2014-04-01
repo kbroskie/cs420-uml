@@ -112,7 +112,6 @@ public class UMLModelTest {
 		//assertFalse(testModel.isRelationType(testO1.getType()));
 		//assertTrue(testModel.isRelationType(testR1.getType()));
 		
-		
 		//**********************************************************************************//
 		//Remove Tests
 		//**********************************************************************************//

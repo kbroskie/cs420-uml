@@ -10,6 +10,7 @@ import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.UMLModel;
+
 import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.object.UMLState;
 import edu.millersville.cs.segfault.model.object.UMLNode;

@@ -113,6 +113,7 @@ public class RelationTest {
 		assertTrue(testAgg2.getType() == DrawableType.AGGREGATION);
 		
 		assertTrue(testAgg1.select().isSelected());
+		assertFalse(testAgg1.unselect().isSelected());
 		
 		//**********************************************************************************//
 		//Association Test
@@ -126,6 +127,7 @@ public class RelationTest {
 		assertTrue(testAss2.getType() == DrawableType.ASSOCIATION);
 		
 		assertTrue(testAss1.select().isSelected());
+		assertFalse(testAss1.unselect().isSelected());
 		
 		//**********************************************************************************//
 		//Composition Test
@@ -139,6 +141,7 @@ public class RelationTest {
 		assertTrue(testCom2.getType() == DrawableType.COMPOSITION);
 		
 		assertTrue(testCom1.select().isSelected());
+		assertFalse(testCom1.unselect().isSelected());
 		
 		//**********************************************************************************//
 		
