@@ -11,7 +11,7 @@ import edu.millersville.cs.segfault.ui.UMLWindow;
  * @author Kimberlyn Broskie
  *************************************************************************/
 
-public class UMLMenuBar extends JMenuBar {
+public class MenuBar extends JMenuBar {
 	 
 	//*************************************************************************
 	// Static Instance Variables
@@ -27,16 +27,18 @@ public class UMLMenuBar extends JMenuBar {
 	 * @param wFrame the frame for the interface
 	 * @param umlPanel the panel for the current UML model
 	 *************************************************************************/
-	public UMLMenuBar (UMLWindow parent) {
+	public MenuBar (UMLWindow parent) {
 		super();
 				   
 		// Create the sub-menus.
-		JMenu fileSubmenu = new UMLFileMenu(parent);
-		JMenu editSubmenu = new UMLEditMenu(parent);
+		JMenu fileSubmenu = new FileMenu(parent);
+		JMenu editSubmenu = new EditMenu(parent);
+		ViewMenu viewMenu = new ViewMenu(parent);
 		   
 		// Add the submenus to the menu bar.
 		add(fileSubmenu);
 		add(editSubmenu);
+		add(viewMenu);
 		   
 		// Set the window's menu bar.
 		parent.setJMenuBar(this);

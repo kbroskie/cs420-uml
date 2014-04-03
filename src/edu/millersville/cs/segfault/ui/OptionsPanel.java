@@ -18,7 +18,7 @@ import edu.millersville.cs.segfault.model.DrawableType;
  * objects and relations a user can select.
  * @author Kimberlyn Broskie
  *************************************************************************/
-public class UMLOptionsPanel extends JPanel
+public class OptionsPanel extends JPanel
 							implements ActionListener {
 
 	//*************************************************************************
@@ -49,7 +49,7 @@ public class UMLOptionsPanel extends JPanel
 	 * relations that a user can select.
 	 * @param umlPanel the panel for the current UML model.
 	 *************************************************************************/
-	 public UMLOptionsPanel (UMLWindow parent) {
+	 public OptionsPanel (UMLWindow parent) {
 		 super();
 		 parentWindow = parent;
 		 

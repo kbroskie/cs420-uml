@@ -17,7 +17,7 @@ import edu.millersville.cs.segfault.ui.UMLWindow;
  * the File submenu and handling the user selections for the submenu.
  * @author Kimberlyn Broskie
  *************************************************************************/
-public class UMLFileMenu extends JMenu 
+public class FileMenu extends JMenu 
 						implements ActionListener {
 	
 	//*************************************************************************
@@ -48,7 +48,7 @@ public class UMLFileMenu extends JMenu
 	 * @param wFrame the frame for the interface
 	 * @param umlPanel the panel for the current UML model
 	 *************************************************************************/
-	public UMLFileMenu (UMLWindow parent) {
+	public FileMenu (UMLWindow parent) {
 		super(fileMenuText);
 		parentWindow = parent;
 		

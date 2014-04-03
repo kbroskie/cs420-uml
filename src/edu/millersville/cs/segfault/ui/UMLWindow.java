@@ -5,7 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
-import edu.millersville.cs.segfault.ui.menu.UMLMenuBar;
+import edu.millersville.cs.segfault.ui.menu.MenuBar;
 
 /**************************************************************************
  * UMLWindow is the class responsible for creating
@@ -24,7 +24,7 @@ public class UMLWindow extends JFrame {
 	// Instance Variables
 	//*************************************************************************	
 	// Components of the main frame.
-	private UMLOptionsPanel optionsPane;
+	private OptionsPanel optionsPane;
 	private UMLPanel umlPanel;
 	private JScrollPane scrollableUMLPanel;
 	
@@ -45,7 +45,7 @@ public class UMLWindow extends JFrame {
 		setExtendedState(	 JFrame.MAXIMIZED_BOTH);
 	
 		// Panels to add to the frame.
-		optionsPane = new UMLOptionsPanel(this);
+		optionsPane = new OptionsPanel(this);
 		umlPanel = new UMLPanel();	
 		
 		// Set the options for the scroll panel.
@@ -57,7 +57,7 @@ public class UMLWindow extends JFrame {
 	    // Add the panels and menu to the frame.
 		add(optionsPane, BorderLayout.WEST);
 		add(scrollableUMLPanel, BorderLayout.CENTER);
-		setJMenuBar(new UMLMenuBar(this));
+		setJMenuBar(new MenuBar(this));
 
 		pack();
 		setVisible(true);

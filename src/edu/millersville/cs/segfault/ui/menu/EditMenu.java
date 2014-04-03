@@ -16,7 +16,7 @@ import edu.millersville.cs.segfault.ui.UMLWindow;
  * the Edit submenu and handling the user selections for the submenu.
  * @author Kimberlyn Broskie
  *************************************************************************/
-public class UMLEditMenu extends JMenu
+public class EditMenu extends JMenu
 						implements ActionListener {
 	
 	//*************************************************************************
@@ -46,7 +46,7 @@ public class UMLEditMenu extends JMenu
 	* @param wFrame the frame for the interface.
 	* @param umlPanel the panel for the current UML model.
 	*************************************************************************/
-	public UMLEditMenu(UMLWindow parent) {
+	public EditMenu(UMLWindow parent) {
 	   super(editMenuText);
 	   parentWindow = parent;
 	   
