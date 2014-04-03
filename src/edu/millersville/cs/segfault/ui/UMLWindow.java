@@ -43,7 +43,7 @@ public class UMLWindow extends JFrame {
 		super("SegUE");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
-		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		setExtendedState(	 JFrame.MAXIMIZED_BOTH);
 	
 		// Panels to add to the frame.
 		optionsPane = new UMLOptionsPanel(this);
