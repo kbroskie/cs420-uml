@@ -47,7 +47,7 @@ public class UMLActiveClass extends UMLClassObject {
 	//Draw active class
 	public void draw (Graphics g) 
 	{
-		//Draw outer blackbox
+		//Draw outer black box
 		g.setColor(Color.BLACK);
 		g.fillRect(this.origin.x - 5, this.origin.y - 5, this.size.width + 10, this.size.height + 10);
 			
