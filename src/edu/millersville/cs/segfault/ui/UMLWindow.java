@@ -1,11 +1,9 @@
 package edu.millersville.cs.segfault.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 
 import edu.millersville.cs.segfault.ui.menu.UMLMenuBar;
 
@@ -21,11 +19,6 @@ public class UMLWindow extends JFrame {
 	//*************************************************************************
 	private static final long serialVersionUID = 1L;
 	
-	// Dimensions for the main frame.
-	private static final Dimension WINDOW_PREFERRED_SIZE = new Dimension(600, 520);
-	private static final Dimension UML_PANE_MIN_SIZE = new Dimension(500, 520);
-	private static final Dimension OPTIONS_PANE_MIN_SIZE = new Dimension(128, 520);
-	
 	
 	//*************************************************************************
 	// Instance Variables
@@ -34,14 +27,14 @@ public class UMLWindow extends JFrame {
 	private UMLOptionsPanel optionsPane;
 	private UMLPanel umlPanel;
 	private JScrollPane scrollableUMLPanel;
-	private JSplitPane splitPane;
+	
 	
 	//*************************************************************************
 	// Constructors	
 	//*************************************************************************
 
 	/**************************************************************************
-	 * Constructor to create a splitpane window comprised of a panel that
+	 * Constructor to create a window comprised of a panel that
 	 * will hold the user options and a scrollable model drawing area.
 	 *************************************************************************/
 	public UMLWindow () {
@@ -49,28 +42,22 @@ public class UMLWindow extends JFrame {
 		super("SegUE");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 	
 		// Panels to add to the frame.
-		umlPanel = new UMLPanel();	
 		optionsPane = new UMLOptionsPanel(this);
+		umlPanel = new UMLPanel();	
+		
+		// Set the options for the scroll panel.
 		scrollableUMLPanel = new JScrollPane(umlPanel);
-	
-		// Create a split pane consisting of the drawing area and options area.
-		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-								   optionsPane, scrollableUMLPanel);
-		splitPane.setOneTouchExpandable(true);
-		splitPane.setDividerLocation(109);
-		splitPane.setEnabled(false);
-		splitPane.setOpaque(true);
-
-		// Set the components sizes.
-		splitPane.setPreferredSize(WINDOW_PREFERRED_SIZE);
-		optionsPane.setMinimumSize(OPTIONS_PANE_MIN_SIZE);
-		scrollableUMLPanel.setMinimumSize(UML_PANE_MIN_SIZE);
+		scrollableUMLPanel.setViewportView(umlPanel);
+		scrollableUMLPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollableUMLPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 					
-	    // Add the splitpane and menu to the frame.
-		add(splitPane);
-	    setJMenuBar(new UMLMenuBar(this));
+	    // Add the panels and menu to the frame.
+		add(optionsPane, BorderLayout.WEST);
+		add(scrollableUMLPanel, BorderLayout.CENTER);
+		setJMenuBar(new UMLMenuBar(this));
 
 		pack();
 		setVisible(true);

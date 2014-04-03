@@ -1,12 +1,11 @@
 package edu.millersville.cs.segfault.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -35,6 +34,10 @@ public class UMLOptionsPanel extends JPanel
 	// OTHER OPTION VARIABLES
 	private static final String optionsPaneSelect = "Select";
 	
+	// Dimensions for the panel and buttons.
+	private static final Dimension OPTIONS_PANE_MAX_SIZE = new Dimension(132, 520);
+	private static final Dimension BUTTON_SIZE = new Dimension(128, 32);
+
 	
 	//*************************************************************************
 	// Instance Variables
@@ -55,22 +58,25 @@ public class UMLOptionsPanel extends JPanel
 		 parentWindow = parent;
 		 
 		 // Set the layout.
-		 setLayout(new GridLayout(15, 2));
-		 setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); 
+		 setLayout(new FlowLayout(FlowLayout.LEFT, 2, 2));
+		 setPreferredSize(OPTIONS_PANE_MAX_SIZE);
 		 
 		 // Build and add the select button.
 		 JButton selectionButton = new JButton(optionsPaneSelect);
 		 selectionButton.addActionListener(this);
+		 selectionButton.setPreferredSize(BUTTON_SIZE);
 		 add(selectionButton);  
 		 
 		 // Create the object button and add an action listener.
 		 JButton objectButton = new JButton(optionsPaneObjectDraw);
 		 objectButton.addActionListener(this);
+		 objectButton.setPreferredSize(BUTTON_SIZE);
 		 add(objectButton, BorderLayout.CENTER);
 			   
 		 // Create the relation buttons and action listeners.
 		 JButton relationButton = new JButton(optionsPaneRelationDraw);
 		 relationButton.addActionListener(this);
+		 relationButton.setPreferredSize(BUTTON_SIZE);
 		 add(relationButton);
 	} 
 	 
