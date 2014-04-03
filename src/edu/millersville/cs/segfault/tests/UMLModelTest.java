@@ -1,10 +1,12 @@
 package edu.millersville.cs.segfault.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Iterator;
 
 import org.junit.Test;
 
-import java.util.Iterator;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.UMLModel;
@@ -57,12 +59,6 @@ public class UMLModelTest {
 		assertTrue(testModel.highestZ() == 5);
 		assertTrue(testModel.lowestZ() == -2);
 		
-		System.out.print("UMLObject Type: ");
-		//System.out.println(testModel.getObjectType(testO1.getType()));
-		
-		System.out.print("UMLRelation Type: ");
-		//System.out.println(testModel.getRelationType(testR1.getType()));
-		
 		//**********************************************************************************//
 		//Selection Tests
 		//**********************************************************************************//
@@ -101,17 +97,6 @@ public class UMLModelTest {
 		assertTrue("There should be only 2 relations in testModel", count == 2);
 		
 		//**********************************************************************************//
-		//Type Check Tests
-		//**********************************************************************************//
-		
-		//assertTrue(testModel.isObjectType(testO1.getType()));
-		//assertFalse(testModel.isObjectType(testR1.getType()));
-		
-		//assertFalse(testModel.isRelationType(testO1.getType()));
-		//assertTrue(testModel.isRelationType(testR1.getType()));
-		
-		
-		//**********************************************************************************//
 		//Remove Tests
 		//**********************************************************************************//
 		
@@ -125,15 +110,17 @@ public class UMLModelTest {
 		
 		UMLPanel testPanel = new UMLPanel();
 		
-		//UMLObject testMO = 
-		//		DrawableFactor.makeObject(testModel.getObjectType(null), 
-		//				new ImmutablePoint(0,0), testO1.getSize(), testPanel);
-		//UMLRelation testMR = 
-		//		DrawableFactory.makeRelation(testModel.getRelationType(null), testR1.getPath(), testPanel);
-		
-		//assertTrue("Heights do not match!", testMO.getHeight() == testO1.getHeight());
-		//assertTrue("Labels do not match!", testMO.getLabel() == testO1.getLabel());
-		//assertTrue("Types do not match!", testMO.getType() == testO1.getType());
+
+//		UMLObject testMO = DrawableType.makeObject(DrawableType.OBJECT, 
+//						new ImmutablePoint(0,0), testO1.getSize(), testPanel);
+//		
+//		//UMLRelation testMR = DrawableType.makeRelation(DrawableType.RELATION, 
+//		//				testR1.getPath(), testPanel);
+//		
+//		assertTrue("Heights do not match!", testMO.getHeight() == testO1.getHeight());
+//		assertTrue("Labels do not match!", testMO.getLabel() == testO1.getLabel());
+//		assertTrue("Types do not match!", testMO.getType() == testO1.getType());
+
 		//assertTrue("End point did not get moved over to new Relation!", testMR.getEnd() == testR1.getEnd());
 		//assertFalse("Z is not supposed to be shared!", testMR.getZ() == testR1.getZ());
 		

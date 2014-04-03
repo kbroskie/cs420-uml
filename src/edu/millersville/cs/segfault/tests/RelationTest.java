@@ -8,12 +8,17 @@ import java.awt.geom.Rectangle2D;
 
 import org.junit.Test;
 
-import edu.millersville.cs.segfault.model.relation.Aggregation;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
+
+import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.object.UMLObject;
+
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
+import edu.millersville.cs.segfault.model.relation.Aggregation;
+import edu.millersville.cs.segfault.model.relation.Association;
+import edu.millersville.cs.segfault.model.relation.Composition;
 
 public class RelationTest {
 
@@ -78,22 +83,15 @@ public class RelationTest {
 		assertFalse("Should not hit point when 10 away!", testR1.hit(new ImmutablePoint(70, 110)));
 		assertTrue("Should now hit at 11 away!", testR1.near(new ImmutablePoint(70, 110), 11));
 		
-		
-		//Shouldn't this not hit? For some reason it does. Might relate to snapping issue.
-		//???
-		//assertFalse("Hit is hitting a line that isn't draw there!", testR1.hit(new ImmutablePoint(80, 500)));
-		//???
-		
 		//**********************************************************************************//
 		//isWithin Test
 		//**********************************************************************************//
 		
-		Rectangle2D testBox = new Rectangle2D.Double(0, 0, 100, 50);
+		Rectangle2D testBox = new Rectangle2D.Double(0, 0, 180, 80);
 		
-		//How to add testBox to the testModel so that it is checked?
-		//assertTrue(testR1.isWithin(testBox));
-		//assertFalse(testR2.isWithin(testBox));
-		
+		assertTrue(testR2.isWithin(testBox));
+		assertFalse(testR1.isWithin(testBox));
+
 		//**********************************************************************************//
 		//SnapPoint Test
 		//**********************************************************************************//
@@ -107,19 +105,48 @@ public class RelationTest {
 		//Aggregation Test
 		//**********************************************************************************//
 		
-		Aggregation testAgg = new Aggregation(testR1.serialize());
+		Aggregation testAgg1 = new Aggregation(testR1.serialize());
+		Aggregation testAgg2 = new Aggregation(
+				new ImmutablePath(new ImmutablePoint(50, 50)).addLast(new ImmutablePoint(100, 100)), 5, false);
 		
+		assertTrue(testAgg1.getType() == DrawableType.AGGREGATION);
+		assertTrue(testAgg2.getType() == DrawableType.AGGREGATION);
 		
+		assertTrue(testAgg1.select().isSelected());
+		assertFalse(testAgg1.unselect().isSelected());
 		
+		//**********************************************************************************//
+		//Association Test
+		//**********************************************************************************//
 		
+		Association testAss1 = new Association(testR1.serialize());
+		Association testAss2 = new Association(
+				new ImmutablePath(new ImmutablePoint(50, 50)).addLast(new ImmutablePoint(100, 100)), 5, false);
+		
+		assertTrue(testAss1.getType() == DrawableType.ASSOCIATION);
+		assertTrue(testAss2.getType() == DrawableType.ASSOCIATION);
+		
+		assertTrue(testAss1.select().isSelected());
+		assertFalse(testAss1.unselect().isSelected());
+		
+		//**********************************************************************************//
+		//Composition Test
+		//**********************************************************************************//
+		
+		Composition testCom1 = new Composition(testR1.serialize());
+		Composition testCom2 = new Composition(
+				new ImmutablePath(new ImmutablePoint(50, 50)).addLast(new ImmutablePoint(100, 100)), 5, false);
+		
+		assertTrue(testCom1.getType() == DrawableType.COMPOSITION);
+		assertTrue(testCom2.getType() == DrawableType.COMPOSITION);
+		
+		assertTrue(testCom1.select().isSelected());
+		assertFalse(testCom1.unselect().isSelected());
 		
 		//**********************************************************************************//
 		
-		
 		//Not yet tested
-		
 		// - findIntAttr
-		// - draw
 	}
 
 }
