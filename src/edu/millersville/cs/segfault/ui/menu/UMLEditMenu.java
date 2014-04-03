@@ -29,6 +29,7 @@ public class UMLEditMenu extends JMenu
 	private static final String undoMenuText = "Undo";
 	private static final String redoMenuText = "Redo";
 	private static final String selectAllText = "Select/Deselect All";
+	private static final String deleteMenuText = "Delete";
 	
 	//*************************************************************************
 	// Instance Variables
@@ -64,10 +65,16 @@ public class UMLEditMenu extends JMenu
 	   selectAllItem.addActionListener(this);
 	   selectAllItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
 	   
+	   // Create the select all menu item and add an action listener and accelerator.	  
+	   JMenuItem deleteItem = new JMenuItem(deleteMenuText);
+	   deleteItem.addActionListener(this);
+	   deleteItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK));	   
+	   
 	   // Add the sub-menus to the Edit menu.
 	   add(undoItem);
 	   add(redoItem);
 	   add(selectAllItem);
+	   add(deleteItem);
 	}
 	
 	
@@ -89,5 +96,17 @@ public class UMLEditMenu extends JMenu
 		 else if (selectedCommand == redoMenuText) {
 			 parentWindow.getUMLPanel().redo();
 		 } 
+		 else if (selectedCommand == deleteMenuText) {
+			 try {
+				parentWindow.getUMLPanel().changeModel(
+						parentWindow.getUMLPanel().getModel().deleteSelected());
+			} catch (Exception e) {}
+		 }
+		 else if (selectedCommand == selectAllText) {			 
+			try {
+					parentWindow.getUMLPanel().changeModel(
+							parentWindow.getUMLPanel().getModel().unselectAll());
+				} catch (Exception e) {}
+		 }
 	}
 }

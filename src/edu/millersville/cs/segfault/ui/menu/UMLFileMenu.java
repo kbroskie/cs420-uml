@@ -28,7 +28,7 @@ public class UMLFileMenu extends JMenu
 	//FILE MENU VARIABLES
 	private static final String fileMenuText = "File";
 	private static final String newMenuText = "New";
-	private static final String openMenuText = "Open";
+	private static final String openMenuText = "Open";	
 	private static final String saveMenuText = "Save";
 	private static final String saveAsMenuText = "Save as...";
 	private static final String exitMenuText = "Exit";
@@ -71,10 +71,9 @@ public class UMLFileMenu extends JMenu
 		JMenuItem saveAsItem = new JMenuItem(saveAsMenuText);
 		saveAsItem.addActionListener(this);
 
-		// Create the exit menu item and add an action listener and accelerator.
+		// Create the exit menu item and add an action listener.
 		JMenuItem exitItem = new JMenuItem(exitMenuText);
 		exitItem.addActionListener(new ExitListener());
-		exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK));
 
 		// Add the sub-menus to the File menu.
 		add(newItem);
