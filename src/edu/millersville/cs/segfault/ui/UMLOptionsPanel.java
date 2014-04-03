@@ -25,26 +25,14 @@ public class UMLOptionsPanel extends JPanel
 	// Static Instance Variables
 	//*************************************************************************
 	private static final long serialVersionUID = -9118912567292664779L;
-
 	
-
 	// Non-Drawable Action Commands
 	private static final String selectAction = "SELECT";
 	private static final String textAction   = "TEXT";
-
-	// OBJECT VARIABLES
-	private static final String optionsPaneObjectDraw = "Object";
-	
-	// RELATION VARIABLES
-	private static final String optionsPaneRelationDraw = "Relation";
-	
-	// OTHER OPTION VARIABLES
-	private static final String optionsPaneSelect = "Select";
 	
 	// Dimensions for the panel and buttons.
 	private static final Dimension OPTIONS_PANE_MAX_SIZE = new Dimension(132, 520);
 	private static final Dimension BUTTON_SIZE = new Dimension(64, 64);
-
 
 	
 	//*************************************************************************

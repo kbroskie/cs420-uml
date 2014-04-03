@@ -19,7 +19,6 @@ public class UMLWindow extends JFrame {
 	//*************************************************************************
 	private static final long serialVersionUID = 1L;
 	
-
 	
 	//*************************************************************************
 	// Instance Variables
@@ -47,7 +46,6 @@ public class UMLWindow extends JFrame {
 	
 		// Panels to add to the frame.
 		optionsPane = new UMLOptionsPanel(this);
-
 		umlPanel = new UMLPanel();	
 		
 		// Set the options for the scroll panel.
