@@ -1,12 +1,11 @@
 package edu.millersville.cs.segfault.ui;
 
-import java.awt.Color;
+
 import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -28,9 +27,25 @@ public class UMLOptionsPanel extends JPanel
 	private static final long serialVersionUID = -9118912567292664779L;
 
 	
+
 	// Non-Drawable Action Commands
 	private static final String selectAction = "SELECT";
 	private static final String textAction   = "TEXT";
+
+	// OBJECT VARIABLES
+	private static final String optionsPaneObjectDraw = "Object";
+	
+	// RELATION VARIABLES
+	private static final String optionsPaneRelationDraw = "Relation";
+	
+	// OTHER OPTION VARIABLES
+	private static final String optionsPaneSelect = "Select";
+	
+	// Dimensions for the panel and buttons.
+	private static final Dimension OPTIONS_PANE_MAX_SIZE = new Dimension(132, 520);
+	private static final Dimension BUTTON_SIZE = new Dimension(64, 64);
+
+
 	
 	//*************************************************************************
 	// Instance Variables
@@ -51,16 +66,20 @@ public class UMLOptionsPanel extends JPanel
 		 parentWindow = parent;
 		 
 		 // Set the layout.
-		 setLayout(new GridLayout(0,2));
-		 setBorder(BorderFactory.createLineBorder(Color.BLACK, 1)); 
+
+		 setLayout(new FlowLayout(FlowLayout.LEFT, 2, 2));
+		 setPreferredSize(OPTIONS_PANE_MAX_SIZE);
+
 		 
 		 // Build and add the select button.
 		 JButton selectionButton = new JButton(new ImageIcon("img/64/selectionMode.png"));
 		 selectionButton.setActionCommand(selectAction);
 		 selectionButton.setPreferredSize(new Dimension(64, 64));
 		 selectionButton.addActionListener(this);
+		 selectionButton.setPreferredSize(BUTTON_SIZE);
 		 add(selectionButton);  
 		 
+
 //		 // Build and add the text button
 //		 JButton textButton = new JButton(new ImageIcon("img/64/textMode.png"));
 //		 textButton.setActionCommand(textAction);
@@ -72,7 +91,7 @@ public class UMLOptionsPanel extends JPanel
 		 for (DrawableType type : DrawableType.objectTypeList()) {
 			 JButton newButton = new JButton(type.icon);
 			 newButton.setActionCommand(type.name());
-			 newButton.setPreferredSize(new Dimension(64, 64));
+			 newButton.setPreferredSize(BUTTON_SIZE);
 			 newButton.addActionListener(this);
 			 
 			 add(newButton);
@@ -82,7 +101,7 @@ public class UMLOptionsPanel extends JPanel
 			 if (type == DrawableType.RELATION) { continue; }
 			 JButton newButton = new JButton(type.icon);
 			 newButton.setActionCommand(type.name());
-			 newButton.setPreferredSize(new Dimension(64, 64));
+			 newButton.setPreferredSize(BUTTON_SIZE);
 			 newButton.addActionListener(this);
 			 add(newButton);
 		 }
