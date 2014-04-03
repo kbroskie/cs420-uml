@@ -127,6 +127,19 @@ public enum DrawableType {
 		}
 	}
 	
+	public static UMLObject makeObject(DrawableType type, ImmutablePoint origin, Dimension size, 
+									   int z, boolean selected) throws Exception {
+		switch(type) {
+		case OBJECT:       return new UMLObject("", origin, z, size, selected);
+		case ACTIVE_CLASS: return new UMLActiveClass("", origin, z, size, selected);
+		case CLASS:        return new UMLClassObject("", origin, z, size, selected);
+		case COMPONENT:    return new UMLComponent("", origin, z, size, selected);
+		case NODE:         return new UMLNode("", origin, z, size, selected);
+		case STATE:        return new UMLState("", origin, z, size, selected);
+		default:           return null;
+		}
+	}
+	
 	
 	// Relation factories - make a relation or one of it's subclasses
 	/*************************************************************************

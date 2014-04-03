@@ -193,7 +193,11 @@ public class UMLObject implements DrawableUML {
 	 */
 	@Override
 	public UMLObject select() {
-		return new UMLObject(this.label, this.origin, this.z, this.size, true);
+		try {
+			return DrawableType.makeObject(getType(), this.origin, this.size, this.z, true);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	/*************************************************************************
@@ -201,7 +205,11 @@ public class UMLObject implements DrawableUML {
 	 */
 	@Override
 	public UMLObject unselect() {
-		return new UMLObject(this.label, this.origin, this.z, this.size, false);
+		try {
+			return DrawableType.makeObject(getType(), this.origin, this.size, this.z, false);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 	//********************************************************************

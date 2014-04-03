@@ -427,7 +427,7 @@ public class UMLPanel extends JPanel {
 	 * Select All
 	 * Sets every element in the panel to a selected state
 	 ******************************************************************************/
-	private void selectAll()
+	public void selectAll()
 	{
 		// Iterate through the set of models
 		Iterator<DrawableUML> zIter = this.getModel().zIterator();

@@ -104,9 +104,15 @@ public class UMLEditMenu extends JMenu
 		 }
 		 else if (selectedCommand == selectAllText) {			 
 			try {
-					parentWindow.getUMLPanel().changeModel(
-							parentWindow.getUMLPanel().getModel().unselectAll());
-				} catch (Exception e) {}
+					if (parentWindow.getUMLPanel().fullSelection()) {
+						parentWindow.getUMLPanel().changeModel(
+								parentWindow.getUMLPanel().getModel().unselectAll());
+					} else {
+						parentWindow.getUMLPanel().selectAll();
+					}
+				} catch (Exception e) {
+					
+				}
 		 }
 	}
 }

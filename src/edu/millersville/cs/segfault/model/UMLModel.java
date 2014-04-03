@@ -304,6 +304,7 @@ public class UMLModel {
 		return workingModel;
 	}
 	
+	
 	/*************************************************************************
 	 * Returns a new model in which all selected drawables have been removed.
 	 */
