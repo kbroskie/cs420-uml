@@ -44,8 +44,8 @@ public class UMLNode extends UMLObject {
 	public void draw (Graphics g)
 	{
 		g.setColor(Color.black);
-		g.draw3DRect(25, 110, 50, 75,true);
-		//g.draw3DRect(this.origin.x, this.origin.y, this.size.width, this.size.height, true);
+		//g.draw3DRect(25, 110, 50, 75,true);
+		g.draw3DRect(this.origin.x, this.origin.y, this.size.width, this.size.height, true);
 	}
 
 }
