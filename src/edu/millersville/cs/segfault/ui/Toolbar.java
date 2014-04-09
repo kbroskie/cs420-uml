@@ -71,8 +71,7 @@ public class Toolbar extends JToolBar
 		setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 					
 		// Build and add the new button.
-		//JButton newButton = new JButton(new ImageIcon("img/32/New.png"));
-		JButton newButton = new JButton(new ImageIcon(""));
+		JButton newButton = new JButton(new ImageIcon("img/32/New.png"));
 		newButton.setActionCommand(newAction);
 		newButton.setToolTipText(newAction);
 		newButton.setMinimumSize(BUTTON_SIZE);
@@ -104,8 +103,7 @@ public class Toolbar extends JToolBar
 		add(saveButton);
 
 		// Undo 
-		//JButton undoButton = new JButton(new ImageIcon("img/32/Undo.png"));
-		JButton undoButton = new JButton(new ImageIcon(""));
+		JButton undoButton = new JButton(new ImageIcon("img/32/Undo.png"));
 		undoButton.setActionCommand(undoAction);
 		undoButton.setToolTipText(undoAction);
 		undoButton.setMinimumSize(BUTTON_SIZE);
@@ -116,8 +114,7 @@ public class Toolbar extends JToolBar
 		add(undoButton);
 		
 		// Redo
-		//JButton redoButton = new JButton(new ImageIcon("img/32/Redo.png"));
-		JButton redoButton = new JButton(new ImageIcon(""));
+		JButton redoButton = new JButton(new ImageIcon("img/32/Redo.png"));
 		redoButton.setActionCommand(redoAction);
 		redoButton.setToolTipText(redoAction);
 		redoButton.setMinimumSize(BUTTON_SIZE);
@@ -128,8 +125,7 @@ public class Toolbar extends JToolBar
 		add(redoButton);
 		
 		// Cut 
-		//JButton cutButton = new JButton(new ImageIcon("img/32/.png"));
-		JButton cutButton = new JButton(new ImageIcon(""));
+		JButton cutButton = new JButton(new ImageIcon("img/32/cut.png"));
 		//cutButton.setActionCommand(cutAction);
 		cutButton.setToolTipText(cutAction);
 		cutButton.setMinimumSize(BUTTON_SIZE);
@@ -141,8 +137,7 @@ public class Toolbar extends JToolBar
 		add(cutButton);
 		
 		// Copy
-		//JButton copyButton = new JButton(new ImageIcon("img/32/Copy.png"));
-		JButton copyButton = new JButton(new ImageIcon(""));
+		JButton copyButton = new JButton(new ImageIcon("img/32/Copy.png"));
 		//copyButton.setActionCommand(copyAction);
 		copyButton.setToolTipText(copyAction);
 		copyButton.setPreferredSize(BUTTON_SIZE);
@@ -154,8 +149,7 @@ public class Toolbar extends JToolBar
 		add(copyButton);
 
 		// Paste
-		//JButton pasteButton = new JButton(new ImageIcon("img/32/Paste.png"));
-		JButton pasteButton = new JButton(new ImageIcon(""));
+		JButton pasteButton = new JButton(new ImageIcon("img/32/Paste.png"));
 		//pasteButton.setActionCommand(pasteAction);
 		pasteButton.setToolTipText(pasteAction);
 		pasteButton.setMinimumSize(BUTTON_SIZE);
@@ -188,8 +182,7 @@ public class Toolbar extends JToolBar
 		add(snapButton);
 
 		//Grid
-		//JButton gridButton = new JButton(new ImageIcon("img/32/Grid.png"));
-		JButton gridButton = new JButton(new ImageIcon(""));
+		JButton gridButton = new JButton(new ImageIcon("img/32/grid.png"));
 		//gridButton.setActionCommand(gridAction);
 		gridButton.setToolTipText(gridAction);
 		gridButton.setMinimumSize(BUTTON_SIZE);
