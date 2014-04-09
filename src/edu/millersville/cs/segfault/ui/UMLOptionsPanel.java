@@ -6,9 +6,11 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.JToolBar;
+import javax.swing.border.EtchedBorder;
 
 import edu.millersville.cs.segfault.model.DrawableType;
 
@@ -18,7 +20,7 @@ import edu.millersville.cs.segfault.model.DrawableType;
  * objects and relations a user can select.
  * @author Kimberlyn Broskie
  *************************************************************************/
-public class UMLOptionsPanel extends JPanel
+public class UMLOptionsPanel extends JToolBar
 							implements ActionListener {
 
 	//*************************************************************************
@@ -31,7 +33,7 @@ public class UMLOptionsPanel extends JPanel
 	private static final String textAction   = "TEXT";
 	
 	// Dimensions for the panel and buttons.
-	private static final Dimension OPTIONS_PANE_MAX_SIZE = new Dimension(132, 520);
+	private static final Dimension OPTIONS_PANE_MAX_SIZE = new Dimension(134, 520);
 	private static final Dimension BUTTON_SIZE = new Dimension(64, 64);
 
 	
@@ -54,16 +56,17 @@ public class UMLOptionsPanel extends JPanel
 		 parentWindow = parent;
 		 
 		 // Set the layout.
-
-		 setLayout(new FlowLayout(FlowLayout.LEFT, 2, 2));
+		 setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
 		 setPreferredSize(OPTIONS_PANE_MAX_SIZE);
+		 setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
-		 
 		 // Build and add the select button.
 		 JButton selectionButton = new JButton(new ImageIcon("img/64/selectionMode.png"));
 		 selectionButton.setActionCommand(selectAction);
 		 selectionButton.setPreferredSize(new Dimension(64, 64));
 		 selectionButton.addActionListener(this);
+		 selectionButton.setToolTipText(selectAction.substring(0,1) + 
+				 selectAction.substring(1).toLowerCase());
 		 selectionButton.setPreferredSize(BUTTON_SIZE);
 		 add(selectionButton);  
 		 
@@ -75,12 +78,28 @@ public class UMLOptionsPanel extends JPanel
 //		 add(textButton);
 		 
 		 // Add all the objects
-		 
 		 for (DrawableType type : DrawableType.objectTypeList()) {
 			 JButton newButton = new JButton(type.icon);
 			 newButton.setActionCommand(type.name());
 			 newButton.setPreferredSize(BUTTON_SIZE);
+			 newButton.setToolTipText(type.name());
 			 newButton.addActionListener(this);
+			 
+			 
+			 // Replace underscores with spaces, and leave the first letter 
+			 // of each word capitalized.
+			 int separatorIndex = type.name().indexOf("_");
+
+			 if (separatorIndex > 0) {
+				 newButton.setToolTipText(type.name().substring(0,1) + 
+						 type.name().substring(1, separatorIndex + 1).toLowerCase().replace("_", " ") +
+						 type.name().substring(separatorIndex + 1, separatorIndex + 2) + 
+						 type.name().substring(separatorIndex + 2).toLowerCase()); 
+			 }
+			 else {
+				 newButton.setToolTipText(type.name().substring(0,1) + 
+					 type.name().substring(1).toLowerCase());
+			 }
 			 
 			 add(newButton);
 		 }
@@ -91,9 +110,10 @@ public class UMLOptionsPanel extends JPanel
 			 newButton.setActionCommand(type.name());
 			 newButton.setPreferredSize(BUTTON_SIZE);
 			 newButton.addActionListener(this);
+			 newButton.setToolTipText(type.name().substring(0,1) + 
+					 type.name().substring(1).toLowerCase());
 			 add(newButton);
-		 }
-		 
+		 } 
 	} 
 	 
 	 

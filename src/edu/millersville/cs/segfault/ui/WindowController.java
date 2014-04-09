@@ -21,7 +21,6 @@ public class WindowController {
 	    	System.setProperty("apple.laf.useScreenMenuBar", "true");
 	    }
 	    JFrame.setDefaultLookAndFeelDecorated(true);
-	    
 	    new UMLWindow();
 	}
 	
