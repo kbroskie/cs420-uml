@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 import javax.swing.border.EtchedBorder;
 
@@ -61,13 +62,15 @@ public class UMLOptionsPanel extends JToolBar
 		 setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
 		 // Build and add the select button.
-		 JButton selectionButton = new JButton(new ImageIcon("img/64/selectionMode.png"));
+		 JToggleButton selectionButton = new JToggleButton(new ImageIcon("img/64/selectionMode.png"));
 		 selectionButton.setActionCommand(selectAction);
 		 selectionButton.setPreferredSize(new Dimension(64, 64));
 		 selectionButton.addActionListener(this);
 		 selectionButton.setToolTipText(selectAction.substring(0,1) + 
 				 selectAction.substring(1).toLowerCase());
 		 selectionButton.setPreferredSize(BUTTON_SIZE);
+		 //selectionButton.setPressedIcon(pressedIcon);
+		 selectionButton.setSelected(true);
 		 add(selectionButton);  
 		 
 
@@ -79,7 +82,7 @@ public class UMLOptionsPanel extends JToolBar
 		 
 		 // Add all the objects
 		 for (DrawableType type : DrawableType.objectTypeList()) {
-			 JButton newButton = new JButton(type.icon);
+			 JToggleButton newButton = new JToggleButton(type.icon);
 			 newButton.setActionCommand(type.name());
 			 newButton.setPreferredSize(BUTTON_SIZE);
 			 newButton.setToolTipText(type.name());
@@ -106,7 +109,7 @@ public class UMLOptionsPanel extends JToolBar
 		 
 		 for (DrawableType type: DrawableType.relationTypeList()) {
 			 if (type == DrawableType.RELATION) { continue; }
-			 JButton newButton = new JButton(type.icon);
+			 JToggleButton newButton = new JToggleButton(type.icon);
 			 newButton.setActionCommand(type.name());
 			 newButton.setPreferredSize(BUTTON_SIZE);
 			 newButton.addActionListener(this);
@@ -136,7 +139,9 @@ public class UMLOptionsPanel extends JToolBar
 		} else {
 			for (DrawableType type: DrawableType.typeList()) {
 				if (type.name().equals(selectedCommand)) {
-					parentWindow.getUMLPanel().changeInteractionMode(new DrawMode(type, parentWindow.getUMLPanel()));
+					parentWindow.getUMLPanel().changeInteractionMode(
+								new DrawMode(type, parentWindow.getUMLPanel()));
+					
 				}
 			}
 		}

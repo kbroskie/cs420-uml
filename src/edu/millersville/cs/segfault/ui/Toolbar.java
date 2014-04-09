@@ -23,8 +23,8 @@ public class Toolbar extends JToolBar
 	private static final long serialVersionUID = -8304808920676331117L;
 	
 	// Dimensions for the toolbar & buttons.
-	private static final Dimension TOOLBAR_MIN_SIZE = new Dimension(520, 36);
-	private static final Dimension BUTTON_SIZE = new Dimension(32, 32);
+	private static final Dimension TOOLBAR_MIN_SIZE = new Dimension(520, 42);
+	private static final Dimension BUTTON_SIZE = new Dimension(38, 38);
 	private static final Dimension BUTTON_SPACE = new Dimension(16, 5);
 	
 	// Toolbar items
@@ -65,7 +65,7 @@ public class Toolbar extends JToolBar
 
 		setFloatable(false);
 		setVisible(true);
-		setLayout(new FlowLayout(FlowLayout.LEFT, 1, 1));
+		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		setMinimumSize(TOOLBAR_MIN_SIZE);
 		setPreferredSize(TOOLBAR_MIN_SIZE);
 		setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
@@ -79,6 +79,7 @@ public class Toolbar extends JToolBar
 		newButton.setMaximumSize(BUTTON_SIZE);
 		newButton.setPreferredSize(BUTTON_SIZE);
 		newButton.addActionListener(this);
+		newButton.setBorderPainted(false);
 
 		// Build and add the load button.
 		JButton loadButton = new JButton(new ImageIcon("img/32/Load.png"));
@@ -88,8 +89,8 @@ public class Toolbar extends JToolBar
 		loadButton.setMaximumSize(BUTTON_SIZE);
 		loadButton.setPreferredSize(BUTTON_SIZE);
 		loadButton.addActionListener(this);
+		loadButton.setBorderPainted(false);
 		add(loadButton);
-		addSeparator(BUTTON_SPACE);
 		
 		// Build and add the save button.
 		JButton saveButton = new JButton(new ImageIcon("img/32/Save.png"));
@@ -99,8 +100,8 @@ public class Toolbar extends JToolBar
 		saveButton.setMaximumSize(BUTTON_SIZE);
 		saveButton.setPreferredSize(BUTTON_SIZE);
 		saveButton.addActionListener(this);
+		saveButton.setBorderPainted(false);
 		add(saveButton);
-		addSeparator(BUTTON_SPACE);
 
 		// Undo 
 		//JButton undoButton = new JButton(new ImageIcon("img/32/Undo.png"));
@@ -111,8 +112,8 @@ public class Toolbar extends JToolBar
 		undoButton.setMaximumSize(BUTTON_SIZE);
 		undoButton.setPreferredSize(BUTTON_SIZE);
 		undoButton.addActionListener(this);
+		undoButton.setBorderPainted(false);
 		add(undoButton);
-		addSeparator(BUTTON_SPACE);
 		
 		// Redo
 		//JButton redoButton = new JButton(new ImageIcon("img/32/Redo.png"));
@@ -123,8 +124,8 @@ public class Toolbar extends JToolBar
 		redoButton.setMaximumSize(BUTTON_SIZE);
 		redoButton.setPreferredSize(BUTTON_SIZE);
 		redoButton.addActionListener(this);
+		redoButton.setBorderPainted(false);
 		add(redoButton);
-		addSeparator(BUTTON_SPACE);
 		
 		// Cut 
 		//JButton cutButton = new JButton(new ImageIcon("img/32/.png"));
@@ -135,9 +136,10 @@ public class Toolbar extends JToolBar
 		cutButton.setMaximumSize(BUTTON_SIZE);
 		cutButton.setPreferredSize(BUTTON_SIZE);
 		cutButton.addActionListener(this);
+		cutButton.setBorderPainted(false);
+		cutButton.setBorderPainted(false);
 		add(cutButton);
-		addSeparator(BUTTON_SPACE);
-
+		
 		// Copy
 		//JButton copyButton = new JButton(new ImageIcon("img/32/Copy.png"));
 		JButton copyButton = new JButton(new ImageIcon(""));
@@ -148,8 +150,8 @@ public class Toolbar extends JToolBar
 		copyButton.setMaximumSize(BUTTON_SIZE);
 		copyButton.setPreferredSize(BUTTON_SIZE);
 		copyButton.addActionListener(this);
+		copyButton.setBorderPainted(false);
 		add(copyButton);
-		addSeparator(BUTTON_SPACE);
 
 		// Paste
 		//JButton pasteButton = new JButton(new ImageIcon("img/32/Paste.png"));
@@ -160,19 +162,19 @@ public class Toolbar extends JToolBar
 		pasteButton.setMaximumSize(BUTTON_SIZE);
 		pasteButton.setPreferredSize(BUTTON_SIZE);
 		pasteButton.addActionListener(this);
+		pasteButton.setBorderPainted(false);
 		add(pasteButton);
-		addSeparator(BUTTON_SPACE);
 
 		// Delete
-		JButton deleteButton = new JButton(new ImageIcon("img/32/Delete.png"));
+		JButton deleteButton = new JButton(new ImageIcon("img/32/Destroy.png"));
 		deleteButton.setActionCommand(deleteAction);
 		deleteButton.setToolTipText(deleteAction);
 		deleteButton.setMinimumSize(BUTTON_SIZE);
 		deleteButton.setMaximumSize(BUTTON_SIZE);
 		deleteButton.setPreferredSize(BUTTON_SIZE);
 		deleteButton.addActionListener(this);
+		deleteButton.setBorderPainted(false);
 		add(deleteButton);
-		addSeparator(BUTTON_SPACE);
 		
 		// Snap
 		JButton snapButton = new JButton(new ImageIcon("img/32/snap.png"));
@@ -182,8 +184,8 @@ public class Toolbar extends JToolBar
 		snapButton.setMaximumSize(BUTTON_SIZE);
 		snapButton.setPreferredSize(BUTTON_SIZE);
 		snapButton.addActionListener(this);
+		snapButton.setBorderPainted(false);
 		add(snapButton);
-		addSeparator(BUTTON_SPACE);
 
 		//Grid
 		//JButton gridButton = new JButton(new ImageIcon("img/32/Grid.png"));
@@ -194,8 +196,8 @@ public class Toolbar extends JToolBar
 		gridButton.setMaximumSize(BUTTON_SIZE);
 		gridButton.setPreferredSize(BUTTON_SIZE);
 		gridButton.addActionListener(this);
+		gridButton.setBorderPainted(false);
 		add(gridButton);
-		addSeparator(BUTTON_SPACE);
 
 		// Help
 		JButton helpButton = new JButton(new ImageIcon("img/32/Help.png"));
@@ -205,6 +207,7 @@ public class Toolbar extends JToolBar
 		helpButton.setMaximumSize(BUTTON_SIZE);
 		helpButton.setPreferredSize(BUTTON_SIZE);
 		helpButton.addActionListener(this);
+		helpButton.setBorderPainted(false);
 		add(helpButton);		
 	}
 
