@@ -73,7 +73,9 @@ public class EditMenu extends JMenu
 	   // Add the sub-menus to the Edit menu.
 	   add(undoItem);
 	   add(redoItem);
+	   addSeparator();
 	   add(selectAllItem);
+	   addSeparator();
 	   add(deleteItem);
 	}
 	
