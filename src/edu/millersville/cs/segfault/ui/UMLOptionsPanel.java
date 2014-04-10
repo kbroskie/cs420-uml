@@ -80,6 +80,7 @@ public class UMLOptionsPanel extends JPanel
 		 // Build and add the select button.
 		 JToggleButton selectionButton = 
 				 new JToggleButton(new ImageIcon("img/64/selectionMode.png"));
+		 selectionButton.setSelectedIcon(new ImageIcon("img/64/down/selectionMode.png"));
 		 selectionButton.setActionCommand(selectAction);
 		 selectionButton.setPreferredSize(new Dimension(64, 64));
 		 selectionButton.addActionListener(this);
@@ -115,6 +116,7 @@ public class UMLOptionsPanel extends JPanel
 		 // Add the object buttons and tooltips to the button group and toolbarBox.
 		 for (DrawableType type : DrawableType.objectTypeList()) {
 			 JToggleButton newButton = new JToggleButton(type.icon);
+			 newButton.setSelectedIcon(type.selectedIcon);
 			 newButton.setActionCommand(type.name());
 			 newButton.setMaximumSize(BUTTON_SIZE);
 			 newButton.setPreferredSize(BUTTON_SIZE);
@@ -160,6 +162,7 @@ public class UMLOptionsPanel extends JPanel
 		 for (DrawableType type: DrawableType.relationTypeList()) {
 			 if (type == DrawableType.RELATION) { continue; }
 			 JToggleButton newButton = new JToggleButton(type.icon);
+			 newButton.setSelectedIcon(type.selectedIcon);
 			 newButton.setActionCommand(type.name());
 			 newButton.setMaximumSize(BUTTON_SIZE);
 			 newButton.setPreferredSize(BUTTON_SIZE);

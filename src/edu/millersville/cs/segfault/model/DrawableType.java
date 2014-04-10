@@ -41,10 +41,12 @@ public enum DrawableType {
 	
 	public final boolean      isObject;
 	public final ImageIcon    icon; 
+	public final ImageIcon    selectedIcon; 
 	
 	DrawableType(boolean isObject) {
 		this.isObject = isObject;
 		this.icon     = new ImageIcon("img/64/" + this.name() + ".png");
+		this.selectedIcon     = new ImageIcon("img/64/down/" + this.name() + ".png");
 	}
 	
 	/************************************************************************* 
