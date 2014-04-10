@@ -9,10 +9,13 @@ import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.object.UMLActiveClass;
 import edu.millersville.cs.segfault.model.object.UMLClassObject;
+import edu.millersville.cs.segfault.model.object.UMLCollaboration;
 import edu.millersville.cs.segfault.model.object.UMLComponent;
 import edu.millersville.cs.segfault.model.object.UMLNode;
 import edu.millersville.cs.segfault.model.object.UMLObject;
+import edu.millersville.cs.segfault.model.object.UMLPackage;
 import edu.millersville.cs.segfault.model.object.UMLState;
+import edu.millersville.cs.segfault.model.object.UMLUseCase;
 import edu.millersville.cs.segfault.model.relation.Aggregation;
 import edu.millersville.cs.segfault.model.relation.Association;
 import edu.millersville.cs.segfault.model.relation.Composition;
@@ -33,10 +36,15 @@ public enum DrawableType {
 	COMPONENT    (true),
 	NODE         (true),
 	STATE        (true),
+	USE_CASE	 (true),
+	COLLABORATION (true),
+	PACKAGE 	 (true),
 	RELATION     (false), 
 	AGGREGATION  (false), 
 	COMPOSITION  (false), 
 	ASSOCIATION  (false);
+	
+	
 	
 	
 	public final boolean      isObject;
@@ -105,6 +113,9 @@ public enum DrawableType {
 		case COMPONENT:    return new UMLComponent(serial);
 		case NODE:         return new UMLNode(serial);
 		case STATE:        return new UMLState(serial);
+		case USE_CASE:	   return new UMLUseCase(serial);
+		case COLLABORATION: return new UMLCollaboration(serial);
+		case PACKAGE: return new UMLPackage(serial);
 		default:           return null;
 		}
 	}
@@ -125,6 +136,9 @@ public enum DrawableType {
 		case COMPONENT:    return new UMLComponent("", origin, panel.getModel().highestZ() + 1, size, false);
 		case NODE:         return new UMLNode("", origin, panel.getModel().highestZ() + 1, size, false);
 		case STATE:        return new UMLState("", origin, panel.getModel().highestZ() + 1, size, false);
+		case USE_CASE:     return new UMLUseCase("", origin, panel.getModel().highestZ() + 1, size, false);
+		case COLLABORATION: return new UMLUseCase("", origin, panel.getModel().highestZ() + 1, size, false);
+		case PACKAGE: return new UMLPackage("", origin, panel.getModel().highestZ() + 1, size, false);
 		default:           return null;
 		}
 	}

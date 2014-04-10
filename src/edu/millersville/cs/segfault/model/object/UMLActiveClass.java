@@ -30,6 +30,7 @@ public class UMLActiveClass extends UMLClassObject {
 			
 	}
 	
+	//Deserialization constructor
 	public UMLActiveClass(String serial) 
 		throws Exception
 	{
