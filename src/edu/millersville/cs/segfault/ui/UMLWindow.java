@@ -2,6 +2,7 @@ package edu.millersville.cs.segfault.ui;
 
 import java.awt.BorderLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -63,7 +64,8 @@ public class UMLWindow extends JFrame {
 		rightPanel.setLayout(new BorderLayout());
 		rightPanel.add(toolbar, BorderLayout.PAGE_START);
 		rightPanel.add(scrollableUMLPanel, BorderLayout.CENTER);
-		
+		rightPanel.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 1, getBackground().darker()));
+
 	    // Add the panels and menu to the frame.
 		add(optionsPane, BorderLayout.LINE_START);
 		setJMenuBar(new UMLMenuBar(this));
