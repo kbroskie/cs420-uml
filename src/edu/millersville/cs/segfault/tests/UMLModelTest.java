@@ -14,6 +14,13 @@ import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
 import edu.millersville.cs.segfault.ui.UMLPanel;
 
+//******************************************************************************************//
+// Model Tests
+//
+// Tests the UMLModel class.
+//
+// Author: Benjamin Nothstein
+//******************************************************************************************//
 
 public class UMLModelTest {
 
@@ -103,7 +110,6 @@ public class UMLModelTest {
 		testModel.remove(testO1);
 		testModel.remove(testR1);
 		
-		
 		//**********************************************************************************//	
 		//makeObject & makeRelation Tests
 		//**********************************************************************************//	
@@ -114,9 +120,9 @@ public class UMLModelTest {
 //		UMLObject testMO = DrawableType.makeObject(DrawableType.OBJECT, 
 //						new ImmutablePoint(0,0), testO1.getSize(), testPanel);
 //		
-//		//UMLRelation testMR = DrawableType.makeRelation(DrawableType.RELATION, 
-//		//				testR1.getPath(), testPanel);
-//		
+		//UMLRelation testMR = DrawableType.makeRelation(DrawableType.RELATION, 
+		//				testR1.getPath(), testPanel);
+		
 //		assertTrue("Heights do not match!", testMO.getHeight() == testO1.getHeight());
 //		assertTrue("Labels do not match!", testMO.getLabel() == testO1.getLabel());
 //		assertTrue("Types do not match!", testMO.getType() == testO1.getType());

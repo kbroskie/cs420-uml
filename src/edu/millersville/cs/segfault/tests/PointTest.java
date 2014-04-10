@@ -6,6 +6,14 @@ import org.junit.Test;
 
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 
+//******************************************************************************************//
+// Point Tests
+//
+// Tests the ImmutablePoint class.
+//
+// Author: Daniel Rabiega
+//******************************************************************************************//
+
 public class PointTest {
 
 	@Test

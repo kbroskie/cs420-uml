@@ -1,5 +1,3 @@
-//Tests for the class UMLObject
-
 package edu.millersville.cs.segfault.tests;
 
 import static org.junit.Assert.*;
@@ -18,10 +16,19 @@ import edu.millersville.cs.segfault.model.object.UMLComponent;
 import edu.millersville.cs.segfault.model.object.UMLClassObject;
 import edu.millersville.cs.segfault.model.object.UMLActiveClass;
 
+//******************************************************************************************//
+// Object Tests
+//
+// Tests the UMLObject classes.
+//
+// Author: Benjamin Nothstein
+//******************************************************************************************//
+
 public class ObjectTest {
 
 	@Test
 	public void test() throws Exception {
+		
 		UMLModel testModel = new UMLModel();
 		
 		//**********************************************************************************//
@@ -35,18 +42,15 @@ public class ObjectTest {
 		testModel = testModel.add(testO1);
 		testModel = testModel.add(testO2);
 		//assertTrue(testO1.getLabel() == testO2.getLabel());
-
 		
 		//**********************************************************************************//
 		//Serialization Tests
 		//**********************************************************************************//
 		
-		testO3 = testO3.move(20, 20, 0);
+		testO3 = testO3.move(20, 20, 7);
 		UMLObject testO4 = new UMLObject(testO3.serialize());
-		//assertTrue("Failed to take in and make object from serialized form", 
-		//		testO4.getX() == testO3.getX());
-
-		
+		assertTrue("Failed to take in and make object from serialized form", 
+				testO4.getZ() == testO3.getZ());
 		
 		//**********************************************************************************//
 		//Move and Resize Tests
@@ -58,10 +62,9 @@ public class ObjectTest {
 		testO2 = testO2.resize(60, 70);
 		testO1 = testO1.resize(60, 70);
 		
-
 //		assertTrue(new1.getX() == 20);
 //		assertTrue(new1.getY() == 20);
-//		assertTrue(new1.getZ() == 0);
+		assertTrue(testO1.getZ() == 0);
 //		assertTrue(new2.getHeight() == 70);
 //		assertTrue(new2.getWidth() == 60);
 
@@ -127,11 +130,11 @@ public class ObjectTest {
 		//**********************************************************************************//
 		
 		UMLClassObject testCO1 = new UMLClassObject();
-		//UMLClassObject testCO2 = new UMLClassObject(testO2.serialize());  //Not working correctly(OUT OF BOUNDS EXCEPTION)
+		UMLClassObject testCO2 = new UMLClassObject(testO2.serialize());  //Not working correctly(OUT OF BOUNDS EXCEPTION)
 		UMLClassObject testCO3 = new UMLClassObject(testO3.label, testO3.origin, testO3.getZ(), testO3.size, false);
 		
 		assertTrue(testCO1.getType() == DrawableType.CLASS);
-		//assertTrue(testCO2.getType() == DrawableType.CLASS);
+		assertTrue(testCO2.getType() == DrawableType.CLASS);
 		assertTrue(testCO3.getType() == DrawableType.CLASS);
 		
 		testCO1 = testCO1.resizeClass(testCO3.size);
@@ -145,11 +148,11 @@ public class ObjectTest {
 		//**********************************************************************************//
 		
 		UMLActiveClass testAC1 = new UMLActiveClass();
-		//UMLActiveClass testAC2 = new UMLActiveClass(testO2.serialize());  //Not working correctly(OUT OF BOUNDS EXCEPTION)
+		UMLActiveClass testAC2 = new UMLActiveClass(testO2.serialize());  //Not working correctly(OUT OF BOUNDS EXCEPTION)
 		UMLActiveClass testAC3 = new UMLActiveClass(testO3.label, testO3.origin, testO3.getZ(), testO3.size, false);
 		
 		assertTrue(testAC1.getType() == DrawableType.ACTIVE_CLASS);
-		//assertTrue(testAC2.getType() == DrawableType.ACTIVE_CLASS);
+		assertTrue(testAC2.getType() == DrawableType.ACTIVE_CLASS);
 		assertTrue(testAC3.getType() == DrawableType.ACTIVE_CLASS);
 		
 		//**********************************************************************************//

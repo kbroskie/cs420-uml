@@ -10,6 +10,13 @@ import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
 import edu.millersville.cs.segfault.model.ZComparator;
 
+//******************************************************************************************//
+// ZComparator Tests
+//
+// Tests the ZComparator class.
+//
+// Author: Benjamin Nothstein
+//******************************************************************************************//
 
 public class ZComparatorTest {
 

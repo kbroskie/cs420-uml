@@ -10,6 +10,14 @@ import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
 
+//******************************************************************************************//
+// Serialize Tests
+//
+// Tests Serialization.
+//
+// Author: Daniel Rabiega
+//******************************************************************************************//
+
 public class ModelSerializationTest {
 
 	@Test

@@ -10,7 +10,14 @@ import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 
 import edu.millersville.cs.segfault.ui.UMLPanel;
-//import edu.millersville.cs.segfault.ui.*;
+
+//******************************************************************************************//
+// Panel Tests
+//
+// Tests the UMLPanel class.
+//
+// Author: Benjamin Nothstein
+//******************************************************************************************//
 
 public class UMLPanelTest {
 
@@ -32,9 +39,9 @@ public class UMLPanelTest {
 		//**********************************************************************************//
 		
 		String serialized = testModel.serialize();
-		//assertTrue(testPanel.save(serialized));
-		//assertTrue(testPanel.saveAs(serialized));  //same as save
-		//assertTrue(testPanel.load());
+		assertTrue(testPanel.save(serialized));
+		assertTrue(testPanel.saveAs(serialized));  //same as save
+		assertTrue(testPanel.load());
 		
 		//**********************************************************************************//
 		//Undo & Redo Tests

@@ -7,6 +7,14 @@ import java.awt.Font;
 import org.junit.Test;
 import edu.millersville.cs.segfault.immutable.ImmutableLabel;
 
+//******************************************************************************************//
+// Label Tests
+//
+// Tests the ImmutableLabel class.
+//
+// Author: Benjamin Nothstein
+//******************************************************************************************//
+
 public class LabelTest {
 
 	@Test

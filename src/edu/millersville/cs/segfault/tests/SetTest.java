@@ -9,13 +9,13 @@ import org.junit.Test;
 
 import edu.millersville.cs.segfault.immutable.ImmutableSet;
 
-//****************************************************************************
-// SetTest
+//******************************************************************************************//
+// Set Tests
 //
-// Tests the ImmutableSet class
+// Tests the ImmutableSet class.
 //
 // Author: Daniel Rabiega
-//****************************************************************************
+//******************************************************************************************//
 
 public class SetTest {
 

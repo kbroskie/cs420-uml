@@ -1,5 +1,3 @@
-//Tests for the class UMLRelation
-
 package edu.millersville.cs.segfault.tests;
 
 import static org.junit.Assert.*;
@@ -19,6 +17,14 @@ import edu.millersville.cs.segfault.model.relation.UMLRelation;
 import edu.millersville.cs.segfault.model.relation.Aggregation;
 import edu.millersville.cs.segfault.model.relation.Association;
 import edu.millersville.cs.segfault.model.relation.Composition;
+
+//******************************************************************************************//
+// Relation Tests
+//
+// Tests the Relation classes.
+//
+// Author: Benjamin Nothstein
+//******************************************************************************************//
 
 public class RelationTest {
 

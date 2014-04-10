@@ -8,6 +8,14 @@ import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.XMLAttribute;
 import edu.millersville.cs.segfault.model.object.*;
 
+//******************************************************************************************//
+// Attribute Tests
+//
+// Tests the XMLAttribute class.
+//
+// Author: Benjamin Nothstein
+//******************************************************************************************//
+
 public class XMLAttributeTest {
 
 	@Test
@@ -31,16 +39,15 @@ public class XMLAttributeTest {
 		assertTrue(XMLAttribute.hasAttr(testModel.serialize(), "title"));
 		
 		assertTrue(XMLAttribute.hasAttr(testModel.serialize(), "OBJECT", 29));
-		//assertFalse(XMLAttribute.hasAttr(testModel.serialize(), "OBJECT", 32)); //Sometimes Returns true which fails the test (Dont know why)
+		assertFalse(XMLAttribute.hasAttr(testModel.serialize(), "OBJECT", 32)); //Sometimes Returns true which fails the test (Dont know why)
 		
 		//**********************************************************************************//
 		//startAttribute Tests (Currently not working correctly)
 		//**********************************************************************************//
 		
-		//System.out.println(XMLAttribute.startAttribute(testO1.serialize(), "OBJECT"));
-		//assertTrue(testO1.serialize().indexOf(XMLAttribute.openTag("label") + 2 + 6) == 16);
+		assertTrue(XMLAttribute.startAttribute(testO1.serialize(), "label") == 15);
 		
-		
+		//Tests to help solve problem
 		//System.out.println(testO1.serialize().indexOf(XMLAttribute.openTag("label") + 2 + 5, 0));
 		//System.out.println(testO1.serialize().indexOf(XMLAttribute.openTag("label") + 2));
 		//System.out.println(testO1.serialize().indexOf(XMLAttribute.openTag("label")));

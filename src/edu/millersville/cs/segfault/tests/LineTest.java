@@ -7,6 +7,14 @@ import org.junit.Test;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.immutable.ImmutableLine;
 
+//******************************************************************************************//
+// Line Tests
+//
+// Tests the ImmutableLine class.
+//
+// Author: Benjamin Nothstein
+//******************************************************************************************//
+
 public class LineTest {
 
 	@Test

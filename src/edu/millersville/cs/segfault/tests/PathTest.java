@@ -9,13 +9,13 @@ import org.junit.Test;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 
-//****************************************************************************
-// PathTest
+//******************************************************************************************//
+// Path Tests
 //
 // Tests the ImmutablePath class.
 //
 // Author: Daniel Rabiega
-//****************************************************************************
+//******************************************************************************************//
 
 
 public class PathTest {
