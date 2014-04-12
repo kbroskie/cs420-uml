@@ -1,48 +1,30 @@
 package edu.millersville.cs.segfault.ui.menu;
 
-import java.awt.Event;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
-
-import javax.swing.JCheckBox;
+import javax.swing.Action;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.KeyStroke;
 
-import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.ui.UMLWindow;
 
 /**************************************************************************
- * UMLFileMenu is the class responsible for instantiating 
+ * FileMenu is the class responsible for instantiating 
  * the File submenu and handling the user selections for the submenu.
  * @author Kimberlyn Broskie
  *************************************************************************/
-public class FileMenu extends JMenu 
-						implements ActionListener {
+public class FileMenu extends JMenu {
 	
 	//*************************************************************************
 	// Static Instance Variables
 	//*************************************************************************
 	private static final long serialVersionUID = 2052974378829469666L;
 
-	//FILE MENU VARIABLES
 	private static final String fileMenuText = "File";
-	private static final String newMenuText = "New";
-	private static final String openMenuText = "Open";	
-	private static final String saveMenuText = "Save";
-	private static final String saveAsMenuText = "Save as...";
-	private static final String exitMenuText = "Exit";
-	private static final String hideToolbarText = "Show Toolbar";
 	
 	
 	//*************************************************************************
 	// Instance Variables
 	//*************************************************************************
 	private final UMLWindow parentWindow;
-	private JCheckBox toolbarCheckBox;
 	
 	//*************************************************************************
 	// Constructors	
@@ -51,107 +33,26 @@ public class FileMenu extends JMenu
 	/**************************************************************************
 	 * Constructor to build the File submenu, with each submenu option
 	 * having a key accelerator.
-	 * @param wFrame the frame for the interface
-	 * @param umlPanel the panel for the current UML model
+	 * @param parent the frame for the interface
 	 *************************************************************************/
 	public FileMenu (UMLWindow parent) {
 		super(fileMenuText);
 		parentWindow = parent;
 		
-		// Create the new menu item and add an action listener and accelerator.	   
-		JMenuItem newItem = new JMenuItem(newMenuText);
-		newItem.addActionListener(this);
-		newItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK));
-	   
-		// Create the open menu item and add an action listener and accelerator.	   
-		JMenuItem openItem = new JMenuItem(openMenuText);
-		openItem.addActionListener(this);
-		openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK));
-
-		// Create the save menu item and add an action listener and accelerator.	   
-		JMenuItem saveItem = new JMenuItem(saveMenuText);
-		saveItem.addActionListener(this);
-		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
-	   
-		// Create the save as menu item and add an action listener.	   
-		JMenuItem saveAsItem = new JMenuItem(saveAsMenuText);
-		saveAsItem.addActionListener(this);
-	
-		// Create the exit menu item and add an action listener.
-		JMenuItem exitItem = new JMenuItem(exitMenuText);
-		exitItem.addActionListener(new ExitListener());
-		
-		// Create a checkbox to show/hide the toolbar.
-		toolbarCheckBox = new JCheckBox(hideToolbarText);
-		toolbarCheckBox.setSelected(true);
-		toolbarCheckBox.addItemListener(new CheckBoxListener());
-		
-		// Add the sub-menus to the File menu.
-		add(newItem);
-		add(openItem);
-		addSeparator();
-		add(saveItem);
-		add(saveAsItem);
-		addSeparator();
-		add(exitItem);
-		add(toolbarCheckBox);
-	}
-	
-	
-	//*************************************************************************
-	// Event Listeners
-	//*************************************************************************
-	
-	// Handles the event generated when the user selects 
-	// the exit option from the File menu.
-	private class ExitListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			System.exit(0);
+		// Generate all the edit action types and add them to the submenu.
+		JMenuItem newItem;
+		Action newAction;
+		   
+		for (ActionType type : ActionType.fileMenuTypeList()) {
+			// Add a menu separator to group similar actions.
+			if (type.isDifferentActionGroup) {
+				addSeparator();
+			 }
+			try {
+				   newAction = (Action)ActionType.makeFileMenuAction(type, parentWindow);
+				   newItem = new JMenuItem(newAction);
+				   add (newItem); 
+			} catch (Exception e) {}
 		}
 	}
-	
-	/**************************************************************************
-	 * Handles the events generated by the user selecting
-	 * a file submenu option.
-	 * @param se the selected event and source 
-	 *************************************************************************/
-	 public void actionPerformed(ActionEvent se) {
-		 String selectedCommand = se.getActionCommand();
-	 	 	 
-		 if (selectedCommand == newMenuText) {
-			 parentWindow.getUMLPanel().changeModel(new UMLModel());
-		 }
-		 else if (selectedCommand == openMenuText) {
-			 parentWindow.getUMLPanel().load();
-		 }
-		 else if (selectedCommand == saveMenuText) {
-			 parentWindow.getUMLPanel().save(
-					 parentWindow.getUMLPanel().getModel().serialize());
-		 }
-		 else if (selectedCommand == saveAsMenuText) {
-			 parentWindow.getUMLPanel().saveAs(
-					 parentWindow.getUMLPanel().getModel().serialize());
-		 }
-	 }
-	 
-	 /**************************************************************************
-	 * Private inner class that handles the events generated by the user 
-	 * clicking a CheckBox.
-	 * @param e the selected event and source 
-	 *************************************************************************/
-	 private class CheckBoxListener implements ItemListener {
-		 public void itemStateChanged(ItemEvent e)
-	      {
-			 // Determine which check box was clicked.
-	         if (e.getSource() == toolbarCheckBox)
-	         {
-	        	 if (toolbarCheckBox.isSelected()) {
-	        		 parentWindow.getToolbar().setVisible(true);
-	        	 }
-	        	 else {
-	        		 parentWindow.getToolbar().setVisible(false);
-	            }
-	         }
-	      } 
-	 }
 }
