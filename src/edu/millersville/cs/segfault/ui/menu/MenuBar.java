@@ -6,7 +6,7 @@ import javax.swing.JMenuBar;
 import edu.millersville.cs.segfault.ui.UMLWindow;
 
 /**************************************************************************
- * UMLMenuBar is the class responsible for instantiating 
+ * MenuBar is the class responsible for instantiating 
  * a menubar.
  * @author Kimberlyn Broskie
  *************************************************************************/
@@ -24,8 +24,7 @@ public class MenuBar extends JMenuBar {
 	
 	/**************************************************************************
 	 * Constructor to build the menu bar.
-	 * @param wFrame the frame for the interface
-	 * @param umlPanel the panel for the current UML model
+	 * @param parent the frame for the interface
 	 *************************************************************************/
 	public MenuBar (UMLWindow parent) {
 		super();
