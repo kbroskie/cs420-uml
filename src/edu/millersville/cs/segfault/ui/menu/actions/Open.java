@@ -11,49 +11,45 @@ import edu.millersville.cs.segfault.ui.UMLWindow;
 import edu.millersville.cs.segfault.ui.menu.MenuAction;
 import edu.millersville.cs.segfault.ui.menu.ActionType;
 
-
 /**************************************************************************
- * SelectAction is the class responsible for invoking the method to select 
- *  or deselect all objects and relations for the current model.
+ * Save is the class responsible for invoking the method to 
+ * load a model.
  * @author Kimberlyn Broskie
  *************************************************************************/
-public class SelectAction extends AbstractAction 
-						implements MenuAction{
+public class Open extends AbstractAction
+						implements MenuAction {
 
 	//*************************************************************************
 	// Static Instance Variables
 	//*************************************************************************
-	private static final long serialVersionUID = 934397787955686064L;
-	
+	private static final long serialVersionUID = -401022597982490050L;
+	private static final String openMenuText = "Open";
+
 	//*************************************************************************
 	// Instance Variables
 	//*************************************************************************
 	private final UMLWindow window;
-	private static final String selectMenuText = "Select/Deselect All";
 
 	/**************************************************************************
 	* Constructor that builds the action with an accelerator.
 	* @param win the frame for the interface.
 	*************************************************************************/
-	public SelectAction (UMLWindow win)
+	public Open (UMLWindow win)
 	{
-		super(selectMenuText);
-		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));		
+		super(openMenuText);
+		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK));		
 		window = win;
 	}
 	
 	//*************************************************************************
 	// Observers
 	//*************************************************************************
-	public ActionType getType() { return ActionType.SELECT; }	
-	
+	public ActionType getType() { return ActionType.OPEN; }	
+
 	//*************************************************************************
 	// Event Listeners
 	//*************************************************************************
 	public void actionPerformed(ActionEvent se) {
-		try {
-				window.getUMLPanel().changeModel(
-						window.getUMLPanel().getModel().unselectAll()); }
-		catch (Exception e) {}
-	}	
+		window.getUMLPanel().load();
+	}		
 }

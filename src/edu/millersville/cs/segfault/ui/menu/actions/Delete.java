@@ -11,19 +11,20 @@ import edu.millersville.cs.segfault.ui.UMLWindow;
 import edu.millersville.cs.segfault.ui.menu.MenuAction;
 import edu.millersville.cs.segfault.ui.menu.ActionType;
 
+
 /**************************************************************************
- * SaveAction is the class responsible for invoking the method to 
- * load a model.
+ * Delete is the class responsible for invoking the method to delete 
+ * all objects and relations for the current model.
  * @author Kimberlyn Broskie
  *************************************************************************/
-public class OpenAction extends AbstractAction
-						implements MenuAction {
-
+public class Delete extends AbstractAction 
+						implements MenuAction{
+	
 	//*************************************************************************
 	// Static Instance Variables
 	//*************************************************************************
-	private static final long serialVersionUID = -401022597982490050L;
-	private static final String openMenuText = "Open";
+	private static final long serialVersionUID = 1596916755400971266L;
+	private static final String deleteMenuText = "Delete";
 
 	//*************************************************************************
 	// Instance Variables
@@ -34,22 +35,25 @@ public class OpenAction extends AbstractAction
 	* Constructor that builds the action with an accelerator.
 	* @param win the frame for the interface.
 	*************************************************************************/
-	public OpenAction (UMLWindow win)
+	public Delete (UMLWindow win)
 	{
-		super(openMenuText);
-		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK));		
+		super(deleteMenuText);
+		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK));		
 		window = win;
 	}
 	
 	//*************************************************************************
 	// Observers
 	//*************************************************************************
-	public ActionType getType() { return ActionType.OPEN; }	
-
+	public ActionType getType() { return ActionType.DELETE; }	
+	
 	//*************************************************************************
 	// Event Listeners
 	//*************************************************************************
 	public void actionPerformed(ActionEvent se) {
-		window.getUMLPanel().load();
-	}		
+		try {
+				window.getUMLPanel().changeModel(
+						window.getUMLPanel().getModel().deleteSelected()); }
+		catch (Exception e) {}
+	}	
 }

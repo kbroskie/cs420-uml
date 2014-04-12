@@ -5,15 +5,15 @@ import java.util.LinkedList;
 import javax.swing.ImageIcon;
 
 import edu.millersville.cs.segfault.ui.UMLWindow;
-import edu.millersville.cs.segfault.ui.menu.actions.DeleteAction;
-import edu.millersville.cs.segfault.ui.menu.actions.ExitAction;
-import edu.millersville.cs.segfault.ui.menu.actions.NewAction;
-import edu.millersville.cs.segfault.ui.menu.actions.OpenAction;
-import edu.millersville.cs.segfault.ui.menu.actions.RedoAction;
-import edu.millersville.cs.segfault.ui.menu.actions.SaveAction;
-import edu.millersville.cs.segfault.ui.menu.actions.SaveAsAction;
-import edu.millersville.cs.segfault.ui.menu.actions.SelectAction;
-import edu.millersville.cs.segfault.ui.menu.actions.UndoAction;
+import edu.millersville.cs.segfault.ui.menu.actions.Delete;
+import edu.millersville.cs.segfault.ui.menu.actions.Exit;
+import edu.millersville.cs.segfault.ui.menu.actions.New;
+import edu.millersville.cs.segfault.ui.menu.actions.Open;
+import edu.millersville.cs.segfault.ui.menu.actions.Redo;
+import edu.millersville.cs.segfault.ui.menu.actions.Save;
+import edu.millersville.cs.segfault.ui.menu.actions.SaveAs;
+import edu.millersville.cs.segfault.ui.menu.actions.Select;
+import edu.millersville.cs.segfault.ui.menu.actions.Undo;
 
 
 /*****************************************************************************
@@ -32,9 +32,12 @@ public enum ActionType {
 	SELECT	 	(false, true),
 	DELETE 		(false, false);
 	
-
+	// Determine whether the variable is a file or edit action type.
 	public final boolean      isFileAction;
+	
+	// Determine whether the variable is the start of a similar group.
 	public final boolean 	  isDifferentActionGroup;
+	
 	public final ImageIcon    icon; 
 	
 	ActionType(boolean isFileAction, boolean isDifferentActionGroup) {
@@ -95,11 +98,11 @@ public enum ActionType {
 			throw new Exception("Factory: Type is not a file action.");
 		}
 		switch(type) {
-		case NEW:       	return new NewAction(win);
-		case OPEN:        	return new OpenAction(win);
-		case SAVE: 			return new SaveAction(win); 
-		case SAVE_AS: 		return new SaveAsAction(win); 
-		case EXIT:  		return new ExitAction();
+		case NEW:       	return new New(win);
+		case OPEN:        	return new Open(win);
+		case SAVE: 			return new Save(win); 
+		case SAVE_AS: 		return new SaveAs(win); 
+		case EXIT:  		return new Exit();
 		default:           	return null;
 		}
 	}
@@ -114,10 +117,10 @@ public enum ActionType {
 			throw new Exception("Factory: Type is not an edit action.");
 		}
 		switch(type) {
-		case UNDO:			return new UndoAction(win);
-		case REDO:     		return new RedoAction(win);
-		case SELECT:	 	return new SelectAction(win);
-		case DELETE: 		return new DeleteAction(win);
+		case UNDO:			return new Undo(win);
+		case REDO:     		return new Redo(win);
+		case SELECT:	 	return new Select(win);
+		case DELETE: 		return new Delete(win);
 		default:           	return null;
 		}
 	}

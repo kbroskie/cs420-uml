@@ -4,39 +4,49 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import edu.millersville.cs.segfault.ui.UMLWindow;
 import edu.millersville.cs.segfault.ui.menu.MenuAction;
 import edu.millersville.cs.segfault.ui.menu.ActionType;
 
 /**************************************************************************
- * ExitAction is the class responsible to invoke the action to 
- * exit the program. 
+ * SaveAs is the class responsible for invoking the method to 
+ * save the current state of the model to a user specified path.
  * @author Kimberlyn Broskie
  *************************************************************************/
-public class ExitAction extends AbstractAction  
+public class SaveAs extends AbstractAction  
 						implements MenuAction {
 
-	private static final long serialVersionUID = 6496835257740499669L;
-	private static final String exitMenuText = "Exit";
+	//*************************************************************************
+	// Static Instance Variables
+	//*************************************************************************
+	private static final long serialVersionUID = -4530998790701147913L;
+	private static final String saveAsMenuText = "Save as...";
 	
+	//*************************************************************************
+	// Instance Variables
+	//*************************************************************************
+	private final UMLWindow window;
+
 	/**************************************************************************
 	* Constructor that builds the action.
+	* @param win the frame for the interface.
 	*************************************************************************/
-	public ExitAction ()
+	public SaveAs (UMLWindow win)
 	{
-		super(exitMenuText);
+		super(saveAsMenuText);
+		window = win;
 	}
 	
 	//*************************************************************************
 	// Observers
 	//*************************************************************************
-	public ActionType getType() { return ActionType.EXIT; }	
+	public ActionType getType() { return ActionType.SAVE_AS; }	
 	
 	//*************************************************************************
 	// Event Listeners
 	//*************************************************************************
-	// Handles the event generated when the user selects 
-	// the exit option from the File menu.
 	public void actionPerformed(ActionEvent se) {
-			System.exit(0);
+		window.getUMLPanel().saveAs(
+				window.getUMLPanel().getModel().serialize());
 	}	
 }

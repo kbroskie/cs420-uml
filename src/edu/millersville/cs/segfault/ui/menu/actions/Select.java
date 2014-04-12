@@ -13,39 +13,39 @@ import edu.millersville.cs.segfault.ui.menu.ActionType;
 
 
 /**************************************************************************
- * DeleteAction is the class responsible for invoking the method to delete 
- * all objects and relations for the current model.
+ * Select is the class responsible for invoking the method to select 
+ *  or deselect all objects and relations for the current model.
  * @author Kimberlyn Broskie
  *************************************************************************/
-public class DeleteAction extends AbstractAction 
+public class Select extends AbstractAction 
 						implements MenuAction{
-	
+
 	//*************************************************************************
 	// Static Instance Variables
 	//*************************************************************************
-	private static final long serialVersionUID = 1596916755400971266L;
-	private static final String deleteMenuText = "Delete";
-
+	private static final long serialVersionUID = 934397787955686064L;
+	
 	//*************************************************************************
 	// Instance Variables
 	//*************************************************************************
 	private final UMLWindow window;
+	private static final String selectMenuText = "Select/Deselect All";
 
 	/**************************************************************************
 	* Constructor that builds the action with an accelerator.
 	* @param win the frame for the interface.
 	*************************************************************************/
-	public DeleteAction (UMLWindow win)
+	public Select (UMLWindow win)
 	{
-		super(deleteMenuText);
-		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK));		
+		super(selectMenuText);
+		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));		
 		window = win;
 	}
 	
 	//*************************************************************************
 	// Observers
 	//*************************************************************************
-	public ActionType getType() { return ActionType.DELETE; }	
+	public ActionType getType() { return ActionType.SELECT; }	
 	
 	//*************************************************************************
 	// Event Listeners
@@ -53,7 +53,7 @@ public class DeleteAction extends AbstractAction
 	public void actionPerformed(ActionEvent se) {
 		try {
 				window.getUMLPanel().changeModel(
-						window.getUMLPanel().getModel().deleteSelected()); }
+						window.getUMLPanel().getModel().unselectAll()); }
 		catch (Exception e) {}
 	}	
 }

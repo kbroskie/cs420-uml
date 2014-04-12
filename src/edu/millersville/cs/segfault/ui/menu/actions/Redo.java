@@ -7,50 +7,49 @@ import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 
-import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.ui.UMLWindow;
 import edu.millersville.cs.segfault.ui.menu.MenuAction;
 import edu.millersville.cs.segfault.ui.menu.ActionType;
 
 /**************************************************************************
- * NewAction is the class responsible for invoking the method to 
- * create a new model.
+ * Redo is the class responsible for invoking the method to redo the 
+ * the last action performed for a given model.
  * @author Kimberlyn Broskie
  *************************************************************************/
-public class NewAction extends AbstractAction 
-					implements MenuAction {
-	
+public class Redo extends AbstractAction 
+						implements MenuAction{
+
 	//*************************************************************************
 	// Static Instance Variables
 	//*************************************************************************
-	private static final long serialVersionUID = 447204292723445794L;
-	private static final String newMenuText = "New";
+	private static final long serialVersionUID = -2648065284343268597L;
+	private static final String redoMenuText = "Redo";
 
 	//*************************************************************************
 	// Instance Variables
 	//*************************************************************************
 	private final UMLWindow window;
-	
+
 	/**************************************************************************
 	* Constructor that builds the action with an accelerator.
 	* @param win the frame for the interface.
 	*************************************************************************/
-	public NewAction (UMLWindow win) 
+	public Redo (UMLWindow win)
 	{
-		super(newMenuText);
-		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK));		
+		super(redoMenuText);
+		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_Y, Event.CTRL_MASK));		
 		window = win;
 	}
 	
 	//*************************************************************************
 	// Observers
 	//*************************************************************************
-	public ActionType getType() { return ActionType.NEW; }	
+	public ActionType getType() { return ActionType.REDO; }	
 	
 	//*************************************************************************
 	// Event Listeners
 	//*************************************************************************
 	public void actionPerformed(ActionEvent se) {
-		window.getUMLPanel().changeModel(new UMLModel());
+		window.getUMLPanel().redo();
 	}	
 }

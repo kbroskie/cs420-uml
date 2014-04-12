@@ -13,11 +13,11 @@ import edu.millersville.cs.segfault.ui.menu.ActionType;
 
 
 /**************************************************************************
- * SaveAction is the class responsible for invoking the method to save the 
+ * Save is the class responsible for invoking the method to save the 
  * current state of the model.
  * @author Kimberlyn Broskie
  *************************************************************************/
-public class SaveAction extends AbstractAction 
+public class Save extends AbstractAction 
 						implements MenuAction{
 
 	//*************************************************************************
@@ -35,7 +35,7 @@ public class SaveAction extends AbstractAction
 	* Constructor that builds the action with an accelerator.
 	* @param win the frame for the interface.
 	*************************************************************************/
-	public SaveAction (UMLWindow win)
+	public Save (UMLWindow win)
 	{
 		super(saveMenuText);
 		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));		

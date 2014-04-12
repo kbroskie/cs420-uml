@@ -13,11 +13,11 @@ import edu.millersville.cs.segfault.ui.menu.MenuAction;
 
 
 /**************************************************************************
- * UndoAction is the class responsible for invoking the method to undo the 
+ * Undo is the class responsible for invoking the method to undo the 
  * the last action performed for a given model.
  * @author Kimberlyn Broskie
  *************************************************************************/
-public class UndoAction extends AbstractAction 
+public class Undo extends AbstractAction 
 						implements MenuAction{
 
 	//*************************************************************************
@@ -35,7 +35,7 @@ public class UndoAction extends AbstractAction
 	* Constructor that builds the action with an accelerator.
 	* @param win the frame for the interface.
 	*************************************************************************/
-	public UndoAction (UMLWindow win)
+	public Undo (UMLWindow win)
 	{
 		super(undoMenuText);
 		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_Z, Event.CTRL_MASK));		

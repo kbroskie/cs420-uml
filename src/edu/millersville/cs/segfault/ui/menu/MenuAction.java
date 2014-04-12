@@ -5,7 +5,7 @@ import edu.millersville.cs.segfault.ui.Toolbar;
 /*****************************************************************************
  * An interface for actions which can be inserted into a {@link MenuBar}     *
  * or {@link Toolbar}                                           			 *
- * @author Kimberlyn Broskie                                                  *
+ * @author Kimberlyn Broskie                                                 *
  *****************************************************************************/
 public interface MenuAction {
 	ActionType getType();
