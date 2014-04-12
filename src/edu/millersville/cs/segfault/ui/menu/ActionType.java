@@ -1,6 +1,7 @@
 package edu.millersville.cs.segfault.ui.menu;
 
 import java.util.LinkedList;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
@@ -39,6 +40,8 @@ public enum ActionType {
 	public final boolean 	  isDifferentActionGroup;
 	
 	public final ImageIcon    icon; 
+	
+	private static final Vector<MenuAction> actions = new Vector<MenuAction>(9);
 	
 	ActionType(boolean isFileAction, boolean isDifferentActionGroup) {
 		this.isFileAction = isFileAction;
@@ -89,7 +92,7 @@ public enum ActionType {
 	
 	// File Action Factories - Make a file action type.
 	/*****************************************************************************
-	 * Produces a  file action.												     *
+	 * Retrieves an existing filing action or produces one if it does not exist	 *
 	 *****************************************************************************/
 	public static MenuAction makeFileMenuAction(ActionType type, UMLWindow win) 
 		throws Exception
@@ -97,14 +100,33 @@ public enum ActionType {
 		if (!type.isFileAction) {
 			throw new Exception("Factory: Type is not a file action.");
 		}
-		switch(type) {
-		case NEW:       	return new New(win);
-		case OPEN:        	return new Open(win);
-		case SAVE: 			return new Save(win); 
-		case SAVE_AS: 		return new SaveAs(win); 
-		case EXIT:  		return new Exit();
-		default:           	return null;
-		}
+		
+		MenuAction newAction;
+		
+		// Create a new instance if the type does not exist.
+	    if (!actions.contains(type)) {
+	    	switch(type) {
+			case NEW:       	newAction = new New(win);
+								break;
+			case OPEN:        	newAction = new Open(win);
+								break;
+			case SAVE: 			newAction = new Save(win); 
+								break;
+			case SAVE_AS: 		newAction = new SaveAs(win); 
+								break;
+			case EXIT:  		newAction = new Exit();
+								break;
+			default:           	newAction = null;
+			
+	    	}
+		    actions.add(newAction);
+	    }
+	    
+	    // Retrieve the existing action.
+	    else {
+	    	newAction = actions.get(actions.indexOf(type));
+	    }
+	    return newAction;		
 	}
 	
 	// Edit action factory - Make an edit action type.
