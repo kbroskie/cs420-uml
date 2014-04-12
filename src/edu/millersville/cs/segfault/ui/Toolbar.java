@@ -24,7 +24,6 @@ public class Toolbar extends JToolBar
 	
 	private static final Color BUTTON_COLOR = new Color(207,219,230);
 
-	
 	// Dimensions for the toolbar & buttons.
 	private static final Dimension TOOLBOX_MIN_SIZE = new Dimension(840, 36);
 	private static final Dimension TOOLBAR_MIN_SIZE = new Dimension(840, 39);
@@ -32,23 +31,10 @@ public class Toolbar extends JToolBar
 	private static final Dimension TOOLBAR_MAX_SIZE = new Dimension(1140, 39);
 	private static final Dimension BUTTON_SIZE = new Dimension(38, 38);
 
-	// Toolbar items
-	private static final String newAction = "New";
-	private static final String loadAction = "Load";
-	private static final String saveAction = "Save";
-	
-	private static final String undoAction = "Undo";
-	private static final String redoAction = "Redo";
-	private static final String cutAction = "Cut";
-	private static final String copyAction = "Copy";
-	private static final String pasteAction = "Paste";
-	private static final String deleteAction = "Delete";
-	
-	private static final String snapAction = "Snap to Grid";
-	private static final String gridAction = "Show/Hide Grid";
-	
-	private static final String helpAction = "Help";
-	
+	private static final String [] toolbarActions = 
+		{"New", "Load", "Save", "Undo", "Redo","Cut", "Copy", "Paste",
+		 "Delete", "Snap to Grid", "Show/Hide Grid", "Help"};
+
 	
 	//*************************************************************************
 	// Instance Variables
@@ -61,11 +47,12 @@ public class Toolbar extends JToolBar
 	
 	/**************************************************************************
 	 * Builds a toolbar to hold the menu options a user can select.
-	 * @param umlPanel the panel for the current UML model.
+	 * @param parent the panel for the current UML model.
 	 *************************************************************************/
 	public Toolbar(UMLWindow parent) {
 		super();
-		
+		parentWindow = parent;	
+
 		setFloatable(false);
 		setVisible(true);
 		setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
@@ -74,183 +61,50 @@ public class Toolbar extends JToolBar
 		setMaximumSize(TOOLBAR_MAX_SIZE);
 		setBackground(BUTTON_COLOR);
 		
-		parentWindow = parent;	
-		
-		// Build and add the new button.
-		JButton newButton = new JButton(new ImageIcon("img/32/New.png"));
-		newButton.setActionCommand(newAction);
-		newButton.setToolTipText(newAction);
-		newButton.setMinimumSize(BUTTON_SIZE);
-		newButton.setMaximumSize(BUTTON_SIZE);
-		newButton.setPreferredSize(BUTTON_SIZE);
-		newButton.addActionListener(this);
-		newButton.setBorderPainted(false);
-		newButton.setFocusPainted(false);
-		newButton.setBackground(BUTTON_COLOR);
-
-		// Build and add the load button.
-		JButton loadButton = new JButton(new ImageIcon("img/32/Load.png"));
-		loadButton.setActionCommand(loadAction);
-		loadButton.setToolTipText(loadAction);
-		loadButton.setMinimumSize(BUTTON_SIZE);
-		loadButton.setMaximumSize(BUTTON_SIZE);
-		loadButton.setPreferredSize(BUTTON_SIZE);
-		loadButton.addActionListener(this);
-		loadButton.setBorderPainted(false);
-		loadButton.setFocusPainted(false);
-		loadButton.setBackground(BUTTON_COLOR);
-	
-		// Build and add the save button.
-		JButton saveButton = new JButton(new ImageIcon("img/32/Save.png"));
-		saveButton.setActionCommand(saveAction);
-		saveButton.setToolTipText(saveAction);
-		saveButton.setMinimumSize(BUTTON_SIZE);
-		saveButton.setMaximumSize(BUTTON_SIZE);
-		saveButton.setPreferredSize(BUTTON_SIZE);
-		saveButton.addActionListener(this);
-		saveButton.setBorderPainted(false);
-		saveButton.setFocusPainted(false);
-		saveButton.setBackground(BUTTON_COLOR);
-
-		// Undo 
-		JButton undoButton = new JButton(new ImageIcon("img/32/Undo.png"));
-		undoButton.setActionCommand(undoAction);
-		undoButton.setToolTipText(undoAction);
-		undoButton.setMinimumSize(BUTTON_SIZE);
-		undoButton.setMaximumSize(BUTTON_SIZE);
-		undoButton.setPreferredSize(BUTTON_SIZE);
-		undoButton.addActionListener(this);
-		undoButton.setBorderPainted(false);
-		undoButton.setFocusPainted(false);
-		undoButton.setBackground(BUTTON_COLOR);
-		
-		// Redo
-		JButton redoButton = new JButton(new ImageIcon("img/32/Redo.png"));
-		redoButton.setActionCommand(redoAction);
-		redoButton.setToolTipText(redoAction);
-		redoButton.setMinimumSize(BUTTON_SIZE);
-		redoButton.setMaximumSize(BUTTON_SIZE);
-		redoButton.setPreferredSize(BUTTON_SIZE);
-		redoButton.addActionListener(this);
-		redoButton.setBorderPainted(false);
-		redoButton.setFocusPainted(false);
-		redoButton.setBackground(BUTTON_COLOR);
-
-		// Cut 
-		JButton cutButton = new JButton(new ImageIcon("img/32/cut.png"));
-		//cutButton.setActionCommand(cutAction);
-		cutButton.setToolTipText(cutAction);
-		cutButton.setMinimumSize(BUTTON_SIZE);
-		cutButton.setMaximumSize(BUTTON_SIZE);
-		cutButton.setPreferredSize(BUTTON_SIZE);
-		cutButton.addActionListener(this);
-		cutButton.setBorderPainted(false);
-		cutButton.setFocusPainted(false);
-		cutButton.setBackground(BUTTON_COLOR);
-		
-		// Copy
-		JButton copyButton = new JButton(new ImageIcon("img/32/Copy.png"));
-		//copyButton.setActionCommand(copyAction);
-		copyButton.setToolTipText(copyAction);
-		copyButton.setPreferredSize(BUTTON_SIZE);
-		copyButton.setMinimumSize(BUTTON_SIZE);
-		copyButton.setMaximumSize(BUTTON_SIZE);
-		copyButton.setPreferredSize(BUTTON_SIZE);
-		copyButton.addActionListener(this);
-		copyButton.setBorderPainted(false);
-		copyButton.setFocusPainted(false);
-		copyButton.setBackground(BUTTON_COLOR);
-		
-		// Paste
-		JButton pasteButton = new JButton(new ImageIcon("img/32/Paste.png"));
-		//pasteButton.setActionCommand(pasteAction);
-		pasteButton.setToolTipText(pasteAction);
-		pasteButton.setMinimumSize(BUTTON_SIZE);
-		pasteButton.setMaximumSize(BUTTON_SIZE);
-		pasteButton.setPreferredSize(BUTTON_SIZE);
-		pasteButton.addActionListener(this);
-		pasteButton.setBorderPainted(false);
-		pasteButton.setFocusPainted(false);
-		pasteButton.setBackground(BUTTON_COLOR);
-		
-		// Delete
-		JButton deleteButton = new JButton(new ImageIcon("img/32/Destroy.png"));
-		deleteButton.setActionCommand(deleteAction);
-		deleteButton.setToolTipText(deleteAction);
-		deleteButton.setMinimumSize(BUTTON_SIZE);
-		deleteButton.setMaximumSize(BUTTON_SIZE);
-		deleteButton.setPreferredSize(BUTTON_SIZE);
-		deleteButton.addActionListener(this);
-		deleteButton.setBorderPainted(false);
-		deleteButton.setFocusPainted(false);
-		deleteButton.setBackground(BUTTON_COLOR);
-		
-		// Snap
-		JButton snapButton = new JButton(new ImageIcon("img/32/snap.png"));
-		snapButton.setActionCommand(snapAction);
-		snapButton.setToolTipText(snapAction);
-		snapButton.setMinimumSize(BUTTON_SIZE);
-		snapButton.setMaximumSize(BUTTON_SIZE);
-		snapButton.setPreferredSize(BUTTON_SIZE);
-		snapButton.addActionListener(this);
-		snapButton.setBorderPainted(false);
-		snapButton.setFocusPainted(false);
-		snapButton.setBackground(BUTTON_COLOR);
-		
-		//Grid
-		JButton gridButton = new JButton(new ImageIcon("img/32/grid.png"));
-		//gridButton.setActionCommand(gridAction);
-		gridButton.setToolTipText(gridAction);
-		gridButton.setMinimumSize(BUTTON_SIZE);
-		gridButton.setMaximumSize(BUTTON_SIZE);
-		gridButton.setPreferredSize(BUTTON_SIZE);
-		gridButton.addActionListener(this);
-		gridButton.setBorderPainted(false);
-		gridButton.setFocusPainted(false);
-		gridButton.setBackground(BUTTON_COLOR);
-
-		// Help
-		JButton helpButton = new JButton(new ImageIcon("img/32/Help.png"));
-		//helpButton.setActionCommand(helpAction);
-		helpButton.setToolTipText(helpAction);
-		helpButton.setMinimumSize(BUTTON_SIZE);
-		helpButton.setMaximumSize(BUTTON_SIZE);
-		helpButton.setPreferredSize(BUTTON_SIZE);
-		helpButton.addActionListener(this);
-		helpButton.setBorderPainted(false);
-		helpButton.setFocusPainted(false);
-		helpButton.setBackground(BUTTON_COLOR);
-
 		// Create a box to group the buttons together.
 		Box toolbarBox = Box.createHorizontalBox();
 		toolbarBox.setMinimumSize(TOOLBOX_MIN_SIZE);
 		toolbarBox.setPreferredSize(TOOLBOX_MIN_SIZE);
 		toolbarBox.setMaximumSize(TOOLBOX_MAX_SIZE);
 		toolbarBox.setBackground(BUTTON_COLOR);
-	
-		toolbarBox.add(newButton);
-		toolbarBox.add(loadButton);
-		toolbarBox.add(saveButton);
-		toolbarBox.add(Box.createHorizontalGlue());
 		
-		toolbarBox.add(undoButton);
-		toolbarBox.add(redoButton);
-		toolbarBox.add(Box.createHorizontalGlue());
-		
-		toolbarBox.add(cutButton);
-		toolbarBox.add(copyButton);
-		toolbarBox.add(deleteButton);
-		toolbarBox.add(Box.createHorizontalGlue());
-		
-		toolbarBox.add(snapButton);
-		toolbarBox.add(gridButton);
-		toolbarBox.add(Box.createHorizontalGlue());
-		
-		toolbarBox.add(helpButton);	
+		// Build and add the buttons.
+		for (String action : toolbarActions) {
+			toolbarBox.add(createButton(action));
+			if (action == toolbarActions[2] || action == toolbarActions[4] ||
+				action == toolbarActions[8] || action == toolbarActions[9])
+				toolbarBox.add(Box.createHorizontalGlue());
+		}
 		
 		add(toolbarBox);
 	}
+	
 
+	//*************************************************************************
+	// Mutators
+	//*************************************************************************
+	
+	/**************************************************************************
+	 * Creates a button for the given string, adding icons and action commands.
+	 * @param action the name of the button to create
+	 *************************************************************************/
+	public JButton createButton(String action) {
+		ImageIcon newImage = new ImageIcon("img/32/" + action.replaceAll(" ","").toLowerCase() + ".png");
+		JButton newButton = new JButton(newImage);
+
+		newButton.setActionCommand(action);
+		newButton.setToolTipText(action);
+		newButton.setMinimumSize(BUTTON_SIZE);
+		newButton.setMaximumSize(BUTTON_SIZE);
+		newButton.setPreferredSize(BUTTON_SIZE);
+		newButton.setBackground(BUTTON_COLOR);
+		newButton.addActionListener(this);
+		newButton.setBorderPainted(false);
+		newButton.setFocusPainted(false);
+		
+		return newButton;
+	}
+	
 	
 	//*************************************************************************
 	// Event Listeners
@@ -264,24 +118,23 @@ public class Toolbar extends JToolBar
 	public void actionPerformed(ActionEvent se) {
 
 		Object selectedCommand = se.getActionCommand();
-		
-		 if (selectedCommand == newAction) {
+		 if (selectedCommand == toolbarActions[0]) {
 			 parentWindow.getUMLPanel().changeModel(new UMLModel());
 		 }
-		 else if (selectedCommand == loadAction) {
+		 else if (selectedCommand == toolbarActions[1]) {
 			 parentWindow.getUMLPanel().load();
 		 }
-		 else if (selectedCommand == saveAction) {
+		 else if (selectedCommand == toolbarActions[2]) {
 			 parentWindow.getUMLPanel().save(
 					 parentWindow.getUMLPanel().getModel().serialize());
 		 }
-		 else if (selectedCommand == undoAction) {
+		 else if (selectedCommand == toolbarActions[3]) {
 		 		parentWindow.getUMLPanel().undo();	
 		 }
-		else if (selectedCommand == redoAction) {
+		else if (selectedCommand == toolbarActions[4]) {
 			parentWindow.getUMLPanel().redo();
 		} 
-		else if (selectedCommand == deleteAction) {
+		else if (selectedCommand == toolbarActions[8]) {
 			try {
 					parentWindow.getUMLPanel().changeModel(
 							parentWindow.getUMLPanel().getModel().deleteSelected());
