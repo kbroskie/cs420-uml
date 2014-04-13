@@ -19,9 +19,8 @@ import javax.swing.JToggleButton;
 import edu.millersville.cs.segfault.model.DrawableType;
 
 /**************************************************************************
- * UMLOptionsPanel is the class responsible for
- * creating a panel containing the different
- * objects and relations a user can select.
+ * OptionsPanel is the class responsible for creating a panel containing 
+ * the different objects and relations a user can select.
  * @author Kimberlyn Broskie
  *************************************************************************/
 public class OptionsPanel extends JPanel
@@ -36,7 +35,6 @@ public class OptionsPanel extends JPanel
 	
 	// Non-Drawable Action Commands
 	private static final String selectAction = "SELECT";
-	//private static final String textAction   = "TEXT";
 	
 	// Dimensions for the panel and buttons.
 	private static final Dimension OPTIONS_PANE_MAX_SIZE = new Dimension(130, 520);
@@ -58,7 +56,7 @@ public class OptionsPanel extends JPanel
 	/**************************************************************************
 	 * Builds a panel to hold the options for various objects and 
 	 * relations that a user can select.
-	 * @param umlPanel the panel for the current UML model.
+	 * @param parent the frame for the current UML model.
 	 *************************************************************************/
 	 public OptionsPanel (UMLWindow parent) {
 		 super();
@@ -72,135 +70,167 @@ public class OptionsPanel extends JPanel
 		 setBackground(BUTTON_COLOR);
 		 setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, parent.getBackground()));
 		 
+		 // Variables to group and store the created buttons.
+		 Vector<Box> boxGroup = new Vector<Box>(10);
 		 ButtonGroup optionsButtonGroup = new ButtonGroup();
+		 Box horizontalBox = createHorizontalBox();
+		 int buttonCount = 0;
 		 
-		 // To store the created buttons.
-		 Vector<Box> buttonBoxes = new Vector<Box>(10);
-
-		 // Build and add the select button.
-		 JToggleButton selectionButton = 
-				 new JToggleButton(new ImageIcon("img/64/selectionMode.png"));
-		 selectionButton.setSelectedIcon(new ImageIcon("img/64/down/selectionMode.png"));
-		 selectionButton.setActionCommand(selectAction);
-		 selectionButton.setPreferredSize(new Dimension(64, 64));
-		 selectionButton.addActionListener(this);
-		 selectionButton.setToolTipText(selectAction.substring(0,1) + 
-				 selectAction.substring(1).toLowerCase());
-		 selectionButton.setMaximumSize(BUTTON_SIZE);
-		 selectionButton.setPreferredSize(BUTTON_SIZE);
-		 selectionButton.setMinimumSize(BUTTON_SIZE);
-		 selectionButton.setSelected(true);
-		 selectionButton.setBorderPainted(false);
-		 selectionButton.setFocusPainted(false);
-		 selectionButton.setBackground(BUTTON_COLOR);
-		 optionsButtonGroup.add(selectionButton);
-
-//		 // Build and add the text button
-//		 JButton textButton = new JButton(new ImageIcon("img/64/textMode.png"));
-//		 textButton.setActionCommand(textAction);
-//		 textButton.setPreferredSize(new Dimension(64, 64));
-//		 add(textButton);
-		
-		 // Create a box to hold groups of two buttons.
-		 Box newBox = Box.createHorizontalBox();
-		 newBox.setPreferredSize(MAX_BOX_SIZE);
-		 newBox.setMaximumSize(MAX_BOX_SIZE);
-		 newBox.setMinimumSize(MIN_BOX_SIZE);
-		 newBox.setBackground(BUTTON_COLOR);	
-		 
-		 newBox.add(selectionButton);
+		 // Create and add the select button.
+		 JToggleButton newButton = createSelectButton();
+		 optionsButtonGroup.add(newButton);
+		 horizontalBox = addNewButton(horizontalBox, newButton, buttonCount);
+		 ++buttonCount;
+			
+		 // Add the objects and relation buttons to the button group 
+		 // and boxGroup in pairs of two.
+		 for (DrawableType type : DrawableType.typeList()) {
+			 newButton = createButton(type.icon, type.selectedIcon, type.name());
+			 optionsButtonGroup.add(newButton);
+			 boxGroup = addBoxToGroupIfFullRow(horizontalBox, boxGroup, buttonCount);
+			 horizontalBox = addNewButton(horizontalBox, newButton, buttonCount);
 			 
-		 // To keep track of when to add a new box.
-		 int buttonCount = 1;
-		
-		 // Add the object buttons and tooltips to the button group and toolbarBox.
-		 for (DrawableType type : DrawableType.objectTypeList()) {
-			 JToggleButton newButton = new JToggleButton(type.icon);
-			 newButton.setSelectedIcon(type.selectedIcon);
-			 newButton.setActionCommand(type.name());
-			 newButton.setMaximumSize(BUTTON_SIZE);
-			 newButton.setPreferredSize(BUTTON_SIZE);
-			 newButton.setToolTipText(type.name());
-			 newButton.addActionListener(this);
-			 newButton.setBackground(BUTTON_COLOR);
-			 newButton.setBorderPainted(false);
-			 newButton.setFocusPainted(false);
-			 	
-			 // Replace underscores with spaces, and leave the first letter 
-			 // of each word capitalized.
-			 int separatorIndex = type.name().indexOf("_");
-
-			 if (separatorIndex > 0) {
-				 newButton.setToolTipText(type.name().substring(0,1) + 
-						 type.name().substring(1, separatorIndex + 1).toLowerCase().replace("_", " ") +
-						 type.name().substring(separatorIndex + 1, separatorIndex + 2) + 
-						 type.name().substring(separatorIndex + 2).toLowerCase()); 
-			 }
-			 else {
-				 newButton.setToolTipText(type.name().substring(0,1) + 
-						 type.name().substring(1).toLowerCase());
-			 }
-			
-			 // Add the current box and create a new one before
-			 // adding the new button.
-			 if (buttonCount % 2 == 0) {
-				 newBox.add(Box.createHorizontalGlue());
-				 buttonBoxes.add(newBox);
-				 newBox = Box.createHorizontalBox();
-				 newBox.setPreferredSize(MAX_BOX_SIZE);
-				 newBox.setMaximumSize(MAX_BOX_SIZE);
-				 newBox.setMinimumSize(MIN_BOX_SIZE);
-				 newBox.setBackground(BUTTON_COLOR);
-			 }
-			
-			 newBox.add(newButton);	
-			 optionsButtonGroup.add(newButton);	
 			 ++buttonCount;	
 		 }
 		
-		 // Add the relation buttons and tooltips to the button group and toolbarBox.
-		 for (DrawableType type: DrawableType.relationTypeList()) {
-			 if (type == DrawableType.RELATION) { continue; }
-			 JToggleButton newButton = new JToggleButton(type.icon);
-			 newButton.setSelectedIcon(type.selectedIcon);
-			 newButton.setActionCommand(type.name());
-			 newButton.setMaximumSize(BUTTON_SIZE);
-			 newButton.setPreferredSize(BUTTON_SIZE);
-			 newButton.addActionListener(this);
-			 newButton.setBorderPainted(false);
-			 newButton.setFocusPainted(false);
-			 newButton.setBackground(BUTTON_COLOR);
-			 newButton.setToolTipText(type.name().substring(0,1) + 
-					 type.name().substring(1).toLowerCase());
+		boxGroup.add(formatLastRow(horizontalBox, buttonCount));
+		 
+		// Add the button rows to the panel.
+		for (Object b : boxGroup) {
+			this.add((Component) b);
+		}
+	}	
+	 
+	//*************************************************************************
+	// Mutators
+	//*************************************************************************
+	 
+	 /**************************************************************************
+	  * Creates a button for the given string, adding icons and default 
+	  * properties.
+	  * @param icon the image for the button
+	  * @param selectedIcon the image for the button when selected
+	  * @param name the action type
+	  *************************************************************************/
+	 public JToggleButton createButton(ImageIcon icon, ImageIcon selectedIcon, String name) {	
+		JToggleButton newButton = new JToggleButton(icon);
+			 
+		newButton.setSelectedIcon(selectedIcon);
+		newButton.setToolTipText(formatAction(name));
+		newButton.setActionCommand(name);
+			 
+		newButton.setMaximumSize(BUTTON_SIZE);
+		newButton.setPreferredSize(BUTTON_SIZE);
+		newButton.setBackground(BUTTON_COLOR);
+			 
+		newButton.addActionListener(this);
+		newButton.setBorderPainted(false);
+		newButton.setFocusPainted(false);
+			 		
+		return newButton;
+	}
 
-			 // Add the current box and create a new one before
-			 // adding the new button.
-			 if (buttonCount % 2 == 0) {
-				 newBox.add(Box.createHorizontalGlue());
-				 buttonBoxes.add(newBox);
-				 newBox = Box.createHorizontalBox();
-				 newBox.setPreferredSize(MAX_BOX_SIZE);
-				 newBox.setMaximumSize(MAX_BOX_SIZE);
-				 newBox.setMinimumSize(MIN_BOX_SIZE);
-				 newBox.setBackground(BUTTON_COLOR);
-			 }
-			
-			 newBox.add(newButton);
-			 optionsButtonGroup.add(newButton); 
-			 ++buttonCount;
-		 }	 
+
+	/**************************************************************************
+	 * Creates a select button, giving it the initial focus.
+	 * properties.
+	 *************************************************************************/
+	public JToggleButton createSelectButton	() {
+		 JToggleButton newButton = 
+				 createButton(new ImageIcon("img/64/selectionMode.png"), 
+				 			  new ImageIcon("img/64/down/selectionMode.png"), selectAction);
+		 
+		 newButton.setActionCommand(selectAction);
+		 newButton.addActionListener(this);
+		 newButton.setSelected(true);
+		 
+		 return newButton;
+	}
 		
+	/**************************************************************************
+	 * Formats a string, adding capitalization and spaces.
+	 * @param name the string to format
+	 *************************************************************************/
+	public String formatAction(String name) {		
+	
+		if (name == null || name == "") {
+			return name;
+		}
+		
+		int separatorIndex = name.indexOf("_");
+			 
+		// Replace an underscore with a space, and leave the first letter 
+		// of each word capitalized.
+		if (separatorIndex > 0)
+		{
+			return name.substring(0,1) + 
+				   name.substring(1, separatorIndex + 1).toLowerCase().replace("_", " ") +
+				   name.substring(separatorIndex + 1, separatorIndex + 2) + 
+				   name.substring(separatorIndex + 2).toLowerCase(); 
+		}
+
+		// Name is a single word.	 
+		return name.substring(0,1) + name.substring(1).toLowerCase();	
+	}
+	 
+	/**************************************************************************
+	 * Create and format a horizontal box.
+	 *************************************************************************/
+	public Box createHorizontalBox() {		 	
+		Box b = Box.createHorizontalBox();
+		b.setPreferredSize(MAX_BOX_SIZE);
+		b.setMaximumSize(MAX_BOX_SIZE);
+		b.setMinimumSize(MIN_BOX_SIZE);
+		b.setBackground(BUTTON_COLOR);
+		
+		return b;
+	 }
+	
+	 /**************************************************************************
+	  * Adds expandable space between rows of buttons if it is needed.
+	  * @param box the horizontal box of button pairs
+	  * @param boxGroup the group of button rows
+	  * @param count the current number of buttons
+	  *************************************************************************/
+	 public Vector<Box> addBoxToGroupIfFullRow(Box box, Vector<Box> boxGroup, int count) { 
+		 if (count % 2 == 0) {
+			 box.add(Box.createHorizontalGlue());
+			 boxGroup.add(box);
+		 }
+		 return boxGroup;
+	 }
+	 
+	 /**************************************************************************
+	  * Adds the button to a row that holds two buttons.
+	  * @param box the horizontal box of button pairs
+	  * @param button the button to add
+	  * @param count the current number of buttons
+	  *************************************************************************/
+	 public Box addNewButton(Box box, JToggleButton button, int count) {
+		 // Create a new box if the current row is full.
+		 if (count % 2 == 0) {
+			 box = createHorizontalBox();
+		 }
+			
+		 box.add(button);	
+		 return box;
+	 }
+	 
+	 /**************************************************************************
+	  * Adds the last group of buttons, formatting the button to the left side 
+	  * of the button row if the last group contains one button.
+	  * @param box the horizontal box to add
+	  * @param boxGroup the group of horizontal boxes
+	  * @param count the current number of buttons
+	  *************************************************************************/
+	 public Box formatLastRow(Box box, int count) {
 		 // Add an area to avoid off-centered single buttons.
-		 if (buttonCount % 2 > 0) {
-			 newBox.add(Box.createRigidArea(BUTTON_SIZE));
+		 if (count % 2 > 0) {
+			 box.add(Box.createRigidArea(BUTTON_SIZE));
 		 }
-
-		 buttonBoxes.add(newBox);
-
-		 for (Object b : buttonBoxes) {
-			 add((Component) b);
-		 }
-	 }	 
+		 
+		 return box;
+	 }
 	 
 	 
 	 //*************************************************************************
