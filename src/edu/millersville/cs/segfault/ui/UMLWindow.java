@@ -1,7 +1,7 @@
 package edu.millersville.cs.segfault.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -37,6 +37,7 @@ public class UMLWindow extends JFrame {
 	private JScrollPane scrollableUMLPanel;
 	private JTabbedPane tabbedPanel;
 	//private UMLPanel panel1;
+	private HashMap<JScrollPane, UMLPanel> panels;
 
 	
 	//*************************************************************************
@@ -48,8 +49,13 @@ public class UMLWindow extends JFrame {
 	 * will hold the user options and a scrollable model drawing area.
 	 *************************************************************************/
 	public UMLWindow () {
+		
+
 
 		super("SegUE");
+
+		panels = new HashMap<JScrollPane, UMLPanel>();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
@@ -72,6 +78,7 @@ public class UMLWindow extends JFrame {
 		
 		umlPanel = new UMLPanel();
 		scrollableUMLPanel = new JScrollPane(umlPanel);
+		panels.put(scrollableUMLPanel, umlPanel);
 		scrollableUMLPanel.setViewportView(umlPanel);
 		scrollableUMLPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollableUMLPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -128,7 +135,7 @@ public class UMLWindow extends JFrame {
 	 * @return the current UML model
 	 *************************************************************************/
 	public UMLPanel getUMLPanel() {
-		return getUMLPanel();
+		return panels.get(tabbedPanel.getSelectedComponent());
 	}
 	
 	/**************************************************************************
