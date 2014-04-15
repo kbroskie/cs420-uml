@@ -40,7 +40,7 @@ public class UMLPanelTest {
 		
 		String serialized = testModel.serialize();
 		assertTrue(testPanel.save(serialized));
-		assertTrue(testPanel.saveAs(serialized));  //same as save
+		//assertTrue(testPanel.saveAs(serialized));  //same as save
 		assertTrue(testPanel.load());
 		
 		//**********************************************************************************//
@@ -57,8 +57,7 @@ public class UMLPanelTest {
 		//Selection Tests
 		//**********************************************************************************//
 		
-		//testPanel.select();
-		//assertTrue(testPanel.fullSelection());
+		testPanel.select();
 		
 		//**********************************************************************************//
 		//GetPerferredSize Tests

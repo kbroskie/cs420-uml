@@ -83,7 +83,7 @@ public class ObjectTest {
 		//**********************************************************************************//
 		
 		testO1 = testO1.changeLabel("Label1");
-		//assertTrue(testO1.getLabel() == "Label1");
+//		assertTrue(testO1.getLabel() == "Label1");
 		
 		assertTrue(testO1.getType() == DrawableType.OBJECT);
 		

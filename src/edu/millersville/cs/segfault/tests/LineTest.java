@@ -58,17 +58,14 @@ public class LineTest {
 		ImmutableLine testLine4 = new ImmutableLine(
 				new ImmutablePoint(10, 20), new ImmutablePoint(50, 20));
 		
-		//assertTrue("", testLine4.perpendicular(testLine3.second));
+		ImmutableLine testLine5 = new ImmutableLine(
+				new ImmutablePoint(30, 20), new ImmutablePoint(30, 50));
 		
 		//**********************************************************************************//
 		
 		//testing item
 		System.out.println();
-		
-		//snap at y
-		//snap at x
 		//snap point
-		//perpendicular
 		//intercept
 	}
 
