@@ -51,6 +51,8 @@ public class UMLUseCase extends UMLObject {
 	public void draw (Graphics g)
 	
 	{
+		g.setColor(Color.white);
+		g.fillOval(this.origin.x, this.origin.y, this.size.width, this.size.height);
 		g.setColor (Color.black);
 		g.drawOval(this.origin.x, this.origin.y, this.size.width, this.size.height);
 

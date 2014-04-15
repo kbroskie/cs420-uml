@@ -43,9 +43,33 @@ public class UMLNode extends UMLObject {
 	
 	public void draw (Graphics g)
 	{
-		g.setColor(Color.black);
-		//g.draw3DRect(25, 110, 50, 75,true);
-		g.draw3DRect(this.origin.x, this.origin.y, this.size.width, this.size.height, true);
+		 Graphics2D g2 = (Graphics2D)g;
+		 g.setColor(Color.WHITE);
+         g.fillRect(this.origin.x, this.origin.y, this.size.width, this.size.height);
+         g.setColor(Color.black);
+         g.drawRect(this.origin.x, this.origin.y, this.size.width, this.size.height);
+         Polygon p = new Polygon();
+         int farLeftBack = (this.origin.x + (this.size.width / 3));
+         int farRightBack = (this.size.width + farLeftBack);
+         int farTopBack = (this.origin.y - (this.size.height / 3));
+         int farBottomBack = (farTopBack + this.size.height);
+
+
+         p.addPoint(this.origin.x + this.size.width, this.origin.y);
+         p.addPoint(farRightBack, farTopBack);
+         p.addPoint(this.origin.x + this.size.width,  this.origin.y);
+         p.addPoint(this.origin.x, this.origin.y);
+         p.addPoint(farLeftBack, farTopBack);
+         p.addPoint(farRightBack, farTopBack);
+         p.addPoint(farRightBack, farBottomBack);
+         p.addPoint(this.origin.x + this.size.width, this.origin.y + this.size.height);
+
+         g2.setColor(Color.WHITE);
+         g2.fillPolygon(p);
+
+         g2.setColor(Color.BLACK);
+         g2.draw(p);
+
 	}
 
 }

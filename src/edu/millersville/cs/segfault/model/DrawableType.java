@@ -137,8 +137,8 @@ public enum DrawableType {
 		case NODE:         return new UMLNode("", origin, panel.getModel().highestZ() + 1, size, false);
 		case STATE:        return new UMLState("", origin, panel.getModel().highestZ() + 1, size, false);
 		case USE_CASE:     return new UMLUseCase("", origin, panel.getModel().highestZ() + 1, size, false);
-		case COLLABORATION: return new UMLUseCase("", origin, panel.getModel().highestZ() + 1, size, false);
-		case PACKAGE: return new UMLPackage("", origin, panel.getModel().highestZ() + 1, size, false);
+		case COLLABORATION:return new UMLCollaboration("", origin, panel.getModel().highestZ() + 1, size, false);
+		case PACKAGE:      return new UMLPackage("", origin, panel.getModel().highestZ() + 1, size, false);
 		default:           return null;
 		}
 	}
@@ -152,6 +152,9 @@ public enum DrawableType {
 		case COMPONENT:    return new UMLComponent("", origin, z, size, selected);
 		case NODE:         return new UMLNode("", origin, z, size, selected);
 		case STATE:        return new UMLState("", origin, z, size, selected);
+		case USE_CASE:     return new UMLUseCase("", origin, z, size, selected);
+		case COLLABORATION:return new UMLCollaboration("", origin, z, size, selected);
+		case PACKAGE:      return new UMLPackage("", origin, z, size, selected);
 		default:           return null;
 		}
 	}
