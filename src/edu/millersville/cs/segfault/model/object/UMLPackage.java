@@ -51,8 +51,8 @@ public class UMLPackage extends UMLObject {
 	{
 		super.draw(g);
 		g.setColor(Color.white);
-		g.fillRect(this.origin.x, this.origin.y - 20, this.size.width/3, this.size.height/8);
+		g.fillRect(this.origin.x, this.origin.y - this.size.height/8, this.size.width/3, this.size.height/8);
 		g.setColor(Color.black);
-		g.drawRect(this.origin.x, this.origin.y - 20, this.size.width/3, this.size.height/8);
+		g.drawRect(this.origin.x, this.origin.y - this.size.height/8, this.size.width/3, this.size.height/8);
 	}
 }
