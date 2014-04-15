@@ -164,7 +164,7 @@ public class UMLPanel extends JPanel {
 		currentModel = new UMLModel();
 		undoStack = new LinkedList<UMLModel>();
 		redoStack = new LinkedList<UMLModel>();
-		currentInteractionMode = new DrawMode(DrawableType.OBJECT, this);
+		currentInteractionMode = new SelectionMode(this);
 		this.addMouseListener(currentInteractionMode);
 		this.addMouseMotionListener(currentInteractionMode);
 		this.addKeyListener(currentInteractionMode);
