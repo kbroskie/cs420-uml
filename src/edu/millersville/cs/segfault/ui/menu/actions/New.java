@@ -7,10 +7,9 @@ import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 
-import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.ui.UMLWindow;
-import edu.millersville.cs.segfault.ui.menu.MenuAction;
 import edu.millersville.cs.segfault.ui.menu.ActionType;
+import edu.millersville.cs.segfault.ui.menu.MenuAction;
 
 /**************************************************************************
  * New is the class responsible for invoking the method to 
@@ -51,6 +50,7 @@ public class New extends AbstractAction
 	// Event Listeners
 	//*************************************************************************
 	public void actionPerformed(ActionEvent se) {
-		window.getUMLPanel().changeModel(new UMLModel());
+		//window.getUMLPanel().changeModel(new UMLModel());
+		window.createNewTab();
 	}	
 }
