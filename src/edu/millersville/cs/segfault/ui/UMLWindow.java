@@ -1,11 +1,13 @@
 package edu.millersville.cs.segfault.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 
 import edu.millersville.cs.segfault.ui.menu.MenuBar;
 
@@ -27,11 +29,15 @@ public class UMLWindow extends JFrame {
 	//*************************************************************************	
 	// Components of the main frame.
 	private OptionsPanel optionsPane;
-	private UMLPanel umlPanel;
-	private JScrollPane scrollableUMLPanel;
+	private TabbedUMLPanel tabbedUMLPanel;
 	JPanel rightPanel;
 	private Toolbar toolbar;
-	
+	private UMLPanel umlPanel;
+	private final int Virtual_Key_0 = 48;
+	private JScrollPane scrollableUMLPanel;
+	private JTabbedPane tabbedPanel;
+	//private UMLPanel panel1;
+
 	
 	//*************************************************************************
 	// Constructors	
@@ -46,24 +52,61 @@ public class UMLWindow extends JFrame {
 		super("SegUE");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
-		setExtendedState(	 JFrame.MAXIMIZED_BOTH);
+		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 	
 		// Panels to add to the frame.
 		toolbar = new Toolbar(this);
 		optionsPane = new OptionsPanel(this);
-		umlPanel = new UMLPanel();			
+		//scrollableUMLPanel = new JScrollPane(umlPanel);
+		//scrollableUMLPanel.setViewportView(umlPanel);
+		//scrollableUMLPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		//scrollableUMLPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
-		// Set the options for the scroll panel.
+		
+		//tabbedUMLPanel = new TabbedUMLPanel();
+		//tabbedUMLPanel.setForeground(toolbar.getBackground());
+		
+		JPanel pane = new JPanel();
+		
+		//panel1 = new UMLPanel();
+		
+		umlPanel = new UMLPanel();
 		scrollableUMLPanel = new JScrollPane(umlPanel);
 		scrollableUMLPanel.setViewportView(umlPanel);
 		scrollableUMLPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollableUMLPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-					
+		
+		tabbedPanel = new JTabbedPane();	
+		tabbedPanel.setForeground(toolbar.getBackground());
+		tabbedPanel.add("Tab 1", scrollableUMLPanel);
+		//tabbedPanel.
+		
+		
+		//Component newTab = tabbedPanel.getComponent(0);
+		//scrollableUMLPanel.setViewportView(newTab);
+
+		
+		
+		
+		//JScrollPane scrollpane = new JScrollPane(newTab);
+		
+		//scrollpane.setViewportView(newTab);
+		//scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		//scrollpane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		
+		//tabbedPanel.add(scrollpane);
+		
+		tabbedPanel.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+			
 		// Create a pane with a toolbar and the drawing pane.
 		rightPanel = new JPanel();
 		rightPanel.setLayout(new BorderLayout());
 		rightPanel.add(toolbar, BorderLayout.PAGE_START);
-		rightPanel.add(scrollableUMLPanel, BorderLayout.CENTER);
+		//rightPanel.add(scrollableUMLPanel, BorderLayout.CENTER);
+		//rightPanel.add(new TabbedUMLPanel(), BorderLayout.CENTER);
+		//rightPanel.add(scrollableUMLPanel, BorderLayout.CENTER);
+
+		rightPanel.add(tabbedPanel, BorderLayout.CENTER);
 		rightPanel.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 1, getBackground().darker()));
 
 	    // Add the panels and menu to the frame.
@@ -85,7 +128,7 @@ public class UMLWindow extends JFrame {
 	 * @return the current UML model
 	 *************************************************************************/
 	public UMLPanel getUMLPanel() {
-		return umlPanel;
+		return getUMLPanel();
 	}
 	
 	/**************************************************************************
