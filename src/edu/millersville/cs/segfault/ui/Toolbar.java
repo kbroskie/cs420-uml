@@ -6,12 +6,13 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
-import edu.millersville.cs.segfault.model.UMLModel;
+import edu.millersville.cs.segfault.ui.menu.ActionType;
 
 public class Toolbar extends JToolBar
 					implements ActionListener {
@@ -32,7 +33,7 @@ public class Toolbar extends JToolBar
 	private static final Dimension BUTTON_SIZE = new Dimension(38, 38);
 
 	private static final String [] toolbarActions = 
-		{"New", "Load", "Save", "Undo", "Redo","Cut", "Copy", "Paste",
+		{"New", "Open", "Save", "Undo", "Redo","Cut", "Copy", "Paste",
 		 "Delete", "Snap to Grid", "Show/Hide Grid", "Help"};
 
 
@@ -89,16 +90,30 @@ public class Toolbar extends JToolBar
 	 * @param action the name of the button to create
 	 *************************************************************************/
 	public JButton createButton(String action) {
-		ImageIcon newImage = new ImageIcon("img/32/" + action.replaceAll(" ","").toLowerCase() + ".png");
-		JButton newButton = new JButton(newImage);
+		ImageIcon newImage = new ImageIcon("img/32/" + 
+				action.replaceAll(" ","").replaceAll("/","").toLowerCase() + ".png");
+		JButton newButton = new JButton();
 
-		newButton.setActionCommand(action);
+		// Use an action from the factory if it exists.
+		try {
+			Action newAction = (Action)ActionType.makeFileMenuAction(
+								ActionType.valueOf(action.toUpperCase()), parentWindow);
+			newButton.setAction(newAction);	
+			newButton.setText(null);
+		}
+		catch (Exception ex) {
+			newButton.addActionListener(this);
+			newButton.setActionCommand(action);
+		}
+		finally {
+			newButton.setIcon(newImage);
+		}
+			
 		newButton.setToolTipText(action);
 		newButton.setMinimumSize(BUTTON_SIZE);
 		newButton.setMaximumSize(BUTTON_SIZE);
 		newButton.setPreferredSize(BUTTON_SIZE);
 		newButton.setBackground(BUTTON_COLOR);
-		newButton.addActionListener(this);
 		newButton.setBorderPainted(false);
 		newButton.setFocusPainted(false);
 
@@ -116,19 +131,8 @@ public class Toolbar extends JToolBar
 	 * @param se the selected event and source 
 	 *************************************************************************/
 	public void actionPerformed(ActionEvent se) {
-
 		Object selectedCommand = se.getActionCommand();
-		 if (selectedCommand == toolbarActions[0]) {
-			 parentWindow.getUMLPanel().changeModel(new UMLModel());
-		 }
-		 else if (selectedCommand == toolbarActions[1]) {
-			 parentWindow.getUMLPanel().load();
-		 }
-		 else if (selectedCommand == toolbarActions[2]) {
-			 parentWindow.getUMLPanel().save(
-					 parentWindow.getUMLPanel().getModel().serialize());
-		 }
-		 else if (selectedCommand == toolbarActions[3]) {
+		if (selectedCommand == toolbarActions[3]) {
 		 		parentWindow.getUMLPanel().undo();	
 		 }
 		else if (selectedCommand == toolbarActions[4]) {

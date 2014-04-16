@@ -85,6 +85,10 @@ public class UMLWindow extends JFrame {
 	// Mutators
 	//********************************************************************
 	
+	/**************************************************************************
+	 * Returns a scrollable UMLPanel
+	 * @return a scrollable UMLPanel
+	 *************************************************************************/
 	public JScrollPane createScrollableUMLPanel(UMLPanel panel) {		
 		JScrollPane scrollPanel = new JScrollPane(panel);
 		scrollPanel.setViewportView(panel);
@@ -95,23 +99,22 @@ public class UMLWindow extends JFrame {
 		return scrollPanel;
 	}
 	
-	
+	/**************************************************************************
+	 * Adds a new tab to the tabbed panel.
+	 *************************************************************************/
 	public void createNewTab() {
 		int newTabNumber = tabbedPanel.getTabCount() + 1;
 
 		if (newTabNumber > MAX_TAB_COUNT) {
-			String message = "Maximum tabs is " 
-					  + MAX_TAB_COUNT + ".\n" + 
+			String message = "The maximum number of tabs is " + MAX_TAB_COUNT + ".\n" + 
 					  "Please close one or more tabs before adding a tab.";
-			JOptionPane.showMessageDialog(null, message, "New Tab Not Created", 
+			JOptionPane.showMessageDialog(null, message, "Maximum Amount of Tabs are Open", 
 										  JOptionPane.ERROR_MESSAGE);
 		}
 		else {
 			UMLPanel uml = new UMLPanel();
 			JScrollPane scrollpanel = createScrollableUMLPanel(uml);
-			//tabbedPanel.addTab("New Tab " + newTabNumber, scrollpanel);
 			tabbedPanel.insertTab("New Tab " +  newTabNumber, null, scrollpanel, null, newTabNumber - 1);
-			tabbedPanel.setSelectedIndex(newTabNumber - 1);
 			tabbedPanel.setSelectedIndex(newTabNumber - 1);
 			panels.put(scrollpanel, uml);
 		}
