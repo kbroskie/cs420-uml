@@ -10,11 +10,11 @@ import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.UMLModel;
 
 import edu.millersville.cs.segfault.model.object.UMLObject;
-import edu.millersville.cs.segfault.model.object.UMLState;
-import edu.millersville.cs.segfault.model.object.UMLNode;
-import edu.millersville.cs.segfault.model.object.UMLComponent;
-import edu.millersville.cs.segfault.model.object.UMLClassObject;
-import edu.millersville.cs.segfault.model.object.UMLActiveClass;
+import edu.millersville.cs.segfault.model.object.State;
+import edu.millersville.cs.segfault.model.object.Node;
+import edu.millersville.cs.segfault.model.object.Component;
+import edu.millersville.cs.segfault.model.object.ClassObject;
+import edu.millersville.cs.segfault.model.object.ActiveClass;
 
 //******************************************************************************************//
 // Object Tests
@@ -92,9 +92,9 @@ public class ObjectTest {
 		//**********************************************************************************//
 		
 
-		UMLState testSta1 = new UMLState();
-		UMLState testSta2 = new UMLState(testO2.serialize());
-		UMLState testSta3 = new UMLState(testO3.label, testO3.origin, testO3.getZ(), testO3.size, false);
+		State testSta1 = new State();
+		State testSta2 = new State(testO2.serialize());
+		State testSta3 = new State(testO3.label, testO3.origin, testO3.getZ(), testO3.size, false);
 		
 		assertTrue(testSta1.getType() == DrawableType.STATE);
 		assertTrue(testSta2.getType() == DrawableType.STATE);
@@ -105,9 +105,9 @@ public class ObjectTest {
 		//UMLNode tests
 		//**********************************************************************************//
 		
-		UMLNode testNod1 = new UMLNode();
-		UMLNode testNod2 = new UMLNode(testO2.serialize());
-		UMLNode testNod3 = new UMLNode(testO3.label, testO3.origin, testO3.getZ(), testO3.size, false);
+		Node testNod1 = new Node();
+		Node testNod2 = new Node(testO2.serialize());
+		Node testNod3 = new Node(testO3.label, testO3.origin, testO3.getZ(), testO3.size, false);
 		
 		assertTrue(testNod1.getType() == DrawableType.NODE);
 		assertTrue(testNod2.getType() == DrawableType.NODE);
@@ -117,9 +117,9 @@ public class ObjectTest {
 		//UMLComponent tests
 		//**********************************************************************************//
 		
-		UMLComponent testCom1 = new UMLComponent();
-		UMLComponent testCom2 = new UMLComponent(testO2.serialize());
-		UMLComponent testCom3 = new UMLComponent(testO3.label, testO3.origin, testO3.getZ(), testO3.size, false);
+		Component testCom1 = new Component();
+		Component testCom2 = new Component(testO2.serialize());
+		Component testCom3 = new Component(testO3.label, testO3.origin, testO3.getZ(), testO3.size, false);
 		
 		assertTrue(testCom1.getType() == DrawableType.COMPONENT);
 		assertTrue(testCom2.getType() == DrawableType.COMPONENT);
@@ -129,9 +129,9 @@ public class ObjectTest {
 		//UMLClassObject tests
 		//**********************************************************************************//
 		
-		UMLClassObject testCO1 = new UMLClassObject();
-		UMLClassObject testCO2 = new UMLClassObject(testO2.serialize());  //Not working correctly(OUT OF BOUNDS EXCEPTION)
-		UMLClassObject testCO3 = new UMLClassObject(testO3.label, testO3.origin, testO3.getZ(), testO3.size, false);
+		ClassObject testCO1 = new ClassObject();
+		ClassObject testCO2 = new ClassObject(testO2.serialize());  //Not working correctly(OUT OF BOUNDS EXCEPTION)
+		ClassObject testCO3 = new ClassObject(testO3.label, testO3.origin, testO3.getZ(), testO3.size, false);
 		
 		assertTrue(testCO1.getType() == DrawableType.CLASS);
 		assertTrue(testCO2.getType() == DrawableType.CLASS);
@@ -147,9 +147,9 @@ public class ObjectTest {
 		//UMLActiveClass tests
 		//**********************************************************************************//
 		
-		UMLActiveClass testAC1 = new UMLActiveClass();
-		UMLActiveClass testAC2 = new UMLActiveClass(testO2.serialize());  //Not working correctly(OUT OF BOUNDS EXCEPTION)
-		UMLActiveClass testAC3 = new UMLActiveClass(testO3.label, testO3.origin, testO3.getZ(), testO3.size, false);
+		ActiveClass testAC1 = new ActiveClass();
+		ActiveClass testAC2 = new ActiveClass(testO2.serialize());  //Not working correctly(OUT OF BOUNDS EXCEPTION)
+		ActiveClass testAC3 = new ActiveClass(testO3.label, testO3.origin, testO3.getZ(), testO3.size, false);
 		
 		assertTrue(testAC1.getType() == DrawableType.ACTIVE_CLASS);
 		assertTrue(testAC2.getType() == DrawableType.ACTIVE_CLASS);

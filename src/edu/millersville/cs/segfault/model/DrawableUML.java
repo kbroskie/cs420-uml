@@ -15,9 +15,9 @@ import edu.millersville.cs.segfault.ui.UMLPanel;
 
 
 /*****************************************************************************
- * An interface for objects which can be inserted into a {@link UMLModel}    *
- * and drawn on a {@link UMLPanel}                                           *
- * @author Daniel Rabiega                                                    *
+ * An interface for objects which can be inserted into a {@link UMLModel}    
+ * and drawn on a {@link UMLPanel}                                           
+ * @author Daniel Rabiega                                                    
  *****************************************************************************/
 public interface DrawableUML {
 	boolean isSelected();

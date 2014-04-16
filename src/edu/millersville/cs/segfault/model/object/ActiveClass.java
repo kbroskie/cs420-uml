@@ -11,19 +11,19 @@ import java.awt.*;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 
-public class UMLActiveClass extends UMLClassObject {
+public class ActiveClass extends ClassObject {
 
 	//*************************************************************************
 	//Constructors	
 		
 	//Empty constructor
-	public UMLActiveClass () 
+	public ActiveClass () 
 	{
 		super();
 	}
 				
 	//Member constructor
-	public UMLActiveClass (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected) 
+	public ActiveClass (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected) 
 			throws Exception
 	{
 		super(nLabel, p, nZ, size, nSelected);
@@ -31,7 +31,7 @@ public class UMLActiveClass extends UMLClassObject {
 	}
 	
 	//Deserialization constructor
-	public UMLActiveClass(String serial) 
+	public ActiveClass(String serial) 
 		throws Exception
 	{
 		super(serial);

@@ -11,27 +11,27 @@ import java.awt.*;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 
-public class UMLComponent extends UMLObject 
+public class Component extends UMLObject 
 {	
 	
 //***************************************************************
 //Constructors
 	
 	//Empty constructor
-	public UMLComponent ()
+	public Component ()
 	{
 		super();
 	}
 		
 	//Member constructor
-	public UMLComponent (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected) 
+	public Component (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected) 
 	throws Exception
 	{
 		super(nLabel, p,nZ,size,nSelected);
 		
 	}
 	
-	public UMLComponent (String serious) 
+	public Component (String serious) 
 		throws Exception
 	{
 		super(serious);

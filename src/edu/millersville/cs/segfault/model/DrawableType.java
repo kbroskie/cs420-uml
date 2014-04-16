@@ -7,15 +7,15 @@ import javax.swing.ImageIcon;
 
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
-import edu.millersville.cs.segfault.model.object.UMLActiveClass;
-import edu.millersville.cs.segfault.model.object.UMLClassObject;
-import edu.millersville.cs.segfault.model.object.UMLCollaboration;
-import edu.millersville.cs.segfault.model.object.UMLComponent;
-import edu.millersville.cs.segfault.model.object.UMLNode;
+import edu.millersville.cs.segfault.model.object.ActiveClass;
+import edu.millersville.cs.segfault.model.object.ClassObject;
+import edu.millersville.cs.segfault.model.object.Collaboration;
+import edu.millersville.cs.segfault.model.object.Component;
+import edu.millersville.cs.segfault.model.object.Node;
 import edu.millersville.cs.segfault.model.object.UMLObject;
-import edu.millersville.cs.segfault.model.object.UMLPackage;
-import edu.millersville.cs.segfault.model.object.UMLState;
-import edu.millersville.cs.segfault.model.object.UMLUseCase;
+import edu.millersville.cs.segfault.model.object.Package;
+import edu.millersville.cs.segfault.model.object.State;
+import edu.millersville.cs.segfault.model.object.UseCase;
 import edu.millersville.cs.segfault.model.relation.Aggregation;
 import edu.millersville.cs.segfault.model.relation.Association;
 import edu.millersville.cs.segfault.model.relation.Composition;
@@ -108,14 +108,14 @@ public enum DrawableType {
 		}
 		switch(type) {
 		case OBJECT:       return new UMLObject(serial);
-		case ACTIVE_CLASS: return new UMLActiveClass(serial);
-		case CLASS:        return new UMLClassObject(serial);
-		case COMPONENT:    return new UMLComponent(serial);
-		case NODE:         return new UMLNode(serial);
-		case STATE:        return new UMLState(serial);
-		case USE_CASE:	   return new UMLUseCase(serial);
-		case COLLABORATION: return new UMLCollaboration(serial);
-		case PACKAGE: return new UMLPackage(serial);
+		case ACTIVE_CLASS: return new ActiveClass(serial);
+		case CLASS:        return new ClassObject(serial);
+		case COMPONENT:    return new Component(serial);
+		case NODE:         return new Node(serial);
+		case STATE:        return new State(serial);
+		case USE_CASE:	   return new UseCase(serial);
+		case COLLABORATION: return new Collaboration(serial);
+		case PACKAGE: return new Package(serial);
 		default:           return null;
 		}
 	}
@@ -131,14 +131,14 @@ public enum DrawableType {
 		}
 		switch(type) {
 		case OBJECT:       return new UMLObject("", origin, panel.getModel().highestZ() + 1, size, false);
-		case ACTIVE_CLASS: return new UMLActiveClass("", origin, panel.getModel().highestZ() + 1, size, false);
-		case CLASS:        return new UMLClassObject("", origin, panel.getModel().highestZ() + 1, size, false);
-		case COMPONENT:    return new UMLComponent("", origin, panel.getModel().highestZ() + 1, size, false);
-		case NODE:         return new UMLNode("", origin, panel.getModel().highestZ() + 1, size, false);
-		case STATE:        return new UMLState("", origin, panel.getModel().highestZ() + 1, size, false);
-		case USE_CASE:     return new UMLUseCase("", origin, panel.getModel().highestZ() + 1, size, false);
-		case COLLABORATION:return new UMLCollaboration("", origin, panel.getModel().highestZ() + 1, size, false);
-		case PACKAGE:      return new UMLPackage("", origin, panel.getModel().highestZ() + 1, size, false);
+		case ACTIVE_CLASS: return new ActiveClass("", origin, panel.getModel().highestZ() + 1, size, false);
+		case CLASS:        return new ClassObject("", origin, panel.getModel().highestZ() + 1, size, false);
+		case COMPONENT:    return new Component("", origin, panel.getModel().highestZ() + 1, size, false);
+		case NODE:         return new Node("", origin, panel.getModel().highestZ() + 1, size, false);
+		case STATE:        return new State("", origin, panel.getModel().highestZ() + 1, size, false);
+		case USE_CASE:     return new UseCase("", origin, panel.getModel().highestZ() + 1, size, false);
+		case COLLABORATION:return new Collaboration("", origin, panel.getModel().highestZ() + 1, size, false);
+		case PACKAGE:      return new Package("", origin, panel.getModel().highestZ() + 1, size, false);
 		default:           return null;
 		}
 	}
@@ -147,14 +147,14 @@ public enum DrawableType {
 									   int z, boolean selected) throws Exception {
 		switch(type) {
 		case OBJECT:       return new UMLObject("", origin, z, size, selected);
-		case ACTIVE_CLASS: return new UMLActiveClass("", origin, z, size, selected);
-		case CLASS:        return new UMLClassObject("", origin, z, size, selected);
-		case COMPONENT:    return new UMLComponent("", origin, z, size, selected);
-		case NODE:         return new UMLNode("", origin, z, size, selected);
-		case STATE:        return new UMLState("", origin, z, size, selected);
-		case USE_CASE:     return new UMLUseCase("", origin, z, size, selected);
-		case COLLABORATION:return new UMLCollaboration("", origin, z, size, selected);
-		case PACKAGE:      return new UMLPackage("", origin, z, size, selected);
+		case ACTIVE_CLASS: return new ActiveClass("", origin, z, size, selected);
+		case CLASS:        return new ClassObject("", origin, z, size, selected);
+		case COMPONENT:    return new Component("", origin, z, size, selected);
+		case NODE:         return new Node("", origin, z, size, selected);
+		case STATE:        return new State("", origin, z, size, selected);
+		case USE_CASE:     return new UseCase("", origin, z, size, selected);
+		case COLLABORATION:return new Collaboration("", origin, z, size, selected);
+		case PACKAGE:      return new Package("", origin, z, size, selected);
 		default:           return null;
 		}
 	}

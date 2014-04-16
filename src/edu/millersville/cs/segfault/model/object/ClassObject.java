@@ -15,7 +15,7 @@ import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.XMLAttribute;
 
-	public class UMLClassObject extends UMLObject {
+	public class ClassObject extends UMLObject {
 		
 //*********************************************************************
 //Static variables
@@ -28,7 +28,7 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
 //Constructors
 		
 	//Empty constructor
-	public UMLClassObject()
+	public ClassObject()
 	{
 		super();
 		this.firstLine  = new ImmutableLine(new ImmutablePoint(this.origin.x, this.origin.y + this.size.height/4), 
@@ -38,7 +38,7 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
 	}
 
 	//Member constructor.
-	public UMLClassObject (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
+	public ClassObject (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
 			throws Exception
 	{
 		super(nLabel, p, nZ, size, nSelected);
@@ -48,7 +48,7 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
 		          		  new ImmutablePoint(this.origin.x + this.size.width, this.origin.y +(this.size.height/2)));
 	}
 
-	public UMLClassObject (String s) 
+	public ClassObject (String s) 
 		throws Exception
 	{
 		super(s);
@@ -74,15 +74,15 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
 		
 
 	//Move
-	public UMLClassObject moveClass (ImmutablePoint p, int z) throws Exception
+	public ClassObject moveClass (ImmutablePoint p, int z) throws Exception
 	{
-		return new UMLClassObject (this.label, p, z, this.size, this.isSelected());
+		return new ClassObject (this.label, p, z, this.size, this.isSelected());
 	}
 
 	//Resize
-	public UMLClassObject resizeClass (Dimension size) throws Exception
+	public ClassObject resizeClass (Dimension size) throws Exception
 	{
-		return new UMLClassObject (this.label, this.origin, this.getZ(), size, this.isSelected());
+		return new ClassObject (this.label, this.origin, this.getZ(), size, this.isSelected());
 	}
 	
 //************************************************************************

@@ -24,7 +24,7 @@ public class DrawMode extends PanelInteractionMode {
 	/*************************************************************************
 	 * The distance within which mouse interactions will snap to snap-points.
 	 *************************************************************************/
-	public static final int snapDistance = 20;
+	public static final int snapDistance = 15;
 
 	// *************************************************************************
 	// Private Instance Variables

@@ -24,7 +24,7 @@ public class XMLAttributeTest {
 		UMLModel testModel = new UMLModel();
 		
 		UMLObject testO1 = new UMLObject();
-		UMLState testSta1 = new UMLState();
+		State testSta1 = new State();
 		testModel = testModel.add(testO1);
 		testModel = testModel.add(testSta1);
 		

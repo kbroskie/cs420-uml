@@ -11,19 +11,19 @@ import java.awt.*;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 
-public class UMLUseCase extends UMLObject {
+public class UseCase extends UMLObject {
 
 	//*****************************************************************
 	//Constructors
 	
 	//Empty constructor
-	public UMLUseCase ()
+	public UseCase ()
 	{
 		super();
 	}
 	
 	//Member constructor
-	public UMLUseCase (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
+	public UseCase (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
 		throws Exception
 	{
 		
@@ -32,7 +32,7 @@ public class UMLUseCase extends UMLObject {
 	}
 	
 	//Deserialization constructor
-	public UMLUseCase (String serial) 
+	public UseCase (String serial) 
 		throws Exception
 	{
 		super(serial);

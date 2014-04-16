@@ -197,6 +197,52 @@ public class UMLModel {
 		return zIterator().next().getZ();
 	}
 	
+	/*************************************************************************
+	 * Returns an ImmutableSet containing a reference to each item currently
+	 * in the model which is selected.
+	 */
+	public ImmutableSet<DrawableUML> selectedSet() {
+		ImmutableSet<DrawableUML> theSelected = new ImmutableSet<DrawableUML>();
+		
+		Iterator<DrawableUML> zIter = zIterator();
+		while (zIter.hasNext()) {
+			DrawableUML candidate = zIter.next();
+			if (candidate.isSelected()) { theSelected.add(candidate); }
+		}
+		
+		return theSelected;
+	}
+	
+	/*************************************************************************
+	 * Returns an ImmutableSet containing a reference to each object in 
+	 * the model which is currently selected.
+	 */
+	public ImmutableSet<UMLObject> selectedObjectSet() {
+		ImmutableSet<UMLObject> theSelected = new ImmutableSet<>();
+		
+		Iterator<UMLObject> oIter = this.objectIterator();
+		while (oIter.hasNext()) {
+			UMLObject candidate = oIter.next();
+			if (candidate.isSelected()) { theSelected.add(candidate); }
+		}
+		return theSelected;
+	}
+	
+	/*************************************************************************
+	 * Returns an ImmutableSet containing a reference to each relation
+	 * in the model which is currently selected.
+	 */
+	public ImmutableSet<UMLRelation> selectedRelationSet() {
+		ImmutableSet<UMLRelation> theSelected = new ImmutableSet<>();
+		
+		Iterator<UMLRelation> rIter = this.relationIterator();
+		while (rIter.hasNext()) {
+			UMLRelation candidate = rIter.next();
+			if (candidate.isSelected()) { theSelected.add(candidate); }
+		}
+		return theSelected;
+	}
+	
 	//********************************************************************
 	// Mutators
 	//********************************************************************

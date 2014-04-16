@@ -19,19 +19,19 @@ import java.awt.geom.Ellipse2D;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 
-public class UMLCollaboration extends UMLUseCase {
+public class Collaboration extends UseCase {
 	
 	//*****************************************************************
 		//Constructors
 		
 		//Empty constructor
-		public UMLCollaboration ()
+		public Collaboration ()
 		{
 			super();
 		}
 		
 		//Member constructor
-		public UMLCollaboration (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
+		public Collaboration (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
 			throws Exception
 		{
 			
@@ -40,7 +40,7 @@ public class UMLCollaboration extends UMLUseCase {
 		}
 		
 		//Deserialization constructor
-		public UMLCollaboration (String serial) 
+		public Collaboration (String serial) 
 			throws Exception
 		{
 			super(serial);

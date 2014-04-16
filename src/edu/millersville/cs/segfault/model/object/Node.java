@@ -12,25 +12,25 @@ import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 
-public class UMLNode extends UMLObject {
+public class Node extends UMLObject {
 
 //************************************************************************
 //Constructors
 	
 	//Empty constructor
-	public UMLNode ()
+	public Node ()
 	{
 		super();
 	}
 		
 	//Member constructor
-	public UMLNode (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
+	public Node (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
 		throws Exception
 	{
 		super(nLabel, p, nZ, size, nSelected);
 	}
 	
-	public UMLNode(String s) 
+	public Node(String s) 
 		throws Exception
 	{
 		super(s);

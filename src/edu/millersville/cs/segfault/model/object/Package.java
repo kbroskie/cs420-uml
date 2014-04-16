@@ -12,19 +12,19 @@ import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 
-public class UMLPackage extends UMLObject {
+public class Package extends UMLObject {
 	
 	//*************************************************************************
 	//Constructors	
 			
 	//Empty constructor
-	public UMLPackage () 
+	public Package () 
 	{
 		super();
 	}
 					
 	//Member constructor
-	public UMLPackage (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected) 
+	public Package (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected) 
 				throws Exception
 	{
 		super(nLabel, p, nZ, size, nSelected);
@@ -32,7 +32,7 @@ public class UMLPackage extends UMLObject {
 	}
 		
 	//Deserialization constructor
-	public UMLPackage(String serial) 
+	public Package(String serial) 
 			throws Exception
 	{
 		super(serial);

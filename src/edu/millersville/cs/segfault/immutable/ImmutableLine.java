@@ -3,6 +3,7 @@ package edu.millersville.cs.segfault.immutable;
 import java.awt.Graphics;
 
 import edu.millersville.cs.segfault.model.XMLAttribute;
+import edu.millersville.cs.segfault.ui.DrawMode;
 
 /*****************************************************************************
  * An immutable line class.
@@ -139,14 +140,19 @@ public class ImmutableLine {
 	 */
 	public ImmutablePoint snapPoint(ImmutablePoint p) {
 		ImmutableLine perpLine = this.perpendicular(p);
-		if (perpLine != null) {
+		if (perpLine != null && perpLine.length() < DrawMode.snapDistance ) {
 			return perpLine.second;
 		}
 		
-		if (first.distance(p) < second.distance(p)) {
-			return first;
-		}
-		return second;
+		ImmutableLine fromFirst  = new ImmutableLine(this.first,  p);
+		ImmutableLine fromSecond = new ImmutableLine(this.second, p);
+		ImmutableLine closer = fromSecond;
+		
+		if (fromFirst.length() < fromSecond.length()) { closer = fromFirst; }
+		
+		if (closer.length() < DrawMode.snapDistance*2) { return closer.first; }
+		
+		return null;		
 	}
 
 	/*************************************************************************

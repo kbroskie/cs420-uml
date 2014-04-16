@@ -12,26 +12,26 @@ import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 
-public class UMLState extends UMLObject {
+public class State extends UMLObject {
 	
 //**********************************************************************************
 //Constructors
 	
 	//Empty constructor
-	public UMLState() 
+	public State() 
 	{
 		super();
 	}
 						
 	//Member constructor
-	public UMLState (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected) 
+	public State (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected) 
 				throws Exception
 	{
 		super(nLabel, p, nZ, size, nSelected);
 				
 	}
 	
-	public UMLState (String duper) 
+	public State (String duper) 
 		throws Exception
 	{
 		super(duper);
