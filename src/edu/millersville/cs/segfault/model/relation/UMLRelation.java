@@ -119,6 +119,7 @@ public class UMLRelation implements DrawableUML {
 		return this.path.last();
 	}
 	
+	public ImmutablePoint nearest(ImmutablePoint p) { return this.path.nearest(p); }
 	
 	//*************************************************************************
 	// Mutators
@@ -127,6 +128,27 @@ public class UMLRelation implements DrawableUML {
 		return new UMLRelation(this.path.addLast(p), this.z, this.selected);
 	}
 	
+	public UMLRelation translate(int deltaX, int deltaY) {
+		UMLRelation newRelation = this;
+		try {
+			newRelation = DrawableType.makeRelation(this.getType(), this.path.translate(deltaX, deltaY), 
+													this.z, this.selected);
+		} catch (Exception e) {
+			
+		}
+		return newRelation;
+	}
+	
+	public UMLRelation translate(ImmutablePoint p, int deltaX, int deltaY) {
+		UMLRelation newRelation = this;
+		try {
+			newRelation = DrawableType.makeRelation(this.getType(), this.path.translate(p, deltaX, deltaY), 
+													this.z, this.selected);
+		} catch (Exception e) {
+			
+		}
+		return newRelation;
+	}
 	
 	//*************************************************************************
 	// Drawing Methods

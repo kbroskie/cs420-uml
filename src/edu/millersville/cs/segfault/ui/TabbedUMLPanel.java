@@ -13,17 +13,18 @@ public class TabbedUMLPanel extends JTabbedPane {
 	private final int Virtual_Key_0 = 48;
 	//private JScrollPane scrollableUMLPanel;
 	
+	private final UMLWindow parent;
 
 
-
-	public TabbedUMLPanel () {
+	public TabbedUMLPanel (UMLWindow parent) {
 		super();	
 
+		this.parent = parent;
 		
 		//String title = "Tab 1";
 		//getNewTab(1, title);
 		//setMnemonicAt(0, KeyEvent.VK_1);
-		addTab("Tab 1", new UMLPanel());
+		addTab("Tab 1", new UMLPanel(parent));
 
 		Component newTab = getComponentAt(0);
 		JScrollPane scrollpane = new JScrollPane(newTab);
@@ -57,7 +58,7 @@ public class TabbedUMLPanel extends JTabbedPane {
 	}
 	
 	public Component getNewTab(int tabNumber, String title) {
-		addTab(title, new UMLPanel());
+		addTab(title, new UMLPanel(parent));
 		return getComponentAt(tabNumber);
 	}
 }

@@ -163,7 +163,7 @@ public class DrawMode extends PanelInteractionMode {
 	 */
 	
 	public ImmutablePoint snap(ImmutablePoint p) {
-		Iterator<DrawableUML> zIter = panel.getModel().zIterator();
+		Iterator<DrawableUML> zIter = panel.getModel().iterator();
 
 		ImmutablePoint closest = null;
 
@@ -213,7 +213,7 @@ public class DrawMode extends PanelInteractionMode {
 			vertical = false;
 		}
 		ImmutablePoint closest = null;
-		Iterator<DrawableUML> zIter = panel.getModel().zIterator();
+		Iterator<DrawableUML> zIter = panel.getModel().iterator();
 		while (zIter.hasNext()) {
 			ImmutablePath currentPath = zIter.next().getPath();
 			Iterator<ImmutableLine> lIter = currentPath.lineIterator();

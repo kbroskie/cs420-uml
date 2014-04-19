@@ -10,7 +10,7 @@ import java.util.Iterator;
  * @param <E> The type of items stored in the set.
  *****************************************************************************/
 
-public class ImmutableSet<E> {
+public class ImmutableSet<E> implements Iterable<E> {
 
 	//************************************************************************
 	// Instance variables

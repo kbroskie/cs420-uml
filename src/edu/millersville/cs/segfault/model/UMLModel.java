@@ -12,7 +12,7 @@ import edu.millersville.cs.segfault.model.relation.UMLRelation;
  * 
  * @author Daniel Rabiega
  */
-public class UMLModel {
+public class UMLModel implements Iterable<DrawableUML> {
 	
 	//*************************************************************************
 	// Instance Variables
@@ -180,7 +180,7 @@ public class UMLModel {
 	 * model.
 	 */
 	public int highestZ() {
-		Iterator<DrawableUML> zIter = zIterator();
+		Iterator<DrawableUML> zIter = iterator();
 		int highZ = 0;
 		while (zIter.hasNext()) {
 			int newZ = zIter.next().getZ();
@@ -194,7 +194,7 @@ public class UMLModel {
 	 * Returns the lowest Z value present in objects and relations in this model.
 	 */
 	public int lowestZ() {
-		return zIterator().next().getZ();
+		return iterator().next().getZ();
 	}
 	
 	/*************************************************************************
@@ -204,10 +204,10 @@ public class UMLModel {
 	public ImmutableSet<DrawableUML> selectedSet() {
 		ImmutableSet<DrawableUML> theSelected = new ImmutableSet<DrawableUML>();
 		
-		Iterator<DrawableUML> zIter = zIterator();
+		Iterator<DrawableUML> zIter = iterator();
 		while (zIter.hasNext()) {
 			DrawableUML candidate = zIter.next();
-			if (candidate.isSelected()) { theSelected.add(candidate); }
+			if (candidate.isSelected()) { theSelected = theSelected.add(candidate); }
 		}
 		
 		return theSelected;
@@ -223,7 +223,7 @@ public class UMLModel {
 		Iterator<UMLObject> oIter = this.objectIterator();
 		while (oIter.hasNext()) {
 			UMLObject candidate = oIter.next();
-			if (candidate.isSelected()) { theSelected.add(candidate); }
+			if (candidate.isSelected()) { theSelected = theSelected.add(candidate); }
 		}
 		return theSelected;
 	}
@@ -238,7 +238,7 @@ public class UMLModel {
 		Iterator<UMLRelation> rIter = this.relationIterator();
 		while (rIter.hasNext()) {
 			UMLRelation candidate = rIter.next();
-			if (candidate.isSelected()) { theSelected.add(candidate); }
+			if (candidate.isSelected()) { theSelected = theSelected.add(candidate); }
 		}
 		return theSelected;
 	}
@@ -340,12 +340,23 @@ public class UMLModel {
 		throws Exception
 	{
 		UMLModel workingModel = new UMLModel(this);
-		Iterator<DrawableUML> zIter = this.zIterator();
+		Iterator<DrawableUML> zIter = this.iterator();
 		while (zIter.hasNext()) {
 			DrawableUML current = zIter.next();
 			if (current.isSelected()) {
 				workingModel = workingModel.unselect(current);
 			}
+		}
+		return workingModel;
+	}
+	
+	public UMLModel replace(DrawableUML oldDraw, DrawableUML newDraw) {
+		UMLModel workingModel = this;
+		try {
+			workingModel = this.remove(oldDraw);
+			workingModel = this.add(newDraw);
+		} catch (Exception e) {
+			System.out.println("Failed to replace old version during replace.");
 		}
 		return workingModel;
 	}
@@ -358,7 +369,7 @@ public class UMLModel {
 		throws Exception
 	{
 		UMLModel workingModel = new UMLModel(this);
-		Iterator<DrawableUML> zIter = this.zIterator();
+		Iterator<DrawableUML> zIter = this.iterator();
 		while (zIter.hasNext()) {
 			DrawableUML current = zIter.next();
 			if (current.isSelected()) {
@@ -375,7 +386,7 @@ public class UMLModel {
 	 * Returns an Iterator<DrawableUML> object which iterates over all objects
 	 * and relations in the model in order of their Z values.
 	 */
-	public Iterator<DrawableUML> zIterator()
+	public Iterator<DrawableUML> iterator()
 	{
 		PriorityQueue<DrawableUML> zQueue = new PriorityQueue<DrawableUML>(1 + this.objects.size()+this.relations.size(),
 				new ZComparator());
@@ -395,6 +406,8 @@ public class UMLModel {
 		return zQueue.iterator();
 	}
 
+
+	
 	/*************************************************************************
 	 * Returns an iterator which iterates over all of the objects in the model.
 	 */
@@ -409,6 +422,7 @@ public class UMLModel {
 	{
 		return relations.iterator();
 	}
+
 	
 
 }

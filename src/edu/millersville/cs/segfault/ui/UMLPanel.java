@@ -152,6 +152,7 @@ public class UMLPanel extends JPanel {
 	private LinkedList<UMLModel> redoStack;
 	private PanelInteractionMode currentInteractionMode;
 	boolean gridOn;
+	UMLWindow parent;
 	
 	//************************************************************************
 	// Constructors
@@ -160,11 +161,12 @@ public class UMLPanel extends JPanel {
 	 * Creates a new UMLPanel with default values.
 	 */
 	
-	public UMLPanel(){
+	public UMLPanel(UMLWindow parent){
 		currentModel = new UMLModel();
+		this.parent = parent;
 		undoStack = new LinkedList<UMLModel>();
 		redoStack = new LinkedList<UMLModel>();
-		currentInteractionMode = new SelectionMode(this);
+		currentInteractionMode = new SelectionMode(parent);
 		this.addMouseListener(currentInteractionMode);
 		this.addMouseMotionListener(currentInteractionMode);
 		this.addKeyListener(currentInteractionMode);
@@ -179,8 +181,8 @@ public class UMLPanel extends JPanel {
 	 * Creates a new UMLPanel displaying a given model.
 	 * @param new_model The model to display.
 	 */
-	public UMLPanel(UMLModel new_model) {
-		this();
+	public UMLPanel(UMLWindow parent, UMLModel new_model) {
+		this(parent);
 		this.changeModel(new_model);
 		repaint();
 	}
@@ -231,7 +233,7 @@ public class UMLPanel extends JPanel {
 	public boolean fullSelection()
 	{
 		// Iterate through the set of models
-		Iterator<DrawableUML> zIter = this.getModel().zIterator();
+		Iterator<DrawableUML> zIter = this.getModel().iterator();
 		
 		while( zIter.hasNext())
 		{
@@ -256,6 +258,10 @@ public class UMLPanel extends JPanel {
 		this.currentModel = new_model;
 		redoStack = new LinkedList<UMLModel>();
 		repaint();
+	}
+	
+	public void minorChange(UMLModel newModel) {
+		this.currentModel = newModel;
 	}
 
 	/*************************************************************************
@@ -415,7 +421,7 @@ public class UMLPanel extends JPanel {
 			}
 		} else {
 			// Enter selection mode
-			this.changeInteractionMode(new SelectionMode(this));
+			this.changeInteractionMode(new SelectionMode(parent));
 			selectAll();
 		}
 		
@@ -430,7 +436,7 @@ public class UMLPanel extends JPanel {
 	public void selectAll()
 	{
 		// Iterate through the set of models
-		Iterator<DrawableUML> zIter = this.getModel().zIterator();
+		Iterator<DrawableUML> zIter = this.getModel().iterator();
 		
 		while( zIter.hasNext())
 		{
@@ -468,7 +474,7 @@ public class UMLPanel extends JPanel {
 			paintGrid(g);
 		}
 		
-		Iterator<DrawableUML> zIter = currentModel.zIterator();
+		Iterator<DrawableUML> zIter = currentModel.iterator();
 		
 		while (zIter.hasNext())
 		{

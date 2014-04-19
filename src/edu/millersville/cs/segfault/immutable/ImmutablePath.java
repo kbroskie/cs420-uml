@@ -18,7 +18,7 @@ import edu.millersville.cs.segfault.ui.DrawMode;
 
 //*****************************************************************************
 // Class Definition
-public class ImmutablePath {
+public class ImmutablePath implements Iterable<ImmutablePoint> {
 	
 	//*************************************************************************
 	// Instance Variables
@@ -123,6 +123,24 @@ public class ImmutablePath {
 		return new ImmutablePath(newPath);		
 	}
 	
+	public ImmutablePath translate(int deltaX, int deltaY) {
+		ImmutablePoint[] newPoints = getPoints();
+		for (int i=0; i < newPoints.length; ++i) {
+			newPoints[i] = newPoints[i].translate(deltaX, deltaY);
+		}
+		return new ImmutablePath(newPoints);
+	}
+	
+	public ImmutablePath translate(ImmutablePoint p, int deltaX, int deltaY) {
+		ImmutablePoint[] newPoints = this.getPoints();
+		for (int i=0; i < newPoints.length; ++i) {
+			if (newPoints[i]==p) {
+				newPoints[i] = newPoints[i].translate(deltaX, deltaY);
+			}
+		}
+		return new ImmutablePath(newPoints);
+	}
+	
 	//*************************************************************************
 	// Observers
 	
@@ -151,6 +169,14 @@ public class ImmutablePath {
 			newPoints[i] = this.points[i];
 		}
 		return newPoints;
+	}
+	
+	public ImmutablePoint nearest(ImmutablePoint p) {
+		ImmutablePoint min = this.points[0]; 
+		for (ImmutablePoint current: this.points) {
+			if (p.distance(current) < p.distance(min)) { min = current; }
+		}
+		return min;
 	}
 	
 	/*************************************************************************

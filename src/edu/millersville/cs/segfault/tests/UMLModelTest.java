@@ -34,7 +34,7 @@ public class UMLModelTest {
 		//**********************************************************************************//
 		
 		UMLObject testO1 = new UMLObject();
-		testO1 = testO1.move(100, 100, 5);
+		//testO1 = testO1.move(100, 100, 5);
 		testO1.resize(500, 450);
 		testModel = testModel.add(testO1);
 		
@@ -42,7 +42,7 @@ public class UMLModelTest {
 		testModel.addObject(testO2);
 		
 		UMLObject testO3 = new UMLObject();
-		testO3 = testO3.move(100, 100, -2);
+//		testO3 = testO3.move(100, 100, -2);
 		testModel = testModel.add(testO3);
 		
 		UMLRelation testR1 = new UMLRelation(new ImmutablePath(
@@ -114,7 +114,7 @@ public class UMLModelTest {
 		//makeObject & makeRelation Tests
 		//**********************************************************************************//	
 		
-		UMLPanel testPanel = new UMLPanel();
+		//UMLPanel testPanel = new UMLPanel();
 		
 
 //		UMLObject testMO = DrawableType.makeObject(DrawableType.OBJECT, 

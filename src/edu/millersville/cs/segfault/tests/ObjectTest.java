@@ -47,7 +47,7 @@ public class ObjectTest {
 		//Serialization Tests
 		//**********************************************************************************//
 		
-		testO3 = testO3.move(20, 20, 7);
+		//testO3 = testO3.move(20, 20, 7);
 		UMLObject testO4 = new UMLObject(testO3.serialize());
 		assertTrue("Failed to take in and make object from serialized form", 
 				testO4.getZ() == testO3.getZ());
@@ -56,8 +56,8 @@ public class ObjectTest {
 		//Move and Resize Tests
 		//**********************************************************************************//
 		
-		testO1 = testO1.move(20, 20, 0);
-		testO2 = testO2.move(100, 100, 0);
+//		testO1 = testO1.move(20, 20, 0);
+//		testO2 = testO2.move(100, 100, 0);
 		testO1 = testO1.resize(20, 50);
 		testO2 = testO2.resize(60, 70);
 		testO1 = testO1.resize(60, 70);

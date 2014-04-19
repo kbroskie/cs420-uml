@@ -76,7 +76,7 @@ public class UMLWindow extends JFrame {
 		
 		//panel1 = new UMLPanel();
 		
-		umlPanel = new UMLPanel();
+		umlPanel = new UMLPanel(this);
 		scrollableUMLPanel = new JScrollPane(umlPanel);
 		panels.put(scrollableUMLPanel, umlPanel);
 		scrollableUMLPanel.setViewportView(umlPanel);

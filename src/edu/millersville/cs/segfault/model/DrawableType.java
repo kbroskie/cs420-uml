@@ -195,5 +195,18 @@ public enum DrawableType {
 		}
 	}
 	
+	public static UMLRelation makeRelation(DrawableType type, ImmutablePath path, int z, boolean selected)
+			throws Exception
+		{
+			if (type.isObject) throw new Exception("Factory: Type is object.");
+			
+			switch(type) {
+			case RELATION: return new UMLRelation(path, z, selected);
+			case AGGREGATION: return new Aggregation(path, z, selected);
+			case ASSOCIATION: return new Association(path, z, selected);
+			case COMPOSITION: return new Composition(path, z, selected);
+			default: return null;
+			}
+		}
 }
  

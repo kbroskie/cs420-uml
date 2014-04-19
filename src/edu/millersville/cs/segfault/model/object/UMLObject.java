@@ -157,6 +157,27 @@ public class UMLObject implements DrawableUML {
 	 */
 	public boolean isSelected() { return this.selected; }
 	
+	public ImmutablePoint getCorner() {
+		return new ImmutablePoint(this.origin.x + this.size.width, this.origin.y + this.size.height);
+	}
+	
+	public int nearestCorner(ImmutablePoint p) {
+		ImmutablePoint[] corners = { this.origin, 
+									 new ImmutablePoint(this.origin.x + this.size.width/2, this.origin.y),
+									 new ImmutablePoint(this.origin.x + this.size.width, this.origin.y),
+									 new ImmutablePoint(this.origin.x, this.origin.y + this.size.height/2),
+									 new ImmutablePoint(this.origin.x + this.size.width, this.origin.y + this.size.height/2),
+									 new ImmutablePoint(this.origin.x, this.origin.y + this.size.height),
+									 new ImmutablePoint(this.origin.x + this.size.width/2, this.origin.y + this.size.height),
+									 this.getCorner() };
+		
+		int min = 0;
+		for (int i=1; i<corners.length; ++i) {
+			if (p.distance(corners[i]) < p.distance(corners[min])) { min = i; }
+		}
+		return min;
+	}
+	
 	//********************************************************************
 	// Mutators
 	//********************************************************************
@@ -173,10 +194,16 @@ public class UMLObject implements DrawableUML {
 	/*************************************************************************
 	 * Returns a new UMLObject with a different location.
 	 */
-	public UMLObject move(int x, int y, int z) 
-		throws Exception
+	public UMLObject translate(int deltaX, int deltaY) 
 	{
-		return new UMLObject(this.label, new ImmutablePoint(x, y), z, this.size, this.selected);
+		UMLObject newObject = this;
+		try {
+			newObject = DrawableType.makeObject(this.getType(), this.origin.translate(deltaX, deltaY), 
+												this.size, z, this.selected);
+		} catch (Exception e) {
+			
+		}
+		return newObject;
 	}
 
 	/*************************************************************************
@@ -210,6 +237,22 @@ public class UMLObject implements DrawableUML {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	/*********************************************************************
+	 * Returns a new version of this object with size adjusted by
+	 * deltaX and deltaY
+	 */
+	public UMLObject scale(int deltaX, int deltaY) {
+		UMLObject newObject = this;
+		try {
+			newObject = DrawableType.makeObject(this.getType(), this.origin, 
+						  			            new Dimension(this.size.width + deltaX, this.size.height + deltaY),
+									            deltaY, selected);
+		} catch (Exception e) {
+			
+		}
+		return newObject;
 	}
 	
 	//********************************************************************

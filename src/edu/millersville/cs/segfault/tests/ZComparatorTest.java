@@ -30,7 +30,7 @@ public class ZComparatorTest {
 		ZComparator testZ = new ZComparator();
 		
 		UMLObject testO = new UMLObject();
-		testO = testO.move(100, 100, 8);
+//		testO = testO.move(100, 100, 8);
 		
 		UMLRelation testR = new UMLRelation(new ImmutablePath(
 				new ImmutablePoint(20, 70)).addLast(new ImmutablePoint(80, 150)), 4, false);
@@ -41,11 +41,11 @@ public class ZComparatorTest {
 		
 		assertTrue("ZComparator for Drawable A > B Failed!", testZ.compare(testO, testR) == 1);
 		
-		testO = testO.move(100, 100, 3);
+//		testO = testO.move(100, 100, 3);
 		
 		assertTrue("ZComparator for Drawable A < B Failed!", testZ.compare(testO, testR) == -1);
 		
-		testO = testO.move(100, 100, 4);
+//		testO = testO.move(100, 100, 4);
 		
 		assertTrue("ZComparator for Drawable A = B Failed!", testZ.compare(testO, testR) == 0);
 

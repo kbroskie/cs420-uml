@@ -1,6 +1,7 @@
 package edu.millersville.cs.segfault.immutable;
 
 import java.awt.Point;
+import java.awt.event.MouseEvent;
 
 import edu.millersville.cs.segfault.model.XMLAttribute;
 
@@ -10,6 +11,17 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
  *****************************************************************************/
 public class ImmutablePoint {
 
+	//************************************************************************
+	// Static Methods
+	
+	/*************************************************************************
+	 * Returns an ImmutablePoint based on the coordinates location in a given
+	 * mouse event.
+	 */
+	public static ImmutablePoint toPoint(MouseEvent e) {
+		return new ImmutablePoint(e.getX(), e.getY());
+	}
+	
 	//************************************************************************
 	// Instance Variables
 	
@@ -101,4 +113,15 @@ public class ImmutablePoint {
 	public String toString() {
 		return this.x + "," + this.y;
 	}
+	
+	//************************************************************************
+	// Mutators
+	
+	/*************************************************************************
+	 * Moves a point by the specified x and y coordinates.
+	 */
+	public ImmutablePoint translate(int deltaX, int deltaY) {
+		return new ImmutablePoint(this.x + deltaX, this.y + deltaY);
+	}
+	
 }

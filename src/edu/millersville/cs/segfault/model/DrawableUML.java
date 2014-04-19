@@ -30,4 +30,5 @@ public interface DrawableUML {
 	boolean hit(ImmutablePoint point);
 	boolean isWithin(Rectangle2D dragArea);
 	ImmutablePath getPath();
+	DrawableUML translate(int deltaX, int deltaY);
 }
