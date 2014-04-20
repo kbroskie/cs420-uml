@@ -29,11 +29,11 @@ public class UMLWindow extends JFrame {
 	//*************************************************************************	
 	// Components of the main frame.
 	private OptionsPanel optionsPane;
-	private TabbedUMLPanel tabbedUMLPanel;
+	//private TabbedUMLPanel tabbedUMLPanel;
 	JPanel rightPanel;
 	private Toolbar toolbar;
 	private UMLPanel umlPanel;
-	private final int Virtual_Key_0 = 48;
+//	private final int Virtual_Key_0 = 48;
 	private JScrollPane scrollableUMLPanel;
 	private JTabbedPane tabbedPanel;
 	//private UMLPanel panel1;

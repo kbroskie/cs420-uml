@@ -15,6 +15,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.plaf.TextUI;
 
 import edu.millersville.cs.segfault.model.DrawableType;
 
@@ -35,6 +36,7 @@ public class OptionsPanel extends JPanel
 	
 	// Non-Drawable Action Commands
 	private static final String selectAction = "SELECT";
+	private static final String textAction = "TEXT";
 	
 	// Dimensions for the panel and buttons.
 	private static final Dimension OPTIONS_PANE_MAX_SIZE = new Dimension(130, 520);
@@ -78,6 +80,12 @@ public class OptionsPanel extends JPanel
 		 
 		 // Create and add the select button.
 		 JToggleButton newButton = createSelectButton();
+		 optionsButtonGroup.add(newButton);
+		 horizontalBox = addNewButton(horizontalBox, newButton, buttonCount);
+		 ++buttonCount;
+		 
+		 // Create and add the text button.
+		 newButton = createTextButton();
 		 optionsButtonGroup.add(newButton);
 		 horizontalBox = addNewButton(horizontalBox, newButton, buttonCount);
 		 ++buttonCount;
@@ -133,9 +141,8 @@ public class OptionsPanel extends JPanel
 
 	/**************************************************************************
 	 * Creates a select button, giving it the initial focus.
-	 * properties.
 	 *************************************************************************/
-	public JToggleButton createSelectButton	() {
+	public JToggleButton createSelectButton() {
 		 JToggleButton newButton = 
 				 createButton(new ImageIcon("img/64/selectionMode.png"), 
 				 			  new ImageIcon("img/64/down/selectionMode.png"), selectAction);
@@ -146,7 +153,21 @@ public class OptionsPanel extends JPanel
 		 
 		 return newButton;
 	}
-		
+	
+	/**************************************************************************
+	 * Creates a text button.
+	 *************************************************************************/
+	public JToggleButton createTextButton() {
+		 JToggleButton newButton = 
+				 createButton(new ImageIcon("img/64/textMode.png"), 
+				 			  new ImageIcon("img/64/down/textMode.png"), textAction);
+		 
+		 newButton.setActionCommand(textAction);
+		 newButton.addActionListener(this);
+		 
+		 return newButton;
+	}
+	
 	/**************************************************************************
 	 * Formats a string, adding capitalization and spaces.
 	 * @param name the string to format
@@ -249,7 +270,12 @@ public class OptionsPanel extends JPanel
 		 if (selectedCommand.equals(selectAction)) {
 			 parentWindow.getUMLPanel().changeInteractionMode(
 					 new SelectionMode(parentWindow));
-		 } else {
+		 } 
+		 else if (selectedCommand.equals(textAction)) {
+		//	 parentWindow.getUMLPanel().chanceInteractionMode(
+		//			 new TextMode(parentWindow));
+		 }
+		 else {
 			 for (DrawableType type: DrawableType.typeList()) {
 				 if (type.name().equals(selectedCommand)) {
 					 parentWindow.getUMLPanel().changeInteractionMode(
