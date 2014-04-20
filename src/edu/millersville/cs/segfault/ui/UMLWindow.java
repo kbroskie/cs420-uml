@@ -120,6 +120,26 @@ public class UMLWindow extends JFrame {
 		}
 	}
 	
+	public void loadNewTab() {
+		int newTabNumber = tabbedPanel.getTabCount() + 1;
+		
+		if (newTabNumber > MAX_TAB_COUNT) {
+			String message = "The maximum number of tabs is " + MAX_TAB_COUNT + ".\n" + 
+					  "Please close one or more tabs before loading a file.";
+			JOptionPane.showMessageDialog(null, message, "Cannot Load File", 
+										  JOptionPane.ERROR_MESSAGE);
+		}
+		else {
+			UMLPanel uml = new UMLPanel(); 
+			uml.load();
+
+			JScrollPane scrollpanel = createScrollableUMLPanel(uml);
+			tabbedPanel.insertTab("New Tab " +  newTabNumber, null, scrollpanel, null, newTabNumber - 1);
+			tabbedPanel.setSelectedIndex(newTabNumber - 1);
+			panels.put(scrollpanel, uml);
+		}
+	}
+	
 	//********************************************************************
 	// Observers
 	//********************************************************************

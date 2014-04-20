@@ -50,6 +50,6 @@ public class Open extends AbstractAction
 	// Event Listeners
 	//*************************************************************************
 	public void actionPerformed(ActionEvent se) {
-		window.getUMLPanel().load();
+		window.loadNewTab();
 	}		
 }

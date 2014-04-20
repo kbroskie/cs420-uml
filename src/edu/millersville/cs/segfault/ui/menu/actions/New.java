@@ -50,7 +50,6 @@ public class New extends AbstractAction
 	// Event Listeners
 	//*************************************************************************
 	public void actionPerformed(ActionEvent se) {
-		//window.getUMLPanel().changeModel(new UMLModel());
 		window.createNewTab();
 	}	
 }
