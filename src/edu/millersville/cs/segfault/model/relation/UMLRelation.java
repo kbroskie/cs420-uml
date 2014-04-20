@@ -10,6 +10,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 
+import edu.millersville.cs.segfault.immutable.ImmutableLabel;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
@@ -28,6 +29,7 @@ public class UMLRelation implements DrawableUML {
 	private final ImmutablePath path;
 	private final int z;
 	private final boolean selected;
+	private final ImmutableLabel[] text;
 	
 	//*************************************************************************
 	// Constructors
@@ -38,6 +40,7 @@ public class UMLRelation implements DrawableUML {
 	 **************************************************************************/
 	public UMLRelation(ImmutablePath path, int z, boolean selected)
 	{
+		this.text = new ImmutableLabel[0];
 		this.z = z;
 		this.selected = selected;
 		this.path = path;
@@ -52,6 +55,7 @@ public class UMLRelation implements DrawableUML {
 	public UMLRelation(String s)
 		throws Exception
 	{
+		this.text = new ImmutableLabel[0];
 		this.z = XMLAttribute.getIntAttribute(s, "z");
 		this.path = new ImmutablePath(XMLAttribute.getAttribute(s, "path"));
 		this.selected = false;
@@ -120,6 +124,13 @@ public class UMLRelation implements DrawableUML {
 	}
 	
 	public ImmutablePoint nearest(ImmutablePoint p) { return this.path.nearest(p); }
+	
+	
+	public ImmutableLabel[] getText() { return this.text; }
+	public ImmutableLabel getText(int n) { return null; }
+	public DrawableUML setText(ImmutableLabel[] n) { return this; }
+	public DrawableUML setText(ImmutableLabel l, int n) { return this; }
+	public ImmutablePoint textPos(int n) { return this.getEnd(); }
 	
 	//*************************************************************************
 	// Mutators

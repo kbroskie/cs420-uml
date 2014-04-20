@@ -56,7 +56,7 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
 		this.firstLine = new ImmutableLine(XMLAttribute.getAttribute(s, "firstLine"));
 		this.secondLine = new ImmutableLine(XMLAttribute.getAttribute(s, "secondLine"));
 	}
-		
+	
 
 	
 //**********************************************************************

@@ -36,8 +36,6 @@ public class DrawMode extends PanelInteractionMode {
 	private ImmutablePoint lastPoint;
 	private ImmutablePoint startPoint;
 	
-	private ImmutableLabel[] blankLabel = { new ImmutableLabel("") };
-
 	// *************************************************************************
 	// Constructors
 	
@@ -122,10 +120,9 @@ public class DrawMode extends PanelInteractionMode {
 			}
 			
 		} else {
-
 			panel.changeModel(panel.getModel().addObject(
 					DrawableType.makeObject(
-							blankLabel, drawType,
+							blankLabel(), drawType,
 							new ImmutablePoint(Math.min(first.getX(),
 									second.getX()), Math.min(first.getY(),
 									second.getY())),
@@ -135,6 +132,14 @@ public class DrawMode extends PanelInteractionMode {
 
 		}
 
+	}
+	
+	public ImmutableLabel[] blankLabel() {
+		ImmutableLabel[] blank = new ImmutableLabel[drawType.textQuantity];
+		for (int i=0; i<blank.length; ++i) {
+			blank[i] = new ImmutableLabel("");
+		}
+		return blank;
 	}
 
 	// *************************************************************************

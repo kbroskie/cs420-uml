@@ -30,20 +30,20 @@ import edu.millersville.cs.segfault.ui.UMLPanel;
  * @author Daniel Rabiega                                                    *
  *****************************************************************************/
 public enum DrawableType {
-	//Name        Object?
-	OBJECT       (true), 
-	CLASS        (true),
-	ACTIVE_CLASS (true), 
-	COMPONENT    (true),
-	NODE         (true),
-	STATE        (true),
-	USE_CASE	 (true),
-	COLLABORATION (true),
-	PACKAGE 	 (true),
-	RELATION     (false), 
-	AGGREGATION  (false), 
-	COMPOSITION  (false), 
-	ASSOCIATION  (false);
+	//Name        Object?  HowManyTexts?
+	OBJECT       (true,    1), 
+	CLASS        (true,    3),
+	ACTIVE_CLASS (true,    3), 
+	COMPONENT    (true,    1),
+	NODE         (true,    1),
+	STATE        (true,    1),
+	USE_CASE	 (true,    1),
+	COLLABORATION (true,   1),
+	PACKAGE 	 (true,    2),
+	RELATION     (false,   0), 
+	AGGREGATION  (false,   0), 
+	COMPOSITION  (false,   0), 
+	ASSOCIATION  (false,   0);
 	
 	
 	
@@ -51,11 +51,13 @@ public enum DrawableType {
 	public final boolean      isObject;
 	public final ImageIcon    icon; 
 	public final ImageIcon    selectedIcon; 
+	public final int          textQuantity;
 	
-	DrawableType(boolean isObject) {
-		this.isObject = isObject;
-		this.icon     = new ImageIcon("img/64/" + this.name() + ".png");
-		this.selectedIcon     = new ImageIcon("img/64/down/" + this.name() + ".png");
+	DrawableType(boolean isObject, int textQuantity) {
+		this.isObject     = isObject;
+		this.icon         = new ImageIcon("img/64/" + this.name() + ".png");
+		this.selectedIcon = new ImageIcon("img/64/down/" + this.name() + ".png");
+		this.textQuantity = textQuantity;
 	}
 	
 	/************************************************************************* 

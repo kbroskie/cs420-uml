@@ -272,8 +272,8 @@ public class OptionsPanel extends JPanel
 					 new SelectionMode(parentWindow));
 		 } 
 		 else if (selectedCommand.equals(textAction)) {
-		//	 parentWindow.getUMLPanel().chanceInteractionMode(
-		//			 new TextMode(parentWindow));
+			 parentWindow.getUMLPanel().changeInteractionMode(
+					 new TextMode(parentWindow));
 		 }
 		 else {
 			 for (DrawableType type: DrawableType.typeList()) {

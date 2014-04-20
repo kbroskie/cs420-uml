@@ -40,7 +40,7 @@ public class UMLObject implements DrawableUML {
 	 * Creates a new, default, UMLObject
 	 */
 	public UMLObject(){
-		this.text = null;
+		this.text = new ImmutableLabel[this.getType().textQuantity];
 		this.origin = new ImmutablePoint(0,0);
 		this.z = 0;
 		this.size = new Dimension(100,100);
@@ -196,6 +196,18 @@ public class UMLObject implements DrawableUML {
 		return min;
 	}
 	
+	public ImmutableLabel[] getText() {
+		return this.text;
+	}
+	
+	public ImmutableLabel getText(int n) {
+		return this.text[n];
+	}
+	
+	public ImmutablePoint textPos(int n) {
+		if (n != 0) { return null; }
+		return this.origin.translate(10, 10);
+	}
 
 	//********************************************************************
 	// Mutators
@@ -266,7 +278,32 @@ public class UMLObject implements DrawableUML {
 		return newObject;
 	}
 	
+	public UMLObject setText(ImmutableLabel[] newText) {
+		UMLObject object = this;
+		try {
+			object = DrawableType.makeObject(newText, this.getType(), this.origin, 
+											 this.size, this.z, this.selected);
+		} catch (Exception e) {
+			System.out.println("Could not change text!");
+		}
+		return object;
+	}
 	
+	public UMLObject setText(ImmutableLabel label, int n) {
+		UMLObject object = this;
+		ImmutableLabel[] newText = new ImmutableLabel[this.text.length];
+		try {
+			for (int i=0; i<this.text.length; ++i) {
+				newText[i] = this.text[i];
+				if (i == n) { newText[i] = label; }
+			}
+			object = DrawableType.makeObject(newText, this.getType(), this.origin, 
+											 this.size, this.z, this.selected);
+		} catch (Exception e) {
+			System.out.println("Could not change text!");
+		}
+		return object;
+	}	 
 	
 	//********************************************************************
 	// Custom Drawing
@@ -274,8 +311,7 @@ public class UMLObject implements DrawableUML {
 	
 	public void draw(Graphics g)
 	{
-		Dimension drawSize = new Dimension(Math.max(this.size.width,  this.minimumWidth(g)), 
-										   Math.max(this.size.height, this.minimumHeight(g)));
+		Dimension drawSize = getSize(g);
 				
 		g.setColor(Color.WHITE);
 		g.fillRect(this.origin.x, this.origin.y, drawSize.width, drawSize.height);
@@ -286,15 +322,31 @@ public class UMLObject implements DrawableUML {
 			g.setColor(Color.BLUE);
 		}
 		g.drawRect(this.origin.x, this.origin.y, drawSize.width, drawSize.height);
-		this.text[0].draw(g, new ImmutablePoint(this.origin.x + 20, this.origin.x + 20));
-	}
-
-	public int minimumWidth(Graphics g) {
-		return 40 + this.text[0].getWidth(g);
+		
+		this.text[0].draw(g, new ImmutablePoint(this.origin.x + 10, this.origin.y + 10));
+		
 	}
 	
+	public Dimension getSize(Graphics g) {
+		return new Dimension(Math.max(this.size.width,  this.minimumWidth(g)), 
+				   Math.max(this.size.height, this.minimumHeight(g)));
+	}
+
 	public int minimumHeight(Graphics g) {
-		return 40 + this.text[0].getHeight(g);
+		int accum = 0;
+		for (int i=0; i<this.text.length; ++i) {
+			accum += this.text[i].getHeight(g) + 20;
+		}
+		return accum;
+	}
+	
+	public int minimumWidth(Graphics g) {
+		int max = this.text[0].getWidth(g);
+		for (int i=1; i<this.text.length; ++i) {
+			int newSize = this.text[i].getWidth(g);
+			if (max < newSize) { max = newSize; }
+		}
+		return max + 20;
 	}
 	
 	/*************************************************************************

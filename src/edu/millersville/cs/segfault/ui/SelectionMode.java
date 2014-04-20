@@ -183,6 +183,7 @@ public class SelectionMode extends PanelInteractionMode {
 	}
 	
 	private void dragSelect(MouseEvent e) {
+		if (this.gestureStartPoint == null || this.gestureLastPoint == null) { return; }
 		int x = Math.min(this.gestureStartPoint.x, this.gestureLastPoint.x);
 		int y = Math.min(this.gestureStartPoint.y, this.gestureLastPoint.y);
 		int width = Math.max(this.gestureStartPoint.x, this.gestureLastPoint.x) - x;
