@@ -20,10 +20,7 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
 		
 //*********************************************************************
 //Static variables
-		
-	public final ImmutableLine firstLine;
-	public final ImmutableLine secondLine;
-		
+				
 		
 //*********************************************************************
 //Constructors
@@ -32,10 +29,6 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
 	public ClassObject()
 	{
 		super();
-		this.firstLine  = new ImmutableLine(new ImmutablePoint(this.origin.x, this.origin.y + this.size.height/4), 
-						  new ImmutablePoint(this.origin.x + this.size.width, this.origin.y + this.size.height/4));
-		this.secondLine = new ImmutableLine(new ImmutablePoint(this.origin.x, this.origin.y + (this.size.height/2)), 
-				          new ImmutablePoint(this.origin.x + this.size.width, this.origin.y + (this.size.height/2)));
 	}
 
 	//Member constructor.
@@ -43,18 +36,12 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
 			throws Exception
 	{
 		super(text, p, nZ, size, nSelected);
-		this.firstLine  = new ImmutableLine(new ImmutablePoint(this.origin.x, this.origin.y +this.size.height/4), 
-		        		  new ImmutablePoint(this.origin.x + this.size.width, this.origin.y +this.size.height/4));
-		this.secondLine = new ImmutableLine(new ImmutablePoint(this.origin.x, this.origin.y +(this.size.height/2)), 
-		          		  new ImmutablePoint(this.origin.x + this.size.width, this.origin.y +(this.size.height/2)));
 	}
 
 	public ClassObject (String s) 
 		throws Exception
 	{
 		super(s);
-		this.firstLine = new ImmutableLine(XMLAttribute.getAttribute(s, "firstLine"));
-		this.secondLine = new ImmutableLine(XMLAttribute.getAttribute(s, "secondLine"));
 	}
 	
 
@@ -63,7 +50,7 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
 //Observers
 
 	public String toString(String name) {
-		return super.toString() + firstLine.serialize("firstLine") + secondLine.serialize("secondLine"); 
+		return super.toString();
 	}
 
 	public DrawableType getType() { return DrawableType.CLASS; }
@@ -79,8 +66,13 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
 	{
 		super.draw(g);
 		g.setColor(Color.black);
-		firstLine.draw(g);
-		secondLine.draw(g);
+		int afterFirstText = this.origin.y + this.getText(0).getHeight(g) + 20;
+		int afterSecondText = afterFirstText + this.getText(1).getHeight(g) + 20;
+		this.getText(0).draw(g, this.origin.translate(10, 10));
+		g.drawLine(this.origin.x, afterFirstText, this.origin.x + this.size.width, afterFirstText);
+		this.getText(1).draw(g, this.origin.translate(10, afterFirstText + 10));
+		g.drawLine(this.origin.x, afterSecondText, this.origin.x + this.size.width, afterSecondText);
+		
 	}
 
 }

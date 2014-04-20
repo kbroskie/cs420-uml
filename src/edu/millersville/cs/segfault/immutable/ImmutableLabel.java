@@ -57,7 +57,15 @@ public class ImmutableLabel {
 	
 	public int getWidth(Graphics g) {
 		FontMetrics metrics = g.getFontMetrics(this.font);
-		return metrics.stringWidth(this.text);
+		
+		String[] lines = lines();
+		
+		int max = metrics.stringWidth(lines[0]);
+		for (int i=0; i<lines.length; ++i) { 
+			if (max < metrics.stringWidth(lines[i])) { max = metrics.stringWidth(lines[i]); }
+		}
+		
+		return max;
 	}
 	
 	public void draw(Graphics g, ImmutablePoint p) {
@@ -73,16 +81,25 @@ public class ImmutableLabel {
 		}
 	}
 	
+	
 	private int newLines() {
-		if (this.text.length()==0) { return 0; }
-		if (this.text.charAt(this.text.length()-1)=='\n') {
-			return lines().length + 1;
-		}
 		return lines().length;
 	}
 	
 	private String[] lines() {
-		return this.text.split("\n");
+		if (this.text.length()==0) { 
+			String[] lines = new String[1];
+			lines[0] = this.text;
+			return lines;
+		}
+		String[] lines = this.text.split("\n");
+		if (this.text.charAt(this.text.length()-1)=='\n') {
+			String[] newLines = new String[lines.length + 1];
+			for (int i=0; i < lines.length; ++i) { newLines[i] = lines[i]; }
+			newLines[newLines.length-1] = "";
+			lines = newLines;
+		}
+		return lines;
 	}
 
 }

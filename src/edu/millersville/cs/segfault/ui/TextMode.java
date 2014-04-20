@@ -12,8 +12,6 @@ import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 
 public class TextMode extends PanelInteractionMode {
-
-	//private final static int blinkSpeed = 3; // How many seconds between cursor blinking.
 	
 	private final UMLWindow parent;
 	private DrawableUML editTarget;
@@ -29,21 +27,7 @@ public class TextMode extends PanelInteractionMode {
 	}
 	
 	public void draw(Graphics g) {
-		if (this.editTarget != null) {
-			if (this.textIndex >= editTarget.getText().length) {
-				this.textIndex = editTarget.getText().length - 1;
-			}
-			if (this.cursorPos >= editTarget.getText()[textIndex].text.length()) {
-				this.cursorPos = editTarget.getText(textIndex).text.length();
-			}
-			ImmutablePoint targetOrigin = editTarget.textPos(textIndex);
-			String beforeCursor = this.editTarget.getText(textIndex).text.substring(0, this.cursorPos);
-			ImmutableLabel labelBeforeCursor =new ImmutableLabel(beforeCursor);
-			int widthBeforeCursor = labelBeforeCursor.getWidth(g);
-			ImmutablePoint cursorOrigin = targetOrigin.translate(widthBeforeCursor, 0);
-			ImmutablePoint cursorBottom = cursorOrigin.translate(0, labelBeforeCursor.getHeight(g));
-			g.drawLine(cursorOrigin.x, cursorOrigin.y, cursorOrigin.x, cursorBottom.y);
-		}
+
 	}
 
 	public void mouseClicked(MouseEvent e) {
@@ -84,6 +68,7 @@ public class TextMode extends PanelInteractionMode {
 		String string = getCurrent();
 		if (cursorPos < 1) { return; }
 		string = string.substring(0, cursorPos-1) + string.substring(cursorPos);
+		--cursorPos;
 		updateTarget(string);
 	}
 	
