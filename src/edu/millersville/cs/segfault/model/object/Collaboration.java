@@ -16,6 +16,7 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
 
+import edu.millersville.cs.segfault.immutable.ImmutableLabel;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 
@@ -31,11 +32,11 @@ public class Collaboration extends UseCase {
 		}
 		
 		//Member constructor
-		public Collaboration (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
+		public Collaboration (ImmutableLabel[] text, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
 			throws Exception
 		{
 			
-			super(nLabel, p, nZ, size, nSelected);
+			super(text, p, nZ, size, nSelected);
 			
 		}
 		

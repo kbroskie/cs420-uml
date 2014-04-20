@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 
+import edu.millersville.cs.segfault.immutable.ImmutableLabel;
 import edu.millersville.cs.segfault.immutable.ImmutableLine;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
@@ -34,6 +35,8 @@ public class DrawMode extends PanelInteractionMode {
 
 	private ImmutablePoint lastPoint;
 	private ImmutablePoint startPoint;
+	
+	private ImmutableLabel[] blankLabel = { new ImmutableLabel("") };
 
 	// *************************************************************************
 	// Constructors
@@ -122,7 +125,7 @@ public class DrawMode extends PanelInteractionMode {
 
 			panel.changeModel(panel.getModel().addObject(
 					DrawableType.makeObject(
-							drawType,
+							blankLabel, drawType,
 							new ImmutablePoint(Math.min(first.getX(),
 									second.getX()), Math.min(first.getY(),
 									second.getY())),

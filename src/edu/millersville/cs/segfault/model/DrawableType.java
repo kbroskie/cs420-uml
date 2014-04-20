@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 
+import edu.millersville.cs.segfault.immutable.ImmutableLabel;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.object.ActiveClass;
@@ -12,9 +13,9 @@ import edu.millersville.cs.segfault.model.object.ClassObject;
 import edu.millersville.cs.segfault.model.object.Collaboration;
 import edu.millersville.cs.segfault.model.object.Component;
 import edu.millersville.cs.segfault.model.object.Node;
-import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.object.Package;
 import edu.millersville.cs.segfault.model.object.State;
+import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.object.UseCase;
 import edu.millersville.cs.segfault.model.relation.Aggregation;
 import edu.millersville.cs.segfault.model.relation.Association;
@@ -123,38 +124,40 @@ public enum DrawableType {
 	/**************************************************************************
 	 * Produces an object of a given type with a given set of properties.
 	 */
-	public static UMLObject makeObject(DrawableType type, ImmutablePoint origin,
+	public static UMLObject makeObject(ImmutableLabel[] text, DrawableType type, 
+									   ImmutablePoint origin,
 									   Dimension size, UMLPanel panel)
 		throws Exception {
 		if (!type.isObject) {
 			throw new Exception("Factory: Type is not an object.");
 		}
 		switch(type) {
-		case OBJECT:       return new UMLObject("", origin, panel.getModel().highestZ() + 1, size, false);
-		case ACTIVE_CLASS: return new ActiveClass("", origin, panel.getModel().highestZ() + 1, size, false);
-		case CLASS:        return new ClassObject("", origin, panel.getModel().highestZ() + 1, size, false);
-		case COMPONENT:    return new Component("", origin, panel.getModel().highestZ() + 1, size, false);
-		case NODE:         return new Node("", origin, panel.getModel().highestZ() + 1, size, false);
-		case STATE:        return new State("", origin, panel.getModel().highestZ() + 1, size, false);
-		case USE_CASE:     return new UseCase("", origin, panel.getModel().highestZ() + 1, size, false);
-		case COLLABORATION:return new Collaboration("", origin, panel.getModel().highestZ() + 1, size, false);
-		case PACKAGE:      return new Package("", origin, panel.getModel().highestZ() + 1, size, false);
+		case OBJECT:       return new UMLObject(text, origin, panel.getModel().highestZ() + 1, size, false);
+		case ACTIVE_CLASS: return new ActiveClass(text, origin, panel.getModel().highestZ() + 1, size, false);
+		case CLASS:        return new ClassObject(text, origin, panel.getModel().highestZ() + 1, size, false);
+		case COMPONENT:    return new Component(text, origin, panel.getModel().highestZ() + 1, size, false);
+		case NODE:         return new Node(text, origin, panel.getModel().highestZ() + 1, size, false);
+		case STATE:        return new State(text, origin, panel.getModel().highestZ() + 1, size, false);
+		case USE_CASE:     return new UseCase(text, origin, panel.getModel().highestZ() + 1, size, false);
+		case COLLABORATION:return new Collaboration(text, origin, panel.getModel().highestZ() + 1, size, false);
+		case PACKAGE:      return new Package(text, origin, panel.getModel().highestZ() + 1, size, false);
 		default:           return null;
 		}
 	}
 	
-	public static UMLObject makeObject(DrawableType type, ImmutablePoint origin, Dimension size, 
+	public static UMLObject makeObject(ImmutableLabel[] text, DrawableType type, 
+									   ImmutablePoint origin, Dimension size, 
 									   int z, boolean selected) throws Exception {
 		switch(type) {
-		case OBJECT:       return new UMLObject("", origin, z, size, selected);
-		case ACTIVE_CLASS: return new ActiveClass("", origin, z, size, selected);
-		case CLASS:        return new ClassObject("", origin, z, size, selected);
-		case COMPONENT:    return new Component("", origin, z, size, selected);
-		case NODE:         return new Node("", origin, z, size, selected);
-		case STATE:        return new State("", origin, z, size, selected);
-		case USE_CASE:     return new UseCase("", origin, z, size, selected);
-		case COLLABORATION:return new Collaboration("", origin, z, size, selected);
-		case PACKAGE:      return new Package("", origin, z, size, selected);
+		case OBJECT:       return new UMLObject(text, origin, z, size, selected);
+		case ACTIVE_CLASS: return new ActiveClass(text, origin, z, size, selected);
+		case CLASS:        return new ClassObject(text, origin, z, size, selected);
+		case COMPONENT:    return new Component(text, origin, z, size, selected);
+		case NODE:         return new Node(text, origin, z, size, selected);
+		case STATE:        return new State(text, origin, z, size, selected);
+		case USE_CASE:     return new UseCase(text, origin, z, size, selected);
+		case COLLABORATION:return new Collaboration(text, origin, z, size, selected);
+		case PACKAGE:      return new Package(text, origin, z, size, selected);
 		default:           return null;
 		}
 	}

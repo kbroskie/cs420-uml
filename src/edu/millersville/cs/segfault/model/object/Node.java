@@ -6,11 +6,15 @@
 
 package edu.millersville.cs.segfault.model.object;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Polygon;
 
+import edu.millersville.cs.segfault.immutable.ImmutableLabel;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
-import edu.millersville.cs.segfault.model.object.UMLObject;
 
 public class Node extends UMLObject {
 
@@ -24,10 +28,10 @@ public class Node extends UMLObject {
 	}
 		
 	//Member constructor
-	public Node (String nLabel, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
+	public Node (ImmutableLabel[] text, ImmutablePoint p, int nZ, Dimension size, boolean nSelected)
 		throws Exception
 	{
-		super(nLabel, p, nZ, size, nSelected);
+		super(text, p, nZ, size, nSelected);
 	}
 	
 	public Node(String s) 

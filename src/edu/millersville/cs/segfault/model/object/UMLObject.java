@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
+import edu.millersville.cs.segfault.immutable.ImmutableLabel;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
@@ -24,8 +26,7 @@ public class UMLObject implements DrawableUML {
 	//************************************************************************
 	// Instance Variables
 	
-
-	public final String label;  
+	public final ImmutableLabel[] text;
 	public final ImmutablePoint origin;
 	public final int z;     
 	public final Dimension size;
@@ -39,7 +40,7 @@ public class UMLObject implements DrawableUML {
 	 * Creates a new, default, UMLObject
 	 */
 	public UMLObject(){
-		this.label = "";
+		this.text = null;
 		this.origin = new ImmutablePoint(0,0);
 		this.z = 0;
 		this.size = new Dimension(100,100);
@@ -51,7 +52,16 @@ public class UMLObject implements DrawableUML {
 	 * Recreates a UMLObject from a serialized representation.
 	 */
 	public UMLObject(String s) throws Exception {
-		this.label = XMLAttribute.getAttribute(s, "label");
+		ArrayList<ImmutableLabel> newText = new ArrayList<ImmutableLabel>();
+		String textSection = XMLAttribute.getAttribute(s, "text");
+		
+		int textSearch = 0;
+		while(XMLAttribute.hasAttr(textSection, "" + textSearch)) {
+			newText.add(new ImmutableLabel(XMLAttribute.getAttribute(textSection, "" + textSearch)));
+		}
+		
+		this.text = newText.toArray(this.text);
+		
 		this.z = new Integer(XMLAttribute.getAttribute(s, "z"));
 		this.origin = new ImmutablePoint(XMLAttribute.getAttribute(s, "origin"));
 		this.size = new Dimension(XMLAttribute.getIntAttribute(s, "width"), 
@@ -62,7 +72,7 @@ public class UMLObject implements DrawableUML {
 	/*************************************************************************
 	 * Creates a new UMLObject from it's components.
 	 */
-	public UMLObject(String nLabel, ImmutablePoint origin, int nZ, Dimension size, boolean nSelected) 
+	public UMLObject(ImmutableLabel[] text, ImmutablePoint origin, int nZ, Dimension size, boolean nSelected) 
 	{
 		if (size.width < 50) {
 			size = new Dimension(50, size.height);
@@ -71,7 +81,7 @@ public class UMLObject implements DrawableUML {
 			size = new Dimension(size.width, 50);
 		}
 		
-		this.label = nLabel;
+		this.text = text;
 		this.origin = origin;
 		this.size = size;
 		this.z = nZ;
@@ -93,14 +103,22 @@ public class UMLObject implements DrawableUML {
 	 * Creates a serialized representation of the properties of this object.
 	 */
 	public String toString() {
-		return XMLAttribute.makeTag("label", this.label) 
+		return XMLAttribute.makeTag("text", this.serializeText())
 			 + XMLAttribute.makeTag("origin", this.origin.serialize())
 			 + XMLAttribute.makeTag("width", this.size.width)
 			 + XMLAttribute.makeTag("height", this.size.height)
 			 + XMLAttribute.makeTag("z", this.z);
 	}
 	
-
+	private String serializeText() {
+		String textString = "";
+		for (int i=0; i<this.text.length; ++i) {
+			textString += XMLAttribute.makeTag("" + i, this.text[i].text);
+		}
+		return textString;
+	}
+	
+	
 	/*************************************************************************
 	 * Returns the DrawableType of this object.
 	 */
@@ -178,19 +196,11 @@ public class UMLObject implements DrawableUML {
 		return min;
 	}
 	
+
 	//********************************************************************
 	// Mutators
 	//********************************************************************
 
-	/*************************************************************************
-	 * Returns a new UMLObject with a different label.
-	 */
-	public UMLObject changeLabel(String newLabel)
-		throws Exception
-	{
-		return new UMLObject(newLabel, this.origin, this.z, this.size, this.selected);
-	}
-	
 	/*************************************************************************
 	 * Returns a new UMLObject with a different location.
 	 */
@@ -198,7 +208,8 @@ public class UMLObject implements DrawableUML {
 	{
 		UMLObject newObject = this;
 		try {
-			newObject = DrawableType.makeObject(this.getType(), this.origin.translate(deltaX, deltaY), 
+			newObject = DrawableType.makeObject(this.text, this.getType(), 
+												this.origin.translate(deltaX, deltaY), 
 												this.size, z, this.selected);
 		} catch (Exception e) {
 			
@@ -212,7 +223,7 @@ public class UMLObject implements DrawableUML {
 	public UMLObject resize(int width, int height)
 		throws Exception
 	{
-		return new UMLObject(this.label, this.origin, this.z, new Dimension(width, height), this.selected);
+		return new UMLObject(this.text, this.origin, this.z, new Dimension(width, height), this.selected);
 	}
 
 	/*************************************************************************
@@ -221,7 +232,7 @@ public class UMLObject implements DrawableUML {
 	@Override
 	public UMLObject select() {
 		try {
-			return DrawableType.makeObject(getType(), this.origin, this.size, this.z, true);
+			return DrawableType.makeObject(this.text, getType(), this.origin, this.size, this.z, true);
 		} catch (Exception e) {
 			return null;
 		}
@@ -233,7 +244,7 @@ public class UMLObject implements DrawableUML {
 	@Override
 	public UMLObject unselect() {
 		try {
-			return DrawableType.makeObject(getType(), this.origin, this.size, this.z, false);
+			return DrawableType.makeObject(this.text, getType(), this.origin, this.size, this.z, false);
 		} catch (Exception e) {
 			return null;
 		}
@@ -246,7 +257,7 @@ public class UMLObject implements DrawableUML {
 	public UMLObject scale(int deltaX, int deltaY) {
 		UMLObject newObject = this;
 		try {
-			newObject = DrawableType.makeObject(this.getType(), this.origin, 
+			newObject = DrawableType.makeObject(this.text, this.getType(), this.origin, 
 						  			            new Dimension(this.size.width + deltaX, this.size.height + deltaY),
 									            deltaY, selected);
 		} catch (Exception e) {
@@ -255,25 +266,36 @@ public class UMLObject implements DrawableUML {
 		return newObject;
 	}
 	
+	
+	
 	//********************************************************************
 	// Custom Drawing
 	//********************************************************************
 	
 	public void draw(Graphics g)
 	{
-		
+		Dimension drawSize = new Dimension(Math.max(this.size.width,  this.minimumWidth(g)), 
+										   Math.max(this.size.height, this.minimumHeight(g)));
+				
 		g.setColor(Color.WHITE);
-		g.fillRect(this.origin.x, this.origin.y, this.size.width, this.size.height);
+		g.fillRect(this.origin.x, this.origin.y, drawSize.width, drawSize.height);
 		
 		g.setColor(Color.BLACK);
 		if (this.selected)
 		{
 			g.setColor(Color.BLUE);
 		}
-		g.drawRect(this.origin.x, this.origin.y, this.size.width, this.size.height);
-
+		g.drawRect(this.origin.x, this.origin.y, drawSize.width, drawSize.height);
+		this.text[0].draw(g, new ImmutablePoint(this.origin.x + 20, this.origin.x + 20));
 	}
 
+	public int minimumWidth(Graphics g) {
+		return 40 + this.text[0].getWidth(g);
+	}
+	
+	public int minimumHeight(Graphics g) {
+		return 40 + this.text[0].getHeight(g);
+	}
 	
 	/*************************************************************************
 	 * Returns an ImmutablePath representing the edges of this object.
@@ -292,5 +314,4 @@ public class UMLObject implements DrawableUML {
 		
 		return newPath;
 	}
-	
 }
