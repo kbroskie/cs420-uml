@@ -10,9 +10,6 @@ import edu.millersville.cs.segfault.ui.menu.ActionType;
 import edu.millersville.cs.segfault.ui.menu.actions.*;
 
 import edu.millersville.cs.segfault.ui.UMLWindow;
-import edu.millersville.cs.segfault.model.UMLModel;
-import edu.millersville.cs.segfault.model.object.UMLObject;
-import edu.millersville.cs.segfault.ui.UMLPanel;
 
 import org.junit.Test;
 
