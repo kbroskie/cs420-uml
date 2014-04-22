@@ -3,6 +3,7 @@ package edu.millersville.cs.segfault.tests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.awt.geom.Dimension2D;
 import java.util.Iterator;
 
 import org.junit.Test;
@@ -10,6 +11,7 @@ import org.junit.Test;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.UMLModel;
+import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
 import edu.millersville.cs.segfault.ui.UMLPanel;
@@ -79,27 +81,36 @@ public class UMLModelTest {
 		assertTrue(testO3.isSelected());
 		testModel.deleteSelected();
 		
+		testO2 = testO2.select();
+		testModel = testModel.add(testO2);
+		testModel = testModel.unselectAll();
+		
+		Iterator<UMLObject> iterO2 = testModel.objectIterator();
+		while(iterO2.hasNext())
+		{
+			assertFalse(iterO2.next().isSelected());
+		}
+		
 		//**********************************************************************************//
 		//Iteration Test
 		//**********************************************************************************//
 		
 		int count = 0;
-		UMLObject obj1 = new UMLObject();
-		Iterator<UMLObject> Oiter = testModel.objectIterator();
-		while(Oiter.hasNext())
+		Iterator<UMLObject> iterO = testModel.objectIterator();
+		while(iterO.hasNext())
 		{
 			++count;
-			Oiter.next();
+			iterO.next();
 		}
-		assertTrue("There should be only 2 objects remaining in testModel", count == 2);
+		assertTrue("There should be only 2 objects remaining in testModel", count == 3);
 		
 		
-		UMLObject obj2 = new UMLObject();
-		Iterator<UMLRelation> IterR = testModel.relationIterator();
-		while(Oiter.hasNext())
+		count = 0;
+		Iterator<UMLRelation> iterR = testModel.relationIterator();
+		while(iterR.hasNext())
 		{
 			++count;
-			Oiter.next();
+			iterR.next();
 		}
 		assertTrue("There should be only 2 relations in testModel", count == 2);
 		
@@ -116,19 +127,18 @@ public class UMLModelTest {
 		
 		//UMLPanel testPanel = new UMLPanel();
 		
-
-//		UMLObject testMO = DrawableType.makeObject(DrawableType.OBJECT, 
-//						new ImmutablePoint(0,0), testO1.getSize(), testPanel);
-//		
-		//UMLRelation testMR = DrawableType.makeRelation(DrawableType.RELATION, 
-		//				testR1.getPath(), testPanel);
+		UMLObject testMO = DrawableType.makeObject(DrawableType.OBJECT, 
+						new ImmutablePoint(0,0), testO1.size, testPanel);
+		
+		UMLRelation testMR = DrawableType.makeRelation(DrawableType.RELATION, 
+						testR2.getPath(), testPanel);
 		
 //		assertTrue("Heights do not match!", testMO.getHeight() == testO1.getHeight());
 //		assertTrue("Labels do not match!", testMO.getLabel() == testO1.getLabel());
-//		assertTrue("Types do not match!", testMO.getType() == testO1.getType());
+		assertTrue("Types do not match!", testMO.getType() == testO1.getType());
 
-		//assertTrue("End point did not get moved over to new Relation!", testMR.getEnd() == testR1.getEnd());
-		//assertFalse("Z is not supposed to be shared!", testMR.getZ() == testR1.getZ());
+		assertTrue("End point did not get moved over to new Relation!", testMR.getEnd() == testR1.getEnd());
+		assertFalse("Z is not supposed to be shared!", testMR.getZ() == testR1.getZ());
 		
 		//**********************************************************************************//	
 	}
