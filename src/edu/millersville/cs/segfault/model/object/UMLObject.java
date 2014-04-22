@@ -325,11 +325,17 @@ public class UMLObject implements DrawableUML {
 		
 		if (this.getType() != DrawableType.OBJECT) { return; }
 		
+		drawText(g);
+	}
+	
+	public void drawText(Graphics g) {
+		
+		Dimension drawSize = getSize(g);
+		
 		int xMargin = (drawSize.width  - this.text[0].getWidth(g))/2;
 		int yMargin = (drawSize.height - this.text[0].getHeight(g))/2;
 		
 		this.text[0].draw(g, new ImmutablePoint(this.origin.x + xMargin, this.origin.y + yMargin));
-		
 	}
 	
 	public Dimension getSize(Graphics g) {

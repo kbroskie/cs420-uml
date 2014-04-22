@@ -51,10 +51,23 @@ public class Package extends UMLObject {
 	//FIX HEIGHT SO THAT Y2 IS THIS.ORIGIN.Y
 	public void draw (Graphics g)
 	{
-		super.draw(g);
-		g.setColor(Color.white);
-		g.fillRect(this.origin.x, this.origin.y - this.size.height/8, this.size.width/3, this.size.height/8);
-		g.setColor(Color.black);
-		g.drawRect(this.origin.x, this.origin.y - this.size.height/8, this.size.width/3, this.size.height/8);
+		int labelWidth = this.text[0].getWidth(g) + 20;
+		int labelHeight = this.text[0].getHeight(g) + 10;
+		
+		int bodyWidth = Math.max(this.text[1].getWidth(g) + 20, this.size.width);
+		int bodyHeight = Math.max(this.text[1].getHeight(g) + 10, this.size.height-labelHeight);
+	
+		g.setColor(Color.WHITE);
+		g.fillRect(this.origin.x, this.origin.y, labelWidth, labelHeight);
+		g.setColor(Color.BLACK);
+		g.drawRect(this.origin.x, this.origin.y, labelWidth, labelHeight);
+		this.text[0].draw(g, this.origin.translate(10,5));
+		
+		g.setColor(Color.WHITE);
+		g.fillRect(this.origin.x, this.origin.y + labelHeight, bodyWidth, bodyHeight);
+		g.setColor(Color.BLACK);
+		g.drawRect(this.origin.x, this.origin.y + labelHeight, bodyWidth, bodyHeight);
+		this.text[1].draw(g, this.origin.translate(10, labelHeight + 5));
+		
 	}
 }

@@ -73,7 +73,7 @@ public class Node extends UMLObject {
 
          g2.setColor(Color.BLACK);
          g2.draw(p);
-
+         this.drawText(g2);
 	}
 
 }

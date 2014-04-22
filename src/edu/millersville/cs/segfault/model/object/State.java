@@ -52,6 +52,6 @@ public class State extends UMLObject {
 		g.fillRoundRect(this.origin.x, this.origin.y, this.size.width, this.size.height, 40, 40);
 		g.setColor(Color.BLACK);
 		g.drawRoundRect(this.origin.x, this.origin.y, this.size.width, this.size.height, 40, 40);
-		
+		this.drawText(g);
 	}
 }

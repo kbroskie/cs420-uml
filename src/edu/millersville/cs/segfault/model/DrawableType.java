@@ -31,19 +31,19 @@ import edu.millersville.cs.segfault.ui.UMLPanel;
  *****************************************************************************/
 public enum DrawableType {
 	//Name        Object?  HowManyTexts?
-	OBJECT       (true,    1), 
-	CLASS        (true,    3),
-	ACTIVE_CLASS (true,    3), 
-	COMPONENT    (true,    1),
-	NODE         (true,    1),
-	STATE        (true,    1),
-	USE_CASE	 (true,    1),
-	COLLABORATION (true,   1),
-	PACKAGE 	 (true,    2),
-	RELATION     (false,   0), 
-	AGGREGATION  (false,   0), 
-	COMPOSITION  (false,   0), 
-	ASSOCIATION  (false,   0);
+	OBJECT        (true,    1), 
+	CLASS         (true,    3),
+	ACTIVE_CLASS  (true,    3), 
+	COMPONENT     (true,    1),
+	NODE          (true,    1),
+	STATE         (true,    1),
+	USE_CASE	  (true,    1),
+	COLLABORATION (true,    1),
+	PACKAGE 	  (true,    2),
+	RELATION      (false,   0), 
+	AGGREGATION   (false,   0), 
+	COMPOSITION   (false,   0), 
+	ASSOCIATION   (false,   0);
 	
 	
 	
@@ -98,6 +98,18 @@ public enum DrawableType {
 	
 	// Drawable Factories - Call a specialized factory
 	
+	public static DrawableUML updateLabel(DrawableUML drawable, ImmutableLabel[] labels) {
+		try {
+			if (drawable.getType().isObject) {
+				UMLObject object = (UMLObject) drawable;
+				return makeObject(labels, object.getType(), object.origin, object.size, 
+								  object.z, object.selected);
+			} 			
+		} catch (Exception e) {
+			
+		}
+		return drawable;
+	}
 	
 	// Object Factories - Make an object or one of it's subclasses
 	/*************************************************************************

@@ -55,6 +55,15 @@ public class ImmutablePoint {
 		this.y = XMLAttribute.getIntAttribute(s, "y");
 	}
 	
+	/*************************************************************************
+	 * Creates a new immutable point from the x and y coordinates in a 
+	 * given mouse event.
+	 */
+	public ImmutablePoint(MouseEvent e) {
+		this.x = e.getX();
+		this.y = e.getY();
+	}
+	
 	//************************************************************************
 	// Observers
 	

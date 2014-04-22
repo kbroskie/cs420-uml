@@ -71,5 +71,6 @@ public class Collaboration extends UseCase {
 			g2.draw(new Ellipse2D.Double(this.origin.x, this.origin.y, this.size.width, this.size.height));
 			g2.setStroke(tempStroke);
 			
+			this.drawText(g);
 		}
 }

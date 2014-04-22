@@ -58,6 +58,6 @@ public class Component extends UMLObject
 		g.setColor (Color.black);
 		g.drawRect(this.origin.x - this.size.width/9, this.origin.y + this.size.height/4, this.size.width/3, this.size.height/4);
 		g.drawRect(this.origin.x - this.size.width/9, this.origin.y + (this.size.height *2)/3, this.size.width/3, this.size.height/4);
-		
+		this.drawText(g);
 	}
 }

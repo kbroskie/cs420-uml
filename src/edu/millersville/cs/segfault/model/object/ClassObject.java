@@ -64,15 +64,27 @@ import edu.millersville.cs.segfault.model.XMLAttribute;
 
 	public void draw (Graphics g)
 	{
-		super.draw(g);
-		g.setColor(Color.black);
-		int afterFirstText = this.origin.y + this.getText(0).getHeight(g) + 20;
-		int afterSecondText = afterFirstText + this.getText(1).getHeight(g) + 20;
-		this.getText(0).draw(g, this.origin.translate(10, 10));
-		g.drawLine(this.origin.x, afterFirstText, this.origin.x + this.size.width, afterFirstText);
-		this.getText(1).draw(g, this.origin.translate(10, afterFirstText + 10));
-		g.drawLine(this.origin.x, afterSecondText, this.origin.x + this.size.width, afterSecondText);
+		int classNameY = this.origin.y;
+		int firstLine  = classNameY + 10 + this.text[0].getHeight(g);
+		int membersY   = firstLine + 10;
+		int secondLine = membersY + this.text[1].getHeight(g) + 10;
+		int methodsY   = secondLine + 10;
 		
+		int width =  Math.max(this.size.width,  this.minimumWidth(g));
+		int height = Math.max(this.size.height, this.minimumHeight(g));
+		
+		g.setColor(Color.WHITE);
+		g.fillRect(this.origin.x, this.origin.y, width, height);
+		
+		g.setColor(Color.BLACK);
+		g.drawRect(this.origin.x, this.origin.y, width, height);
+		
+		g.drawLine(this.origin.x, firstLine, this.origin.x + width, firstLine);
+		g.drawLine(this.origin.x, secondLine, this.origin.x + width, secondLine);
+		
+		this.text[0].draw(g, new ImmutablePoint(this.origin.x+5, this.origin.y+5));
+		this.text[1].draw(g, new ImmutablePoint(this.origin.x+5, membersY));
+		this.text[2].draw(g, new ImmutablePoint(this.origin.x+5, methodsY));
 	}
 
 }
