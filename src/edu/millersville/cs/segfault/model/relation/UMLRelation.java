@@ -207,14 +207,24 @@ public class UMLRelation implements DrawableUML {
 
 	@Override
 	public UMLRelation select() {
-		return new UMLRelation(this.getPath(), this.getZ(), true);
+		try {
+			return DrawableType.makeRelation(this.getType(), this.path, this.z, true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return this;
+		}
 	}
 
 	
 
 	@Override
 	public UMLRelation unselect() {
-		return new UMLRelation(this.getPath(), this.getZ(), false);
+		try {
+			return DrawableType.makeRelation(this.getType(), this.path, this.z, false);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return this;
+		}
 	}
 
 	@Override
