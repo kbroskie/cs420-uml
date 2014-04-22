@@ -3,28 +3,30 @@ package edu.millersville.cs.segfault.ui.menu.actions;
 import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.Iterator;
 
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 
+import edu.millersville.cs.segfault.immutable.ImmutableSet;
+import edu.millersville.cs.segfault.model.DrawableUML;
+import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.ui.UMLWindow;
 import edu.millersville.cs.segfault.ui.menu.MenuAction;
 import edu.millersville.cs.segfault.ui.menu.ActionType;
 
-
 /**************************************************************************
- * Delete is the class responsible for invoking the method to delete 
- * all objects and relations for the current model.
- * @author Kimberlyn Broskie
+ * Paste is a class to support paste buffer actions
+ * @author Wesley DeMarco
  *************************************************************************/
-public class Delete extends AbstractAction 
-						implements MenuAction{
-	
+public class Paste extends AbstractAction
+						implements MenuAction {
+
 	//*************************************************************************
 	// Static Instance Variables
 	//*************************************************************************
-	private static final long serialVersionUID = 1596916755400971266L;
-	private static final String deleteMenuText = "Delete";
+	private static final long serialVersionUID = -401022597982490050L;
+	private static final String pasteMenuText = "Paste";
 
 	//*************************************************************************
 	// Instance Variables
@@ -35,25 +37,35 @@ public class Delete extends AbstractAction
 	* Constructor that builds the action with an accelerator.
 	* @param win the frame for the interface.
 	*************************************************************************/
-	public Delete (UMLWindow win)
+	public Paste (UMLWindow win)
 	{
-		super(deleteMenuText);
-		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE , 0));		
+		super(pasteMenuText);
+		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK));		
 		window = win;
 	}
 	
 	//*************************************************************************
 	// Observers
 	//*************************************************************************
-	public ActionType getType() { return ActionType.DELETE; }	
-	
+	public ActionType getType() { return ActionType.PASTE; }	
+
 	//*************************************************************************
 	// Event Listeners
 	//*************************************************************************
 	public void actionPerformed(ActionEvent se) {
-		try {
-				window.getUMLPanel().changeModel(
-						window.getUMLPanel().getModel().deleteSelected()); }
-		catch (Exception e) {}
-	}	
+		try{
+			UMLModel model = new UMLModel(window.getUMLPanel().getModel());
+			Iterator<DrawableUML> iter = window.getPasteBuffer().iterator();
+			model = model.deleteSelected();
+			while( iter.hasNext())
+			{
+				model = model.add(iter.next());
+			}
+			
+			window.getUMLPanel().changeModel( model );
+					
+		} catch(Exception e) {
+					
+		}
+	}		
 }

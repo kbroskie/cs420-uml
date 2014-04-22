@@ -6,10 +6,13 @@ import java.util.Vector;
 import javax.swing.ImageIcon;
 
 import edu.millersville.cs.segfault.ui.UMLWindow;
+import edu.millersville.cs.segfault.ui.menu.actions.Copy;
+import edu.millersville.cs.segfault.ui.menu.actions.Cut;
 import edu.millersville.cs.segfault.ui.menu.actions.Delete;
 import edu.millersville.cs.segfault.ui.menu.actions.Exit;
 import edu.millersville.cs.segfault.ui.menu.actions.New;
 import edu.millersville.cs.segfault.ui.menu.actions.Open;
+import edu.millersville.cs.segfault.ui.menu.actions.Paste;
 import edu.millersville.cs.segfault.ui.menu.actions.Redo;
 import edu.millersville.cs.segfault.ui.menu.actions.Save;
 import edu.millersville.cs.segfault.ui.menu.actions.SaveAs;
@@ -31,7 +34,10 @@ public enum ActionType {
 	UNDO		(false, false),
 	REDO        (false, false),
 	SELECT	 	(false, true),
-	DELETE 		(false, false);
+	DELETE 		(false, false),
+	CUT			(false, true),
+	COPY		(false, false),
+	PASTE		(false, false);
 	
 	// Determine whether the variable is a file or edit action type.
 	public final boolean      isFileAction;
@@ -143,6 +149,9 @@ public enum ActionType {
 		case REDO:     		return new Redo(win);
 		case SELECT:	 	return new Select(win);
 		case DELETE: 		return new Delete(win);
+		case CUT:			return new Cut(win);
+		case PASTE:			return new Paste(win);
+		case COPY:			return new Copy(win);
 		default:           	return null;
 		}
 	}
