@@ -13,18 +13,18 @@ import edu.millersville.cs.segfault.ui.menu.ActionType;
 
 
 /**************************************************************************
- * Delete is the class responsible for invoking the method to delete 
- * all objects and relations for the current model.
- * @author Kimberlyn Broskie
+ * Copy is the class responsible for adding a selection to a paste buffer
+ * without making any mutations to the model.
+ * @author Wesley DeMarco
  *************************************************************************/
-public class Delete extends AbstractAction 
+public class Copy extends AbstractAction 
 						implements MenuAction{
 	
 	//*************************************************************************
 	// Static Instance Variables
 	//*************************************************************************
 	private static final long serialVersionUID = 1596916755400971266L;
-	private static final String deleteMenuText = "Delete";
+	private static final String cutMenuText = "Copy";
 
 	//*************************************************************************
 	// Instance Variables
@@ -35,25 +35,26 @@ public class Delete extends AbstractAction
 	* Constructor that builds the action with an accelerator.
 	* @param win the frame for the interface.
 	*************************************************************************/
-	public Delete (UMLWindow win)
+	public Copy (UMLWindow win)
 	{
-		super(deleteMenuText);
-		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE , 0));		
+		super(cutMenuText);
+		putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK));		
 		window = win;
 	}
 	
 	//*************************************************************************
 	// Observers
 	//*************************************************************************
-	public ActionType getType() { return ActionType.DELETE; }	
+	public ActionType getType() { return ActionType.COPY; }	
 	
 	//*************************************************************************
 	// Event Listeners
 	//*************************************************************************
 	public void actionPerformed(ActionEvent se) {
 		try {
-				window.getUMLPanel().changeModel(
-						window.getUMLPanel().getModel().deleteSelected()); }
+			// Add current selection to the pastebuffer
+			window.setPasteBuffer(window.getUMLPanel().getModel().selectedSet());
+		}
 		catch (Exception e) {}
 	}	
 }

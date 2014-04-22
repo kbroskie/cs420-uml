@@ -125,6 +125,7 @@ public class UMLModelTest {
 		//makeObject & makeRelation Tests
 		//**********************************************************************************//	
 		
+
 		//UMLPanel testPanel = new UMLPanel();
 		
 //		UMLObject testMO = DrawableType.makeObject(DrawableType.OBJECT, 
@@ -135,12 +136,18 @@ public class UMLModelTest {
 		
 //		assertTrue("Heights do not match!", testMO.getHeight() == testO1.getHeight());
 //		assertTrue("Labels do not match!", testMO.getLabel() == testO1.getLabel());
+
 //		assertTrue("Types do not match!", testMO.getType() == testO1.getType());
 //
 //		assertTrue("End point did not get moved over to new Relation!", testMR.getEnd() == testR1.getEnd());
 //		assertFalse("Z is not supposed to be shared!", testMR.getZ() == testR1.getZ());
+<<<<<<< HEAD
 		
 		//**********************************************************************************//	
+=======
+//		
+//		//**********************************************************************************//	
+>>>>>>> cut_paste
 	}
 
 }

@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
+import edu.millersville.cs.segfault.immutable.ImmutableSet;
+import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.ui.menu.MenuBar;
 
 /**************************************************************************
@@ -33,6 +35,7 @@ public class UMLWindow extends JFrame {
 	JPanel rightPanel;
 	private Toolbar toolbar;
 	private UMLPanel umlPanel;
+	private ImmutableSet<DrawableUML> pasteBuffer;
 //	private final int Virtual_Key_0 = 48;
 	private JScrollPane scrollableUMLPanel;
 	private JTabbedPane tabbedPanel;
@@ -136,6 +139,21 @@ public class UMLWindow extends JFrame {
 	 *************************************************************************/
 	public UMLPanel getUMLPanel() {
 		return panels.get(tabbedPanel.getSelectedComponent());
+	}
+	
+	/**************************************************************************
+	 * Returns the contents of the current Pastebuffer
+	 * @return the pastebuffer
+	 *************************************************************************/
+	public ImmutableSet<DrawableUML> getPasteBuffer() {
+		return pasteBuffer;
+	}
+	
+	/**************************************************************************
+	 * Adds input to the pastebuffer
+	 *************************************************************************/
+	public void setPasteBuffer( ImmutableSet<DrawableUML> selected) {
+		pasteBuffer = selected;
 	}
 	
 	/**************************************************************************
