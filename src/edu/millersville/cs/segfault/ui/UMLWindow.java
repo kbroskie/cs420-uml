@@ -148,6 +148,7 @@ public class UMLWindow extends JFrame {
 			tabbedPanel.setTabComponentAt(newTabIndex, new ButtonTab(tabbedPanel, tabTitle));
 			panels.put(scrollpanel, uml);
 			panels.get(tabbedPanel.getSelectedComponent()).load();
+			
 		}
 	}
 	

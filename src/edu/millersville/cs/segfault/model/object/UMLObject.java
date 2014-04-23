@@ -58,9 +58,10 @@ public class UMLObject implements DrawableUML {
 		int textSearch = 0;
 		while(XMLAttribute.hasAttr(textSection, "" + textSearch)) {
 			newText.add(new ImmutableLabel(XMLAttribute.getAttribute(textSection, "" + textSearch)));
+			++textSearch;
 		}
-		
-		this.text = newText.toArray(this.text);
+		ImmutableLabel[] textType = new ImmutableLabel[1];
+		this.text = newText.toArray(textType);
 		
 		this.z = new Integer(XMLAttribute.getAttribute(s, "z"));
 		this.origin = new ImmutablePoint(XMLAttribute.getAttribute(s, "origin"));
