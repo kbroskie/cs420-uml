@@ -10,6 +10,7 @@ import edu.millersville.cs.segfault.ui.menu.actions.Copy;
 import edu.millersville.cs.segfault.ui.menu.actions.Cut;
 import edu.millersville.cs.segfault.ui.menu.actions.Delete;
 import edu.millersville.cs.segfault.ui.menu.actions.Exit;
+import edu.millersville.cs.segfault.ui.menu.actions.Help;
 import edu.millersville.cs.segfault.ui.menu.actions.New;
 import edu.millersville.cs.segfault.ui.menu.actions.Open;
 import edu.millersville.cs.segfault.ui.menu.actions.Paste;
@@ -25,23 +26,25 @@ import edu.millersville.cs.segfault.ui.menu.actions.Undo;
  * @author Kimberlyn Broskie                                                 *
  *****************************************************************************/
 public enum ActionType {
-	//Name      ActionType? Different Action Group?
-	NEW      	(true, false),
-	OPEN        (true, false),
-	SAVE 		(true, true),
-	SAVE_AS	    (true, false),
-	HELP        (false, true),
-	EXIT  		(true, true),
-	UNDO		(false, false),
-	REDO        (false, false),
-	SELECT	 	(false, true),
-	DELETE 		(false, false),
-	CUT			(false, true),
-	COPY		(false, false),
-	PASTE		(false, false);
+	//Name      FileAction? OptionAction? Different Action Group?
+	NEW      	(true, false, false),
+	OPEN        (true, false, false),
+	SAVE 		(true, false, true),
+	SAVE_AS	    (true, false, false),
+	EXIT  		(true, false, true),
+	UNDO		(false, false, false),
+	REDO        (false, false, false),
+	SELECT	 	(false, false, true),
+	DELETE 		(false, false, false),
+	CUT			(false, false, true),
+	COPY		(false, false, false),
+	PASTE		(false, false, false),
+	HELP        (false, true, false);
+
 	
-	// Determine whether the variable is a file or edit action type.
+	// Determine whether the variable is a file, edit, or option action type.
 	public final boolean      isFileAction;
+	public final boolean 	  isOptionAction;
 	
 	// Determine whether the variable is the start of a similar group.
 	public final boolean 	  isDifferentActionGroup;
@@ -50,8 +53,9 @@ public enum ActionType {
 	
 	private static final Vector<MenuAction> actions = new Vector<MenuAction>(9);
 	
-	ActionType(boolean isFileAction, boolean isDifferentActionGroup) {
+	ActionType(boolean isFileAction, boolean isOptionAction, boolean isDifferentActionGroup) {
 		this.isFileAction = isFileAction;
+		this.isOptionAction = isOptionAction;
 		this.isDifferentActionGroup = isDifferentActionGroup;
 		this.icon     = new ImageIcon("img/32/" + this.name() + ".png");
 	}
@@ -74,7 +78,7 @@ public enum ActionType {
 	public static LinkedList<ActionType> fileMenuTypeList() {
 		LinkedList<ActionType> types = new LinkedList<ActionType>();
 		for (ActionType type: NEW.getDeclaringClass().getEnumConstants()) {
-			if (type.isFileAction) {
+			if (type.isFileAction && !type.isOptionAction) {
 				types.add(type);
 			}
 		}
@@ -87,7 +91,18 @@ public enum ActionType {
 	public static LinkedList<ActionType> editMenuTypeList() {
 		LinkedList<ActionType> types = new LinkedList<ActionType>();
 		for (ActionType type: NEW.getDeclaringClass().getEnumConstants()) {
-			if (!type.isFileAction) types.add(type);
+			if (!type.isFileAction && !type.isOptionAction) types.add(type);
+		}
+		return types;
+	}
+	
+	/*****************************************************************************
+	 * Returns all of the types in this enum that correspond to options actions     *
+	 *****************************************************************************/
+	public static LinkedList<ActionType> optionsMenuTypeList() {
+		LinkedList<ActionType> types = new LinkedList<ActionType>();
+		for (ActionType type: NEW.getDeclaringClass().getEnumConstants()) {
+			if (type.isOptionAction) types.add(type);
 		}
 		return types;
 	}
@@ -96,7 +111,7 @@ public enum ActionType {
 	// Factories
 
 	// Action Factories - Call a specialized factory
-	
+
 	// File Action Factories - Make a file action type.
 	/*****************************************************************************
 	 * Retrieves an existing filing action or produces one if it does not exist	 *
@@ -156,5 +171,22 @@ public enum ActionType {
 		default:           	return null;
 		}
 	}
+	
+	// Edit action factory - Make an edit action type.
+	/*****************************************************************************
+	* Produces an option action												     *
+	*****************************************************************************/
+		public static MenuAction makeOptionMenuAction(ActionType type, UMLWindow win)
+			throws Exception {
+
+			if (!type.isOptionAction) {
+				throw new Exception("Factory: Type is not an option action.");
+			}
+			
+			switch(type) {
+			case HELP:			return new Help();
+			default:           	return null;
+			}
+		}
 }
  

@@ -8,12 +8,11 @@ import java.util.Iterator;
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 
-import edu.millersville.cs.segfault.immutable.ImmutableSet;
 import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.ui.UMLWindow;
-import edu.millersville.cs.segfault.ui.menu.MenuAction;
 import edu.millersville.cs.segfault.ui.menu.ActionType;
+import edu.millersville.cs.segfault.ui.menu.MenuAction;
 
 /**************************************************************************
  * Paste is a class to support paste buffer actions

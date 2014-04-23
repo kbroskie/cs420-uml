@@ -3,8 +3,10 @@ package edu.millersville.cs.segfault.ui.menu;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.Action;
 import javax.swing.JCheckBox;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 import edu.millersville.cs.segfault.ui.UMLWindow;
 
@@ -13,7 +15,7 @@ import edu.millersville.cs.segfault.ui.UMLWindow;
  * window.
  * @author Daniel Rabiega, Kimberlyn Broskie, 
  *************************************************************************/
-public class ViewMenu extends JMenu {
+public class OptionsMenu extends JMenu {
 	
 	//*************************************************************************
 	// Static Instance Variables
@@ -34,16 +36,33 @@ public class ViewMenu extends JMenu {
 	 * Builds a viewMenu and initializes it with a reference to it's parent.
 	 * @param parent the frame for the interface
 	 *************************************************************************/
-	public ViewMenu(UMLWindow parent) {
-		super("View");
+	public OptionsMenu(UMLWindow parent) {
+		super("Options");
 		this.parent = parent;
+		
+		Action newAction;
+		JMenuItem newItem;
+		
+		// Create and add options menu items.
+		for (ActionType type : ActionType.optionsMenuTypeList()) {
+			// Add a menu separator to group similar actions.
+			if (type.isDifferentActionGroup) {
+				addSeparator();
+			 }
+			try {
+				   newAction = (Action)ActionType.makeOptionMenuAction(type, parent);
+				   newItem = new JMenuItem(newAction);
+				   add (newItem); 
+			} catch (Exception e) {}
+		}
+		
+		addSeparator();
 		
 		// Create a checkbox to show/hide the toolbar.
 		toolbarCheckBox = new JCheckBox(hideToolbarText);
 		toolbarCheckBox.setSelected(true);
 		toolbarCheckBox.addItemListener(new ToolbarCheckBoxListener());
-		this.add(toolbarCheckBox);
-		
+		add(toolbarCheckBox);		
 	}
 	
 		 
