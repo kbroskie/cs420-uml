@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -29,15 +30,13 @@ public class UMLWindow extends JFrame {
 	//*************************************************************************	
 	// Components of the main frame.
 	private OptionsPanel optionsPane;
-	JPanel rightPanel;
+	private JPanel rightPanel;
 	private Toolbar toolbar;
-	//private UMLPanel umlPanel;
-	//private JScrollPane scrollableUMLPanel;
 	private JTabbedPane tabbedPanel;
 	private HashMap<JScrollPane, UMLPanel> panels;
+	
 	private final int MAX_TAB_COUNT = 9;
 
-	
 	//*************************************************************************
 	// Constructors	
 	//*************************************************************************
@@ -114,16 +113,24 @@ public class UMLWindow extends JFrame {
 		else {
 			UMLPanel uml = new UMLPanel();
 			JScrollPane scrollpanel = createScrollableUMLPanel(uml);
-			tabbedPanel.insertTab("New Tab " +  newTabNumber, null, scrollpanel, null, newTabNumber - 1);
+			String tabTitle = "New Tab " +  newTabNumber;
+			
+			tabbedPanel.insertTab(tabTitle, new ImageIcon("img/16/Destroy.png"), 
+					scrollpanel, null, newTabNumber - 1);
 			tabbedPanel.setSelectedIndex(newTabNumber - 1);
+			tabbedPanel.setTabComponentAt(newTabNumber - 1, new ButtonTab(tabbedPanel, tabTitle));
 			panels.put(scrollpanel, uml);
 		}
 	}
 	
+	/**************************************************************************
+	 * Adds a tab to the tabbed panel that contains a saved diagram from the 
+	 * location specified by the user.
+	 *************************************************************************/
 	public void loadNewTab() {
-		int newTabNumber = tabbedPanel.getTabCount() + 1;
+		int newTabIndex = tabbedPanel.getTabCount();
 		
-		if (newTabNumber > MAX_TAB_COUNT) {
+		if (newTabIndex + 1 > MAX_TAB_COUNT) {
 			String message = "The maximum number of tabs is " + MAX_TAB_COUNT + ".\n" + 
 					  "Please close one or more tabs before loading a file.";
 			JOptionPane.showMessageDialog(null, message, "Cannot Load File", 
@@ -131,14 +138,17 @@ public class UMLWindow extends JFrame {
 		}
 		else {
 			UMLPanel uml = new UMLPanel(); 
-			uml.load();
-
 			JScrollPane scrollpanel = createScrollableUMLPanel(uml);
-			tabbedPanel.insertTab("New Tab " +  newTabNumber, null, scrollpanel, null, newTabNumber - 1);
-			tabbedPanel.setSelectedIndex(newTabNumber - 1);
+			String tabTitle = "New Tab " +  newTabIndex;
+			
+			tabbedPanel.insertTab(tabTitle, null, scrollpanel, null, newTabIndex);
+			tabbedPanel.setSelectedIndex(newTabIndex);
+			tabbedPanel.setTabComponentAt(newTabIndex, new ButtonTab(tabbedPanel, tabTitle));
 			panels.put(scrollpanel, uml);
+			panels.get(tabbedPanel.getSelectedComponent()).load();
 		}
 	}
+	
 	
 	//********************************************************************
 	// Observers
