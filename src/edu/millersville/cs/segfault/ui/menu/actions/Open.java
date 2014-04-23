@@ -8,8 +8,8 @@ import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 
 import edu.millersville.cs.segfault.ui.UMLWindow;
-import edu.millersville.cs.segfault.ui.menu.MenuAction;
 import edu.millersville.cs.segfault.ui.menu.ActionType;
+import edu.millersville.cs.segfault.ui.menu.MenuAction;
 
 /**************************************************************************
  * Save is the class responsible for invoking the method to 
@@ -50,6 +50,6 @@ public class Open extends AbstractAction
 	// Event Listeners
 	//*************************************************************************
 	public void actionPerformed(ActionEvent se) {
-		window.getUMLPanel().load();
+		window.loadNewTab();
 	}		
 }

@@ -366,7 +366,7 @@ public class UMLPanel extends JPanel {
 	/*************************************************************************
 	 * Public Load
 	 * Prompts the user with the JFileChooser to obtain information about
-	 * the file to be loaded. This will present a graphical interface and
+	 * the file to be loaded. This will prese																																																																																																													nt a graphical interface and
 	 * then pass the resulting path to 'LoadObject()' which will then give
 	 * back the resultant 'UMLObject'.
 	 * -----------------------------------------------------------------------

@@ -21,12 +21,12 @@ public class ImmutableLabel {
 	 */
 	public final String text;	
 	
-	private final Font font;
-	
 	/**************************************************************************
 	 * Whether or not this label is selected.
 	 */
 	public final boolean selected; 
+	
+	private final Font font;
 	
 	//*************************************************************************
 	// Constructors
@@ -71,8 +71,6 @@ public class ImmutableLabel {
 	 * @return
 	 */
 	public Font getFont() { return this.font; }
-	
-	private FontMetrics metrics(Graphics g) { return g.getFontMetrics(this.font); }
 	
 	/**************************************************************************
 	 * Returns the height required to display this label's text.
@@ -122,10 +120,11 @@ public class ImmutableLabel {
 		return lines;
 	}
 	
+	private FontMetrics metrics(Graphics g) { return g.getFontMetrics(this.font); }
+		
 	//*************************************************************************
 	// Mutators
-	
-	
+		
 	/**************************************************************************
 	 * Creates a new version of this label with a different font.
 	 * @param newFont The font to be used with the new version.
@@ -144,13 +143,24 @@ public class ImmutableLabel {
 		return new ImmutableLabel(newText, this.font, this.selected);
 	}
 
+	/**************************************************************************
+	 * Returns a new, selected, copy of this object.	
+	 */
 	public ImmutableLabel select()   { return new ImmutableLabel(this.text, this.font, true); }
 	
+	/**************************************************************************
+	 * Returns a new copy of this object which is not selected.
+	 */
 	public ImmutableLabel deselect() { return new ImmutableLabel(this.text, this.font, false); }
 	
 	//*************************************************************************
 	// Drawing Methods
 	
+	/**************************************************************************
+	 * Draws the text of this label in it's font at the specified coordinates.
+	 * @param g The graphics object to draw the text upon.
+	 * @param p The upper left corner of the area to draw the text.
+	 */
 	public void draw(Graphics g, ImmutablePoint p) {
 		
 		String[] lines = lines();
