@@ -1,17 +1,12 @@
 package edu.millersville.cs.segfault.ui.menu;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 
 import edu.millersville.cs.segfault.ui.UMLWindow;
-import edu.millersville.cs.segfault.ui.console.Console;
 
 /**************************************************************************
  * A menu for enabling and disabling subviews and the toolbar in the main 
@@ -29,13 +24,10 @@ public class ViewMenu extends JMenu {
 	//*************************************************************************
 	// Instance Variables
 	//*************************************************************************
-	private boolean consoleOn = false;
 	private UMLWindow parent;
 	
-	private JCheckBoxMenuItem consoleItem;
 	private JCheckBox toolbarCheckBox;
 
-	private Console console=null;
 	
 	
 	/**************************************************************************
@@ -52,11 +44,6 @@ public class ViewMenu extends JMenu {
 		toolbarCheckBox.addItemListener(new ToolbarCheckBoxListener());
 		this.add(toolbarCheckBox);
 		
-//		// Create a checkbox to show/hide the console.
-//		this.consoleItem = new JCheckBoxMenuItem("Console");
-//		consoleItem.addActionListener(this);
-//		consoleItem.setActionCommand("CONSOLE");
-//		this.add(consoleItem);
 	}
 	
 		 

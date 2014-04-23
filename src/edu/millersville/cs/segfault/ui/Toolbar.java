@@ -108,7 +108,7 @@ public class Toolbar extends JToolBar
 		finally {
 			newButton.setIcon(newImage);
 		}
-			
+		
 		newButton.setToolTipText(action);
 		newButton.setMinimumSize(BUTTON_SIZE);
 		newButton.setMaximumSize(BUTTON_SIZE);

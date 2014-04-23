@@ -30,6 +30,7 @@ public enum ActionType {
 	OPEN        (true, false),
 	SAVE 		(true, true),
 	SAVE_AS	    (true, false),
+	HELP        (false, true),
 	EXIT  		(true, true),
 	UNDO		(false, false),
 	REDO        (false, false),
