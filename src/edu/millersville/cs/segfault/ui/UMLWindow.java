@@ -36,6 +36,7 @@ public class UMLWindow extends JFrame {
 	private Toolbar toolbar;
 	private JTabbedPane tabbedPanel;
 	private HashMap<JScrollPane, UMLPanel> panels;
+	private ImmutableSet<DrawableUML> pasteBuffer;
 	
 	private final int MAX_TAB_COUNT = 9;
 
@@ -113,7 +114,7 @@ public class UMLWindow extends JFrame {
 										  JOptionPane.ERROR_MESSAGE);
 		}
 		else {
-			UMLPanel uml = new UMLPanel();
+			UMLPanel uml = new UMLPanel(this);
 			JScrollPane scrollpanel = createScrollableUMLPanel(uml);
 			String tabTitle = "New Tab " +  newTabNumber;
 			
@@ -139,7 +140,7 @@ public class UMLWindow extends JFrame {
 										  JOptionPane.ERROR_MESSAGE);
 		}
 		else {
-			UMLPanel uml = new UMLPanel(); 
+			UMLPanel uml = new UMLPanel(this); 
 			JScrollPane scrollpanel = createScrollableUMLPanel(uml);
 			String tabTitle = "New Tab " +  newTabIndex;
 			

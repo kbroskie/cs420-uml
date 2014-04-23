@@ -141,13 +141,7 @@ public class UMLModelTest {
 //
 //		assertTrue("End point did not get moved over to new Relation!", testMR.getEnd() == testR1.getEnd());
 //		assertFalse("Z is not supposed to be shared!", testMR.getZ() == testR1.getZ());
-<<<<<<< HEAD
-		
-		//**********************************************************************************//	
-=======
-//		
-//		//**********************************************************************************//	
->>>>>>> cut_paste
+
 	}
 
 }
