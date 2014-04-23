@@ -53,15 +53,11 @@ public class UMLPanel extends JPanel {
 		if( file != null)
 		{
 			try{
-				//***********************************************
-				//*** CHECK FOR FILE, IF NOT FOUND CREATE ONE ***
-				//..............................................,
+				// CHECK FOR FILE, IF NOT FOUND CREATE ONE
 				if( !file.exists())
 				{
-					//*********************************************
-					//***      CHECK FOR FILE EXTENSION         ***
-					//*** IF ONE DOES NOT EXIST, APPEND ".uml"  ***
-					//............................................,
+					// CHECK FOR FILE EXTENSION         
+					// IF ONE DOES NOT EXIST, APPEND ".uml" 
 					if( !file.getName().contains(".") )
 					{
 						file = new File(file.getAbsolutePath() + ".uml");
@@ -69,9 +65,7 @@ public class UMLPanel extends JPanel {
 					file.createNewFile();
 				}
 			
-				//***********************************************
-				//***			WRITE TO THE FILE		 	  ***
-				//..............................................,
+				// WRITE TO THE FILE		 	  
 				FileWriter fw = new FileWriter(file);
 				BufferedWriter bw = new BufferedWriter(fw);
 			
@@ -108,9 +102,7 @@ public class UMLPanel extends JPanel {
 			try{
 				String serialized = new String();
 			
-				//***********************************************
-				//***				READ THE FILE			  ***
-				//..............................................,
+				// READ THE FILE			
 				FileReader fr = new FileReader(file);
 				BufferedReader br = new BufferedReader(fr);
 			
