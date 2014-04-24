@@ -16,6 +16,7 @@ import edu.millersville.cs.segfault.ui.menu.MenuAction;
 
 public class SaveImage extends AbstractAction implements MenuAction {
 
+	private static final long serialVersionUID = 572951439251319138L;
 	private UMLWindow parent;
 	
 	public SaveImage(UMLWindow parent) {

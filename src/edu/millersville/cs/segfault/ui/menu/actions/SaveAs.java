@@ -48,5 +48,6 @@ public class SaveAs extends AbstractAction
 	public void actionPerformed(ActionEvent se) {
 		window.getUMLPanel().saveAs(
 				window.getUMLPanel().getModel().serialize());
+		window.updateTabname();
 	}	
 }

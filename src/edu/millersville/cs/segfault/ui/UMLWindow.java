@@ -30,6 +30,7 @@ public class UMLWindow extends JFrame {
 	//*************************************************************************
 	// Instance Variables
 	//*************************************************************************	
+	
 	// Components of the main frame.
 	private OptionsPanel optionsPane;
 	private JPanel rightPanel;
@@ -96,6 +97,7 @@ public class UMLWindow extends JFrame {
 		scrollPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPanel.setAutoscrolls(true);
+		scrollPanel.setWheelScrollingEnabled(true);
 		
 		return scrollPanel;
 	}
@@ -149,10 +151,8 @@ public class UMLWindow extends JFrame {
 			tabbedPanel.setTabComponentAt(newTabIndex, new ButtonTab(tabbedPanel, tabTitle));
 			panels.put(scrollpanel, uml);
 			panels.get(tabbedPanel.getSelectedComponent()).load();
-			
 		}
 	}
-	
 	
 	//********************************************************************
 	// Observers
@@ -160,10 +160,18 @@ public class UMLWindow extends JFrame {
 	
 	/**************************************************************************
 	 * Returns the current UML model.
-	 * @return the current UML model
+	 * @return the current UML model for the selected tab.
 	 *************************************************************************/
 	public UMLPanel getUMLPanel() {
 		return panels.get(tabbedPanel.getSelectedComponent());
+	}
+	
+	/**************************************************************************
+	 * Returns the toolbar.
+	 * @return the toolbar.
+	 *************************************************************************/
+	public Toolbar getToolbar() {
+		return toolbar;
 	}
 	
 	/**************************************************************************
@@ -181,11 +189,16 @@ public class UMLWindow extends JFrame {
 		pasteBuffer = selected;
 	}
 	
+	//********************************************************************
+	// Mutators
+	//********************************************************************
+	
 	/**************************************************************************
-	 * Returns the toolbar.
-	 * @return the toolbar.
+	 * Set the tab title to the name of the current file.
 	 *************************************************************************/
-	public Toolbar getToolbar() {
-		return toolbar;
+	public void updateTabname() {
+		String title = panels.get(tabbedPanel.getSelectedComponent()).getFilename();
+		title = title.substring(title.lastIndexOf("\\") + 1, title.indexOf("."));
+		tabbedPanel.setTabComponentAt(tabbedPanel.getSelectedIndex(), new ButtonTab(tabbedPanel, title));
 	}
 }
