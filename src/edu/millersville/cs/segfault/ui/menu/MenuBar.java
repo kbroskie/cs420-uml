@@ -32,12 +32,12 @@ public class MenuBar extends JMenuBar {
 		// Create the sub-menus.
 		JMenu fileSubmenu = new FileMenu(parent);
 		JMenu editSubmenu = new EditMenu(parent);
-		ViewMenu viewMenu = new ViewMenu(parent);
+		OptionsMenu optionsMenu = new OptionsMenu(parent);
 		   
 		// Add the submenus to the menu bar.
 		add(fileSubmenu);
 		add(editSubmenu);
-		add(viewMenu);
+		add(optionsMenu);
 		   
 		// Set the window's menu bar.
 		parent.setJMenuBar(this);

@@ -82,7 +82,6 @@ public class UMLWindow extends JFrame {
 		setVisible(true);
 	}
 	
-	
 	//********************************************************************
 	// Mutators
 	//********************************************************************
@@ -177,7 +176,7 @@ public class UMLWindow extends JFrame {
 	/**************************************************************************
 	 * Adds input to the pastebuffer
 	 *************************************************************************/
-	public void setPasteBuffer( ImmutableSet<DrawableUML> selected) {
+	public void setPasteBuffer(ImmutableSet<DrawableUML> selected) {
 		pasteBuffer = selected;
 	}
 	

@@ -15,7 +15,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import javax.swing.plaf.TextUI;
 
 import edu.millersville.cs.segfault.model.DrawableType;
 

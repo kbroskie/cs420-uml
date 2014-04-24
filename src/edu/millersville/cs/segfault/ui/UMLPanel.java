@@ -16,17 +16,16 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 
-/*****************************************************************************
+/**************************************************************************
  * A custom subclass of JPanel which contains a UMLModel and displays it
  * as a panel in a swing GUI.
  * 
  * @author Daniel Rabiega
- */
+ *************************************************************************/
 
 public class UMLPanel extends JPanel {
 	
