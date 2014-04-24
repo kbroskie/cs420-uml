@@ -37,11 +37,10 @@ public enum ActionType {
 	EXIT  		(true, false, true),
 	UNDO		(false, false, false),
 	REDO        (false, false, false),
-	SELECT	 	(false, false, true),
-	DELETE 		(false, false, false),
 	CUT			(false, false, true),
 	COPY		(false, false, false),
 	PASTE		(false, false, false),
+	SELECT	 	(false, false, true),
 	HELP        (false, true, false);
 
 	
