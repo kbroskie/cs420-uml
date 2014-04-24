@@ -21,15 +21,17 @@ public class Open extends AbstractAction
 
 	//*************************************************************************
 	// Static Instance Variables
-	//*************************************************************************
 	private static final long serialVersionUID = -401022597982490050L;
 	private static final String openMenuText = "Open";
 
 	//*************************************************************************
 	// Instance Variables
-	//*************************************************************************
+
 	private final UMLWindow window;
 
+	//*************************************************************************
+	// Constructors
+	
 	/**************************************************************************
 	* Constructor that builds the action with an accelerator.
 	* @param win the frame for the interface.
@@ -43,12 +45,14 @@ public class Open extends AbstractAction
 	
 	//*************************************************************************
 	// Observers
-	//*************************************************************************
+
+	@Override
 	public ActionType getType() { return ActionType.OPEN; }	
 
 	//*************************************************************************
 	// Event Listeners
-	//*************************************************************************
+
+	@Override
 	public void actionPerformed(ActionEvent se) {
 		window.loadNewTab();
 		window.updateTabname();

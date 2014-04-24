@@ -16,7 +16,7 @@ public class Toolbar extends JToolBar {
 
 	//*************************************************************************
 	// Static Instance Variables
-	//*************************************************************************
+	
 	private static final long serialVersionUID = -8304808920676331117L;
 
 	private static final Color BUTTON_COLOR = new Color(207,219,230);
@@ -30,17 +30,15 @@ public class Toolbar extends JToolBar {
 
 	private static final String [] toolbarActions = 
 		{"New", "Open", "Save", "Undo", "Redo","Cut", "Copy", "Paste",
-		 "Delete", "Snap to Grid", "Help"};
-
+		 "Delete", "Help"};
 
 	//*************************************************************************
 	// Instance Variables
-	//*************************************************************************
+	
 	private UMLWindow parentWindow;
 
 	//*************************************************************************
 	// Constructors	
-	//*************************************************************************
 
 	/**************************************************************************
 	 * Builds a toolbar to hold the menu options a user can select.
@@ -76,14 +74,13 @@ public class Toolbar extends JToolBar {
 		add(toolbarBox);
 	}
 
-
 	//*************************************************************************
-	// Mutators
-	//*************************************************************************
+	// Producers
 
 	/**************************************************************************
 	 * Creates a button for the given string, adding icons and action commands.
 	 * @param action the name of the button to create
+	 * @param return a formatted JButton and its action.
 	 *************************************************************************/
 	public JButton createButton(String action) {
 		ImageIcon newImage = new ImageIcon("img/32/" + 
@@ -104,6 +101,7 @@ public class Toolbar extends JToolBar {
 			newButton.setIcon(newImage);
 		}
 		
+		// Format the button.
 		newButton.setToolTipText(action);
 		newButton.setMinimumSize(BUTTON_SIZE);
 		newButton.setMaximumSize(BUTTON_SIZE);

@@ -21,17 +21,20 @@ public class Redo extends AbstractAction
 
 	//*************************************************************************
 	// Static Instance Variables
-	//*************************************************************************
+
 	private static final long serialVersionUID = -2648065284343268597L;
 	private static final String redoMenuText = "Redo";
 
 	//*************************************************************************
 	// Instance Variables
-	//*************************************************************************
+
 	private final UMLWindow window;
 
+	//*************************************************************************
+	// Constructors
+
 	/**************************************************************************
-	* Constructor that builds the action with an accelerator.
+	* Constructor that builds the redo action with an accelerator.
 	* @param win the frame for the interface.
 	*************************************************************************/
 	public Redo (UMLWindow win)
@@ -43,13 +46,14 @@ public class Redo extends AbstractAction
 	
 	//*************************************************************************
 	// Observers
-	//*************************************************************************
 	
+	@Override
 	public ActionType getType() { return ActionType.REDO; }	
 	
 	//*************************************************************************
 	// Event Listeners
-	//*************************************************************************
+
+	@Override
 	public void actionPerformed(ActionEvent se) {
 		window.getUMLPanel().redo();
 	}	

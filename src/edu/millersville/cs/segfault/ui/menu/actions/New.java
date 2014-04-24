@@ -12,8 +12,8 @@ import edu.millersville.cs.segfault.ui.menu.ActionType;
 import edu.millersville.cs.segfault.ui.menu.MenuAction;
 
 /**************************************************************************
- * New is the class responsible for invoking the method to 
- * create a new model.
+ * New is the class responsible for creating an action that invokes the 
+ * method to create a new model.
  * @author Kimberlyn Broskie
  *************************************************************************/
 public class New extends AbstractAction 
@@ -21,15 +21,18 @@ public class New extends AbstractAction
 	
 	//*************************************************************************
 	// Static Instance Variables
-	//*************************************************************************
+
 	private static final long serialVersionUID = 447204292723445794L;
 	private static final String newMenuText = "New";
 
 	//*************************************************************************
 	// Instance Variables
-	//*************************************************************************
+	
 	private final UMLWindow window;
 	
+	//*************************************************************************
+	// Constructors
+
 	/**************************************************************************
 	* Constructor that builds the action with an accelerator.
 	* @param win the frame for the interface.
@@ -43,12 +46,14 @@ public class New extends AbstractAction
 	
 	//*************************************************************************
 	// Observers
-	//*************************************************************************
+
+	@Override
 	public ActionType getType() { return ActionType.NEW; }	
 	
 	//*************************************************************************
 	// Event Listeners
-	//*************************************************************************
+
+	@Override
 	public void actionPerformed(ActionEvent se) {
 		window.createNewTab();
 	}	

@@ -22,17 +22,20 @@ public class Undo extends AbstractAction
 
 	//*************************************************************************
 	// Static Instance Variables
-	//*************************************************************************
+
 	private static final long serialVersionUID = -7350470434363782769L;
 	private static final String undoMenuText = "Undo";
 
 	//*************************************************************************
 	// Instance Variables
-	//*************************************************************************
+
 	private final UMLWindow window;
 
+	//*************************************************************************
+	// Constructors
+
 	/**************************************************************************
-	* Constructor that builds the action with an accelerator.
+	* Constructor that builds the undo action with an accelerator.
 	* @param win the frame for the interface.
 	*************************************************************************/
 	public Undo (UMLWindow win)
@@ -44,12 +47,14 @@ public class Undo extends AbstractAction
 
 	//*************************************************************************
 	// Observers
-	//*************************************************************************
+
+	@Override
 	public ActionType getType() { return ActionType.UNDO; }	
 
 	//*************************************************************************
 	// Event Listeners
-	//*************************************************************************
+
+	@Override
 	public void actionPerformed(ActionEvent se) {
 		window.getUMLPanel().undo();
 	}	

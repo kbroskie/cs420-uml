@@ -20,15 +20,20 @@ import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
 
+
+/*****************************************************************************
+ * Class responsible for creating a DrawMode.      			 			 	 *
+ * @author Daniel Rabiega                                                    *
+ *****************************************************************************/
 public class DrawMode extends PanelInteractionMode {
 
 	/*************************************************************************
-	 * The distance within which mouse interactions will snap to snap-points.
+	 * The distance within which mouse interactions will snap to snap-points.*
 	 *************************************************************************/
 	public static final int snapDistance = 15;
 
-	// *************************************************************************
-	// Private Instance Variables
+	//*************************************************************************
+	// Instance Variables
 	
 	private final UMLPanel panel;
 	private final DrawableType drawType;
@@ -36,19 +41,15 @@ public class DrawMode extends PanelInteractionMode {
 	private ImmutablePoint lastPoint;
 	private ImmutablePoint startPoint;
 	
-	// *************************************************************************
+	//*************************************************************************
 	// Constructors
 	
-	/***
-	 * Constructs a new DrawMode which interprets mouse and key actions to add
-	 * {@link DrawableUML}s into the {@link UMLModel} held by a {@link UMLPanel}
-	 * .
-	 * 
-	 * @param type
-	 *            The type of Drawable to add to the panel.
-	 * @param panel
-	 *            The panel to which the Drawable will be added.
-	 */
+	/*****************************************************************************
+	 * Constructs a new DrawMode which interprets mouse and key actions to add	 *
+	 * {@link DrawableUML}s into the {@link UMLModel} held by a {@link UMLPanel} *
+	 * @param type The type of Drawable to add to the panel.					 *
+	 * @param panel The panel to which the Drawable will be added.				 *
+	 *****************************************************************************/
 	public DrawMode(DrawableType type, UMLPanel panel) {
 		this.drawType = type;
 		this.panel = panel;
@@ -56,10 +57,8 @@ public class DrawMode extends PanelInteractionMode {
 		this.startPoint = null;
 	}
 
-	
-
 	// *************************************************************************
-	// Action Listener Methods
+	// Action Listeners
 	
 	public void mouseDragged(MouseEvent e) {
 		super.mouseDragged(e);
@@ -101,7 +100,6 @@ public class DrawMode extends PanelInteractionMode {
 	{
 		if (!drawType.isObject) {
 			// Drawing a relation.
-
 			UMLRelation previous = findByEndPoint(first);
 			
 			if (previous == null) {
@@ -137,6 +135,10 @@ public class DrawMode extends PanelInteractionMode {
 
 	}
 	
+	/*************************************************************************
+	 * Constructs an immutable blank label.
+	 * @return an immmutable blank label.
+	 *************************************************************************/
 	public ImmutableLabel[] blankLabel() {
 		ImmutableLabel[] blank = new ImmutableLabel[drawType.textQuantity];
 		for (int i=0; i<blank.length; ++i) {
@@ -145,34 +147,10 @@ public class DrawMode extends PanelInteractionMode {
 		return blank;
 	}
 
-	// *************************************************************************
-	// Drawing Methods
-	// *************************************************************************
-
-	/***
-	 * Draws any partially completed objects on it's panel.
-	 */
-	@Override
-	public void draw(Graphics g) {
-		g.setColor(Color.BLUE);
-		if (startPoint != null && lastPoint != null) {
-			if (drawType.isObject) {
-				g.drawRect(Math.min(startPoint.getX(), lastPoint.getX()),
-						Math.min(startPoint.getY(), lastPoint.getY()),
-						Math.abs(startPoint.getX() - lastPoint.getX()),
-						Math.abs(startPoint.getY() - lastPoint.getY()));
-			} else {
-				g.drawLine(startPoint.getX(), startPoint.getY(),
-						lastPoint.getX(), lastPoint.getY());
-			}
-		}
-	}
-
 	/*************************************************************************
-	 * If p is within snapdistance of a snap point the snap point will be
-	 * returned. Otherwise, p will be returned.
-	 */
-	
+	 * If p is within snapdistance of a snap point the snap point will be    *
+	 * returned. Otherwise, p will be returned.								 *
+	 *************************************************************************/
 	public ImmutablePoint snap(ImmutablePoint p) {
 		Iterator<DrawableUML> zIter = panel.getModel().iterator();
 
@@ -197,7 +175,6 @@ public class DrawMode extends PanelInteractionMode {
 		
 	}
 
-	
 	private UMLRelation findByEndPoint(ImmutablePoint p) {
 		Iterator<UMLRelation> rIter = panel.getModel().getRelations().iterator();
 		UMLRelation highest = null;
@@ -215,7 +192,6 @@ public class DrawMode extends PanelInteractionMode {
 	}
 
 	private ImmutablePoint straitSnap(ImmutablePoint mousePos, ImmutablePoint startPos, MouseEvent e) {
-		
 		if (e.isShiftDown()) { return this.snap(mousePos); }
 		boolean vertical = true;
 		int xDistance = Math.abs(mousePos.getX() - startPos.getX());
@@ -251,5 +227,27 @@ public class DrawMode extends PanelInteractionMode {
 			}
 		}
 		return closest;
+	}
+	
+	// *************************************************************************
+	// Drawing Methods
+
+	/*************************************************************************
+	 * Draws any partially completed objects on it's panel.					 *
+	 *************************************************************************/
+	@Override
+	public void draw(Graphics g) {
+		g.setColor(Color.BLUE);
+		if (startPoint != null && lastPoint != null) {
+			if (drawType.isObject) {
+				g.drawRect(Math.min(startPoint.getX(), lastPoint.getX()),
+						Math.min(startPoint.getY(), lastPoint.getY()),
+						Math.abs(startPoint.getX() - lastPoint.getX()),
+						Math.abs(startPoint.getY() - lastPoint.getY()));
+			} else {
+				g.drawLine(startPoint.getX(), startPoint.getY(),
+						lastPoint.getX(), lastPoint.getY());
+			}
+		}
 	}
 }

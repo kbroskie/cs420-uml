@@ -28,7 +28,7 @@ public class OptionsPanel extends JPanel
 
 	//*************************************************************************
 	// Static Instance Variables
-	//*************************************************************************
+
 	private static final long serialVersionUID = -9118912567292664779L;
 	
 	private static final Color BUTTON_COLOR = new Color(231,237,243);
@@ -47,12 +47,11 @@ public class OptionsPanel extends JPanel
 	
 	//*************************************************************************
 	// Instance Variables
-	//*************************************************************************
+
 	private UMLWindow parentWindow;
 	
 	//*************************************************************************
 	// Constructors	
-	//*************************************************************************
 	
 	/**************************************************************************
 	 * Builds a panel to hold the options for various objects and 
@@ -111,16 +110,63 @@ public class OptionsPanel extends JPanel
 	 
 	//*************************************************************************
 	// Mutators
-	//*************************************************************************
+		
+	// Adds expandable space between rows of buttons if it is needed.
+	private Vector<Box> addBoxToGroupIfFullRow(Box box, Vector<Box> boxGroup, int count) { 
+		if (count % 2 == 0) {
+			box.add(Box.createHorizontalGlue());
+			boxGroup.add(box);
+		}
+		return boxGroup;
+	}
+		 
+	// Adds the button to a row that holds two buttons.
+	private Box addNewButton(Box box, JToggleButton button, int count) {
+		// Create a new box if the current row is full.
+		if (count % 2 == 0) {
+			box = createHorizontalBox();
+		}
+				
+		box.add(button);	
+			return box;
+	}
+		 
+	// Adds the last group of buttons, formatting the button to the left side 
+	private Box formatLastRow(Box box, int count) {
+		// Add an area to avoid off-centered single buttons.
+		if (count % 2 > 0) {
+			box.add(Box.createRigidArea(BUTTON_SIZE));
+		}
+			 
+		return box;
+	}
+		 
+	// Formats a string, adding capitalization and spaces.
+	private String formatAction(String name) {		
+		if (name == null || name == "") {
+			return name;
+		}
+				
+		int separatorIndex = name.indexOf("_");
+					 
+		// Replace an underscore with a space, and leave the first letter 
+		// of each word capitalized.
+		if (separatorIndex > 0) {
+			return name.substring(0,1) + 
+				name.substring(1, separatorIndex + 1).toLowerCase().replace("_", " ") +
+				name.substring(separatorIndex + 1, separatorIndex + 2) + 
+				name.substring(separatorIndex + 2).toLowerCase(); 
+		}
+
+		// Name is a single word.	 
+		return name.substring(0,1) + name.substring(1).toLowerCase();	
+	}	 
 	 
-	 /**************************************************************************
-	  * Creates a button for the given string, adding icons and default 
-	  * properties.
-	  * @param icon the image for the button
-	  * @param selectedIcon the image for the button when selected
-	  * @param name the action type
-	  *************************************************************************/
-	 private JToggleButton createButton(ImageIcon icon, ImageIcon selectedIcon, String name) {	
+	//*************************************************************************
+	// Producers
+	 
+	// Creates a button for the given string, adding icons and default properties.
+	private JToggleButton createButton(ImageIcon icon, ImageIcon selectedIcon, String name) {	
 		JToggleButton newButton = new JToggleButton(icon);
 			 
 		newButton.setSelectedIcon(selectedIcon);
@@ -138,10 +184,7 @@ public class OptionsPanel extends JPanel
 		return newButton;
 	}
 
-
-	/**************************************************************************
-	 * Creates a select button, giving it the initial focus.
-	 *************************************************************************/
+	// Creates a select button, giving it the initial focus.
 	private JToggleButton createSelectButton() {
 		 JToggleButton newButton = 
 				 createButton(new ImageIcon("img/64/selectionMode.png"), 
@@ -154,9 +197,7 @@ public class OptionsPanel extends JPanel
 		 return newButton;
 	}
 	
-	/**************************************************************************
-	 * Creates a text button.
-	 *************************************************************************/
+	// Creates a text button.
 	private JToggleButton createTextButton() {
 		 JToggleButton newButton = 
 				 createButton(new ImageIcon("img/64/textMode.png"), 
@@ -167,36 +208,8 @@ public class OptionsPanel extends JPanel
 		 
 		 return newButton;
 	}
-	
-	/**************************************************************************
-	 * Formats a string, adding capitalization and spaces.
-	 * @param name the string to format
-	 *************************************************************************/
-	private String formatAction(String name) {		
-	
-		if (name == null || name == "") {
-			return name;
-		}
-		
-		int separatorIndex = name.indexOf("_");
-			 
-		// Replace an underscore with a space, and leave the first letter 
-		// of each word capitalized.
-		if (separatorIndex > 0)
-		{
-			return name.substring(0,1) + 
-				   name.substring(1, separatorIndex + 1).toLowerCase().replace("_", " ") +
-				   name.substring(separatorIndex + 1, separatorIndex + 2) + 
-				   name.substring(separatorIndex + 2).toLowerCase(); 
-		}
-
-		// Name is a single word.	 
-		return name.substring(0,1) + name.substring(1).toLowerCase();	
-	}
 	 
-	/**************************************************************************
-	 * Create and format a horizontal box.
-	 *************************************************************************/
+	// Create and format a horizontal box.
 	private Box createHorizontalBox() {		 	
 		Box b = Box.createHorizontalBox();
 		b.setPreferredSize(MAX_BOX_SIZE);
@@ -206,63 +219,16 @@ public class OptionsPanel extends JPanel
 		
 		return b;
 	 }
-	
-	 /**************************************************************************
-	  * Adds expandable space between rows of buttons if it is needed.
-	  * @param box the horizontal box of button pairs
-	  * @param boxGroup the group of button rows
-	  * @param count the current number of buttons
-	  *************************************************************************/
-	private Vector<Box> addBoxToGroupIfFullRow(Box box, Vector<Box> boxGroup, int count) { 
-		 if (count % 2 == 0) {
-			 box.add(Box.createHorizontalGlue());
-			 boxGroup.add(box);
-		 }
-		 return boxGroup;
-	 }
-	 
-	 /**************************************************************************
-	  * Adds the button to a row that holds two buttons.
-	  * @param box the horizontal box of button pairs
-	  * @param button the button to add
-	  * @param count the current number of buttons
-	  *************************************************************************/
-	 private Box addNewButton(Box box, JToggleButton button, int count) {
-		 // Create a new box if the current row is full.
-		 if (count % 2 == 0) {
-			 box = createHorizontalBox();
-		 }
-			
-		 box.add(button);	
-		 return box;
-	 }
-	 
-	 /**************************************************************************
-	  * Adds the last group of buttons, formatting the button to the left side 
-	  * of the button row if the last group contains one button.
-	  * @param box the horizontal box to add
-	  * @param boxGroup the group of horizontal boxes
-	  * @param count the current number of buttons
-	  *************************************************************************/
-	 private Box formatLastRow(Box box, int count) {
-		 // Add an area to avoid off-centered single buttons.
-		 if (count % 2 > 0) {
-			 box.add(Box.createRigidArea(BUTTON_SIZE));
-		 }
-		 
-		 return box;
-	 }
-	 
 	 
 	 //*************************************************************************
 	 // Event Listeners
-	 //*************************************************************************
 	 
 	 /**************************************************************************
 	 * Handles the events generated by the user selecting
 	 * an option.
 	 * @param se the selected event and source 
 	 *************************************************************************/
+	 @Override
 	 public void actionPerformed(ActionEvent se) {
 
 		 Object selectedCommand = se.getActionCommand();

@@ -15,22 +15,24 @@ import edu.millersville.cs.segfault.ui.menu.ActionType;
 /**************************************************************************
  * Copy is the class responsible for adding a selection to a paste buffer
  * without making any mutations to the model.
- * @author Wesley DeMarco
+ * @author Wesley DeMarco, Kimberlyn Broskie
  *************************************************************************/
 public class Copy extends AbstractAction 
 						implements MenuAction{
 	
 	//*************************************************************************
 	// Static Instance Variables
-	//*************************************************************************
+
 	private static final long serialVersionUID = 1596916755400971266L;
 	private static final String cutMenuText = "Copy";
 
 	//*************************************************************************
 	// Instance Variables
-	//*************************************************************************
 	private final UMLWindow window;
 
+	//*************************************************************************
+	// Constructors
+	
 	/**************************************************************************
 	* Constructor that builds the action with an accelerator.
 	* @param win the frame for the interface.
@@ -44,12 +46,14 @@ public class Copy extends AbstractAction
 	
 	//*************************************************************************
 	// Observers
-	//*************************************************************************
+	
+	@Override
 	public ActionType getType() { return ActionType.COPY; }	
 	
 	//*************************************************************************
 	// Event Listeners
-	//*************************************************************************
+
+	@Override
 	public void actionPerformed(ActionEvent se) {
 		try {
 			// Add current selection to the pastebuffer

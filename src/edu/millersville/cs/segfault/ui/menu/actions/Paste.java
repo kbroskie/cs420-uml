@@ -16,21 +16,24 @@ import edu.millersville.cs.segfault.ui.menu.MenuAction;
 
 /**************************************************************************
  * Paste is a class to support paste buffer actions
- * @author Wesley DeMarco
+ * @author Wesley DeMarco, Kimberlyn Broskie
  *************************************************************************/
 public class Paste extends AbstractAction
 						implements MenuAction {
 
 	//*************************************************************************
 	// Static Instance Variables
-	//*************************************************************************
+
 	private static final long serialVersionUID = -401022597982490050L;
 	private static final String pasteMenuText = "Paste";
 
 	//*************************************************************************
 	// Instance Variables
-	//*************************************************************************
+
 	private final UMLWindow window;
+
+	//*************************************************************************
+	// Constructors
 
 	/**************************************************************************
 	* Constructor that builds the action with an accelerator.
@@ -45,12 +48,14 @@ public class Paste extends AbstractAction
 	
 	//*************************************************************************
 	// Observers
-	//*************************************************************************
+
+	@Override
 	public ActionType getType() { return ActionType.PASTE; }	
 
 	//*************************************************************************
 	// Event Listeners
-	//*************************************************************************
+
+	@Override
 	public void actionPerformed(ActionEvent se) {
 		try{
 			UMLModel model = new UMLModel(window.getUMLPanel().getModel());
@@ -59,12 +64,10 @@ public class Paste extends AbstractAction
 			while( iter.hasNext())
 			{
 				model = model.add(iter.next().unselect());
+
 			}
 			
-			window.getUMLPanel().changeModel( model );
-					
-		} catch(Exception e) {
-					
-		}
+			window.getUMLPanel().changeModel( model );		
+		} catch(Exception e) {}
 	}		
 }
