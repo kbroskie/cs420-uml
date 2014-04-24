@@ -61,15 +61,6 @@ public class LineTest {
 		//assertTrue("", testLine4.perpendicular(testLine3.second));
 		
 		//**********************************************************************************//
-		
-		//testing item
-		System.out.println();
-		
-		//snap at y
-		//snap at x
-		//snap point
-		//perpendicular
-		//intercept
 	}
 
 }

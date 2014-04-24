@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
+import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
@@ -116,19 +117,17 @@ public class UMLModelTest {
 		
 		UMLPanel testPanel = new UMLPanel();
 		
-
-//		UMLObject testMO = DrawableType.makeObject(DrawableType.OBJECT, 
-//						new ImmutablePoint(0,0), testO1.getSize(), testPanel);
-//		
-		//UMLRelation testMR = DrawableType.makeRelation(DrawableType.RELATION, 
-		//				testR1.getPath(), testPanel);
+		UMLObject testMO = DrawableType.makeObject(DrawableType.OBJECT, 
+						new ImmutablePoint(0,0), testO1.size, testPanel);
 		
-//		assertTrue("Heights do not match!", testMO.getHeight() == testO1.getHeight());
-//		assertTrue("Labels do not match!", testMO.getLabel() == testO1.getLabel());
-//		assertTrue("Types do not match!", testMO.getType() == testO1.getType());
+		UMLRelation testMR = DrawableType.makeRelation(DrawableType.RELATION, 
+						new ImmutablePath(new ImmutablePoint(20, 70)).addLast(new ImmutablePoint(80, 150)), testPanel);
+		
+		
+		assertTrue("Types do not match!", testMO.getType() == testO1.getType());
 
-		//assertTrue("End point did not get moved over to new Relation!", testMR.getEnd() == testR1.getEnd());
-		//assertFalse("Z is not supposed to be shared!", testMR.getZ() == testR1.getZ());
+		assertTrue("End point did not get moved over to new Relation!", testMR.getEnd() == testR1.getEnd());
+		assertFalse("Z is not supposed to be shared!", testMR.getZ() == testR1.getZ());
 		
 		//**********************************************************************************//	
 	}

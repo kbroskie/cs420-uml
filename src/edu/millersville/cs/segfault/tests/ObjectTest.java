@@ -62,12 +62,7 @@ public class ObjectTest {
 		testO2 = testO2.resize(60, 70);
 		testO1 = testO1.resize(60, 70);
 		
-//		assertTrue(new1.getX() == 20);
-//		assertTrue(new1.getY() == 20);
 		assertTrue(testO1.getZ() == 0);
-//		assertTrue(new2.getHeight() == 70);
-//		assertTrue(new2.getWidth() == 60);
-
 		
 		//**********************************************************************************//
 		//Selection Tests
@@ -83,7 +78,6 @@ public class ObjectTest {
 		//**********************************************************************************//
 		
 		testO1 = testO1.changeLabel("Label1");
-		//assertTrue(testO1.getLabel() == "Label1");
 		
 		assertTrue(testO1.getType() == DrawableType.OBJECT);
 		

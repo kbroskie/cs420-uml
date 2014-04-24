@@ -47,12 +47,6 @@ public class XMLAttributeTest {
 		
 		assertTrue(XMLAttribute.startAttribute(testO1.serialize(), "label") == 15);
 		
-		//Tests to help solve problem
-		//System.out.println(testO1.serialize().indexOf(XMLAttribute.openTag("label") + 2 + 5, 0));
-		//System.out.println(testO1.serialize().indexOf(XMLAttribute.openTag("label") + 2));
-		//System.out.println(testO1.serialize().indexOf(XMLAttribute.openTag("label")));
-		//System.out.println(testO1.serialize());
-		
 		//**********************************************************************************//
 		//endAttribute Tests (may change if serialization form changes)
 		//**********************************************************************************//
