@@ -77,6 +77,10 @@ public class TextMode extends PanelInteractionMode {
 		}
 	}
 	
+	public void leaveMode() {
+		parent.getUMLPanel().changeModel(this.deselect(parent.getUMLPanel().getModel()));
+	}
+	
 	//*************************************************************************
 	// Model Observers
 	
