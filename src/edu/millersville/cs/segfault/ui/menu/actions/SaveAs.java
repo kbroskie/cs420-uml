@@ -18,14 +18,17 @@ public class SaveAs extends AbstractAction
 
 	//*************************************************************************
 	// Static Instance Variables
-	//*************************************************************************
+
 	private static final long serialVersionUID = -4530998790701147913L;
 	private static final String saveAsMenuText = "Save as...";
 	
 	//*************************************************************************
 	// Instance Variables
-	//*************************************************************************
+
 	private final UMLWindow window;
+
+	//*************************************************************************
+	// Constructors
 
 	/**************************************************************************
 	* Constructor that builds the action.
@@ -39,12 +42,14 @@ public class SaveAs extends AbstractAction
 	
 	//*************************************************************************
 	// Observers
-	//*************************************************************************
+
+	@Override
 	public ActionType getType() { return ActionType.SAVE_AS; }	
 	
 	//*************************************************************************
 	// Event Listeners
-	//*************************************************************************
+
+	@Override
 	public void actionPerformed(ActionEvent se) {
 		window.getUMLPanel().saveAs(
 				window.getUMLPanel().getModel().serialize());

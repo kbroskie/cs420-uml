@@ -11,7 +11,8 @@ import edu.millersville.cs.segfault.ui.menu.MenuAction;
 
 
 /**************************************************************************
- * Help is the class responsible for displaying the help file.
+ * Help is the class responsible for creating an action that will display 
+ * the help file.
  * @author Daniel Rabiega, Kimberlyn Broskie
  *************************************************************************/
 public class Help extends AbstractAction 
@@ -19,13 +20,16 @@ public class Help extends AbstractAction
 	
 	//*************************************************************************
 	// Static Instance Variables
-	//*************************************************************************
+
 	private static final long serialVersionUID = -8781235292253313426L;
 	private static final String helpMenuText = "Help";
 
+	//*************************************************************************
+	// Constructors
+
 	/**************************************************************************
-	* Constructor that builds the action with an accelerator.
-	*************************************************************************/
+	 * Constructor that builds the action with an accelerator.
+	 *************************************************************************/
 	public Help ()
 	{
 		super(helpMenuText);
@@ -33,13 +37,13 @@ public class Help extends AbstractAction
 	
 	//*************************************************************************
 	// Observers
-	//*************************************************************************
+
 	@Override
 	public ActionType getType() { return ActionType.HELP; }
 	
 	//*************************************************************************
 	// Event Listeners
-	//*************************************************************************
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {

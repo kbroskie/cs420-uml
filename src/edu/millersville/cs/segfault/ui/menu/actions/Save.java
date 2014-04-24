@@ -22,17 +22,20 @@ public class Save extends AbstractAction
 
 	//*************************************************************************
 	// Static Instance Variables
-	//*************************************************************************
+
 	private static final long serialVersionUID = -7422025816728887633L;
 	private static final String saveMenuText = "Save";
 	
 	//*************************************************************************
 	// Instance Variables
-	//*************************************************************************
+
 	private final UMLWindow window;
 
+	//*************************************************************************
+	// Constructors
+
 	/**************************************************************************
-	* Constructor that builds the action with an accelerator.
+	* Constructor that builds the save action with an accelerator.
 	* @param win the frame for the interface.
 	*************************************************************************/
 	public Save (UMLWindow win)
@@ -44,12 +47,14 @@ public class Save extends AbstractAction
 	
 	//*************************************************************************
 	// Observers
-	//*************************************************************************
+
+	@Override
 	public ActionType getType() { return ActionType.SAVE; }	
 	
 	//*************************************************************************
 	// Event Listeners
-	//*************************************************************************
+
+	@Override
 	public void actionPerformed(ActionEvent se) {
 		window.getUMLPanel().save(
 				window.getUMLPanel().getModel().serialize());

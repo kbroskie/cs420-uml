@@ -11,11 +11,12 @@ import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.object.UMLObject;
-/******************************************************************************
- * Mediates user interaction with text boxes.
- * 
- * @author Daniel Rabiega
- */
+
+
+/*****************************************************************************
+ * Mediates user interaction with text boxes.       			 			 *
+ * @author Daniel Rabiega                                                    *
+ *****************************************************************************/
 public class TextMode extends PanelInteractionMode {
 	
 	//*************************************************************************
@@ -242,8 +243,7 @@ public class TextMode extends PanelInteractionMode {
 					UMLModel model = parent.getUMLPanel().getModel();
 					model = model.remove(object).add(newObject);
 					parent.getUMLPanel().minorChange(model);
-					
-					
+				
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -255,9 +255,6 @@ public class TextMode extends PanelInteractionMode {
 	// Drawing Methods
 	
 	public void draw(Graphics g) {
-		growObjects(g);
-		
-		
-		
+		growObjects(g);	
 	}
 }

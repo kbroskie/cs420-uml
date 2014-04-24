@@ -14,13 +14,19 @@ import edu.millersville.cs.segfault.ui.menu.ActionType;
  *************************************************************************/
 public class Exit extends AbstractAction  
 						implements MenuAction {
+	
+	//*************************************************************************
+	// Static Instance Variables
 
 	private static final long serialVersionUID = 6496835257740499669L;
 	private static final String exitMenuText = "Exit";
 	
+	//*************************************************************************
+	// Constructors
+
 	/**************************************************************************
-	* Constructor that builds the action.
-	*************************************************************************/
+	 * Constructor that builds the exit action.
+	 *************************************************************************/
 	public Exit ()
 	{
 		super(exitMenuText);
@@ -28,14 +34,14 @@ public class Exit extends AbstractAction
 	
 	//*************************************************************************
 	// Observers
-	//*************************************************************************
+
+	@Override
 	public ActionType getType() { return ActionType.EXIT; }	
 	
 	//*************************************************************************
 	// Event Listeners
-	//*************************************************************************
-	// Handles the event generated when the user selects 
-	// the exit option from the File menu.
+
+	@Override
 	public void actionPerformed(ActionEvent se) {
 			System.exit(0);
 	}	
