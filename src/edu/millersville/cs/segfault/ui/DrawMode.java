@@ -122,13 +122,15 @@ public class DrawMode extends PanelInteractionMode {
 		} else {
 			panel.changeModel(panel.getModel().addObject(
 					DrawableType.makeObject(
-							blankLabel(), drawType,
+							blankLabel(), 
+							drawType,
 							new ImmutablePoint(Math.min(first.getX(),
 									second.getX()), Math.min(first.getY(),
 									second.getY())),
 							new Dimension(
 									Math.abs(first.getX() - second.getX()),
-									Math.abs(first.getY() - second.getY())), panel)));
+									Math.abs(first.getY() - second.getY())),
+									panel.getModel().highestZ()+1, false)));
 
 		}
 

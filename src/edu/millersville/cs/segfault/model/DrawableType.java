@@ -139,27 +139,6 @@ public enum DrawableType {
 	 * Produces an object of a given type with a given set of properties.
 	 */
 	public static UMLObject makeObject(ImmutableLabel[] text, DrawableType type, 
-									   ImmutablePoint origin,
-									   Dimension size, UMLPanel panel)
-		throws Exception {
-		if (!type.isObject) {
-			throw new Exception("Factory: Type is not an object.");
-		}
-		switch(type) {
-		case OBJECT:       return new UMLObject(text, origin, panel.getModel().highestZ() + 1, size, false);
-		case ACTIVE_CLASS: return new ActiveClass(text, origin, panel.getModel().highestZ() + 1, size, false);
-		case CLASS:        return new ClassObject(text, origin, panel.getModel().highestZ() + 1, size, false);
-		case COMPONENT:    return new Component(text, origin, panel.getModel().highestZ() + 1, size, false);
-		case NODE:         return new Node(text, origin, panel.getModel().highestZ() + 1, size, false);
-		case STATE:        return new State(text, origin, panel.getModel().highestZ() + 1, size, false);
-		case USE_CASE:     return new UseCase(text, origin, panel.getModel().highestZ() + 1, size, false);
-		case COLLABORATION:return new Collaboration(text, origin, panel.getModel().highestZ() + 1, size, false);
-		case PACKAGE:      return new Package(text, origin, panel.getModel().highestZ() + 1, size, false);
-		default:           return null;
-		}
-	}
-	
-	public static UMLObject makeObject(ImmutableLabel[] text, DrawableType type, 
 									   ImmutablePoint origin, Dimension size, 
 									   int z, boolean selected) throws Exception {
 		switch(type) {
