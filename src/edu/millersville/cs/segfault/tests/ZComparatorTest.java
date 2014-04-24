@@ -30,7 +30,7 @@ public class ZComparatorTest {
 		ZComparator testZ = new ZComparator();
 		
 		UMLObject testO = new UMLObject();
-//		testO = testO.move(100, 100, 8);
+		testO = testO.translate(100, 100);
 		
 		UMLRelation testR = new UMLRelation(new ImmutablePath(
 				new ImmutablePoint(20, 70)).addLast(new ImmutablePoint(80, 150)), 4, false);

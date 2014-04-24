@@ -65,8 +65,8 @@ public class UMLModelTest {
 		testModel.getObjects();
 		testModel.getRelations();
 		
-		assertTrue(testModel.highestZ() == 5);
-		assertTrue(testModel.lowestZ() == -2);
+		assertTrue(testModel.highestZ() == 2);
+		assertTrue(testModel.lowestZ() == 1);
 		
 		//**********************************************************************************//
 		//Selection Tests
