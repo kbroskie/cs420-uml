@@ -47,7 +47,7 @@ public class UMLPanel extends JPanel {
 	 * @param serialized file
 	 * @return boolean
 	 */
-	private static boolean saveObject( String serialized, File file )
+	private static boolean saveObject( String serialized, File file)
 	{
 		if( file != null)
 		{
@@ -389,6 +389,14 @@ public class UMLPanel extends JPanel {
 	    }
 	}
 
+	
+	/**************************************************************************
+	 * Returns the current filename.
+	 * @return the current saved filename.
+	 *************************************************************************/
+	public String getFilename() {
+		return srcFile.toString();
+	}
 	
 	/******************************************************************************
 	 * Select Controller

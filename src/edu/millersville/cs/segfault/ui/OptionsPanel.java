@@ -119,7 +119,7 @@ public class OptionsPanel extends JPanel
 	  * @param selectedIcon the image for the button when selected
 	  * @param name the action type
 	  *************************************************************************/
-	 public JToggleButton createButton(ImageIcon icon, ImageIcon selectedIcon, String name) {	
+	 private JToggleButton createButton(ImageIcon icon, ImageIcon selectedIcon, String name) {	
 		JToggleButton newButton = new JToggleButton(icon);
 			 
 		newButton.setSelectedIcon(selectedIcon);
@@ -141,7 +141,7 @@ public class OptionsPanel extends JPanel
 	/**************************************************************************
 	 * Creates a select button, giving it the initial focus.
 	 *************************************************************************/
-	public JToggleButton createSelectButton() {
+	private JToggleButton createSelectButton() {
 		 JToggleButton newButton = 
 				 createButton(new ImageIcon("img/64/selectionMode.png"), 
 				 			  new ImageIcon("img/64/down/selectionMode.png"), selectAction);
@@ -156,7 +156,7 @@ public class OptionsPanel extends JPanel
 	/**************************************************************************
 	 * Creates a text button.
 	 *************************************************************************/
-	public JToggleButton createTextButton() {
+	private JToggleButton createTextButton() {
 		 JToggleButton newButton = 
 				 createButton(new ImageIcon("img/64/textMode.png"), 
 				 			  new ImageIcon("img/64/down/textMode.png"), textAction);
@@ -171,7 +171,7 @@ public class OptionsPanel extends JPanel
 	 * Formats a string, adding capitalization and spaces.
 	 * @param name the string to format
 	 *************************************************************************/
-	public String formatAction(String name) {		
+	private String formatAction(String name) {		
 	
 		if (name == null || name == "") {
 			return name;
@@ -196,7 +196,7 @@ public class OptionsPanel extends JPanel
 	/**************************************************************************
 	 * Create and format a horizontal box.
 	 *************************************************************************/
-	public Box createHorizontalBox() {		 	
+	private Box createHorizontalBox() {		 	
 		Box b = Box.createHorizontalBox();
 		b.setPreferredSize(MAX_BOX_SIZE);
 		b.setMaximumSize(MAX_BOX_SIZE);
@@ -212,7 +212,7 @@ public class OptionsPanel extends JPanel
 	  * @param boxGroup the group of button rows
 	  * @param count the current number of buttons
 	  *************************************************************************/
-	 public Vector<Box> addBoxToGroupIfFullRow(Box box, Vector<Box> boxGroup, int count) { 
+	private Vector<Box> addBoxToGroupIfFullRow(Box box, Vector<Box> boxGroup, int count) { 
 		 if (count % 2 == 0) {
 			 box.add(Box.createHorizontalGlue());
 			 boxGroup.add(box);
@@ -226,7 +226,7 @@ public class OptionsPanel extends JPanel
 	  * @param button the button to add
 	  * @param count the current number of buttons
 	  *************************************************************************/
-	 public Box addNewButton(Box box, JToggleButton button, int count) {
+	 private Box addNewButton(Box box, JToggleButton button, int count) {
 		 // Create a new box if the current row is full.
 		 if (count % 2 == 0) {
 			 box = createHorizontalBox();
@@ -243,7 +243,7 @@ public class OptionsPanel extends JPanel
 	  * @param boxGroup the group of horizontal boxes
 	  * @param count the current number of buttons
 	  *************************************************************************/
-	 public Box formatLastRow(Box box, int count) {
+	 private Box formatLastRow(Box box, int count) {
 		 // Add an area to avoid off-centered single buttons.
 		 if (count % 2 > 0) {
 			 box.add(Box.createRigidArea(BUTTON_SIZE));
