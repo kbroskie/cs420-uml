@@ -65,8 +65,8 @@ public class UMLModelTest {
 		testModel.getObjects();
 		testModel.getRelations();
 		
-		assertTrue(testModel.highestZ() == 5);
-		assertTrue(testModel.lowestZ() == -2);
+		assertTrue(testModel.highestZ() == 2);
+		assertTrue(testModel.lowestZ() == 1);
 		
 		//**********************************************************************************//
 		//Selection Tests
@@ -121,24 +121,7 @@ public class UMLModelTest {
 		testModel.remove(testO1);
 		testModel.remove(testR1);
 		
-		//**********************************************************************************//	
-		//makeObject & makeRelation Tests
-		//**********************************************************************************//	
 		
-
-		UMLWindow newWin = new UMLWindow();
-		UMLPanel testPanel = new UMLPanel(newWin);
-				
-		UMLRelation testMR = DrawableType.makeRelation(DrawableType.RELATION, 
-						new ImmutablePath(new ImmutablePoint(20, 70)).addLast(new ImmutablePoint(80, 150)), testPanel);
-		
-		
-		
-		assertTrue("End point did not get moved over to new Relation!", testMR.getEnd() == testR1.getEnd());
-		assertFalse("Z is not supposed to be shared!", testMR.getZ() == testR1.getZ());
-		
-		//**********************************************************************************//	
-
 	}
 
 }

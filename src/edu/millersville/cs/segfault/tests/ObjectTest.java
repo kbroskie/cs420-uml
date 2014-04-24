@@ -4,17 +4,21 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import edu.millersville.cs.segfault.immutable.ImmutableLabel;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.UMLModel;
 
+import edu.millersville.cs.segfault.model.object.Collaboration;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.object.State;
 import edu.millersville.cs.segfault.model.object.Node;
 import edu.millersville.cs.segfault.model.object.Component;
 import edu.millersville.cs.segfault.model.object.ClassObject;
 import edu.millersville.cs.segfault.model.object.ActiveClass;
+import edu.millersville.cs.segfault.model.object.Package;
+import edu.millersville.cs.segfault.model.object.UseCase;
 
 //******************************************************************************************//
 // Object Tests
@@ -39,16 +43,20 @@ public class ObjectTest {
 		UMLObject testO1 = new UMLObject();
 		UMLObject testO2 = new UMLObject();
 		UMLObject testO3 = new UMLObject();
+		testO1 = testO1.setText(new ImmutableLabel("blah"), 10);
+		testO2 = testO2.setText(testO1.text);
 		testModel = testModel.add(testO1);
 		testModel = testModel.add(testO2);
-		//assertTrue(testO1.getLabel() == testO2.getLabel());
+		
+		assertTrue(testO1.getText() == testO2.getText());
 		
 		//**********************************************************************************//
 		//Serialization Tests
 		//**********************************************************************************//
 		
-		//testO3 = testO3.move(20, 20, 7);
+		testO3 = testO3.translate(20, 20);
 		UMLObject testO4 = new UMLObject(testO3.serialize());
+		
 		assertTrue("Failed to take in and make object from serialized form", 
 				testO4.getZ() == testO3.getZ());
 		
@@ -56,14 +64,14 @@ public class ObjectTest {
 		//Move and Resize Tests
 		//**********************************************************************************//
 		
-//		testO1 = testO1.move(20, 20, 0);
-//		testO2 = testO2.move(100, 100, 0);
+		testO1 = testO1.translate(20, 20);
+		testO2 = testO2.translate(100, 100);
 		testO1 = testO1.resize(20, 50);
 		testO2 = testO2.resize(60, 70);
 		testO1 = testO1.resize(60, 70);
-		
 		assertTrue(testO1.getZ() == 0);
-		
+
+
 		//**********************************************************************************//
 		//Selection Tests
 		//**********************************************************************************//
@@ -88,7 +96,7 @@ public class ObjectTest {
 
 		State testSta1 = new State();
 		State testSta2 = new State(testO2.serialize());
-		//State testSta3 = new State(testO3.origin, testO3.getZ(), testO3.size, false);
+		//State testSta3 = new State(new ImmutableLabel("blah"), testO3.origin, testO3.getZ(), testO3.size, false);
 		
 		assertTrue(testSta1.getType() == DrawableType.STATE);
 		assertTrue(testSta2.getType() == DrawableType.STATE);
@@ -145,6 +153,45 @@ public class ObjectTest {
 		//assertTrue(testAC3.getType() == DrawableType.ACTIVE_CLASS);
 		
 		//**********************************************************************************//
+		//UMLUseCase tests
+		//**********************************************************************************//
+						
+		UseCase testUse1 = new UseCase();
+		UseCase testUse2 = new UseCase(testO2.serialize());
+						
+		assertTrue(testUse1.getType() == DrawableType.USE_CASE);
+		assertTrue(testUse2.getType() == DrawableType.USE_CASE);
+								
+		//**********************************************************************************//
+				
+		//**********************************************************************************//
+		//UMLCollaberation tests
+		//**********************************************************************************//
+						
+		Collaboration testCol1 = new Collaboration();
+		Collaboration testCol2 = new Collaboration(testO2.serialize());
+						
+		assertTrue(testCol1.getType() == DrawableType.COLLABORATION);
+		assertTrue(testCol2.getType() == DrawableType.COLLABORATION);
+						
+		//**********************************************************************************//
+		//UMLPackage tests
+		//**********************************************************************************//
+				
+		Package testPac1 = new Package();
+		Package testPac2 = new Package(testO2.serialize());  //Not working correctly(OUT OF BOUNDS EXCEPTION)
+		//Package testPac3 = new Package(testO3.origin, testO3.getZ(), testO3.size, false);
+				
+		assertTrue(testPac1.getType() == DrawableType.PACKAGE);
+		assertTrue(testPac2.getType() == DrawableType.PACKAGE);
+		//assertTrue(testPac3.getType() == DrawableType.PACKAGE);
+						
+		//**********************************************************************************//
+		
+		
+		
+		
+		
 	}
 
 }
