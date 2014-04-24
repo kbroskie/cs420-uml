@@ -28,7 +28,7 @@ public class ImmutablePath implements Iterable<ImmutablePoint> {
 	// Constructors
 	
 	/********************************************************************
-	 * Constructs a new Path by copying an Points                       *                                          *
+	 * Constructs a new Path by copying an Points                                                                 *
 	 * @param points The array of Points to copy.                                                    *
 	 ********************************************************************/
 	public ImmutablePath(ImmutablePoint[] points) {
@@ -36,8 +36,8 @@ public class ImmutablePath implements Iterable<ImmutablePoint> {
 	}
 	
 	/********************************************************************
-	 * Constructs a new Path which contains a single Point.             *
-	 * @param origin The starting point of the new Path                 *
+	 * Constructs a new Path which contains a single Point.             
+	 * @param origin The starting point of the new Path                 
 	 ********************************************************************/
 	public ImmutablePath(ImmutablePoint origin) {
 		points = new ImmutablePoint[1];
@@ -45,9 +45,9 @@ public class ImmutablePath implements Iterable<ImmutablePoint> {
 	}
 
 	/********************************************************************
-	 * Constructs a Path object from the serialized representation of   *
-	 * a Path object.                                                   *
-	 * @param serialString The serialized Path to construct from.       *
+	 * Constructs a Path object from the serialized representation of   
+	 * a Path object.                                                   
+	 * @param serialString The serialized Path to construct from.       
 	 ********************************************************************/
 	public ImmutablePath(String serialString) {
 		ArrayList<ImmutablePoint> newPoints = 
@@ -93,8 +93,8 @@ public class ImmutablePath implements Iterable<ImmutablePoint> {
 	// Iterators
 	
 	/*************************************************************************
-	 * Returns an iterator which returns the points in this path in order.   *
-	 * @return An in-sequence iterator for the contained points.             *
+	 * Returns an iterator which returns the points in this path in order.   
+	 * @return An in-sequence iterator for the contained points.             
 	 *************************************************************************/
 	public Iterator<ImmutablePoint> iterator() {
 		return new PointIterator(this.points);
@@ -112,10 +112,10 @@ public class ImmutablePath implements Iterable<ImmutablePoint> {
 	// Mutators
 	
 	/*************************************************************************
-	 * Returns a new Path object which is the same as this one except that   *
-	 * it has an additional point at the end of it's Path.                   *
-	 * @param newPoint The point to be added to the new Path.                *
-	 * @return A new Path with newPoint added.                               *
+	 * Returns a new Path object which is the same as this one except that   
+	 * it has an additional point at the end of it's Path.                   
+	 * @param newPoint The point to be added to the new Path.                
+	 * @return A new Path with newPoint added.                               
 	 *************************************************************************/
 	public ImmutablePath addLast(ImmutablePoint newPoint){
 		ImmutablePoint[] newPath = Arrays.copyOf(points, points.length + 1);
@@ -145,15 +145,15 @@ public class ImmutablePath implements Iterable<ImmutablePoint> {
 	// Observers
 	
 	/*************************************************************************
-	 * Returns this Path formated as a string.                               *
+	 * Returns this Path formated as a string.                               
 	 *************************************************************************/
 	public String toString() {
 		return this.serialize();
 	}
 
 	/*************************************************************************
-	 * Returns the number of Points in this Path                             *
-	 * @return The number of Points in this Path                             *
+	 * Returns the number of Points in this Path                             
+	 * @return The number of Points in this Path                             
 	 *************************************************************************/
 	public int size() {
 		return points.length;
@@ -180,25 +180,25 @@ public class ImmutablePath implements Iterable<ImmutablePoint> {
 	}
 	
 	/*************************************************************************
-	 * Returns a copy of the first point in this Path.                       *
-	 * @return A copy of the first point in this Path.                       *
+	 * Returns a copy of the first point in this Path.                       
+	 * @return A copy of the first point in this Path.                       
 	 *************************************************************************/
 	public ImmutablePoint first() {
 		return points[0];
 	}
 	
 	/*************************************************************************
-	 * Returns a copy of the last point in this Path.                        *
-	 * @return A copy of the last point in this Path.                        *
+	 * Returns a copy of the last point in this Path.                        
+	 * @return A copy of the last point in this Path.                        
 	 *************************************************************************/
 	public ImmutablePoint last() {
 		return points[points.length-1];
 	}
 
 	/*************************************************************************
-	 * Returns the closest point on this Path to a given Point.              *
-	 * @param testPoint The point to test for distance.                      *
-	 * @return The closest point on this Path to testPoint                   *
+	 * Returns the closest point on this Path to a given Point.              
+	 * @param testPoint The point to test for distance.                      
+	 * @return The closest point on this Path to testPoint                   
 	 *************************************************************************/
 	public ImmutablePoint closestPointTo(ImmutablePoint testPoint) {
 		ImmutablePoint snapPoint = null;
