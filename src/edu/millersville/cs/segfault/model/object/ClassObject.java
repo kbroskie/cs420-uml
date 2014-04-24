@@ -11,10 +11,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 
 import edu.millersville.cs.segfault.immutable.ImmutableLabel;
-import edu.millersville.cs.segfault.immutable.ImmutableLine;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
-import edu.millersville.cs.segfault.model.XMLAttribute;
 
 	public class ClassObject extends UMLObject {
 		

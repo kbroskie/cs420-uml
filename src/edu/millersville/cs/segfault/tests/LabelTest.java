@@ -1,12 +1,13 @@
 package edu.millersville.cs.segfault.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.Font;
 
 import org.junit.Test;
+
 import edu.millersville.cs.segfault.immutable.ImmutableLabel;
-import java.awt.Graphics;
 
 //******************************************************************************************//
 // Label Tests

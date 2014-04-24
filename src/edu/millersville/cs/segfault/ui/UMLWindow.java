@@ -98,6 +98,7 @@ public class UMLWindow extends JFrame {
 		scrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPanel.setAutoscrolls(true);
 		scrollPanel.setWheelScrollingEnabled(true);
+		scrollPanel.setPreferredSize(panel.getPreferredSize());
 		
 		return scrollPanel;
 	}

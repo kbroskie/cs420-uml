@@ -8,8 +8,8 @@ import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 
 import edu.millersville.cs.segfault.ui.UMLWindow;
-import edu.millersville.cs.segfault.ui.menu.MenuAction;
 import edu.millersville.cs.segfault.ui.menu.ActionType;
+import edu.millersville.cs.segfault.ui.menu.MenuAction;
 
 
 /**************************************************************************

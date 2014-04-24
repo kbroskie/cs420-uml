@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import edu.millersville.cs.segfault.ui.menu.MenuAction;
 import edu.millersville.cs.segfault.ui.menu.ActionType;
+import edu.millersville.cs.segfault.ui.menu.MenuAction;
 
 /**************************************************************************
  * Exit is the class responsible to invoke the action to 

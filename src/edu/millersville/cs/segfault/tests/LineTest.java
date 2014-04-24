@@ -1,11 +1,11 @@
 package edu.millersville.cs.segfault.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.immutable.ImmutableLine;
+import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 
 //******************************************************************************************//
 // Line Tests

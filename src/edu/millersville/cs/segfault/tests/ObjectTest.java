@@ -1,23 +1,21 @@
 package edu.millersville.cs.segfault.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import edu.millersville.cs.segfault.immutable.ImmutableLabel;
-import edu.millersville.cs.segfault.immutable.ImmutablePoint;
-
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.UMLModel;
-
-import edu.millersville.cs.segfault.model.object.Collaboration;
-import edu.millersville.cs.segfault.model.object.UMLObject;
-import edu.millersville.cs.segfault.model.object.State;
-import edu.millersville.cs.segfault.model.object.Node;
-import edu.millersville.cs.segfault.model.object.Component;
-import edu.millersville.cs.segfault.model.object.ClassObject;
 import edu.millersville.cs.segfault.model.object.ActiveClass;
+import edu.millersville.cs.segfault.model.object.ClassObject;
+import edu.millersville.cs.segfault.model.object.Collaboration;
+import edu.millersville.cs.segfault.model.object.Component;
+import edu.millersville.cs.segfault.model.object.Node;
 import edu.millersville.cs.segfault.model.object.Package;
+import edu.millersville.cs.segfault.model.object.State;
+import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.object.UseCase;
 
 //******************************************************************************************//

@@ -1,6 +1,7 @@
 package edu.millersville.cs.segfault.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.geom.Rectangle2D;
 
@@ -8,15 +9,13 @@ import org.junit.Test;
 
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
-
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.object.UMLObject;
-
-import edu.millersville.cs.segfault.model.relation.UMLRelation;
 import edu.millersville.cs.segfault.model.relation.Aggregation;
 import edu.millersville.cs.segfault.model.relation.Association;
 import edu.millersville.cs.segfault.model.relation.Composition;
+import edu.millersville.cs.segfault.model.relation.UMLRelation;
 
 //******************************************************************************************//
 // Relation Tests

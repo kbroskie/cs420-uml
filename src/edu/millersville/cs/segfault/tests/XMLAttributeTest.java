@@ -1,12 +1,14 @@
 package edu.millersville.cs.segfault.tests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.XMLAttribute;
-import edu.millersville.cs.segfault.model.object.*;
+import edu.millersville.cs.segfault.model.object.State;
+import edu.millersville.cs.segfault.model.object.UMLObject;
 
 //******************************************************************************************//
 // Attribute Tests

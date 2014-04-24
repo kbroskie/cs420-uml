@@ -9,12 +9,9 @@ import org.junit.Test;
 
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.immutable.ImmutablePoint;
-import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
-import edu.millersville.cs.segfault.ui.UMLPanel;
-import edu.millersville.cs.segfault.ui.UMLWindow;
 
 //******************************************************************************************//
 // Model Tests

@@ -23,7 +23,6 @@ import edu.millersville.cs.segfault.model.relation.Association;
 import edu.millersville.cs.segfault.model.relation.Composition;
 import edu.millersville.cs.segfault.model.relation.Generalization;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
-import edu.millersville.cs.segfault.ui.UMLPanel;
 
 
 /*****************************************************************************

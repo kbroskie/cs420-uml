@@ -1,17 +1,20 @@
 package edu.millersville.cs.segfault.tests;
 
-import static org.junit.Assert.*;
-
-import java.awt.event.ActionEvent;
-
-import javax.swing.AbstractAction;
-
-import edu.millersville.cs.segfault.ui.menu.ActionType;
-import edu.millersville.cs.segfault.ui.menu.actions.*;
-
-import edu.millersville.cs.segfault.ui.UMLWindow;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import edu.millersville.cs.segfault.ui.UMLWindow;
+import edu.millersville.cs.segfault.ui.menu.ActionType;
+import edu.millersville.cs.segfault.ui.menu.actions.Delete;
+import edu.millersville.cs.segfault.ui.menu.actions.Exit;
+import edu.millersville.cs.segfault.ui.menu.actions.New;
+import edu.millersville.cs.segfault.ui.menu.actions.Open;
+import edu.millersville.cs.segfault.ui.menu.actions.Redo;
+import edu.millersville.cs.segfault.ui.menu.actions.Save;
+import edu.millersville.cs.segfault.ui.menu.actions.SaveAs;
+import edu.millersville.cs.segfault.ui.menu.actions.Select;
+import edu.millersville.cs.segfault.ui.menu.actions.Undo;
 
 //******************************************************************************************//
 // Action Tests
