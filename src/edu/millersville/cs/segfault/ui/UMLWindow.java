@@ -141,9 +141,10 @@ public class UMLWindow extends JFrame {
 		else {
 			UMLPanel uml = new UMLPanel(this); 
 			JScrollPane scrollpanel = createScrollableUMLPanel(uml);
-			String tabTitle = "New Tab " +  newTabIndex;
+			String tabTitle = "New Tab " +  (newTabIndex + 1);
 			
-			tabbedPanel.insertTab(tabTitle, null, scrollpanel, null, newTabIndex);
+			tabbedPanel.insertTab(tabTitle, new ImageIcon("img/16/Destroy.png"), 
+ 					scrollpanel, null, newTabIndex);
 			tabbedPanel.setSelectedIndex(newTabIndex);
 			tabbedPanel.setTabComponentAt(newTabIndex, new ButtonTab(tabbedPanel, tabTitle));
 			panels.put(scrollpanel, uml);
