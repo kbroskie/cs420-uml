@@ -92,6 +92,7 @@ public class OptionsPanel extends JPanel
 		 // Add the objects and relation buttons to the button group 
 		 // and boxGroup in pairs of two.
 		 for (DrawableType type : DrawableType.typeList()) {
+			 if (type == DrawableType.FREE_TEXT) { continue; }
 			 newButton = createButton(type.icon, type.selectedIcon, type.name());
 			 optionsButtonGroup.add(newButton);
 			 boxGroup = addBoxToGroupIfFullRow(horizontalBox, boxGroup, buttonCount);

@@ -12,6 +12,7 @@ import edu.millersville.cs.segfault.model.object.ActiveClass;
 import edu.millersville.cs.segfault.model.object.ClassObject;
 import edu.millersville.cs.segfault.model.object.Collaboration;
 import edu.millersville.cs.segfault.model.object.Component;
+import edu.millersville.cs.segfault.model.object.FreeText;
 import edu.millersville.cs.segfault.model.object.Node;
 import edu.millersville.cs.segfault.model.object.Package;
 import edu.millersville.cs.segfault.model.object.State;
@@ -32,6 +33,7 @@ import edu.millersville.cs.segfault.ui.UMLPanel;
 public enum DrawableType {
 	//Name        Object?  HowManyTexts?
 	OBJECT        (true,    1), 
+	FREE_TEXT	  (true,    1),
 	CLASS         (true,    3),
 	ACTIVE_CLASS  (true,    3), 
 	COMPONENT     (true,    1),
@@ -123,6 +125,7 @@ public enum DrawableType {
 		}
 		switch(type) {
 		case OBJECT:       return new UMLObject(serial);
+		case FREE_TEXT:    return new FreeText(serial);
 		case ACTIVE_CLASS: return new ActiveClass(serial);
 		case CLASS:        return new ClassObject(serial);
 		case COMPONENT:    return new Component(serial);
@@ -143,6 +146,7 @@ public enum DrawableType {
 									   int z, boolean selected) throws Exception {
 		switch(type) {
 		case OBJECT:       return new UMLObject(text, origin, z, size, selected);
+		case FREE_TEXT:    return new FreeText(text, origin, z, size, selected);
 		case ACTIVE_CLASS: return new ActiveClass(text, origin, z, size, selected);
 		case CLASS:        return new ClassObject(text, origin, z, size, selected);
 		case COMPONENT:    return new Component(text, origin, z, size, selected);

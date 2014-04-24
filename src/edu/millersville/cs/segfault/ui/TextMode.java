@@ -44,6 +44,18 @@ public class TextMode extends PanelInteractionMode {
 		parent.getUMLPanel().requestFocusInWindow();
 		if (hit(ImmutablePoint.toPoint(e)) != null) {
 			updateSelection(hit(new ImmutablePoint(e)));
+		} else {
+			try {
+				UMLModel model = parent.getUMLPanel().getModel();
+				DrawableUML drawable = DrawableType.makeObject(blankLabel(), DrawableType.FREE_TEXT, 
+						ImmutablePoint.toPoint(e), new Dimension(0, 0), 
+						parent.getUMLPanel().getModel().highestZ(), true);
+				this.updateSelection(drawable);
+				model = model.add(drawable);
+				parent.getUMLPanel().changeModel(model);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 	
@@ -251,6 +263,14 @@ public class TextMode extends PanelInteractionMode {
 		}
 	}
 	
+	
+	public ImmutableLabel[] blankLabel() {
+		ImmutableLabel[] blank = new ImmutableLabel[DrawableType.FREE_TEXT.textQuantity];
+		for (int i=0; i<blank.length; ++i) {
+			blank[i] = new ImmutableLabel("");
+		}
+		return blank;
+	}
 	//*************************************************************************
 	// Drawing Methods
 	
