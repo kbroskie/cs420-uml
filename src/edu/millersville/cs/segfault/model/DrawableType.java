@@ -21,6 +21,7 @@ import edu.millersville.cs.segfault.model.object.UseCase;
 import edu.millersville.cs.segfault.model.relation.Aggregation;
 import edu.millersville.cs.segfault.model.relation.Association;
 import edu.millersville.cs.segfault.model.relation.Composition;
+import edu.millersville.cs.segfault.model.relation.Generalization;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
 import edu.millersville.cs.segfault.ui.UMLPanel;
 
@@ -42,7 +43,8 @@ public enum DrawableType {
 	USE_CASE	  (true,    1),
 	COLLABORATION (true,    1),
 	PACKAGE 	  (true,    2),
-	RELATION      (false,   0), 
+	RELATION      (false,   0),
+	GENERALIZATION(false,   0),
 	AGGREGATION   (false,   0), 
 	COMPOSITION   (false,   0), 
 	ASSOCIATION   (false,   0);
@@ -174,27 +176,14 @@ public enum DrawableType {
 		case AGGREGATION: return new Aggregation(serial);
 		case ASSOCIATION: return new Association(serial);
 		case COMPOSITION: return new Composition(serial);
+		case GENERALIZATION: return new Generalization(serial);
 		default: return null;
 		}
 	}
 	
 	/*************************************************************************
 	 * Produces a relation of a given type with given properties.
-	 */
-	public static UMLRelation makeRelation(DrawableType type, ImmutablePath path, UMLPanel panel)
-		throws Exception
-	{
-		if (type.isObject) throw new Exception("Factory: Type is object.");
-		
-		switch(type) {
-		case RELATION: return new UMLRelation(path, panel.getModel().lowestZ()-1, false);
-		case AGGREGATION: return new Aggregation(path, panel.getModel().lowestZ()-1, false);
-		case ASSOCIATION: return new Association(path, panel.getModel().lowestZ()-1, false);
-		case COMPOSITION: return new Composition(path, panel.getModel().lowestZ()-1, false);
-		default: return null;
-		}
-	}
-	
+	 */	
 	public static UMLRelation makeRelation(DrawableType type, ImmutablePath path, int z, boolean selected)
 			throws Exception
 		{
@@ -205,6 +194,7 @@ public enum DrawableType {
 			case AGGREGATION: return new Aggregation(path, z, selected);
 			case ASSOCIATION: return new Association(path, z, selected);
 			case COMPOSITION: return new Composition(path, z, selected);
+			case GENERALIZATION: return new Generalization(path, z, selected);
 			default: return null;
 			}
 		}

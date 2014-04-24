@@ -108,7 +108,8 @@ public class DrawMode extends PanelInteractionMode {
 				// This is a new actual relation.
 				UMLRelation newRelation = DrawableType.makeRelation(
 						drawType,
-						new ImmutablePath(first).addLast(this.straitSnap(second, first, e)), panel);
+						new ImmutablePath(first).addLast(this.straitSnap(second, first, e)), 
+						panel.getModel().highestZ(), false);
 				panel.changeModel(panel.getModel().addRelation(newRelation));
 
 			} else {

@@ -16,6 +16,7 @@ import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.model.XMLAttribute;
+import edu.millersville.cs.segfault.ui.UMLPanel;
 
 /*****************************************************************************
  * Root of the class hierarchy for various types of Relations and arrows.    
@@ -254,5 +255,10 @@ public class UMLRelation implements DrawableUML {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public DrawableUML top(UMLPanel panel) {
+		return this;
 	}
 }

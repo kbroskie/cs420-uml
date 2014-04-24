@@ -49,7 +49,7 @@ public class TextMode extends PanelInteractionMode {
 				UMLModel model = parent.getUMLPanel().getModel();
 				DrawableUML drawable = DrawableType.makeObject(blankLabel(), DrawableType.FREE_TEXT, 
 						ImmutablePoint.toPoint(e), new Dimension(0, 0), 
-						parent.getUMLPanel().getModel().highestZ(), true);
+						parent.getUMLPanel().getModel().highestZ()+1, true);
 				this.updateSelection(drawable);
 				model = model.add(drawable);
 				parent.getUMLPanel().changeModel(model);

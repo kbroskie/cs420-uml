@@ -37,4 +37,5 @@ public interface DrawableUML {
 	DrawableUML setText(ImmutableLabel label, int n);
 	DrawableUML setText(ImmutableLabel[] label);
 	ImmutablePoint textPos(int n);
+	DrawableUML top(UMLPanel panel);
 }

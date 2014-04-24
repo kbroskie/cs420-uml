@@ -12,6 +12,7 @@ import edu.millersville.cs.segfault.immutable.ImmutablePoint;
 import edu.millersville.cs.segfault.model.DrawableType;
 import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.model.XMLAttribute;
+import edu.millersville.cs.segfault.ui.UMLPanel;
 
 /*****************************************************************************
  * UMLObject is the top level representation of all non-relation objects
@@ -209,7 +210,7 @@ public class UMLObject implements DrawableUML {
 		if (n != 0) { return null; }
 		return this.origin.translate(10, 10);
 	}
-
+	
 	//********************************************************************
 	// Mutators
 	//********************************************************************
@@ -223,7 +224,7 @@ public class UMLObject implements DrawableUML {
 		try {
 			newObject = DrawableType.makeObject(this.text, this.getType(), 
 												this.origin.translate(deltaX, deltaY), 
-												this.size, z, this.selected);
+												this.size, this.z, this.selected);
 		} catch (Exception e) {
 			
 		}
@@ -272,7 +273,7 @@ public class UMLObject implements DrawableUML {
 		try {
 			newObject = DrawableType.makeObject(this.text, this.getType(), this.origin, 
 						  			            new Dimension(this.size.width + deltaX, this.size.height + deltaY),
-									            deltaY, selected);
+									            this.z, selected);
 		} catch (Exception e) {
 			
 		}
@@ -305,6 +306,16 @@ public class UMLObject implements DrawableUML {
 		}
 		return object;
 	}	 
+	
+	public UMLObject top(UMLPanel panel) {
+		try {
+			return DrawableType.makeObject(this.text, this.getType(), this.origin, 
+					this.size, panel.getModel().highestZ()+1, this.selected);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return this;
+	}
 	
 	//********************************************************************
 	// Custom Drawing

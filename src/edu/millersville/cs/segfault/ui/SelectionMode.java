@@ -81,10 +81,11 @@ public class SelectionMode extends PanelInteractionMode {
 		} else {
 			try {
 				UMLModel workingModel = parent.getUMLPanel().getModel();
+				workingModel = workingModel.remove(this.gestureStartTarget);
 				if (!e.isShiftDown() && !e.isControlDown()) {
 					workingModel = workingModel.unselectAll();
 				}
-				workingModel = workingModel.select(this.gestureStartTarget);
+				workingModel = workingModel.add(this.gestureStartTarget.select().top(panel));
 				parent.getUMLPanel().changeModel(workingModel);
 			} catch (Exception ex) {
 				System.out.println("Selection change failed.");
