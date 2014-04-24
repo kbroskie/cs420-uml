@@ -16,6 +16,7 @@ import edu.millersville.cs.segfault.ui.menu.actions.Paste;
 import edu.millersville.cs.segfault.ui.menu.actions.Redo;
 import edu.millersville.cs.segfault.ui.menu.actions.Save;
 import edu.millersville.cs.segfault.ui.menu.actions.SaveAs;
+import edu.millersville.cs.segfault.ui.menu.actions.SaveImage;
 import edu.millersville.cs.segfault.ui.menu.actions.Select;
 import edu.millersville.cs.segfault.ui.menu.actions.Undo;
 
@@ -30,6 +31,7 @@ public enum ActionType {
 	OPEN        (true, false),
 	SAVE 		(true, true),
 	SAVE_AS	    (true, false),
+	SAVE_IMAGE	(true, false),
 	HELP        (false, true),
 	EXIT  		(true, true),
 	UNDO		(false, false),
@@ -120,6 +122,8 @@ public enum ActionType {
 			case SAVE: 			newAction = new Save(win); 
 								break;
 			case SAVE_AS: 		newAction = new SaveAs(win); 
+								break;
+			case SAVE_IMAGE:	newAction = new SaveImage(win);
 								break;
 			case EXIT:  		newAction = new Exit();
 								break;
