@@ -46,7 +46,7 @@ public class Help extends AbstractAction
 			if (Desktop.isDesktopSupported()) {
 				Desktop desktop = Desktop.getDesktop();
 				if (desktop.isSupported(Desktop.Action.BROWSE)) {
-					desktop.browse(new URI("docs/index.html"));
+					desktop.browse(new URI("http://verdantneuron.com/Manual.html"));
 				}
 			}
 		} catch (Exception ex) {
