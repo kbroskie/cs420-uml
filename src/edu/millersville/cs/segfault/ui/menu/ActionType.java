@@ -40,6 +40,7 @@ public enum ActionType {
 	CUT			(false, false, true),
 	COPY		(false, false, false),
 	PASTE		(false, false, false),
+	DELETE 		(false, false, false),
 	SELECT	 	(false, false, true),
 	HELP        (false, true, false);
 
