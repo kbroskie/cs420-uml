@@ -1,7 +1,6 @@
 package edu.millersville.cs.segfault.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;

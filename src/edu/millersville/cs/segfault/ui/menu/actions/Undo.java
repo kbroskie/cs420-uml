@@ -50,7 +50,6 @@ public class Undo extends AbstractAction
 	//*************************************************************************
 	// Event Listeners
 	//*************************************************************************
-	
 	public void actionPerformed(ActionEvent se) {
 		window.getUMLPanel().undo();
 	}	
