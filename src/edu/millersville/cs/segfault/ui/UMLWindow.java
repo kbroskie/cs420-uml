@@ -1,6 +1,7 @@
 package edu.millersville.cs.segfault.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
@@ -151,7 +152,6 @@ public class UMLWindow extends JFrame {
 			tabbedPanel.setTabComponentAt(newTabIndex, new ButtonTab(tabbedPanel, tabTitle));
 			panels.put(scrollpanel, uml);
 			panels.get(tabbedPanel.getSelectedComponent()).load();
-			updateTabname(uml, newTabIndex);
 		}
 	}
 	
@@ -197,9 +197,9 @@ public class UMLWindow extends JFrame {
 	/**************************************************************************
 	 * Set the tab title to the name of the current file.
 	 *************************************************************************/
-	public void updateTabname(UMLPanel uml, int tabIndex) {
+	public void updateTabname() {
 		String title = panels.get(tabbedPanel.getSelectedComponent()).getFilename();
 		title = title.substring(title.lastIndexOf("\\") + 1, title.indexOf("."));
-		tabbedPanel.setTabComponentAt(tabIndex, new ButtonTab(tabbedPanel, title));
+		tabbedPanel.setTabComponentAt(tabbedPanel.getSelectedIndex(), new ButtonTab(tabbedPanel, title));
 	}
 }

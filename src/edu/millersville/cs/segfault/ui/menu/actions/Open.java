@@ -51,5 +51,6 @@ public class Open extends AbstractAction
 	//*************************************************************************
 	public void actionPerformed(ActionEvent se) {
 		window.loadNewTab();
+		window.updateTabname();
 	}		
 }
