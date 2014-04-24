@@ -10,7 +10,7 @@ import edu.millersville.cs.segfault.model.DrawableType;
 
 /*****************************************************************************
  * An object with no display of it's own, only shows text within itself.
- */
+ *****************************************************************************/
 public class FreeText extends UMLObject {
 	
 	public FreeText() {

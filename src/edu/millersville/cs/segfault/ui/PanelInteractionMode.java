@@ -7,19 +7,20 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+
+/**************************************************************************
+ * Class to handle events triggered by mouse and keyboard events.
+ * @author Daniel Rabiega
+ *************************************************************************/
 public class PanelInteractionMode implements MouseListener, MouseMotionListener, KeyListener {
 	
 	private boolean controlDown;
 	private boolean shiftDown;
 
 	
-	void draw(Graphics g) {
-		
-	}
+	void draw(Graphics g) {}
 	
-	void leaveMode() {
-		
-	}
+	void leaveMode() {}
 
 	@Override
 	public void keyTyped(KeyEvent e) {}

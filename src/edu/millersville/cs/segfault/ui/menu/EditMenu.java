@@ -15,19 +15,18 @@ public class EditMenu extends JMenu {
 	
 	//*************************************************************************
 	// Static Instance Variables
-	//*************************************************************************
+
 	private static final long serialVersionUID = -3884476289367851522L;
 	
 	private static final String editMenuText = "Edit";
 	
 	//*************************************************************************
 	// Instance Variables
-	//*************************************************************************
+
 	private final UMLWindow parentWindow;
 	
 	//*************************************************************************
 	// Constructors	
-	//*************************************************************************
 		
 	/**************************************************************************
 	* Constructor that builds the Edit submenu, with each submenu option

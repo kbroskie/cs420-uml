@@ -10,6 +10,11 @@ import edu.millersville.cs.segfault.immutable.ImmutableLine;
 import edu.millersville.cs.segfault.immutable.ImmutablePath;
 import edu.millersville.cs.segfault.model.DrawableType;
 
+
+/*****************************************************************************
+ * A subclass of UMLRelation which is ended by an unfilled arrow.
+ * @author Daniel Rabiega
+ ****************************************************************************/
 public class Generalization extends UMLRelation {
 
 	private static int[] xPoints = {0,   10, -10,  0};

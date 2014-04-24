@@ -17,9 +17,8 @@ import edu.millersville.cs.segfault.ui.UMLPanel;
 /*****************************************************************************
  * UMLObject is the top level representation of all non-relation objects
  * in UML diagrams.
- * 
  * @author Daniel Rabiega
- */
+ *****************************************************************************/
 
 public class UMLObject implements DrawableUML {
 	

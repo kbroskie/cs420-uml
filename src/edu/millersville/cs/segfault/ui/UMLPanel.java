@@ -39,14 +39,13 @@ public class UMLPanel extends JPanel {
 	//************************************************************************
 	// Static Methods
 	
-	/*************************************************************************
+	/**************************************************************************
 	 * Save File
 	 * Takes a serialized String from Model.serialize() and writes
 	 * that string to a file at a given location
-	 * 
 	 * @param serialized file
 	 * @return boolean
-	 */
+	 *************************************************************************/
 	private static boolean saveObject( String serialized, File file)
 	{
 		if( file != null)
@@ -90,7 +89,6 @@ public class UMLPanel extends JPanel {
 	 * Takes a path location and returns a serialized string
 	 * corresponding to the contents found in the file at the
 	 * given location.
-	 * -----------------------------------------------------------------------
 	 * @param file
 	 * @return String
 	 *************************************************************************/
@@ -122,18 +120,11 @@ public class UMLPanel extends JPanel {
 				return(null);
 			}
 		} else {
-			//********************************************************************
-			//*** The file is null here. This means that there wasn't even	   ***
-			//*** an attempt to open anything. This is most likely due to	   ***
-			//*** the user closing the FileChooser without making a selection. ***
-			//...................................................................,
 			System.err.println("ERROR: JFileChooser closed unexpectedly.");
 			System.err.println("Aborting.");
 			return(null);
 		}
 	}
-	
-	
 	
 	//************************************************************************
 	// Instance Variables
@@ -150,8 +141,7 @@ public class UMLPanel extends JPanel {
 	
 	/*************************************************************************
 	 * Creates a new UMLPanel with default values.
-	 */
-	
+	 *************************************************************************/
 	public UMLPanel(UMLWindow parent){
 		currentModel = new UMLModel();
 		this.parent = parent;
@@ -165,13 +155,12 @@ public class UMLPanel extends JPanel {
 		srcFile = new File("");
 		setFocusable(true);
 		gridOn = false;
-		
 	}
 
 	/*************************************************************************
 	 * Creates a new UMLPanel displaying a given model.
 	 * @param new_model The model to display.
-	 */
+	 *************************************************************************/
 	public UMLPanel(UMLWindow parent, UMLModel new_model) {
 		this(parent);
 		this.changeModel(new_model);
@@ -209,7 +198,8 @@ public class UMLPanel extends JPanel {
 	
 	/*************************************************************************
 	 * Returns the current state of the model.
-	 */
+	 *************************************************************************/
+
 	public UMLModel getModel()
 	{
 		return currentModel;
@@ -218,7 +208,6 @@ public class UMLPanel extends JPanel {
 	/******************************************************************************
 	 * All Selected?
 	 * Checks whether the entire model is selected
-	 * ----------------------------------------------------------------------------
 	 * @return boolean
 	 ******************************************************************************/
 	public boolean fullSelection()
@@ -243,7 +232,7 @@ public class UMLPanel extends JPanel {
 	/*************************************************************************
 	 * Replaces the current state of the model with a new version and places
 	 * the previous version on the undo stack.
-	 */
+	 ************************************************************************/
 	public void changeModel(UMLModel new_model) {
 		undoStack.push(currentModel);
 		this.currentModel = new_model;
@@ -257,7 +246,7 @@ public class UMLPanel extends JPanel {
 
 	/*************************************************************************
 	 * Reroutes user interaction with the UMLPanel to the given mode.
-	 */
+	 *************************************************************************/
 	public void changeInteractionMode(PanelInteractionMode newMode)
 	{
 		currentInteractionMode.leaveMode();
@@ -273,7 +262,7 @@ public class UMLPanel extends JPanel {
 	
 	/*************************************************************************
 	 * Undoes the last change to the model which used changeModel	
-	 */
+	 *************************************************************************/
 	public void undo()
 	{
 		if (undoStack.size() > 0)
@@ -286,7 +275,7 @@ public class UMLPanel extends JPanel {
 	
 	/*************************************************************************
 	 * Redoes an undone change to the model.
-	 */
+	 *************************************************************************/
 	public void redo()
 	{
 		if (redoStack.size() > 0)
@@ -302,54 +291,42 @@ public class UMLPanel extends JPanel {
 	 * Prompts the user with the JFileChooser to obtain information about
 	 * the file's parameters to be saved. This will present a graphical
 	 * interface and then pass the resulting path to 'saveObject()'
-	 * -----------------------------------------------------------------------
 	 * @param serialized
 	 * @return boolean
 	 *************************************************************************/
 	public boolean saveAs( String serialized )
 	{
-		//*********************************************
-		//*** Create save menu through JFileChooser ***
-		//............................................,
+		// Create save menu through JFileChooser
 	    JFileChooser chooser = new JFileChooser();
 	    FileNameExtensionFilter filter = new FileNameExtensionFilter( "UML Diagram (.uml)", "uml" );
 	    chooser.setFileFilter(filter);
 	    int returnVal = chooser.showSaveDialog(chooser);
 	    
-	    //******************************************************
-	    //*** Save the file through a call to 'saveObject()' ***
-	    //*** returning saveObject()'s success status		 ***
-	    //.....................................................,
+	    // Save the file through a call to 'saveObject()'
+	    // returning saveObject()'s success status
 	    if(returnVal == JFileChooser.APPROVE_OPTION)
 	    {
 			return(saveObject(serialized, chooser.getSelectedFile()));
 	    } else {
-	    	// Oh no! JFileChooser failed!!!
 	    	return(false);
 	    }
 	}
 	
-
 	/*************************************************************************
 	 * Save Controller
 	 * Determine whether a given project has a file associated with it already
 	 * If so, simply overwrite that file, otherwise, prompt the user to create
 	 * one through the saveAs() function.
-	 * -----------------------------------------------------------------------
 	 * @param serialized
 	 * @return boolean
 	 *************************************************************************/
 	public boolean save( String serialized )
 	{
-		//***********************************************
-		//***			CHECK FOR THE FILE			  ***
-		//..............................................,
+		// CHECK FOR THE FILE
 		if(hasFile)
 		{
-			// We have one! Overwrite it
 			return( saveObject(serialized, srcFile ) );
 		} else {
-			// There is no file. Let's make one
 			return( saveAs(serialized) );
 		}
 	}
@@ -360,7 +337,6 @@ public class UMLPanel extends JPanel {
 	 * the file to be loaded. This will prese																																																																																																													nt a graphical interface and
 	 * then pass the resulting path to 'LoadObject()' which will then give
 	 * back the resultant 'UMLObject'.
-	 * -----------------------------------------------------------------------
 	 * @return boolean
 	 *************************************************************************/
 	public boolean load()
@@ -384,12 +360,10 @@ public class UMLPanel extends JPanel {
 	    		return(false);
 	    	}
 	    } else {
-		  	//Oh no! JFileChooser failed!!!
 		   	return(false);
 	    }
 	}
 
-	
 	/**************************************************************************
 	 * Returns the current filename.
 	 * @return the current saved filename.
@@ -404,12 +378,10 @@ public class UMLPanel extends JPanel {
 	 ******************************************************************************/
 	public void select()
 	{
-		//*********************************************************
-		//*** 		CHECK IF ALL ELEMENTS ARE SELECTED			***
-		//*** If so, deselect everything. Otherwise, ensure		***
-		//*** that the application is in selection mode and set ***
-		//*** all objects to the 'selected' state.				***
-		//........................................................,
+		// CHECK IF ALL ELEMENTS ARE SELECTED	
+		// If so, deselect everything. Otherwise, ensure
+		// that the application is in selection mode and set
+		// all objects to the 'selected' state
 		if(fullSelection())
 		{
 			// De-select everything
@@ -446,7 +418,7 @@ public class UMLPanel extends JPanel {
 				System.out.println("Could not select:" + e.getMessage());
 			}
 		}
-		
+	
 		// Update the screen to reflect changes
 		this.repaint();
 	}

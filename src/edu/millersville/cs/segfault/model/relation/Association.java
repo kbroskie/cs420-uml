@@ -14,7 +14,7 @@ import edu.millersville.cs.segfault.model.DrawableType;
  * A subclass of UMLRelation which creates an unfilled arrow.
  * 
  * @author Daniel Rabiega
- */
+  ****************************************************************************/
 
 public class Association extends UMLRelation {
 

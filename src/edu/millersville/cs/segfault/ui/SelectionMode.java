@@ -13,13 +13,11 @@ import edu.millersville.cs.segfault.model.UMLModel;
 import edu.millersville.cs.segfault.model.object.UMLObject;
 import edu.millersville.cs.segfault.model.relation.UMLRelation;
 
-/*****************************************************************************
+/**************************************************************************
  * Interprets user input and uses it to select and deselect items in the 
  * current diagram.
- * 
  * @author Daniel Rabiega
- */
-
+ *************************************************************************/
 public class SelectionMode extends PanelInteractionMode {
 
 	//************************************************************************
@@ -43,11 +41,10 @@ public class SelectionMode extends PanelInteractionMode {
 	//************************************************************************
 	// Constructors
 	
-	/*************************************************************************
+	/**************************************************************************
 	 * Creates a new Selection Mode.
-	 * 
-	 * @param caller The UMLPanel in which to select and deselect items.
-	 */
+	 * @param parent The UMLPanel in which to select and deselect items.
+	 *************************************************************************/
  	public SelectionMode(UMLWindow parent)
 	{
 		this.parent = parent;
@@ -367,7 +364,5 @@ public class SelectionMode extends PanelInteractionMode {
 		g.fillArc(p.x-handleSize, p.y-handleSize, handleSize*2, handleSize*2, 0, 360);
 		g.setColor(Color.BLACK);
 		g.drawArc(p.x-handleSize, p.y-handleSize, handleSize*2, handleSize*2, 0, 360);
-	}
-	
-	
+	}	
 }

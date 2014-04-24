@@ -16,20 +16,19 @@ import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.ui.menu.MenuBar;
 
 /**************************************************************************
- * UMLWindow is the class responsible for creating
- * a UMLWindow.
- * @author Kimberlyn Broskie
+ * UMLWindow is the class responsible for creating				   		  *
+ * a UMLWindow.															  *
+ * @author Kimberlyn Broskie											  *
  *************************************************************************/
 public class UMLWindow extends JFrame {
 	
 	//*************************************************************************
 	// Static Instance Variables
-	//*************************************************************************
+	
 	private static final long serialVersionUID = 1L;
 	
 	//*************************************************************************
 	// Instance Variables
-	//*************************************************************************	
 	
 	// Components of the main frame.
 	private OptionsPanel optionsPane;
@@ -43,11 +42,10 @@ public class UMLWindow extends JFrame {
 
 	//*************************************************************************
 	// Constructors	
-	//*************************************************************************
 
 	/**************************************************************************
-	 * Constructor to create a window comprised of a panel that
-	 * will hold the user options and a scrollable model drawing area.
+	 * Constructor to create a window comprised of a panel that				  *
+	 * will hold the user options and a scrollable model drawing area.		  *
 	 *************************************************************************/
 	public UMLWindow () {
 		super("SegUE");		
@@ -85,11 +83,10 @@ public class UMLWindow extends JFrame {
 	
 	//********************************************************************
 	// Mutators
-	//********************************************************************
 	
 	/**************************************************************************
-	 * Returns a scrollable UMLPanel
-	 * @return a scrollable UMLPanel
+	 * Returns a scrollable UMLPanel										  *
+	 * @return a scrollable UMLPanel										  *
 	 *************************************************************************/
 	public JScrollPane createScrollableUMLPanel(UMLPanel panel) {		
 		JScrollPane scrollPanel = new JScrollPane(panel);
@@ -104,7 +101,7 @@ public class UMLWindow extends JFrame {
 	}
 	
 	/**************************************************************************
-	 * Adds a new tab to the tabbed panel.
+	 * Adds a new tab to the tabbed panel.									  *
 	 *************************************************************************/
 	public void createNewTab() {
 		int newTabNumber = tabbedPanel.getTabCount() + 1;
@@ -129,8 +126,8 @@ public class UMLWindow extends JFrame {
 	}
 	
 	/**************************************************************************
-	 * Adds a tab to the tabbed panel that contains a saved diagram from the 
-	 * location specified by the user.
+	 * Adds a tab to the tabbed panel that contains a saved diagram from the  *
+	 * location specified by the user.										  *
 	 *************************************************************************/
 	public void loadNewTab() {
 		int newTabIndex = tabbedPanel.getTabCount();
@@ -157,34 +154,33 @@ public class UMLWindow extends JFrame {
 	
 	//********************************************************************
 	// Observers
-	//********************************************************************
 	
 	/**************************************************************************
-	 * Returns the current UML model.
-	 * @return the current UML model for the selected tab.
+	 * Returns the current UML model.										  *
+	 * @return the current UML model for the selected tab.					  *
 	 *************************************************************************/
 	public UMLPanel getUMLPanel() {
 		return panels.get(tabbedPanel.getSelectedComponent());
 	}
 	
 	/**************************************************************************
-	 * Returns the toolbar.
-	 * @return the toolbar.
+	 * Returns the toolbar.													  *
+	 * @return the toolbar.													  *
 	 *************************************************************************/
 	public Toolbar getToolbar() {
 		return toolbar;
 	}
 	
 	/**************************************************************************
-	 * Returns the contents of the current Pastebuffer
-	 * @return the pastebuffer
+	 * Returns the contents of the current Pastebuffer						  *
+	 * @return the pastebuffer												  *
 	 *************************************************************************/
 	public ImmutableSet<DrawableUML> getPasteBuffer() {
 		return pasteBuffer;
 	}
 	
 	/**************************************************************************
-	 * Adds input to the pastebuffer
+	 * Adds input to the pastebuffer										  *
 	 *************************************************************************/
 	public void setPasteBuffer(ImmutableSet<DrawableUML> selected) {
 		pasteBuffer = selected;
@@ -192,10 +188,9 @@ public class UMLWindow extends JFrame {
 	
 	//********************************************************************
 	// Mutators
-	//********************************************************************
 	
 	/**************************************************************************
-	 * Set the tab title to the name of the current file.
+	 * Set the tab title to the name of the current file.					  *
 	 *************************************************************************/
 	public void updateTabname() {
 		String title = panels.get(tabbedPanel.getSelectedComponent()).getFilename();

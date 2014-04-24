@@ -275,6 +275,7 @@ public class TextMode extends PanelInteractionMode {
 		}
 		return blank;
 	}
+	
 	//*************************************************************************
 	// Drawing Methods
 	

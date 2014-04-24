@@ -1,7 +1,5 @@
 package edu.millersville.cs.segfault.model.relation;
 
-//****************************************************************************
-// Import Statement
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -26,7 +24,7 @@ public class UMLRelation implements DrawableUML {
 	
 	//*************************************************************************
 	// Member variables
-	//*************************************************************************
+
 	private final ImmutablePath path;
 	private final int z;
 	private final boolean selected;
@@ -64,6 +62,7 @@ public class UMLRelation implements DrawableUML {
 	
 	//*************************************************************************
 	// Observers
+	
 	public String serialize() 
 	{
 		return XMLAttribute.makeTag(this.getType().name(), this.toString());
@@ -112,14 +111,14 @@ public class UMLRelation implements DrawableUML {
 	
 	/**************************************************************************
 	 * Returns the path of this relation.
-	 */
+	 **************************************************************************/
 	public ImmutablePath getPath() {
 		return this.path;
 	}
 	
 	/**************************************************************************
 	 * Returns the endpoint of this relation.
-	 */
+	 **************************************************************************/
 	public ImmutablePoint getEnd() {
 		return this.path.last();
 	}
@@ -215,8 +214,6 @@ public class UMLRelation implements DrawableUML {
 			return this;
 		}
 	}
-
-	
 
 	@Override
 	public UMLRelation unselect() {

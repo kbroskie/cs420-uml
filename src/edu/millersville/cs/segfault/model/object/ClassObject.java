@@ -16,9 +16,6 @@ import edu.millersville.cs.segfault.model.DrawableType;
 
 	public class ClassObject extends UMLObject {
 		
-//*********************************************************************
-//Static variables
-				
 		
 //*********************************************************************
 //Constructors

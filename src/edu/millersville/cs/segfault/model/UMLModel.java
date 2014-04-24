@@ -9,9 +9,8 @@ import edu.millersville.cs.segfault.model.relation.UMLRelation;
 
 
 /*****************************************************************************
- * 
  * @author Daniel Rabiega
- */
+ *****************************************************************************/
 public class UMLModel implements Iterable<DrawableUML> {
 	
 	//*************************************************************************

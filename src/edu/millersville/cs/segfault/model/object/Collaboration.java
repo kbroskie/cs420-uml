@@ -22,7 +22,7 @@ import edu.millersville.cs.segfault.model.DrawableType;
 
 public class Collaboration extends UseCase {
 	
-	//*****************************************************************
+		//*****************************************************************
 		//Constructors
 		
 		//Empty constructor

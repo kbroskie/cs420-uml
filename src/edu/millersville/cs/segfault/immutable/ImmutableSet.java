@@ -6,7 +6,6 @@ import java.util.Iterator;
 /*****************************************************************************
  * A set which can not be changed after construction.
  * @author Daniel Rabiega
- *
  * @param <E> The type of items stored in the set.
  *****************************************************************************/
 

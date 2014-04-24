@@ -14,9 +14,8 @@ import edu.millersville.cs.segfault.model.DrawableType;
 /*****************************************************************************
  * A subclass of Relation which draws a unfilled diamond at the end of it's 
  * path.
- * 
  * @author Daniel Rabiega
- */
+ ****************************************************************************/
 
 public class Aggregation extends UMLRelation {
 	
