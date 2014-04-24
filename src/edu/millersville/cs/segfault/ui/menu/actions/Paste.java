@@ -59,7 +59,7 @@ public class Paste extends AbstractAction
 			model = model.deleteSelected();
 			while( iter.hasNext())
 			{
-				model = model.add(iter.next());
+				model = model.add(iter.next().unselect());
 			}
 			
 			window.getUMLPanel().changeModel( model );
