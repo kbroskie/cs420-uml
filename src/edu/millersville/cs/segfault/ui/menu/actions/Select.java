@@ -3,10 +3,12 @@ package edu.millersville.cs.segfault.ui.menu.actions;
 import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.Iterator;
 
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 
+import edu.millersville.cs.segfault.model.DrawableUML;
 import edu.millersville.cs.segfault.ui.UMLWindow;
 import edu.millersville.cs.segfault.ui.menu.MenuAction;
 import edu.millersville.cs.segfault.ui.menu.ActionType;
@@ -52,8 +54,8 @@ public class Select extends AbstractAction
 	//*************************************************************************
 	public void actionPerformed(ActionEvent se) {
 		try {
-				window.getUMLPanel().changeModel(
-						window.getUMLPanel().getModel().unselectAll()); }
+				window.getUMLPanel().select();
+		}
 		catch (Exception e) {}
 	}	
 }
