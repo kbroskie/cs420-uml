@@ -62,11 +62,7 @@ public class LineTest {
 				new ImmutablePoint(30, 20), new ImmutablePoint(30, 50));
 		
 		//**********************************************************************************//
-		
-		//testing item
-		System.out.println();
-		//snap point
-		//intercept
+
 	}
 
 }

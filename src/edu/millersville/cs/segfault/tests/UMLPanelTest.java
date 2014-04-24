@@ -48,14 +48,9 @@ public class UMLPanelTest {
 		testPanel.add(testPanel2);
 		System.out.println(testPanel.getComponentCount());
 		testPanel.undo();
-		//System.out.println(testPanel.);
-		//testPanel.redo();
-		
-		//**********************************************************************************//
-		//Selection Tests
-		//**********************************************************************************//
-		
-		testPanel.select();
+
+		testPanel.redo();
+
 		
 		//**********************************************************************************//
 		//GetPerferredSize Tests
