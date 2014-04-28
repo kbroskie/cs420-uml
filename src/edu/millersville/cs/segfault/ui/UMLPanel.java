@@ -33,98 +33,7 @@ public class UMLPanel extends JPanel {
 	// Static Members
 	
 	private static final long serialVersionUID = 3691818181393202313L;
-	static boolean hasFile;
-	static File srcFile;
-	
-	//************************************************************************
-	// Static Methods
-	
-	/**************************************************************************
-	 * Save File
-	 * Takes a serialized String from Model.serialize() and writes
-	 * that string to a file at a given location
-	 * @param serialized file
-	 * @return boolean
-	 *************************************************************************/
-	private static boolean saveObject( String serialized, File file)
-	{
-		if( file != null)
-		{
-			try{
-				// CHECK FOR FILE, IF NOT FOUND CREATE ONE
-				if( !file.exists())
-				{
-					// CHECK FOR FILE EXTENSION         
-					// IF ONE DOES NOT EXIST, APPEND ".uml" 
-					if( !file.getName().contains(".") )
-					{
-						file = new File(file.getAbsolutePath() + ".uml");
-					}
-					file.createNewFile();
-				}
-			
-				// WRITE TO THE FILE		 	  
-				FileWriter fw = new FileWriter(file);
-				BufferedWriter bw = new BufferedWriter(fw);
-			
-				bw.write( serialized );		// Write the serialized string
-				bw.close();					// Close the file
-			
-				hasFile = true;
-				srcFile = file;
-				return( true );
-			} catch (IOException e) {
-				System.err.println("ERROR: Failed to write file!");
-				return( false );
-			}
-		} else {
-			System.err.println("WARNING: JFileChooser closed unexpectedly.");
-			System.err.println("Nothing saved.");
-			return( false );
-		}
-	}
-	
-	/*************************************************************************
-	 * Load File
-	 * Takes a path location and returns a serialized string
-	 * corresponding to the contents found in the file at the
-	 * given location.
-	 * @param file
-	 * @return String
-	 *************************************************************************/
-	private static String loadObject( File file )
-	{
-		if( file != null )
-		{
-			try{
-				String serialized = new String();
-			
-				// READ THE FILE			
-				FileReader fr = new FileReader(file);
-				BufferedReader br = new BufferedReader(fr);
-			
-				// Anything left?
-				while( br.ready())
-				{
-					// Append the next line to the serialized string
-					serialized = serialized + br.readLine() + "\n";
-				}
-				br.close();						// Close the file
-			
-				hasFile = true;
-				srcFile = file;
-				return(serialized);				// Return the serialized string
-			
-			} catch (IOException e) {
-				System.err.println("ERROR: Failed to open file!");
-				return(null);
-			}
-		} else {
-			System.err.println("ERROR: JFileChooser closed unexpectedly.");
-			System.err.println("Aborting.");
-			return(null);
-		}
-	}
+
 	
 	//************************************************************************
 	// Instance Variables
@@ -135,6 +44,9 @@ public class UMLPanel extends JPanel {
 	private PanelInteractionMode currentInteractionMode;
 	boolean gridOn;
 	UMLWindow parent;
+	boolean hasFile;
+	File srcFile;
+	
 	
 	//************************************************************************
 	// Constructors
@@ -306,7 +218,7 @@ public class UMLPanel extends JPanel {
 	    // returning saveObject()'s success status
 	    if(returnVal == JFileChooser.APPROVE_OPTION)
 	    {
-			return(saveObject(serialized, chooser.getSelectedFile()));
+	    	return(saveObject(serialized, chooser.getSelectedFile()));
 	    } else {
 	    	return(false);
 	    }
@@ -353,6 +265,7 @@ public class UMLPanel extends JPanel {
 				undoStack.push(currentModel);
 				currentModel = new UMLModel( loadObject(chooser.getSelectedFile()) );;
 				repaint();
+
 				return(true);
 	    	} catch(Exception e) {
 	    		System.err.println("Load failed: " + e.getMessage());
@@ -431,6 +344,92 @@ public class UMLPanel extends JPanel {
 		this.gridOn = false;
 	}
 
+	/**************************************************************************
+	 * Save File
+	 * Takes a serialized String from Model.serialize() and writes
+	 * that string to a file at a given location
+	 * @param serialized file
+	 * @return boolean
+	 *************************************************************************/
+	private boolean saveObject( String serialized, File file)
+	{
+		if( file != null)
+		{
+			try{
+				// CHECK FOR FILE, IF NOT FOUND CREATE ONE
+				if( !file.exists())
+				{
+					// CHECK FOR FILE EXTENSION         
+					// IF ONE DOES NOT EXIST, APPEND ".uml" 
+					if( !file.getName().contains(".") )
+					{
+						file = new File(file.getAbsolutePath() + ".uml");
+					}
+					file.createNewFile();
+				}
+			
+				// WRITE TO THE FILE		 	  
+				FileWriter fw = new FileWriter(file);
+				BufferedWriter bw = new BufferedWriter(fw);
+			
+				bw.write( serialized );		// Write the serialized string
+				bw.close();					// Close the file
+			
+				hasFile = true;
+				srcFile = file;
+				return( true );
+			} catch (IOException e) {
+				System.err.println("ERROR: Failed to write file!");
+				return( false );
+			}
+		} else {
+			System.err.println("WARNING: JFileChooser closed unexpectedly.");
+			System.err.println("Nothing saved.");
+			return( false );
+		}
+	}
+	
+	/*************************************************************************
+	 * Load File
+	 * Takes a path location and returns a serialized string
+	 * corresponding to the contents found in the file at the
+	 * given location.
+	 * @param file
+	 * @return String
+	 *************************************************************************/
+	private String loadObject( File file )
+	{
+		if( file != null )
+		{
+			try{
+				String serialized = new String();
+			
+				// READ THE FILE			
+				FileReader fr = new FileReader(file);
+				BufferedReader br = new BufferedReader(fr);
+			
+				// Anything left?
+				while( br.ready())
+				{
+					// Append the next line to the serialized string
+					serialized = serialized + br.readLine() + "\n";
+				}
+				br.close();						// Close the file
+			
+				hasFile = true;
+				srcFile = file;
+				return(serialized);				// Return the serialized string
+			
+			} catch (IOException e) {
+				System.err.println("ERROR: Failed to open file!");
+				return(null);
+			}
+		} else {
+			System.err.println("ERROR: JFileChooser closed unexpectedly.");
+			System.err.println("Aborting.");
+			return(null);
+		}
+	}
 	
 	//************************************************************************
 	// Drawing Methods

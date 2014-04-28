@@ -140,6 +140,8 @@ public class UMLWindow extends JFrame {
 		}
 		else {
 			UMLPanel uml = new UMLPanel(this); 
+			uml.load();
+			if (uml.getFilename() != "") {
 			JScrollPane scrollpanel = createScrollableUMLPanel(uml);
 			String tabTitle = "New Tab " +  (newTabIndex + 1);
 			
@@ -148,7 +150,7 @@ public class UMLWindow extends JFrame {
 			tabbedPanel.setSelectedIndex(newTabIndex);
 			tabbedPanel.setTabComponentAt(newTabIndex, new ButtonTab(tabbedPanel, tabTitle));
 			panels.put(scrollpanel, uml);
-			panels.get(tabbedPanel.getSelectedComponent()).load();
+			}
 		}
 	}
 	
@@ -194,7 +196,11 @@ public class UMLWindow extends JFrame {
 	 *************************************************************************/
 	public void updateTabname() {
 		String title = panels.get(tabbedPanel.getSelectedComponent()).getFilename();
-		title = title.substring(title.lastIndexOf("\\") + 1, title.indexOf("."));
-		tabbedPanel.setTabComponentAt(tabbedPanel.getSelectedIndex(), new ButtonTab(tabbedPanel, title));
+		
+		// Check if a file exists to update the tab title to.
+		if (title != "") {
+			title = title.substring(title.lastIndexOf("\\") + 1, title.indexOf("."));
+			tabbedPanel.setTabComponentAt(tabbedPanel.getSelectedIndex(), new ButtonTab(tabbedPanel, title));
+		}
 	}
 }
