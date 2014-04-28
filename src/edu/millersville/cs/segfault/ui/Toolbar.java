@@ -95,7 +95,15 @@ public class Toolbar extends JToolBar {
 			newButton.setText(null);
 		}
 		catch (Exception ex) {
-			newButton.setActionCommand(action);
+			try {
+				Action newAction = (Action)ActionType.makeOptionMenuAction(
+									ActionType.valueOf(action.toUpperCase()), parentWindow);
+				newButton.setAction(newAction);	
+				newButton.setText(null);
+			}
+			catch (Exception e) {
+				newButton.setActionCommand(action);				
+			}
 		}
 		finally {
 			newButton.setIcon(newImage);
